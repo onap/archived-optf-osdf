@@ -1,0 +1,718 @@
+/*
+ * This XCORE file contains models for the placement optimization policies in SNIRO.
+ * @author Ankitkumar Patel
+ * @version 0.0.1
+ * @since 2017-04-13
+ */
+
+package com.att.ecomp.sniro.policies.placement
+
+import java.util.UUID
+
+annotation "http://ecomp.att.com" as ecomp
+annotation "http://ecomp.att.com/policy" as policy
+
+type UUID  wraps UUID
+
+/*
+ * Comparison operators
+ */
+enum ComparisonOperator{
+        less=1, grater=2, lessEqual=3, greaterEqual=4, equal=5, notEqual=6
+}
+
+enum TenantType{
+        GW_TENANT_ID=1, PORTAL_TENANT_ID=2
+}
+
+/*
+ * Computational operators
+ */
+enum ComputationalOperator{
+        sum=1, product=2
+}
+
+
+/*
+ * Qualifier types
+ */
+enum Qualifier{
+        same=1, different=2
+}
+
+/*
+ * Zone  category
+ */
+enum ZoneCategory{
+        disaster=1, region=2, complex=3, time=4, maintenance=5
+}
+
+/*
+ * Geographical region types
+ */
+enum GeoRegion{
+        US=1, EMEA=2, AP=3, CALA=4, CA=5, INTERNATIONAL=6
+}
+
+/*
+ * Parameters
+ */
+enum Parameter{
+        distance=0, latency=1, aic_version=2
+        //thoughput=1, geoDistance=1, airDistance=2, latency=3, bandwidth=4
+}
+
+
+/*
+ * The type of inventory defined in AIC
+ */
+enum InventoryType{
+        service=1, cloud=2
+}
+
+/*
+ * The type of AT&T network
+ */
+ enum NetworkType{
+        ip=1
+ }
+
+/*
+ * Objective functions.
+ */
+
+enum ObjectiveFunction{
+        minimize=1, maximize=2
+}
+
+/*
+ * This is a model of a condition.
+ * @param parameter This is the parameter of interest.
+ * @param operator This is a comparison operator.
+ * @param value This is a value of a parameter
+ */
+class ConditionalInfo{
+        @ecomp(^type = "configuration")
+        Parameter parameter
+        @ecomp(^type = "configuration")
+        ComparisonOperator operator
+        @ecomp(^type = "configuration")
+        String value
+}
+
+enum LocationInfo{
+        customer_loc=1, none=2, customer_pref_loc=3
+}
+
+
+/*
+ * Model for distance to location property.
+ * @param distanceCondition This is a distance condition.
+ * @param locationInfo This is a location with respect to which distance condition is applied.
+ */
+class DistanceToLocationProperty{
+        //distanceCondition.parameter must be distance.
+        @ecomp(^type = "configuration")
+        contains ConditionalInfo distanceCondition
+        @ecomp(^type = "configuration")
+        LocationInfo locationInfo
+}
+
+enum DistanceToLocationPolicyType{
+        distance_to_location=1
+}
+
+/*
+ * Model for distance to location policy.
+ * @param identity This is an identity created by a user.
+ * @param type This is the type of a policy.
+ * @param resourceInstance This is a list of resource instances over which this policy is applied.
+ * @param distanceToLocationProperty This is the distance properties of the policy.
+ */
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+class DistanceToLocationPolicy extends SniroPolicyMetaInfo{
+        @ecomp(^type = "configuration")
+        @policy (matching = "true")
+        DistanceToLocationPolicyType ^type
+        @ecomp(^type = "configuration")
+        String[] resourceInstanceType
+        @ecomp(^type = "configuration")
+        contains DistanceToLocationProperty distanceToLocationProperty
+}
+
+/*
+ * The property associated with the NetworkBetweenDemandsPolicy.
+ * @param latencyCondition The latency property associated with the policy.
+ * @param locationInfo The customer location information.
+ */
+class NetworkToLocationProperty{
+        //latencyCondition.parameter must be latency.
+        @ecomp(^type = "configuration")
+        contains ConditionalInfo latencyCondition
+        @ecomp(^type = "configuration")
+        LocationInfo locationInfo
+}
+
+enum NetworkToLocationPolicyType{
+        network_to_location=1
+}
+
+/*
+ * Network between demands policy.
+ * @param type The type of a policy.
+ * @param resourceInstanceType The resources associated with a policy.
+ * @param networkToLocationProperty The property associated with the policy.
+ */
+
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+class NetworkToLocationPolicy extends SniroPolicyMetaInfo{
+        @policy (matching = "true")
+        @ecomp(^type = "configuration")
+        NetworkToLocationPolicyType ^type
+        @ecomp(^type = "configuration")
+        String[] resourceInstanceType
+        @ecomp(^type = "configuration")
+        contains NetworkToLocationProperty networkToLocationProperty
+}
+
+/*
+ * The property associated with the NetworkBetweenDemandsPolicy.
+ * @param latencyCondition The latency property associated with the policy.
+ */
+class NetworkBetweenDemandsProperty{
+        //latencyCondition.parameter must be latency.
+        @ecomp(^type = "configuration")
+        contains ConditionalInfo latencyCondition
+}
+
+enum NetworkBetweenDemandsPolicyType{
+        network_between_demands=1
+}
+
+/*
+ * Network between demands policy.
+ * @param type The type of a policy.
+ * @param resourceInstanceType The resources associated with a policy.
+ * @param networkBetweenDemandsProperty The property associated with the policy.
+ */
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+class NetworkBetweenDemandsPolicy extends SniroPolicyMetaInfo{
+        @policy (matching = "true")
+        @ecomp(^type = "configuration")
+        NetworkBetweenDemandsPolicyType ^type
+        @ecomp(^type = "configuration")
+        String[] resourceInstanceType
+        @ecomp(^type = "configuration")
+        contains NetworkBetweenDemandsProperty networkBetweenDemandsProperty
+}
+
+
+/*
+ * Network roles supported a VNF placement
+ * @param all A list of network roles.
+ */
+class NetworkRoles{
+        @ecomp(^type = "configuration")
+        String[] all
+}
+
+/*
+ * Complex names supported by a VNF placement
+ * @param any A list of complex names.
+ */
+class Complex{
+        @ecomp(^type = "configuration")
+        String[] any
+}
+/*
+ * This are the AIC properties.
+ * @param aicVersion This is the version of AIC.
+ * @param aicType This is the type of AIC.
+ * @param dataPlace This is the type of data plane.
+ * @param hypervisor This is the type of hypervisor.
+ * @param networkRoles This is a list of connected networks.
+ * @param exclusivityGroups This is an exclusivity group Id
+ * @param state State in which a VNF should be located.
+ * @param country Country in which a VNF should be located.
+ * @param getRegion Geographical region in which a VNF should be located.
+ */
+class AicAttributeProperty{
+        //aicVersionCondition.parameter must be aicVersion.
+        @ecomp(^type = "configuration")
+        String aicVersion
+        @ecomp(^type = "configuration")
+        String aicType
+        @ecomp(^type = "configuration")
+        String dataPlane
+        @ecomp(^type = "configuration")
+        String hypervisor
+        @ecomp(^type = "configuration")
+        contains NetworkRoles networkRoles
+        @ecomp(^type = "configuration")
+        contains Complex complex
+        @ecomp(^type = "configuration")
+        String exclusivityGroups
+        @ecomp(^type = "configuration")
+        String state
+        @ecomp(^type = "configuration")
+        String country
+        @ecomp(^type = "configuration")
+        GeoRegion geoRegion
+        @ecomp(^type = "configuration")
+    	String replicationRole
+
+}
+
+enum AicAttributePolicyType{
+        attribute=1
+}
+
+/*
+ * Model for the AIC attribute policy.
+ * @param type This is the type of a policy.
+ * @param resourceInstance This is a list of resources over which the policy is applied.
+ * @param aicAttributeProperty This is the properties associated with the policy.
+ */
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+class AicAttributePolicy extends SniroPolicyMetaInfo{
+        @policy (matching = "true")
+        @ecomp(^type = "configuration")
+        AicAttributePolicyType ^type
+        @ecomp(^type = "configuration")
+        String[] resourceInstanceType
+        @ecomp(^type = "configuration")
+        contains AicAttributeProperty aicAttributeProperty
+}
+
+/*
+ * The property associated with the capacity policy.
+ * @param tenant The tenant whose capacity needs to be checked.
+ * @param description The location of a heat template.
+ */
+class CapacityProperty{
+        @ecomp(^type = "configuration")
+        TenantType tenant
+        @ecomp(^type = "configuration")
+        String description
+}
+
+enum CapacityPolicyType{
+        cloud_capacity=1
+}
+
+/*
+ * Capacity policy
+ * @param type The type of a policy.
+ * @param resourceInstanceType The type of resources associated with a policy.
+ * @param capacityProperty The property associated with a policy.
+ */
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+class CapacityPolicy extends SniroPolicyMetaInfo{
+        @policy (matching = "true")
+        @ecomp(^type = "configuration")
+        CapacityPolicyType ^type
+        @ecomp(^type = "configuration")
+        String[] resourceInstanceType
+        @ecomp(^type = "configuration")
+        contains CapacityProperty capacityProperty
+}
+
+enum InventoryGroupPolicyType{
+        inventory_group = 1
+}
+
+/*
+ * Model for the inventory group policy.
+ * @param type This is the type of a policy.
+ * @param resourceInstance This is a list of resources that must be grouped/paired
+ */
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+class InventoryGroupPolicy extends SniroPolicyMetaInfo{
+        @policy (matching = "true")
+        @ecomp(^type = "configuration")
+        InventoryGroupPolicyType ^type
+        @ecomp(^type = "configuration")
+        String[] resourceInstanceType
+}
+
+/*
+ * This is the property associated with this policy.
+ * @param controller ECOMP controller.
+ * @param request This should be key-value pairs to be sent in a request.
+ */
+class ResourceInstanceProperty{
+        @ecomp(^type = "configuration")
+        String controller
+        @ecomp(^type = "configuration")
+        String request
+}
+
+enum ResourceInstancePolicyType{
+        instance_fit=1
+}
+/*
+ * Model for the resource instance policy.
+ * @param type This is the type of a policy.
+ * @param resourceInstance This is a list of resources.
+ * @param resourceInstanceProperty This is a property associated with each resource in the list.
+ */
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+class ResourceInstancePolicy extends SniroPolicyMetaInfo{
+        @policy (matching = "true")
+        @ecomp(^type = "configuration")
+        ResourceInstancePolicyType ^type
+        @ecomp(^type = "configuration")
+        String[] resourceInstanceType
+        @ecomp(^type = "configuration")
+        contains ResourceInstanceProperty resourceInstanceProperty
+
+}
+
+/*
+ * This is the property associated with this policy.
+ * @param controller ECOMP controller
+ * @param request This should be key-value pairs to be sent in a request.
+ */
+class ResourceRegionProperty{
+        @ecomp(^type = "configuration")
+        String controller
+        @ecomp(^type = "configuration")
+        String request
+}
+
+enum ResourceRegionPolicyType{
+        region_fit=1
+}
+
+/*
+ * Model for the resource region policy
+ * @param type This is the type of a policy.
+ * @param resourceInstance This is a list of resources.
+ * @param resourceRegionProperty This is a property associated with this policy.
+ */
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+class ResourceRegionPolicy extends SniroPolicyMetaInfo{
+        @policy (matching = "true")
+        @ecomp(^type = "configuration")
+        ResourceRegionPolicyType ^type
+        @ecomp(^type = "configuration")
+        String[] resourceInstanceType
+        @ecomp(^type = "configuration")
+        contains ResourceRegionProperty resourceRegionProperty
+}
+
+/*
+ * This is the property associated with zone policy.
+ * @param qualifier This is the qualifier.
+ * @param category This is the category of a zone.
+ */
+class ZoneProperty{
+        @ecomp(^type = "configuration")
+        Qualifier qualifier
+        @ecomp(^type = "configuration")
+        ZoneCategory category
+}
+
+enum ZonePolicyType{
+        zone=1
+}
+
+/*
+ * Model of the zone policy.
+ * @param type This is the type of a policy.
+ * @param resourceInstanceType This is a list of resources.
+ * @param zoneProperty This is the property associated with the policy.
+ */
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+
+class ZonePolicy extends SniroPolicyMetaInfo{
+        @policy (matching = "true")
+        @ecomp(^type = "configuration")
+        ZonePolicyType ^type
+        @ecomp(^type = "configuration")
+        String[] resourceInstanceType
+        @ecomp(^type = "configuration")
+        contains ZoneProperty zoneProperty
+}
+
+/*
+ * The property associated with a VNF type.
+ * @param inventoryProvider The ECOMP entity providing inventory information.
+ * @param inventoryType The type of an inventory.
+ * @param serviceId The id of a service.
+ */
+class VNFPolicyProperty{
+        @ecomp(^type = "configuration")
+        String inventoryProvider
+        @ecomp(^type = "configuration")
+        InventoryType inventoryType
+        @ecomp(^type = "configuration")
+        contains Attributes attributes
+}
+
+/*
+ * The property associated with a Subscriber type.
+ * @param subscriberName The name of a subscriber.
+ * @param subscriberRole The role of a subscriber.
+ * @param provStatus The provisioning status of a subscriber.
+ */
+class SubscriberPolicyProperty{
+        @ecomp(^type = "configuration")
+        String[] subscriberName
+        @ecomp(^type = "configuration")
+        String[] subscriberRole
+        @ecomp(^type = "configuration")
+        String[] provStatus
+}
+
+enum VNFPolicyType{
+        vnfPolicy=1
+}
+
+enum SubscriberPolicyType{
+        subscriberPolicy=1
+}
+
+class Attributes{
+    @ecomp(^type = "configuration")
+    String globalCustomerId
+    @ecomp(^type = "configuration")
+    String operationalStatus
+    @ecomp(^type = "configuration")
+    String[] orchestrationStatus
+    @ecomp(^type = "configuration")
+    String modelInvariantId
+    @ecomp(^type = "configuration")
+    String modelVersionId
+    @ecomp(^type = "configuration")
+    String equipmentRole
+}
+
+/*
+ * Policy associated with a VNF.
+ * @param resourceInstance This parameter identifies a specific VNF.
+ * @param inventoryProvider This is the provider of inventory.
+ * @param inventoryType This is the type of inventory.
+ * @param serviceType The service associated with a VNF.
+ * @param serviceId The Id associated with a service.
+ * @param globalCustomerId The global id of a customer.
+ */
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+class VNFPolicy extends SniroPolicyMetaInfo{
+        @policy (matching = "true")
+        @ecomp(^type = "configuration")
+        VNFPolicyType ^type
+        @ecomp(^type = "configuration")
+        String[] resourceInstanceType
+        @ecomp(^type = "configuration")
+        contains VNFPolicyProperty[] property
+}
+
+/*
+ * Policy associated with a Subscriber.
+ * @param subscriberName The name of a subscriber.
+ * @param subscriberRole The role of a subscriber.
+ * @param provStatus The provisioning status of a subscriber.
+ */
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+class SubscriberPolicy extends SniroPolicyMetaInfo{
+        @policy (matching = "true")
+        @ecomp(^type = "configuration")
+        SubscriberPolicyType ^type
+        @ecomp(^type = "configuration")
+        contains SubscriberPolicyProperty[] property
+}
+
+
+/*
+ * This is the property associated with this policy.
+ * @param providerUrl This is the url of provider to check the capacity.
+ * @param request This should be key-value pairs to be sent in a request.
+ */
+class InstanceReservationProperty{
+        @ecomp(^type = "configuration")
+        String controller
+        @ecomp(^type = "configuration")
+        String request
+}
+
+enum InstanceReservationPolicyType{
+        instance_reservation=1
+}
+/*
+ * Model for the resource instance policy.
+ * @param identity This is an identity created by a user.
+ * @param type This is the type of a policy.
+ * @param resourceInstance This is a list of resources.
+ * @param resourceInstanceProperty This is a property associated with each resource in the list.
+ */
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+class instanceReservationPolicy extends SniroPolicyMetaInfo{
+        @policy (matching = "true")
+        @ecomp(^type = "configuration")
+        InstanceReservationPolicyType ^type
+        @ecomp(^type = "configuration")
+        String[] resourceInstanceType
+        @ecomp(^type = "configuration")
+        contains InstanceReservationProperty instanceReservationProperty
+
+}
+
+/*
+ * This is a model of an operand.
+ * @param parameter This is a parameter.
+ * @param associativity This is a list of entities with which a parameter is associated.
+ */
+ /*
+class Operand{
+        @ecomp(^type = "configuration")
+        Parameter parameter
+        @ecomp(^type = "configuration")
+        Entity associativity
+}
+*/
+
+/*
+ * This is the optimization function.
+ * @param identity This is an identity of a function.
+ * @param operation This is a computational operator.
+ * @param leftOperand This is a left operand of a function.
+ * @param rightOperand This is a right operand of a function.
+ */
+/*
+class OptimizationFunction{
+        @ecomp(^type = "configuration")
+        ExpressionIdentity identity
+        @ecomp(^type = "configuration")
+        ComputationalOperator operation
+        @ecomp(^type = "configuration")
+        contains Operand[] operands
+}
+*/
+
+/*
+ * Properties associated with a sub-expression.
+ * @param weight The weight of an expression.
+ * @param parameter The parameter involved in an expression.
+ * @param entity The entities involved in an expression.
+ * @param operator The operator of an expression.
+ * @param customerLocationInfo The location of a customer.
+ */
+class AttributeProperty{
+        @ecomp(^type = "configuration")
+        double weight
+        @ecomp(^type = "configuration")
+        Parameter parameter
+        @ecomp(^type = "configuration")
+        String[] resource
+        @ecomp(^type = "configuration")
+        ComputationalOperator operator
+        @ecomp(^type = "configuration")
+        LocationInfo customerLocationInfo
+}
+
+enum PlacementOptimizationPolicyType{
+        placementOptimization=1
+}
+
+/*
+ * @param operator An operator in an expression.
+ * @param parameterAttributes Represents sub-expression
+ */
+class ObjectiveParameter{
+        @ecomp(^type = "configuration")
+        ComputationalOperator operator
+        @ecomp(^type = "configuration")
+        contains AttributeProperty[] parameterAttributes
+}
+
+/*
+ * Model of the placement optimization policy.
+ * @param type This is the type of a policy.
+ * @param objective This is an objective function.
+ * @param objectiveParameter The parameter/expression to be optimized.
+ */
+@policy (
+    policyTemplate = "SNIRO-PLACEMENT"
+)
+
+class PlacementOptimizationPolicy extends SniroPolicyMetaInfo{
+        @policy (matching = "true")
+        @ecomp(^type = "configuration")
+        PlacementOptimizationPolicyType ^type
+        @ecomp(^type = "configuration")
+        ObjectiveFunction objective
+        @ecomp(^type = "configuration")
+        contains ObjectiveParameter objectiveParameter
+}
+
+
+/*
+ * Meta information required for SNIRO policies.
+ * @param identity This is a user-defined identity.
+ * @param policyScope The scope of a policy
+ */
+
+@policy (
+    policyTemplate = "SNIRO"
+)
+class SniroPolicyMetaInfo{
+        @ecomp(^type = "configuration")
+        String identity
+        @ecomp(^type = "configuration")
+        @policy (matching = "true")
+        contains Scope policyScope
+}
+
+/*
+ * Scopes in which a policy is applicable.
+ * @param serviceType The type of a service.
+ * @param networkType The type of a network
+ * @param geoRigion The geographical region.
+ * @param resourceInstanceType The resources associated with a policy/
+ * @param subscriberRole 
+ */
+class Scope{
+        @ecomp(^type = "configuration")
+        @policy (matching = "true")
+        String[] serviceType
+        @ecomp(^type = "configuration")
+        @policy (matching = "true")
+        String[] networkType
+        @ecomp(^type = "configuration")
+        @policy (matching = "true")
+        String[] geoRegion
+        @ecomp(^type = "configuration")
+        @policy (matching = "true")
+        String[] resourceInstanceType
+        @ecomp(^type = "configuration")
+        @policy (matching = "true")
+        String[] modelInvariantId
+        @ecomp(^type = "configuration")
+        @policy (matching = "true")
+        String[] subscriberRole
+}
