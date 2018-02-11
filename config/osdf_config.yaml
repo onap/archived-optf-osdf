@@ -1,0 +1,34 @@
+osdfUserNameForSO: ""   # The OSDF Manager username for MSO.
+odfPasswordForSO: ""   # The OSDF Manager password for MSO.
+
+# msoUrl: ""   # The SO url for call back. This will be part of the request, so no need
+soUsername: ""   # SO username for call back.
+soPassword: ""   # SO password for call back.
+
+conductorUrl: "https://OOF-HAS-CONDUCTOR-HOST:8091"
+conductorUsername: "CONDUCTOR-USER"
+conductorPassword: "CONDUCTOR-PASSWD"
+conductorPingWaitTime: 60  # seconds to wait before calling the conductor retry URL
+conductorMaxRetries: 30  # if we don't get something in 30 minutes, give up
+
+# Policy Platform -- requires ClientAuth, Authorization, and Environment
+policyPlatformUrl: https://POLICY-URL:8081/pdp/getConfig # Policy Dev platform URL
+policyPlatformEnv: TEST  # Environment for policy platform
+policyPlatformUsername: POLICY-USER   # Policy platform username.
+policyPlatformPassword: POLICY-PASSWD   # Policy platform password.
+policyClientUsername: POLICY-CLIENT-USER   # For use with ClientAuth
+policyClientPassword: POLICY-CLIENT-PASSWD   # For use with ClientAuth
+
+messageReaderHosts: https://DMAAP-HOST1:3905,https://DMAAP-HOST2:3905,https://DMAAP-HOST3:3905
+messageReaderTopic: org.onap.oof.osdf.multicloud
+messageReaderAafUserId: DMAAP-OSDF-MC-USER
+messageReaderAafPassword: DMAAP-OSDF-MC-PASSWD
+
+sdcUrl: https://SDC-HOST:8443/sdc/v1/catalog
+sdcUsername: SDC-OSDF-USER
+sdcPassword: SDC-OSDF-PASSWD
+sdcONAPInstanceID: ONAP-OSDF
+
+osdfPlacementUrl: "http://127.0.0.1:24699/osdf/api/v2/placement"
+osdfPlacementUsername: "test"
+osdfPlacementPassword: "testpwd"

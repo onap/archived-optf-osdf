@@ -1,0 +1,34 @@
+{
+    "service": "CloudAttributePolicy",
+    "policyName": "cloud AttributePolicy_vG",
+    "description": "Attribute policy",
+    "templateVersion": "1702.03",
+    "version": "1707",
+    "priority": "10",
+    "riskType": "test",
+    "riskLevel": "3",
+    "guard": "False",
+    "content": {
+        "identity": "vG_cloud_attributes",
+        "policyScope": {
+            "serviceType": ["vCPE"],
+            "geoRegion": ["US", "INTERNATIONAL"],
+            "networkType": ["ip"],
+            "resourceInstanceType": ["vG"]
+        },
+        "cloudAttributeProperty": {
+            "networkRoles": {
+                "all": [
+                    	"vG.OAM",
+                      "vG.SR_IOV_Provider2_1",
+                      "vG.SR_IOV_Provider2_2"
+                ]
+            },
+            "complex": {
+                "any": [  ]
+            }
+        },
+        "type": "attribute",
+        "resourceInstanceType": ["vG"]
+    }
+}

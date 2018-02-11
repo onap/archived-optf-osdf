@@ -1,0 +1,81 @@
+{
+  "name": "{{ name }}",
+  "files": {},
+  "timeout": {{ timeout }},
+  "limit": {{ limit }},
+  "template": {
+    "conductor_template_version": "2018-02-01",
+    "parameters": {
+	    "REQUEST_TYPE": "{{ requestType }}",
+        "CHOSEN_REGION": "{{ chosenRegion }}",
+        "LATITUDE": "{{ latitude }}",
+        "LONGITUDE": "{{ longitude }}",
+        {% if serviceType == 'DHV' %}
+        "E2EVPNKEY": "{{ e2eVpnKey }}",
+        "UCPEHOST": "{{ ucpeHostName }}",
+        "EFFECTIVE_BANDWIDTH": "{{ effectiveBandwidth }}",
+        "WAN_PORT1_UP": "{{ ipsec_bw_up }}",
+        "WAN_PORT1_DOWN": "{{ ipsec_bw_down }}",
+        "WAN_PORT2_UP": "{{ ipsec2_bw_up }}",
+        "WAN_PORT2_DOWN": "{{ ipsec2_bw_down }}",
+        {% endif %}
+        {% if serviceType != 'DHV' %}
+        "GW_TENANT_ID": "{{ gwTenantId }}",
+        "PORTAL_TENANT_ID": "{{ portalTenantId }}",
+        {% endif %}
+        "CHOSEN_COMPLEX": "{{ chosenComplex }}",
+        {% if serviceType == 'ADIOD' or serviceType == 'VPE' %}
+        "BANDWIDTH": "{{ bandwidth }}",
+        "UNIT": "{{ bandwidth_unit }}",
+        {% endif %}
+        "SERVICE_INST": "{{ serviceInstance }}",
+    	"PROV_STATUS": {{ json.dumps(provStatus) }}
+    },
+    "locations": {
+        {% if serviceType == 'DHV' %}
+        "customer_loc": {
+            "host_name": { "get_param": "UCPEHOST" }
+        }
+        {% elif serviceType == 'ADIOD' %}
+        "customer_pref_location": {
+            "clli_code": { "get_param": "CHOSEN_COMPLEX" }
+        }
+        {% elif serviceType == 'NETBOND' %}
+        "peering_point": {
+            "latitude": { "get_param": "LATITUDE" },
+            "longitude": { "get_param": "LONGITUDE" }
+        }
+        {% else %}
+        "customer_pref_loc": {
+            "clli_code": { "get_param": "CHOSEN_COMPLEX" }
+        }
+        {% endif %}
+    },
+    "demands": {{ json.dumps(demand_list) }},
+    {% set comma_main = joiner(",") %}
+    "constraints": {
+      {% set comma=joiner(",") %}
+      {% for elem in policy_groups %} {{ comma() }}
+        {% for key, value in elem.items() %}
+          "{{key}}": {{ json.dumps(value) }}
+        {% endfor %}
+      {% endfor %}
+    },
+    "reservation": {
+      {% set comma=joiner(",") %}
+      {% for elem in reservation_groups %} {{ comma() }}
+        {% for key, value in elem.items() %}
+          "{{key}}": {{ json.dumps(value) }}
+        {% endfor %}
+      {% endfor %}
+    },
+    "optimization": {
+      {% set comma=joiner(",") %}
+      {% for elem in optimization_policies %} {{ comma() }}
+        {% for key, value in elem.items() %}
+          "{{key}}": {{ json.dumps(value) }}
+        {% endfor %}
+      {% endfor %}
+    }
+  }
+}

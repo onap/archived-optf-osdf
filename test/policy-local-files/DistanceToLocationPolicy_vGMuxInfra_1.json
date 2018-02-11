@@ -1,0 +1,30 @@
+{
+    "service": "DistanceToLocationPolicy",
+    "policyName": "DistanceToLocationPolicy_vGMuxInfra",
+    "description": "DistanceToLocationPolicy",
+    "templateVersion": "1702.03",
+    "version": "1707",
+    "priority": "3",
+    "riskType": "test",
+    "riskLevel": "2",
+    "guard": "False",
+    "content": {
+        "distanceToLocationProperty": {
+            "locationInfo": "customer_loc",
+            "distanceCondition": {
+                "parameter": "distance",
+                "value": "50000 km",
+                "operator": "less"
+            }
+        },
+        "identity": "distance-vGMuxInfra",
+        "policyScope": {
+            "serviceType": ["vCPE"],
+            "geoRegion": ["US", "INTERNATIONAL"],
+            "networkType": ["ip"],
+            "resourceInstanceType": ["vGMuxInfra"]
+        },
+        "type": "distance_to_location",
+        "resourceInstanceType": ["vGMuxInfra"]
+    }
+}

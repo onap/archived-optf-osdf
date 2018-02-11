@@ -1,0 +1,67 @@
+{
+  "transaction_id": "{{ transaction_id }}",
+  "request_id": "{{ request_id }}",
+  "start_date" : "{{ start_time }}",
+  "end_date" : "{{ end_time }}",
+
+  "change_elements" : [
+  {% set comma = joiner(",") -%}
+  {% for element in all_upgrades -%} {{ comma() }}
+    {
+      "id" : "{{ element.id }}",
+      "failback_duration": {{ element.failback_duration }},
+      {% if element.group_id -%}
+        "group_id": "{{ element.group_id }}",
+      {% endif %}
+      {% if element.scheduled_on -%}
+        "scheduled_on": "{{ element.scheduled_on }}",
+      {% endif %}
+      "duration": {{ element.duration }}
+    }
+  {% endfor -%}
+  ],
+
+  "constraints" : [
+    {
+      "type" : "general_concurrency_limit",
+      "parameters": [{{ concurrency_limit }}]
+    },
+
+    {
+      "type" : "allowed_forbidden_periods",
+      "parameters" : [
+      {% set comma = joiner(",") -%}
+      {% for idx in all_pending -%} {{ comma() }}
+        { "id" : "{{ idx.id }}",
+          "allowed_periods": [ {{ allowed_periods }}]
+        }
+      {% endfor -%}
+      ]
+    },
+    {
+      "type" : "spatial_conflict",
+      "parameters": [
+      {% set comma = joiner(",") -%}
+      {% for pserver, vce_list in vce_pserver_mapping.items() -%} {{ comma() }}
+        {
+          "spatial_entity": "{{ pserver }}",
+          "affected_entities": {{ vce_list }}
+        }
+      {% endfor -%}
+      ]
+    },
+
+    {
+      "type" : "critical_periods",
+      "parameters": [
+      {% set comma = joiner(",") -%}
+      {% for element, conflict_period in conflict_interval.items() -%} {{ comma() }}
+        {
+          "id" : "{{ element }}",
+          "periods": [{{ conflict_period }}]
+        }
+      {% endfor -%}
+      ]
+    }
+  ]
+}

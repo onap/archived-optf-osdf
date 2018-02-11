@@ -1,0 +1,41 @@
+{
+    "service": "PlacementOptimizationPolicy",
+    "policyName": "PlacementOptimizationPolicy",
+    "description": "PlacementOptimizationPolicy",
+    "templateVersion": "1702.03",
+    "version": "1707",
+    "priority": "5",
+    "riskType": "test",
+    "riskLevel": "3",
+    "guard": "False",
+    "content": {
+        "objectiveParameter": {
+            "parameterAttributes": [
+                {
+                    "resource": ["vGMuxInfra"],
+                    "customerLocationInfo": "customer_loc",
+                    "parameter": "distance",
+                    "weight": "2",
+                    "operator": "product"
+                },
+                {
+                    "resource": ["vG"],
+                    "customerLocationInfo": "customer_loc",
+                    "parameter": "distance",
+                    "weight": "1",
+                    "operator": "product"
+                }
+            ],
+            "operator": "sum"
+        },
+        "identity": "optimization",
+        "policyScope": {
+            "serviceType": ["vCPE"],
+            "geoRegion": ["US", "INTERNATIONAL"],
+            "networkType": ["ip"],
+            "resourceInstanceType": ["vGMuxInfra","vG"]
+        },
+        "type": "placementOptimization",
+        "objective": "minimize"
+    }
+}

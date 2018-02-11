@@ -1,0 +1,105 @@
+{
+  "requestInfo": {
+    "transactionId": "xxx-xxx-xxxx",
+    "requestId": "yyy-yyy-yyyy",
+    "callbackUrl": "https://so:5000/callbackUrl",
+    "sourceId": "SO",
+    "requestType": "create",
+    "numSolutions": 1,
+    "optimizers": ["placement"],
+    "timeout": 600
+  },
+  "requestParameters": {
+    "customerLatitude": 32.897480,
+    "customerLongitude": -97.040443,
+    "customerName": "xyz"
+  },
+  "placementDemands": [
+    {
+      "resourceModuleName": "vGMuxInfra",
+      "serviceResourceId": "vGMuxInfra-xx",
+      "tenantId": "vGMuxInfra-tenant",
+      "resourceModelInfo": {
+        "modelInvariantId": "vGMuxInfra-modelInvariantId",
+        "modelVersionId": "vGMuxInfra-versionId",
+        "modelName": "vGMuxInfra-model",
+        "modelType": "resource",
+        "modelVersion": "1.0",
+        "modelCustomizationName": "vGMuxInfra-customeModelName"
+      },
+      "existingCandidates": {
+        "identifierType": "service_instance_id",
+        "identifiers": ["87257b49-9602-4ca1-9817-094e52bc873b"]
+      },
+      "excludedCandidates": {
+        "identifierType": "service_instance_id",
+        "identifiers": ["1ac71fb8-ad43-4e16-9459-c3f372b8236d"]
+      },
+      "requiredCandidates": {
+        "identifierType": "service_instance_id",
+        "identifiers": ["7e6c3e57-62cd-44f6-aa88-d0896998f7ec"]
+      }
+    },
+    {
+      "resourceModuleName": "vG",
+      "serviceResourceId": "71d563e8-e714-4393-8f99-cc480144a05e",
+      "tenantId": "vG-tenant",
+      "resourceModelInfo": {
+        "modelInvariantId": "vG-modelInvariantId",
+        "modelVersionId": "vG-versionId",
+        "modelName": "vG-model",
+        "modelType": "resource",
+        "modelVersion": "1.0",
+        "modelCustomizationName": "vG-customeModelName"
+      },
+      "existingCandidates": {
+        "identifierType": "service_instance_id",
+        "identifiers": ["21d5f3e8-e714-4383-8f99-cc480144505a"]
+      },
+      "excludedCandidates": {
+        "identifierType": "service_instance_id",
+        "identifiers": ["1ac71fb8-ad43-4e16-9459-c3f372b8236d"]
+      },
+      "requiredCandidates": {
+        "identifierType": "cloud_region_id",
+        "identifiers": ["TXAUS219"]
+      }
+    }
+  ],
+  "serviceInfo": {
+    "serviceInstanceId": "d61b2543-5914-4b8f-8e81-81e38575b8ec",
+    "serviceModelInfo": {
+      "modelInvariantId": "vCPE-invariantId",
+      "modelVersionId": "vCPE-versionId",
+      "modelName": "vCPE-model",
+      "modelType": "service",
+      "modelVersion": "1.0",
+      "modelCustomizationName": "vCPE-customeModelName"
+    }
+  },
+  "licenseDemands": [
+    {
+      "resourceModuleName": "vGMuxInfra",
+      "serviceResourceId": "vGMuxInfra-xx",
+      "tenantId": "vGMuxInfra-tenant",
+      "resourceModelInfo": {
+        "modelInvariantId": "vGMuxInfra-modelInvariantId",
+        "modelVersionId": "vGMuxInfra-versionId",
+        "modelName": "vGMuxInfra-model",
+        "modelType": "resource",
+        "modelVersion": "1.0",
+        "modelCustomizationName": "vGMuxInfra-customeModelName"
+      },
+      "existingLicenses": {
+        "entitlementPoolUUID": [
+          "87257b49-9602-4ca1-9817-094e52bc873b",
+          "43257b49-9602-4fe5-9337-094e52bc9435"
+        ],
+        "licenseKeyGroupUUID": [
+          "87257b49-9602-4ca1-9817-094e52bc873b",
+          "43257b49-9602-4fe5-9337-094e52bc9435"
+        ]
+      }
+    }
+  ]
+}

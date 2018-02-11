@@ -1,0 +1,22 @@
+{
+    "service": "InventoryGroupPolicy",
+    "policyName": "InventoryGroupPolicy_vGMuxInfra",
+    "description": "InventoryGroupPolicy",
+    "templateVersion": "1702.03",
+    "version": "1707",
+    "priority": "6",
+    "riskType": "test",
+    "riskLevel": "3",
+    "guard": "False",
+    "content": {
+        "identity": "vGMuxInfra-pri-sec-2",
+        "policyScope": {
+            "serviceType": ["vCPE"],
+            "geoRegion": ["US", "INTERNATIONAL"],
+            "networkType": ["ip"],
+            "resourceInstanceType": ["vGMuxInfra"]
+        },
+        "type": "inventory_group",
+        "resourceInstanceType": ["vGMuxInfra"]
+    }
+}

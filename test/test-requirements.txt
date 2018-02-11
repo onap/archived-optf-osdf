@@ -1,0 +1,4 @@
+coverage
+moto
+pytest
+pytest-tap

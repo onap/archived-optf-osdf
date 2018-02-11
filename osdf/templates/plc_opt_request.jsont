@@ -1,0 +1,142 @@
+{
+  "name": "{{ name }}",
+  "files": "{{ files }}",
+  "timeout": "{{ timeout }}",
+  "limit": "{{ limit }}",
+  "template": {
+    "CUST_ID": "{{ cust_id }}",
+    "E2EVPNKEY": "{{ e2evpnkey }}",
+    "UCPEHOST": "{{ ucpehost }}",
+    "WAN_PORT1_UP": "{{ wan_port1_up }}",
+    "WAN_PORT1_DOWN": "{{ wan_port1_down }}",
+    "EFFECTIVE_BANDWIDTH": "{{ effective_bandwidth }}",
+    "SERVICE_INST": "{{ service_inst }}",
+    "locations": {
+      "customer_loc": {
+        "host_name": "{{ ucpehost }}"
+      }
+    },
+    "demands": [
+      {% set comma=joiner(",") %}
+      {% for demand in demand_list %} {{ comma() }}
+      {
+        "{{ demand.vnf_name }}": [
+          {% set comma2=joiner(",") %}
+          {% for property in demand.property %}
+            "inventory_provider": {{ property.inventory_provider }},
+            "inventory_type": {{ property.inventory_type }},
+            "service_type": {{ property.service_type }},
+            "customer_id": {{ property.customer_id }},
+            "candidate_id": {{ property.candidate_id }}
+          {% endfor %}
+        ]
+      }
+      {% endfor %}
+    ],
+    "constraints": {
+      {% set comma_main=joiner(",") %}
+
+      {% if attribute_policy_list %} {{ comma_main() }} {% endif %}
+      {% set comma=joiner(",") %}
+      {% for attribute in attribute_policy_list %} {{ comma() }}
+      attribute['identity'] : {
+        "type": {{ attribute['type'] }},
+        "demands": {{ attribute['demands'] }},
+        "properties": {
+          "evaluate": {
+            "hypervisor": {{ attribute['property']['hypervisor'] }},
+            "aic_version": {{ attribute['property']['aicVersion'] }},
+            "aic_type": {{ attribute['property']['aicType'] }},
+            "dataplane": {{ attribute['property']['datatype'] }},
+            "network_roles": {{ attribute['property']['networkRoles'] }},
+            "complex": {{ attribute['property']['complex'] }}
+          }
+        }
+      }
+      {% endfor %}
+
+      {% if distance_to_location_policy_list %} {{ comma_main() }} {% endif %}
+      {% set comma=joiner(",") %}
+      {% for distance_location in distance_to_location_policy_list %} {{ comma() }}
+      distance_location['identity'] : {
+        "type": {{ distance_location['type'] }},
+        "demands": {{ distance_location['demands'] }},
+        "properties": {
+          "distance": {{ distance_location['property']['distance'] }},
+          "location": {{ distance_location['property']['location'] }}
+        }
+      }
+      {% endfor %}
+
+      {% if inventory_policy_list %} {{ comma_main() }} {% endif %}
+      {% set comma=joiner(",") %}
+      {% for inventory in inventory_policy_list %} {{ comma() }}
+      inventory['identity'] : {
+        "type": {{ inventory['type'] }},
+        "demands": {{ inventory['demands'] }}
+      }
+      {% endfor %}
+
+      {% if resource_instance_policy_list %} {{ comma_main() }} {% endif %}
+      {% set comma=joiner(",") %}
+      {% for resource_instance in resource_instance_policy_list %} {{ comma() }}
+      resource_instance['identity'] : {
+        "type": {{ resource_instance['type'] }},
+        "demands": {{ resource_instance['demands'] }},
+        "properties": {
+          "controller": {{ resource_instance['property']['controller'] }},
+          "request": {{ resource_instance['property']['request'] }}
+        }
+      }
+      {% endfor %}
+
+      {% if resource_region_policy_list %} {{ comma_main() }} {% endif %}
+      {% set comma=joiner(",") %}
+      {% for resource_region in resource_region_policy_list %} {{ comma() }}
+      resource_region['identity'] : {
+        "type": {{ resource_region['type'] }},
+        "demands": {{ resource_region['demands'] }},
+        "properties": {
+          "controller": {{ resource_region['property']['controller'] }},
+          "request": {{ resource_region['property']['request'] }}
+        }
+      }
+      {% endfor %}
+
+      {% if zone_policy_list %} {{ comma_main() }} {% endif %}
+      {% set comma=joiner(",") %}
+      {% for zone in zone_policy_list %} {{ comma() }}
+      zone['identity'] : {
+        "type": {{ zone['type'] }},
+        "demands": {{ zone['demands'] }},
+        "properties": {
+          "qualifier": {{ resource_region['property']['qualifier'] }},
+          "category": {{ resource_region['property']['category'] }}
+        }
+      }
+      {% endfor %}
+
+      {%  if optmization_policy_list %} {{ comma_main() }} {% endif %}
+      {% set comma=joiner(",") %}
+      {% for optimization in optimization_policy_list %} {{ comma() }}
+      "optimization" : {
+        {{ optimization['objective'] }}: {
+          "sum": [
+            {% set comma2=joiner(",") %}
+            {% for parameter in optimization['parameter'] %} {{ comma() }}
+            {
+              "product": [
+                {{ parameter['weight'] }},
+                {
+                  "distance_between": [{{ parameter['customerLocation'] }},{{ parameter['demand'] }}]
+                }
+              ]
+            }
+            {% endfor %}
+          ]
+        }
+      }
+      {% endfor %}
+    }
+  }
+}

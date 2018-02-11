@@ -18,7 +18,7 @@
 
 import json
 from osdf.utils.data_conversion import text_to_symbol
-from osdf.utils import data_mapping
+# from osdf.utils import data_mapping
 
 def gen_optimization_policy(vnf_list, optimization_policy):
     """Generate optimization policy details to pass to Conductor
@@ -183,7 +183,8 @@ def get_demand_properties(demand, policies):
                     if 'attributes' in x:
                         attributes = {}
                         for k,v in x['attributes'].items():
-                            key=data_mapping.convert(k)
+                            # key=data_mapping.convert(k)
+                            key = k
                             attributes[key] = v
                             if(key=="model-invariant-id"):
                                 attributes[key]=demand['resourceModelInfo']['modelInvariantId']
