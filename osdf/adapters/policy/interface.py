@@ -29,7 +29,7 @@ from osdf.config.base import osdf_config
 from osdf.logging.osdf_logging import audit_log, MH, metrics_log, error_log, debug_log
 from osdf.utils.interfaces import RestClient
 from osdf.optimizers.placementopt.conductor.api_builder import retrieve_node
-from osdf.utils import data_mapping
+# from osdf.utils import data_mapping
 
 
 def get_by_name(rest_client, policy_name_list, wildcards=True):
@@ -109,9 +109,10 @@ def get_by_scope(rest_client, req, config_local, type_service):
     pscope = pmain['policy_scope']
     
     model_name = retrieve_node(req, pscope['service_name'])
-    service_name = data_mapping.get_request_service_type(req)
-    if service_name is None:
-        service_name = data_mapping.get_service_type(model_name)
+    service_name = model_name
+    # service_name = data_mapping.get_request_service_type(req)
+    # if service_name is None:
+    #     service_name = data_mapping.get_service_type(model_name)
     scope = pscope['scope_{}'.format(service_name.lower())]
     subscriber_role, prov_status = get_subscriber_role(rest_client, req, pmain, service_name, scope)
     policy_type_list = pmain['policy_type_{}'.format(service_name.lower())]

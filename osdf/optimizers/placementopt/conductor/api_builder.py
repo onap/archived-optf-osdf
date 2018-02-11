@@ -18,7 +18,7 @@
 
 import copy
 import json
-from osdf.utils import data_mapping
+# from osdf.utils import data_mapping
 from jinja2 import Template
 from osdf.utils.programming_utils import list_flatten, dot_notation
 import osdf.optimizers.placementopt.conductor.translation as tr
@@ -61,8 +61,10 @@ def conductor_api_builder(request_json, flat_policies: list, local_config, prov_
     reservation_groups = list_flatten(reservation_policies)
     req_info = request_json['requestInfo']
     model_name = request_json['placementInfo']['serviceModelInfo']['modelName']
-    service_type = data_mapping.get_service_type(model_name)
+    service_type = model_name
+    # service_type = data_mapping.get_service_type(model_name)
     service_info = local_config.get('service_info', {}).get(service_type, {})
+    order_info = {}
     if 'orderInfo' in request_json["placementInfo"]:
         order_info = json.loads(request_json["placementInfo"]["orderInfo"])
     request_type = req_info.get('requestType', None)
@@ -70,7 +72,7 @@ def conductor_api_builder(request_json, flat_policies: list, local_config, prov_
     if 'subscriberInfo' in request_json['placementInfo']: 
         subs_com_site_id = request_json['placementInfo']['subscriberInfo'].get('subscriberCommonSiteId', "")
     if service_type == 'vCPE':
-        data_mapping.normalize_user_params(order_info)
+        # data_mapping.normalize_user_params(order_info)
         rendered_req = templ.render(
             requestType=request_type,
             chosenComplex=subs_com_site_id,
@@ -83,7 +85,7 @@ def conductor_api_builder(request_json, flat_policies: list, local_config, prov_
             serviceType=service_type,
             serviceInstance=request_json['placementInfo']['serviceInstanceId'],
             provStatus = prov_status,
-            chosenRegion=order_info['requestParameters']['lcpCloudRegionId'],
+            chosenRegion=order_info.get('requestParameters',{}).get('lcpCloudRegionId'),
             json=json)
     elif service_type == 'UNKNOWN':
         rendered_req = templ.render(
