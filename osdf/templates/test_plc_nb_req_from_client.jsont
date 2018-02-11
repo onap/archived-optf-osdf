@@ -1,0 +1,52 @@
+{
+  "requestInfo": {
+        "requestId": "{{requestId}}",
+        "sourceId": "{{sourceId}}",
+        "optimizer": "{{optimizer}}",
+        "numSolutions": {{numSolutions}},
+        "timeout": {{timeout}},
+        "callbackUrl" : "{{callbackUrl}}"
+  },
+  "placementInfo": {
+      "modelInfo": {
+          "modelType": "{{modelType}}",
+          "modelInvariant": "{{modelInvariantId}}",
+          "modelVersionId": "{{modelVersionId}}",
+          "modelName": "{{modelName}}",
+          "modelVersion": "{{modelVersion}}",
+          "modelCustomizationId": "{{modelCustomizationId}}"
+      },
+      "subscriberInfo": {
+          "globalSubscriberId": "{{globalSubscriberId}}",
+          "subscriberName": "{{subscriberName}}",
+          "subscriberCommonSiteId": "{{subscriberCommonSiteId}}",
+          "ucpeHostName": "{{ucpeHostName}}"
+      },
+      "policyId": {{json.dumps(policyId)}},
+      "vnfInfo": {
+        "vnfType": "{{vnfType}}",
+        "vnfPartNumber": "{{vnfPartNumber}}",
+        "nominalThroughput": "{{nominalThroughput}}",
+        "vnfSoftwareVersion": "{{vnfSoftwareVersion}}",
+        "vnfManagementOption": "{{vnfManagementOption}}"
+      },
+      "vpnInfo": {
+        "vpnId": "{{vpnId}}",
+        "pvcId":  "{{pvcId}}"
+      },
+      "serviceInfo": {
+        "dhvServiceInfo": {
+          "serviceInstanceId": "{{serviceInstanceId}}",
+          "serviceType": "{{serviceType}}",
+          "e2evpnkey": "{{e2evpnkey}}",
+          "dhvSiteEffectiveTransportBandwidth": {{dhvSiteEffectiveTransportBandwidth}},
+          "dhvIPSecTransportBandwidthUp": {{dhvIPSecTransportBandwidthUp}},
+          "dhvIPSecTransportBandwidthDown": {{dhvIPSecTransportBandwidthDown}},
+          "dhvIPSec2TransportBandwidthUp": {{dhvIPSec2TransportBandwidthUp}},
+          "dhvIPSec2TransportBandwidthDown": {{dhvIPSec2TransportBandwidthDown}},
+          "dhvVendorName": "{{dhvVendorName}}"
+        }
+      },
+      "demandInfo": {{json.dumps(demandInfo)}}
+  }
+}

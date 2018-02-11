@@ -1,0 +1,87 @@
+{
+	"requestInfo": {
+		"transactionId": "xxx-xxx-xxxx",
+		"requestId": "yyy-yyy-yyyy",
+		"callbackUrl": "https://test.url.com:5000/callback/",
+		"sourceId": "so",
+		"optimizers": ["placement"],
+		"numSolutions": 1,
+		"timeout": 600
+	},
+	"placementInfo": {
+		"serviceModelInfo": {
+			"modelType": "service",
+			"modelInvariantId": "fad5f4d5-1c94-4890-927d-9cec6e82997f",
+			"modelVersionId": "6e13c5e1-f172-436c-9cc4-0d64c94eb7f4",
+			"modelName": "vCPE",
+			"modelVersion": "1.0"
+		},
+		"subscriberInfo": {
+			"globalSubscriberId": "SUB12_0325_UD_0833",
+			"subscriberName": "SUB_12_0325_UD_0833",
+			"subscriberCommonSiteId": "DALTX0101"
+		},
+		"demandInfo": {
+			"placementDemand": [{
+					"resourceInstanceType": "allotted",
+					"serviceResourceId": "61d563e8-e714-4393-8f99-cc480144a05e",
+					"resourceModuleName": "vGMuxInfra",
+					"exclusionCandidateInfo": [{
+							"candidateType": "cloud",
+							"candidates": ["MDT54NJ", "BDM78NJ"]
+						}, {
+							"candidateType": "service",
+							"candidates": ["RT76U8F789", "PO098HJG"]
+						}
+					],
+					"requiredCandidateInfo": [{
+							"candidateType": "cloud",
+							"candidates": ["DHU87NY"]
+						}, {
+							"candidateType": "service",
+							"candidates": ["YHT675YH"]
+						}
+					],
+					"resourceModelInfo": {
+						"modelCustomizationId": "",
+						"modelInvariantId": "h59988ce-3d81-4e07-81b5-53d3aa821134",
+						"modelName": "",
+						"modelVersion": "2.0",
+						"modelVersionId": "51d563e8-e714-4393-8f99-cc480144a05e",
+						"modelType": "allotted"
+					},
+					"tenantId": "",
+					"tenantName": ""
+				}, {
+					"resourceInstanceType": "allotted",
+					"serviceResourceId": "71d563e8-e714-4393-8f99-cc480144a05e",
+					"resourceModuleName": "vG",
+					"resourceModelInfo": {
+						"modelCustomizationId": "",
+						"modelInvariantId": "a59988ce-3d81-4e07-81b5-53d3aa821134",
+						"modelName": "",
+						"modelVersion": "2.0",
+						"modelVersionId": "91d563e8-e714-4393-8f99-cc480144a05e",
+						"modelType": "allotted"
+					},
+					"tenantId": "",
+					"tenantName": ""
+				}
+			],
+			"licenseDemand": []
+		},
+		"policyId": [
+			""
+		],
+		"serviceInstanceId": "1234-fsdf-23sdf-24kjnk",
+		"requestParameters": {
+
+				"commonSiteId": "DALTX0101",
+				"vendorName": "xyz",
+				"e2eVpnKey": "200",
+				"vcpeHostName": "USOSTCDALTX0101UJZZ11"
+
+		}
+
+	}
+}

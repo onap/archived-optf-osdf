@@ -1,0 +1,19 @@
+{
+	"schedulingInfo": { 
+        "change_management_id": "{{ change_management_id }}",
+        "start_time": "{{ start_time }}",
+        "end_time": "{{ end_time }}",
+        "policy_id": {{ json.dumps(policy_id) }},  {# a list of policy Ids #}
+        "service_type": "{{ service_type }}",
+        "workflow_type": "{{ workflow_type }}",
+        "upgrades": {{ json.dumps(upgrades) }}	  {# a list of node Ids #}
+    }, 
+    "requestInfo": {
+        "requestId": "{{ requestId }}",
+        "sourceId": "{{ sourceId }}",
+        "optimizer": "{{ optimizer }}",
+        "numSolutions": "{{ numSolutions }}",
+        "callbackUrl" : "{{ callbackUrl }}"
+    }
+}
+

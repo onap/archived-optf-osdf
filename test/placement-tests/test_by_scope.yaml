@@ -1,0 +1,20 @@
+policy_info:
+    placement:
+        policy_fetch: by_scope
+        policy_scope:
+            default_scope: XXX_1802
+            scope_vcpe: oof_beijing
+            service_name: placementInfo.serviceModelInfo.modelName
+        policy_subscriber: SubscriberPolicy
+        subscriber_name: placementInfo.subscriberInfo.subscriberName
+        policy_type_vcpe:
+            - CloudAttributePolicy
+            - DistanceToLocationPolicy
+            - instanceReservationPolicy
+            - PlacementOptimizationPolicy
+            - ResourceInstancePolicy
+            - VNFPolicy
+            - ZonePolicy
+    default:  # if no explicit service related information is needed
+        policy_fetch: by_name
+        policy_scope: none

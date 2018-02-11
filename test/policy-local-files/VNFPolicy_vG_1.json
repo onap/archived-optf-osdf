@@ -1,0 +1,36 @@
+{
+    "service": "VNFPolicy",
+    "policyName": "VNFPolicy_vG",
+    "description": "VNFPolicy",
+    "templateVersion": "1702.03",
+    "version": "1707",
+    "priority": "6",
+    "riskType": "test",
+    "riskLevel": "3",
+    "guard": "False",
+    "content": {
+        "identity": "vG-pri-sec-1",
+        "policyScope": {
+            "serviceType": ["vCPE"],
+            "geoRegion": ["US", "INTERNATIONAL"],
+            "networkType": ["ip"],
+            "resourceInstanceType": ["vG"]
+        },
+        "property": [
+            {
+                "inventoryProvider": "aai",
+                "serviceType": "",
+                "inventoryType": "cloud",
+                "customerId": " "
+            },
+            {
+                "inventoryProvider": "aai",
+                "serviceType": "vGaaS",
+                "inventoryType": "service",
+                "customerId": "21014aa2-526b-11e6-beb8-9e71128cae77"
+	    }
+	],
+        "type": "vnfPolicy",
+        "resourceInstanceType": ["vG"]
+    }
+}

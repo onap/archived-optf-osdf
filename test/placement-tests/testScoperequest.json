@@ -1,0 +1,144 @@
+{
+   "placementInfo": {
+      "serviceModelInfo": {
+         "modelVersion": "1.0",
+         "modelName": "vCPE",
+         "modelInvariantId": "250c90b4-42f9-4cd9-9270-fd33a0676f92",
+         "modelVersionId": "c233e7f3-bd70-4a2c-a88f-4f5743109e8d",
+         "modelType": "service"
+      },
+      "orderInfo":" {        \"requestParameters\": {            \"e2eVpnKey\": \"VPNL61657\",            \"dhvVendorName\": \"VELOCLOUD\",            \"dhvIPSec2TransportBandwidthUp\": \"10\",            \"vpnList\": [               {                  \"vpnInfo\": {                     \"pvcId\": \"5952413\",                     \"vpnId\": \"61657\"                  }               }           ],         \"dhvSiteEffectiveTransportBandwidth\": \"10\",            \"ucpeHostName\": \"US292IORLFL0102UJZZ01\",          \"commonSiteId\": \"90101124\",           \"dhvIPSec2TransportBandwidthDown\": \"10\",            \"vnfList\": [            {                \"vnfInfo\": {                    \"vnfType\": \"HN\",                    \"veloCloudNominalThroughput\": \"100\",                     \"vnfHostName\": \"US292IORLFL0102UVHN01\",                   \"vnfPartNumber\": \"DHV-VNF-VC-10M\",                    \"vnfManagementOption\": \"ATT\",                  \"vnfSoftwareVersion\": \"2.4.1\"                }             }            ]       }     }",
+      "serviceInstanceId": "4701bd3c-b722-4d07-abc0-183ea398fac5",
+      "demandInfo": {
+         "placementDemand": [
+            {
+               "tenantName": "",
+               "tenantId": "",
+               "serviceResourceId": "a297f69d-4d68-4d1f-8b06-be61bddf9e7f",
+               "resourceInstanceType": "vVIGaaS",
+               "resourceModuleName": "Primary Tunnel_XConn for DHV Testing_1 0",
+               "resourceModelInfo": {
+                  "modelVersion": "1.0",
+                  "modelName": "Tunnel_XConn for DHV Testing_1",
+                  "modelInvariantId": "b2ac0b6a-c157-4f27-a226-4fc6c1d5b08c",
+                  "modelCustomizationId": "8ade4a5f-a446-4b14-9d12-3ccdd80ef55c",
+                  "modelVersionId": "c3c3531a-a0c6-498f-8512-03793f7772fa",
+                  "modelType": "allottedResource"
+               }
+            },
+            {
+               "tenantName": "",
+               "tenantId": "",
+               "serviceResourceId": "73190cfb-e9de-4185-8f18-cb339df6b92a",
+               "resourceInstanceType": "vVIGaaS",
+               "resourceModuleName": "Secondary Tunnel_XConn for DHV Testing_1 1",
+               "resourceModelInfo": {
+                  "modelVersion": "1.0",
+                  "modelName": "Tunnel_XConn for DHV Testing_1",
+                  "modelInvariantId": "b2ac0b6a-c157-4f27-a226-4fc6c1d5b08c",
+                  "modelCustomizationId": "32b80123-84ea-4bda-82d9-4c70e812b450",
+                  "modelVersionId": "c3c3531a-a0c6-498f-8512-03793f7772fa",
+                  "modelType": "allottedResource"
+               }
+            },
+            {
+               "tenantName": "",
+               "tenantId": "",
+               "serviceResourceId": "f8489f98-db3d-4e84-9ec7-7f7b17b9857f",
+               "resourceInstanceType": "vHNPortalaaS",
+               "resourceModuleName": "Primary Service_Admin for DHV Test_1 0",
+               "resourceModelInfo": {
+                  "modelVersion": "1.0",
+                  "modelName": "Service_Admin for DHV Test_1",
+                  "modelInvariantId": "a8031455-34bc-4608-b731-973c258822d2",
+                  "modelCustomizationId": "bace7e9f-c0e7-4479-93df-aa10d387038b",
+                  "modelVersionId": "0e830d97-39fc-4310-a11d-ebab6c71b35e",
+                  "modelType": "allottedResource"
+               }
+            },
+            {
+               "tenantName": "",
+               "tenantId": "",
+               "serviceResourceId": "8a8973d4-3a91-4fe6-a846-6f4c282f9005",
+               "resourceInstanceType": "vHNPortalaaS",
+               "resourceModuleName": "Secondary Service_Admin for DHV Test_1 1",
+               "resourceModelInfo": {
+                  "modelVersion": "1.0",
+                  "modelName": "Service_Admin for DHV Test_1",
+                  "modelInvariantId": "a8031455-34bc-4608-b731-973c258822d2",
+                  "modelCustomizationId": "cb6d359d-8f83-41b6-b0cc-fb3cdf978e25",
+                  "modelVersionId": "0e830d97-39fc-4310-a11d-ebab6c71b35e",
+                  "modelType": "allottedResource"
+               }
+            },
+            {
+               "tenantName": "",
+               "tenantId": "",
+               "serviceResourceId": "3f2b0c6d-6867-4369-b597-d929305da414",
+               "resourceInstanceType": "vHNGWaaS",
+               "resourceModuleName": "Primary IP_Mux_Demux updated_1 0",
+               "resourceModelInfo": {
+                  "modelVersion": "1.0",
+                  "modelName": "IP_Mux_Demux updated_1",
+                  "modelInvariantId": "72ad23e8-575d-4bc1-a88d-bb63ca66b85f",
+                  "modelCustomizationId": "925db703-945a-4b14-aafa-607c99c32f46",
+                  "modelVersionId": "cb760674-1c09-4316-837f-1ee1e816c26f",
+                  "modelType": "allottedResource"
+               }
+            },
+            {
+               "tenantName": "",
+               "tenantId": "",
+               "serviceResourceId": "caea369e-90e6-4bf0-9aa4-c80ffb10c77e",
+               "resourceInstanceType": "vHNGWaaS",
+               "resourceModuleName": "Secondary IP_Mux_Demux updated_1 1",
+               "resourceModelInfo": {
+                  "modelVersion": "1.0",
+                  "modelName": "IP_Mux_Demux updated_1",
+                  "modelInvariantId": "72ad23e8-575d-4bc1-a88d-bb63ca66b85f",
+                  "modelCustomizationId": "5f5793d7-843c-4f8e-b01d-35ece0b17ead",
+                  "modelVersionId": "cb760674-1c09-4316-837f-1ee1e816c26f",
+                  "modelType": "allottedResource"
+               }
+            }
+         ]
+      },
+      "subscriberInfo": {
+         "subscriberCommonSiteId": null,
+         "globalSubscriberId": "300NCQ",
+         "subscriberName": "Test Customer"
+      },
+      "policyId": [
+         "SNIRO.DistanceToLocationPolicy_vhngw",
+         "SNIRO.VNFPolicy_vhngatewayprimary1_v1",
+         "SNIRO.ResourceInstancePolicy_hngateway",
+         "SNIRO.ResourceRegionPolicy_hngateway_v1",
+         "SNIRO.VNFPolicy_vhngatewaysecondary1_v1",
+         "SNIRO.ZonePolicy_vhngw",
+         "SNIRO.PlacementOptimizationPolicy_dhv_v3",
+         "SNIRO.VNFPolicy_vhnportal_primary1_v1",
+         "SNIRO.ResourceInstancePolicy_vhnportal_v3",
+         "SNIRO.ResourceRegionPolicy_vhnportal_v1",
+         "SNIRO.VNFPolicy_vhnportalsecondary1_v1",
+         "SNIRO.ZonePolicy_vhnportal",
+         "SNIRO.DistanceToLocationPolicy_vvig",
+         "SNIRO.InventoryGroupPolicy_vvig",
+         "SNIRO.VNFPolicy_vvigprimary1_v1",
+         "SNIRO.ResourceInstancePolicy_vvig",
+         "SNIRO.VNFPolicy_vvigsecondary1_v1"
+      ]
+   },
+   "requestInfo": {
+      "transactionId": "264e9db9-6d59-4888-9c90-51245d7c811f",
+      "sourceId": "mso",
+      "requestType": "initial",
+      "callbackUrl": "http://127.0.0.1:7001",
+      "requestId": "264e9db9-6d59-4888-9c90-51245d7c811f",
+      "optimizer": [
+         "placement",
+         "license"
+      ],
+      "numSolutions": 1,
+      "timeout": 1800
+   }
+}

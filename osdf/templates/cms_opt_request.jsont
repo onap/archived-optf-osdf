@@ -1,0 +1,35 @@
+{
+  "transaction_id": "{{ transaction_id }}",
+  "request_id": "{{ request_id }}",
+  "start_date" : "{{ start_time }}",
+  "end_date" : "{{ end_time }}",
+  "change_elements" : {{ json.dumps(change_elements) }},
+  "constraints" : [
+    {
+      "type" : "general_concurrency_limit",
+      "parameters": [{{ concurrency_limit }}]
+    },
+
+    {
+      "type" : "allowed_forbidden_periods",
+      "parameters" : {{ json.dumps(allowed_periods) }}
+    }
+
+    {% if spatial_conflicts is defined and spatial_conflicts|length > 0 %}
+    ,
+    {
+      "type" : "spatial_conflict",
+      "parameters": {{ json.dumps(spatial_conflicts) }}
+    }
+    {% endif %}
+
+
+    {% if critical_periods is defined and spatial_conflicts|length > 0 %}
+    ,
+    {
+      "type" : "critical_periods",
+      "parameters": {{ json.dumps(critical_periods) }}
+    }
+    {% endif %}
+  ]
+}

@@ -1,0 +1,6 @@
+{
+	"transactionId": "{{transaction_id}}",
+	"requestId": "{{request_id}}",
+    "partNumber": "{{part_number}}",
+	"licenseModel" : "{{artifact}}"
+}

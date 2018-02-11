@@ -1,0 +1,63 @@
+{
+	"requestInfo": {
+		"transactionId": "1b98ee53-3fbd-48ca-9b85-302792bf5918",
+		"requestId": "1b98ee53-3fbd-48ca-9b85-302792bf5918",
+		"callbackUrl": "http://127.0.0.1:7001",
+		"sourceId": "mso",
+		"optimizer": [
+			"placement",
+			"license"
+		],
+		"numSolutions": 1,
+		"timeout": 600
+	},
+	"placementInfo": {
+		"serviceModelInfo": {
+			"modelType": "",
+			"modelInvariantId": "598e3f9e-3244-4d8f-a8e0-0e5d7a29eda9",
+			"modelVersionId": "b8c45108-68df-48c5-8d58-c8dd4de833bb",
+			"modelName": "ADIOD vMX vPE_BV Service 488",
+			"modelVersion": "1.0"
+		},
+		"subscriberInfo": {
+			"globalSubscriberId": "21014aa2-526b-11e6-beb8-9e71128cae77",
+			"subscriberName": "default",
+			"subscriberCommonSiteId": "MDTWNJ2B17"
+		},
+		"demandInfo": {
+			"placementDemand": [{
+					"resourceInstanceType": "VNF",
+					"serviceResourceId": "6ea4128a-ba41-4872-a1f8-2748d0e1c361",
+					"resourceModuleName": "2017-488_ADIOD-vPE 0",
+					"resourceModelInfo": {
+						"modelCustomizationId": "06ed941b-1d83-4132-8a1d-1874f4f4b89b",
+						"modelInvariantId": "5be7e99e-8eb2-4d97-be63-8081ff3cd10e",
+						"modelName": "2017-488_ADIOD-vPE",
+						"modelVersion": "1.0",
+						"modelVersionId": "7cd2d399-2bcb-4ecf-bd32-c36cdca7aa03",
+						"modelType": ""
+					},
+					"tenantId": "",
+					"tenantName": ""
+				}
+			],
+			"licenseDemand": [{
+					"resourceInstanceType": "VNF",
+					"serviceResourceId": "6ea4128a-ba41-4872-a1f8-2748d0e1c361",
+					"resourceModuleName": "2017-488_ADIOD-vPE 0",
+					"resourceModelInfo": {
+						"modelCustomizationId": "06ed941b-1d83-4132-8a1d-1874f4f4b89b",
+						"modelInvariantId": "5be7e99e-8eb2-4d97-be63-8081ff3cd10e",
+						"modelName": "2017-488_ADIOD-vPE",
+						"modelVersion": "1.0",
+						"modelVersionId": "7cd2d399-2bcb-4ecf-bd32-c36cdca7aa03",
+						"modelType": ""
+					}
+				}
+			]
+		},
+		"policyId": [],
+		"serviceInstanceId": "28014cbe-b334-4d5c-839d-980157929b0b",
+		"orderInfo": "{\"requestParameters\": {\"aLaCarte\":false,\"usePreload\":true,\"subscriptionServiceType\":\"VPE\",\"alaCarteSet\":true,\"rebuildVolumeGroups\":false,\"userParams\":[{\"name\":\"2017488_adiodvpe0_vnf_config_template_version\",\"value\":\"17.2\"},{\"name\":\"2017488_adiodvpe0_bandwidth_units\",\"value\":\"Gbps\"},{\"name\":\"2017488_adiodvpe0_bandwidth\",\"value\":\"10\"},{\"name\":\"2017488_adiodvpe0_AIC_CLLI\",\"value\":\"MDTWNJ2B17\"},{\"name\":\"2017488_adiodvpe0_vnf_instance_name\",\"value\":\"mtnj309me6\"}],\"autoBuildVfModules\":false,\"cascadeDelete\":false}}"
+	}
+}

@@ -1,0 +1,21 @@
+    {
+        "policyConfigMessage": "Config Retrieved! ",
+        "policyConfigStatus": "CONFIG_RETRIEVED",
+        "type": "JSON",
+        "config": "{\"service\":\"ResourceRegionPolicy\",\"policyName\":\"bg4702.ResourceRegionPolicy_vhnportal_v1\",\"description\":\"ResourceRegionPolicy@CreatedBy:mh7921\",\"templateVersion\":\"1802V01\",\"version\":\"1802V01\",\"priority\":\"1\",\"riskType\":\"test\",\"riskLevel\":\"3\",\"guard\":\"False\",\"content\":{\"identity\":\"vhnPortalResourceRegion\",\"policyScope\":{\"serviceType\":[\"DHV\"],\"geoRegion\":[\"US\",\"INTERNATIONAL\"],\"subscriberRole\":[\"FFA Homing\"],\"networkType\":[\"ip\"],\"resourceInstanceType\":[\"Primary Service_Admin\",\"Secondary Service_Admin\"]},\"resourceRegionProperty\":{\"request\":\"{\\\"dhv_service_instance\\\": {\\\"get_param\\\": \\\"SERVICE_INST\\\"}, \\\"service_type\\\": \\\"vHNPortal\\\", \\\"e2evpnkey\\\": {\\\"get_param\\\": \\\"E2EVPNKEY\\\"}}\",\"controller\":\"SDN-C\"},\"type\":\"region_fit\",\"resourceInstanceType\":[\"Primary Service_Admin\",\"Secondary Service_Admin\"]}}",
+        "policyName": "bg4702.Config_MS_ResourceRegionPolicy_vhnportal_v1.1.xml",
+        "policyVersion": "1",
+        "matchingConditions": {
+            "serviceType": "DHV",
+            "ECOMPName": "SNIRO-Placement",
+            "ONAPName": "SNIRO-Placement",
+            "geoRegion": "US,INTERNATIONAL",
+            "service": "ResourceRegionPolicy",
+            "subscriberRole": "FFA Homing",
+            "type": "region_fit",
+            "networkType": "ip",
+            "resourceInstanceType": "Primary Service_Admin,Secondary Service_Admin"
+        },
+        "responseAttributes": {},
+        "property": null
+    }

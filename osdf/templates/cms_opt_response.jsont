@@ -1,0 +1,8 @@
+{
+    "transactionId": "{{transaction_id}}",
+    "scheduleId":"{{schedule_id}}",
+    "requestState": "{{request_state}}",
+    "status": "{{status}}",
+    "description": "{{description}}",
+    "schedule": {{schedule}}
+}

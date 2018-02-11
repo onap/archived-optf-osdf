@@ -1,0 +1,63 @@
+{
+  "request_id": "{{ request_id }}",
+  "startdate" : "{{ start_time }}",
+  "enddate" : "{{ end_time }}",
+
+  "change_elements" : [
+{% set comma = joiner(",") -%}
+{% for element in all_upgrades -%} {{ comma() }} 
+    { "id" : "{{ element.id }}",
+    {% if element.scheduled -%} "scheduled_on": "{{ element.scheduled }}", {% endif -%}
+    "duration": {{ element.duration }}, {# duration in seconds #}
+    "failback_duration": {{ element.failback_duration }}, {# duration in seconds #}
+    "group_id": {{ element.group_id }}, {# duration in seconds #}
+    }{% endfor -%}
+  ],
+
+  "constraints" : [
+    {
+      "type" : "general_concurrency_limit",
+      "parameters" : [ {{ general_concurrency_limit }} ]
+    },
+
+    {
+      "type" : "allowed_forbidden_periods",
+      "parameters" : [
+{% set comma = joiner(",") -%}
+{% for idx in all_pending -%} {{ comma() }}
+        { "id" : "{{ idx.id }}",
+          "allowed_periods": [ {% set comma2 = joiner(",") -%}
+          {% for period in allowed_periods -%} {{ comma2() }} [{{ json.dumps(period[0]) }}, {{ json.dumps(period[1]) }}]
+          {% endfor -%} ] }{% endfor -%}
+      ]
+    }
+
+{% if p_v_conflict is defined and p_v_conflict|length > 0 %}
+    ,
+    {
+      "type" : "critical_periods",
+      "description" : "Simultaneous upgrades",
+      "parameters" : [
+{% set comma2 = joiner(",") -%}
+{% for element in p_v_conflict -%} {{ comma2() }}
+        {
+          "id" : "{{ element[0]  }}",
+          "periods" : [{{ json.dumps(element[0]) }}, {{ json.dumps(element[1]) }}]
+        }
+{% endfor -%}
+{% endif %}
+
+{% for pserver, vce_group in grouped_vces.items() -%} {{ comma() }}
+    ,
+    {
+          "id" : "{{ pserver  }}",
+          "name" : "VCE's on pserver {{ pserver }}",
+          "description": "Only some VCEs on a pserver can be upgraded at a time",
+          "max_num_upgrades" : {{ max_num_upgrades(vce_group) }},
+          "upgrades" : {{ json.dumps(vce_group) }}
+        }
+{% endfor -%}
+      ]
+    }
+  ]
+}

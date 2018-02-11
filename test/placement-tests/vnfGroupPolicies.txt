@@ -1,0 +1,197 @@
+[
+  {
+    "content": {
+      "identity": "vhngateway-pri-sec-1",
+      "policyScope": {
+        "geoRegion": [
+          "US",
+          "INTERNATIONAL"
+        ],
+        "networkType": [
+          "ip"
+        ],
+        "resourceInstanceType": [
+          "Primary IP_Mux_Demux",
+          "Secondary IP_Mux_Demux"
+        ],
+        "serviceType": [
+          "DHV"
+        ],
+        "subscriberRole": [
+          "FFA Homing"
+        ]
+      },
+      "property": [
+        {
+          "attributes": {
+            "equipmentRole": "",
+            "globalCustomerId": "",
+            "modelInvariantId": "",
+            "modelVersionId": "",
+            "operationalStatus": "out-of-service-path",
+            "orchestrationStatus": [
+              "Activate",
+              "Activated"
+            ]
+          },
+          "inventoryProvider": "aai",
+          "inventoryType": "cloud"
+        },
+        {
+          "attributes": {
+            "equipmentRole": "",
+            "globalCustomerId": "21014aa2-526b-11e6-beb8-9e71128cae77",
+            "modelInvariantId": "",
+            "modelVersionId": "",
+            "operationalStatus": "out-of-service-path",
+            "orchestrationStatus": [
+              "Activate",
+              "Activated"
+            ]
+          },
+          "inventoryProvider": "aai",
+          "inventoryType": "service"
+        }
+      ],
+      "resourceInstanceType": [
+        "Primary IP_Mux_Demux",
+        "Secondary IP_Mux_Demux"
+      ],
+      "type": "vnfPolicy"
+    },
+    "description": "VNFPolicy@CreatedBy:mh7921",
+    "guard": "False",
+    "policyName": "bg4702.VNFPolicy_vhngatewayprimary_v1",
+    "priority": "1",
+    "riskLevel": "3",
+    "riskType": "test",
+    "service": "VNFPolicy",
+    "templateVersion": "1802V01",
+    "version": "1802V01"
+  },
+  {
+    "content": {
+      "identity": "vhnportal-pri-sec-1",
+      "policyScope": {
+        "geoRegion": [
+          "US",
+          "INTERNATIONAL"
+        ],
+        "networkType": [
+          "ip"
+        ],
+        "resourceInstanceType": [
+          "Primary Service_Admin",
+          "Secondary Service_Admin"
+        ],
+        "serviceType": [
+          "DHV"
+        ],
+        "subscriberRole": [
+          "FFA Homing"
+        ]
+      },
+      "property": [
+        {
+          "attributes": {
+            "equipmentRole": "",
+            "globalCustomerId": "",
+            "modelInvariantId": "",
+            "modelVersionId": "",
+            "operationalStatus": "out-of-service-path",
+            "orchestrationStatus": [
+              "Activate",
+              "Activated"
+            ]
+          },
+          "inventoryProvider": "aai",
+          "inventoryType": "cloud"
+        },
+        {
+          "attributes": {
+            "equipmentRole": "",
+            "globalCustomerId": "21014aa2-526b-11e6-beb8-9e71128cae77",
+            "modelInvariantId": "",
+            "modelVersionId": "",
+            "operationalStatus": "out-of-service-path",
+            "orchestrationStatus": [
+              "Activate",
+              "Activated"
+            ]
+          },
+          "inventoryProvider": "aai",
+          "inventoryType": "service"
+        }
+      ],
+      "resourceInstanceType": [
+        "Primary Service_Admin",
+        "Secondary Service_Admin"
+      ],
+      "type": "vnfPolicy"
+    },
+    "description": "VNFPolicy@CreatedBy:mh7921",
+    "guard": "False",
+    "policyName": "bg4702.VNFPolicy_vhnportal_primary_v1",
+    "priority": "1",
+    "riskLevel": "3",
+    "riskType": "test",
+    "service": "VNFPolicy",
+    "templateVersion": "1802V01",
+    "version": "1802V01"
+  },
+  {
+    "content": {
+      "identity": "vvig-pri-sec-1",
+      "policyScope": {
+        "geoRegion": [
+          "US",
+          "INTERNATIONAL"
+        ],
+        "networkType": [
+          "ip"
+        ],
+        "resourceInstanceType": [
+          "Primary Tunnel_XConn",
+          "Secondary Tunnel_XConn"
+        ],
+        "serviceType": [
+          "DHV"
+        ],
+        "subscriberRole": [
+          "FFA Homing"
+        ]
+      },
+      "property": [
+        {
+          "attributes": {
+            "equipmentRole": "",
+            "globalCustomerId": "21014aa2-526b-11e6-beb8-9e71128cae77",
+            "modelInvariantId": "",
+            "modelVersionId": "",
+            "operationalStatus": "out-of-service-path",
+            "orchestrationStatus": [
+              "Activate",
+              "Activated"
+            ]
+          },
+          "inventoryProvider": "aai",
+          "inventoryType": "service"
+        }
+      ],
+      "resourceInstanceType": [
+        "Primary Tunnel_XConn",
+        "Secondary Tunnel_XConn"
+      ],
+      "type": "vnfPolicy"
+    },
+    "description": "VNFPolicy@CreatedBy:mh7921",
+    "guard": "False",
+    "policyName": "bg4702.VNFPolicy_vvig1_v1",
+    "priority": "1",
+    "riskLevel": "3",
+    "riskType": "test",
+    "service": "VNFPolicy",
+    "templateVersion": "1802V01",
+    "version": "1802V01"
+  }
+]
