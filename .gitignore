@@ -3,6 +3,13 @@
 # github/gitignore is licensed under the
 # Creative Commons Zero v1.0 Universal
 
+# IDEA / IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
