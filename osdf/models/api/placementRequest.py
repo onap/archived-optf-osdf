@@ -17,8 +17,8 @@
 #
 
 from .common import OSDFModel
-from schematics.types import StringType, URLType, IntType, FloatType
-from schematics.types.compound import ModelType, ListType
+from schematics.types import BaseType, StringType, URLType, IntType
+from schematics.types.compound import ModelType, ListType, DictType
 
 
 class RequestInfo(OSDFModel):
@@ -27,7 +27,7 @@ class RequestInfo(OSDFModel):
     requestId = StringType(required=True)
     callbackUrl = URLType(required=True)
     sourceId = StringType(required=True)
-    optimizer = ListType(StringType())
+    optimizers = ListType(StringType(required=True))
     numSolutions = IntType()
     timeout = IntType()
     requestType = StringType()
@@ -47,7 +47,6 @@ class ResourceModelInfo(OSDFModel):
     modelVersion = StringType()
     modelVersionId = StringType()
     modelType = StringType()
-    operationalStatus = StringType()
 
 
 class ExistingLicenseInfo(OSDFModel):
@@ -70,9 +69,8 @@ class PlacementDemand(OSDFModel):
     exclusionCandidateInfo = ListType(ModelType(CandidateInfo))
     requiredCandidateInfo = ListType(ModelType(CandidateInfo))
     resourceModelInfo = ModelType(ResourceModelInfo)
-    tenantId = StringType()
+    tenantId = StringType(required=True)
     tenantName = StringType()
-
 
 class ExistingPlacementInfo(OSDFModel):
     serviceInstanceId = StringType(required=True)
@@ -100,22 +98,15 @@ class ServiceModelInfo(OSDFModel):
     modelVersion = StringType(required=True)
 
 
-class Location(OSDFModel):
-    latitude = FloatType(required=True)
-    longitude = FloatType(required=True)
-
-
 class PlacementInfo(OSDFModel):
     """Information specific to placement optimization"""
-    serviceModelInfo = ModelType(ServiceModelInfo)
-    subscriberInfo = ModelType(SubscriberInfo)
+    serviceModelInfo = ModelType(ServiceModelInfo, required=True)
+    subscriberInfo = ModelType(SubscriberInfo, required=True)
     demandInfo = ModelType(DemandInfo, required=True)
-    orderInfo = StringType()
+    requestParameters = DictType(BaseType)
     policyId = ListType(StringType())
-    serviceInstanceId = StringType()
+    serviceInstanceId = StringType(required=True)
     existingPlacement = ModelType(ExistingPlacementInfo)
-    location = ModelType(Location)
-    serviceType = StringType()
 
 
 class PlacementAPI(OSDFModel):

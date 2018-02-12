@@ -31,14 +31,12 @@ import json
 import osdf.adapters.policy.interface
 import osdf.config.credentials
 import osdf.config.loader
-import osdf.datasources.aai.aai_local_cached_data
+# import osdf.datasources.aai.aai_local_cached_data
 import osdf.operation.error_handling
 import osdf.operation.responses
 import traceback
 from osdf.adapters.policy.interface import get_policies
-from osdf.adapters.response_parsing.aots_ueb_cm_data import aots_ds_ueb_listener
-from osdf.config.base import osdf_config, DOCKER_CM_OPTIMIZER, AOTS_CM_MESSAGE_BUS
-from osdf.optimizers.cmopt.rcscheduler.local_opt_processor import process_local_cm_scheduler_opt
+from osdf.config.base import osdf_config
 from osdf.optimizers.placementopt.conductor.remote_opt_processor import process_placement_opt
 from osdf.webapp.appcontroller import auth_basic
 from optparse import OptionParser
@@ -47,8 +45,7 @@ from osdf.operation.error_handling import request_exception_to_json_body, intern
 from requests import RequestException
 from schematics.exceptions import DataError
 from osdf.logging.osdf_logging import MH, audit_log, error_log
-from osdf.models.placementRequest import PlacementAPI
-from osdf.models.schedulerRequest import SchedulerAPI
+from osdf.models.api.placementRequest import PlacementAPI
 
 ERROR_TEMPLATE = osdf.ERROR_TEMPLATE
 
@@ -125,7 +122,7 @@ def do_placement_opt():
 
 # Returned when unexpected coding errors occur during initial synchronous processing
 @app.errorhandler(500)
-def interal_failure(error):
+def internal_failure(error):
     error_log.error("Synchronous error for request id {} {}".format(g.request_id, traceback.format_exc()))
     response = Response(internal_error_message, content_type='application/json; charset=utf-8')
     response.status_code = 500
