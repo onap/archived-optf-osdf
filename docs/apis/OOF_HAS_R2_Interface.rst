@@ -11,7 +11,7 @@ OOF-HAS Create/Update API
 +--------------------+-------------------------------------+
 |Interface Definition|Description                          |
 +====================+=====================================+
-|URI                 |{serverRoot}/oof/has/v2              |
+|URI                 |{serverRoot}/oof-osdf/v2/placement   |
 +--------------------+-------------------------------------+
 |Operation Type      |POST                                 |
 +--------------------+-------------------------------------+
@@ -25,15 +25,15 @@ Request Header
 +----------------+-----------+-------------------------------------------------------------------------------------------+
 | Header Name    | Qualifier | Description                                                                               |
 +================+===========+===========================================================================================+
-| Accept         | N         | Determines the format of the body of the response. Valid value is “application/json”      |
+| Accept         | O         | Determines the format of the body of the response. Valid value is “application/json”    |
 +----------------+-----------+-------------------------------------------------------------------------------------------+
-| Authorization  | Y         | Supplies Basic Authentication credentials for the request. If the Authorization header is |
+| Authorization  | M         | Supplies Basic Authentication credentials for the request. If the Authorization header is |
 |                |           | missing, then an HTTP 400 Invalid Request response is returned. If the string supplied is |
 |                |           | invalid, then an HTTP 401 Unauthorized response is returned.                              |
 +----------------+-----------+-------------------------------------------------------------------------------------------+
-| Content-Type   | Y         | Determines the format of the request content. Only application/json is supported.         |
+| Content-Type   | M         | Determines the format of the request content. Only application/json is supported.         |
 +----------------+-----------+-------------------------------------------------------------------------------------------+
-| Content-Length | N         | Number of bytes in the body of the request. Note that content length is limited to 1 MB.  |
+| Content-Length | O         | Number of bytes in the body of the request. Note that content length is limited to 1 MB.  |
 +----------------+-----------+-------------------------------------------------------------------------------------------+
 
 
@@ -74,7 +74,7 @@ RequestInfo Object:
 +---------------+-----------+-------------+-----------------+---------------+-----------------------------------------------------------------------+
 | optimizers    | M         | 1..N        | List of Strings | placement     | A list of optimization services.                                      |
 +---------------+-----------+-------------+-----------------+---------------+-----------------------------------------------------------------------+
-| timeout       | M         | 1           | Integer         | -             | A tolerance window (in min) for expecting solutions.                  |
+| timeout       | M         | 1           | Integer         | -             | A tolerance window (in second) for expecting solutions.               |
 +---------------+-----------+-------------+-----------------+---------------+-----------------------------------------------------------------------+
 
 
@@ -98,7 +98,8 @@ PlacementDemand Object:
 +--------------------+-----------+-------------+----------------------+---------------+-----------------------------------------------------------------+
 | serviceResourceId  | M         | 1           | String               | -             | A unique resource Id with a local scope between client and OOF. |
 +--------------------+-----------+-------------+----------------------+---------------+-----------------------------------------------------------------+
-| tenantId           | O         | 1           | String               | -             | A tenant Id as defined in the ordering system.                  |
+| givenPlacement     | O         | 1           | KeyValuePairs        | -             | placement parameters defined in the ordering system,            |
+|                    |           |             |                      |               | keyname include tenantId.                                       |
 +--------------------+-----------+-------------+----------------------+---------------+-----------------------------------------------------------------+
 | resourceModelInfo  | M         | 1           | ModelMetaData Object | -             | Resource model information as defined in SDC.                   |
 +--------------------+-----------+-------------+----------------------+---------------+-----------------------------------------------------------------+
@@ -158,7 +159,7 @@ LicenseInfo Object:
 +----------------+-----------+-------------+-------------------------------+---------------+--------------------------------------------+
 | Attribute      | Qualifier | Cardinality | Content                       | Domain Values | Description                                |
 +================+===========+=============+===============================+===============+============================================+
-| licenseDemands | M         | 1           | List of LicenseDemands Object | -             | A list of resources for license selection. |
+| licenseDemands | M         | 1..N        | List of LicenseDemands Object | -             | A list of resources for license selection. |
 +----------------+-----------+-------------+-------------------------------+---------------+--------------------------------------------+
 
 
@@ -216,9 +217,9 @@ Asynchronous Response Body:
 +---------------+-----------+-------------+-----------------+---------------+------------------------------------------------------------------------+
 | requestStatus | M         | 1           | String          | success,      | The status of a request.                                               |
 |               |           |             |                 | failure,      |                                                                        |
-|               |           |             |                 | pending      |                                                                         |
+|               |           |             |                 | pending       |                                                                        |
 +---------------+-----------+-------------+-----------------+---------------+------------------------------------------------------------------------+
-| solutions     | M         | 1           | Solution Object | -             | Solutions related to a request.                                        |
+| solutions     | M         | 1           | Solutions Object| -             | Solutions related to a request.                                        |
 +---------------+-----------+-------------+-----------------+---------------+------------------------------------------------------------------------+
 
 
@@ -229,7 +230,7 @@ Solutions Object:
 +====================+===========+=============+======================================+===============+================================+
 | placementSolutions | M         | 1..N        | List of ComprehensiveSolution Object | -             | A list of placement solutions. |
 +--------------------+-----------+-------------+--------------------------------------+---------------+--------------------------------+
-| licenseSolutions   | M         | 1           | List of LicenseSolution Object       | -             | A list of license solutions    |
+| licenseSolutions   | M         | 1..N        | List of LicenseSolution Object       | -             | A list of license solutions    |
 +--------------------+-----------+-------------+--------------------------------------+---------------+--------------------------------+
 
 
