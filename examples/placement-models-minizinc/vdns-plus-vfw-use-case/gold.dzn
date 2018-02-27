@@ -1,0 +1,62 @@
+% enum CUST_TYPES = { STANDARD, SILVER, GOLD };
+% enum ATTRIBUTES = { CORE_DC, DIRECT_CONN, MIN_GUARANTEE, SRIOV };
+% enum METRICS = { AVG_CPU_UTILIZATION, PEAK_CPU_UTILIZATION };
+% enum CLOUD_REGION_CAPACITY = {CPU_CLOUD, MEMORY_CLOUD};
+
+N_CLOUD_REGIONS = 3;  % e-dc-1, core-dc-1, core-dc-2
+N_ATTRIBUTES = 4;
+N_UTILIZATION_METRICS = 2;
+N_CAPACITY_METRICS = 2;
+N_VMS = 3;
+C_ALLOC_THRESHOLD = 0.65;
+CUST_ALLOC_THRESHOLD = 0.95;
+AVG_CPU_UTILIZATION_THRESHOLD = 0.7;
+PEAK_CPU_UTILIZATION_THRESHOLD = 0.95;
+
+cust_type = GOLD;
+N_VNFS = 1;
+
+w_metrics = [0.9, 0.1];
+w_attributes = [0.1, 0.9, 0.05, 0.05]; 
+
+capabilities = [| 0, 1, 1, 1
+                | 1, 0, 1, 1
+                | 1, 1, 0, 1 |];
+
+cpu_utilization = [| 0.05, 0.9
+                   | 0.1, 0.5
+                   | 0.6, 0.8 |];
+
+c_alloc_capacity = [| 600, 1200
+                    | 1200, 2400
+                    | 2400, 4800 |];
+
+c_total_capacity = [| 1000, 2000
+                    | 2000, 4000
+                    | 4000, 8000 |];
+
+c_alloc_capacity_norm = [| 0.6, 0.6
+                         | 0.6, 0.6
+                         | 0.6, 0.6 |];
+
+cust_alloc_capacity = [| 60, 120
+                       | 120, 240
+                       | 240, 480 |];
+
+cust_total_capacity = [| 100, 200
+                       | 200, 400
+                       | 400, 800 |];
+
+cust_alloc_capacity_norm = [| 0.6, 0.6
+                            | 0.6, 0.6
+                            | 0.6, 0.6 |];
+
+vm_reqs = [| 1, 4
+           | 2, 8
+           | 4, 16 |];
+
+%vm_reqs_sums = [ 14, 56 ];
+
+vm_reqs_sums_norm = [| 0.007, 0.014
+                     | 0.0035, 0.007
+                     | 0.00175, 0.0035 |];
