@@ -44,6 +44,7 @@
 
     <build>
         <plugins>
+            <!-- triggers tox test for sonar -->
             <plugin>
                 <artifactId>exec-maven-plugin</artifactId>
                 <groupId>org.codehaus.mojo</groupId>
