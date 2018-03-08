@@ -65,8 +65,8 @@ class TestOSDFApp(TestCase):
         resp = osdfapp.internal_failure(e)
         assert resp.status_code == 500
 
-    def test_getOptions_default(self):
-        opts = osdfapp.getOptions(["PROG"])  # ensure nothing breaks
+    def test_get_options_default(self):
+        opts = osdfapp.get_options(["PROG"])  # ensure nothing breaks
 
 
 if __name__ == "__main__":
