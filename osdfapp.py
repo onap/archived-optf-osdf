@@ -128,7 +128,7 @@ def internal_failure(error):
     return response
 
 
-def getOptions(argv):
+def get_options(argv):
     program_version_string = '%%prog %s' % ("v1.0")
     program_longdesc = ""
     program_license = ""
@@ -152,7 +152,7 @@ if __name__ == "__main__":
     ports = sys_conf['osdf_ports']
     internal_port, external_port = ports['internal'], ports['external']
     ssl_context = tuple(sys_conf['ssl_context'])
-    local_host = "0.0.0.0"
+    local_host = "0.0.0.0"  # NOSONAR
 
     common_app_opts = dict(host=local_host, threaded=True, use_reloader=False)
 
