@@ -39,7 +39,7 @@
         <sonar.python.coverage.reportPath>coverage.xml</sonar.python.coverage.reportPath>
         <sonar.language>py</sonar.language>
         <sonar.pluginname>python</sonar.pluginname>
-        <sonar.inclusions>**/**.py</sonar.inclusions>
+        <sonar.inclusions>**/**.py,osdfapp.py</sonar.inclusions>
         <sonar.exclusions>test/**.py</sonar.exclusions>
     </properties>
 
