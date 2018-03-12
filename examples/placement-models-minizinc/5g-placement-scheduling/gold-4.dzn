@@ -1,0 +1,116 @@
+% enum CUST_TYPES = { STANDARD, SILVER, GOLD };
+% enum ATTRIBUTES = { CORE_DC, DIRECT_CONN, MIN_GUARANTEE, SRIOV };
+% enum METRICS = { AVG_CPU_UTILIZATION, PEAK_CPU_UTILIZATION };
+% enum CLOUD_REGION_CAPACITY = {CPU_CLOUD, MEMORY_CLOUD};
+
+NCR = 8;  % e-dc-1,2,3,4,5 core-dc-6,7,8
+N_ATTR = 4;
+N_UTILIZATION_METRICS = 2;
+N_CAPM = 2;
+N_VMS = 3;
+C_ALLOC_THRESHOLD = 0.65;
+CUST_ALLOC_THRESHOLD = 0.95;
+AVG_CPU_UTILIZATION_THRESHOLD = 0.7;
+PEAK_CPU_UTILIZATION_THRESHOLD = 0.95;
+
+cust_type = GOLD;
+N_WL = 5;
+MIN_GUAR_ADDL_WT = 1000;
+
+u_lat = 3;
+u_lon = 3;
+cr_lat = [0, 1, 2, 3, 4, 100, 100, 100];
+cr_lon = [0, 1, 2, 3, 4, 100, 100, 100];
+dist_norm = 1000.0;
+max_dist_ue = 3.0;
+
+% enum ATTRIBUTES = { CORE_DC, DIRECT_CONN, MIN_GUARANTEE, SRIOV };
+w_attr = [0.1, 0.7, 0.1, 0.1]; 
+capabilities = [| 0, 1, 0, 1    % edge dc 1
+                | 0, 1, 1, 1    % edge dc 2
+                | 0, 1, 0, 0    % edge dc 3
+                | 0, 1, 0, 1    % edge dc 4
+                | 0, 1, 0, 1    % edge dc 5
+                | 1, 0, 1, 0    % core dc 6
+                | 1, 0, 0, 0    % core dc 7
+                | 1, 0, 0, 0 |];% core dc 8
+
+% enum METRICS = { AVG_CPU_UTILIZATION, PEAK_CPU_UTILIZATION };
+w_metrics       = [0.9,  0.1];
+cpu_utilization = [| 0.1,  0.5
+                   | 0.1,  0.96
+                   | 0.1,  0.5
+                   | 0.1,  0.5
+                   | 0.1,  0.5
+                   | 0.6,  0.8
+                   | 0.6,  0.8
+                   | 0.6,  0.8 |];
+
+c_alloc_capacity = [| 600,  1200
+                    | 600,  1200
+                    | 600,  1200
+                    | 600,  1200
+                    | 600,  1200
+                    | 2400, 4800
+                    | 2400, 4800
+                    | 2400, 4800 |];
+
+c_total_capacity = [| 1000, 2000
+                    | 1000, 2000
+                    | 1000, 2000
+                    | 1000, 2000
+                    | 1000, 2000
+                    | 4000, 8000
+                    | 4000, 8000
+                    | 4000, 8000 |];
+
+c_alloc_capacity_norm = [| 0.6, 0.6
+                         | 0.6, 0.6
+                         | 0.6, 0.6
+                         | 0.6, 0.6
+                         | 0.6, 0.6
+                         | 0.6, 0.6
+                         | 0.6, 0.6
+                         | 0.6, 0.6 |];
+
+cust_alloc_capacity = [| 60, 120
+                       | 60, 120
+                       | 60, 120
+                       | 60, 120
+                       | 60, 120
+                       | 240, 480
+                       | 240, 480
+                       | 240, 480 |];
+
+cust_total_capacity = [| 100, 200
+                       | 100, 200
+                       | 100, 200
+                       | 100, 200
+                       | 100, 200
+                       | 400, 800
+                       | 400, 800
+                       | 400, 800 |];
+
+cust_alloc_capacity_norm = [| 0.6, 0.6
+                            | 0.6, 0.6
+                            | 0.6, 0.6
+                            | 0.6, 0.6
+                            | 0.6, 0.6
+                            | 0.6, 0.6
+                            | 0.6, 0.6
+                            | 0.6, 0.6 |];
+
+vm_reqs = [| 1, 4
+           | 2, 8
+           | 4, 16 |];
+
+%vm_reqs_sums = [ 14, 56 ];
+
+vm_reqs_sums_norm = [| 0.007, 0.014
+                     | 0.007, 0.014
+                     | 0.007, 0.014
+                     | 0.007, 0.014
+                     | 0.007, 0.014
+                     | 0.00175, 0.0035
+                     | 0.00175, 0.0035
+                     | 0.00175, 0.0035 |];

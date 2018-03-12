@@ -1,0 +1,10 @@
+Build docker image:
+------------------
+sudo docker build --network=host -t placement-example .
+
+Run Jupyter lab demo:
+---------------------
+sudo docker run --name placement-example --network=host -it placement-example /bin/bash -c 'cd /osdf/examples/placement-models-minizinc/vdns-plus-vfw-use-case; jupyter lab --port=<public port> --ip=<public ip> --allow-root placement-minizinc.ipynb'
+
+Usage Example:
+  sudo docker run --name placement-example --network=host -it placement-example /bin/bash -c 'cd /osdf/examples/placement-models-minizinc/vdns-plus-vfw-use-case; jupyter lab --port=8181 --ip=10.172.161.6 --allow-root placement-minizinc.ipynb'
