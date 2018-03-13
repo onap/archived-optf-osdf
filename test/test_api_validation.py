@@ -26,7 +26,7 @@ from schematics.exceptions import ModelValidationError
 class TestReqValidation(unittest.TestCase):
 
     def test_req_validation(self):
-        req_file = "./test/placement-tests/request.json"
+        req_file = "./placement-tests/request.json"
         req_json = json.loads(open(req_file).read())
         self.assertEqual(PlacementAPI(req_json).validate(), None)
 
@@ -36,6 +36,11 @@ class TestReqValidation(unittest.TestCase):
 
 
 class TestResponseValidation(unittest.TestCase):
+
+    def test_res_validation(self):
+        req_file = "./placement-tests/response.json"
+        req_json = json.loads(open(req_file).read())
+        self.assertEqual(PlacementResponse(req_json).validate(), None)
 
     def test_invalid_response(self):
         resp_json = {}

@@ -26,60 +26,61 @@ class RequestInfo(OSDFModel):
     transactionId = StringType(required=True)
     requestId = StringType(required=True)
     callbackUrl = URLType(required=True)
+    callbackHeader = DictType(BaseType)
     sourceId = StringType(required=True)
-    optimizers = ListType(StringType(required=True))
+    requestType = StringType(required=True)
     numSolutions = IntType()
+    optimizers = ListType(StringType(required=True))
     timeout = IntType()
-    requestType = StringType()
 
 
-class CandidateInfo(OSDFModel):
+class Candidates(OSDFModel):
     """Preferred candidate for a resource (sent as part of a request from client)"""
-    candidateType = StringType(required=True)
-    candidates = ListType(StringType(required=True))
+    identifierType = StringType(required=True)
+    identifiers = ListType(StringType(required=True))
+    cloudOwner = StringType()
 
 
-class ResourceModelInfo(OSDFModel):
+class ModelMetaData(OSDFModel):
     """Model information for a specific resource"""
-    modelCustomizationId = StringType(required=True)
     modelInvariantId = StringType(required=True)
+    modelVersionId = StringType(required=True)
     modelName = StringType()
-    modelVersion = StringType()
-    modelVersionId = StringType()
     modelType = StringType()
+    modelVersion = StringType()
+    modelCustomizationName = StringType(required=True)
 
 
-class ExistingLicenseInfo(OSDFModel):
-    entitlementPoolUUID = ListType(StringType())
-    licenseKeyGroupUUID = ListType(StringType())
+class LicenseModel(OSDFModel):
+    entitlementPoolUUID = ListType(StringType(required=True))
+    licenseKeyGroupUUID = ListType(StringType(required=True))
 
 
-class LicenseDemand(OSDFModel):
-    resourceInstanceType = StringType(required=True)
-    serviceResourceId = StringType(required=True)
+class LicenseDemands(OSDFModel):
     resourceModuleName = StringType(required=True)
-    resourceModelInfo = ModelType(ResourceModelInfo)
-    existingLicense = ModelType(ExistingLicenseInfo)
+    serviceResourceId = StringType(required=True)
+    resourceModelInfo = ModelType(ModelMetaData, required=True)
+    existingLicenses = ModelType(LicenseModel)
+
+
+class LicenseInfo(OSDFModel):
+    licenseDemands = ListType(ModelType(LicenseDemands))
 
 
 class PlacementDemand(OSDFModel):
-    resourceInstanceType = StringType(required=True)
-    serviceResourceId = StringType(required=True)
     resourceModuleName = StringType(required=True)
-    exclusionCandidateInfo = ListType(ModelType(CandidateInfo))
-    requiredCandidateInfo = ListType(ModelType(CandidateInfo))
-    resourceModelInfo = ModelType(ResourceModelInfo)
-    tenantId = StringType(required=True)
-    tenantName = StringType()
+    serviceResourceId = StringType(required=True)
+    tenantId = StringType()
+    resourceModelInfo = ModelType(ModelMetaData, required=True)
+    existingCandidates = ListType(ModelType(Candidates))
+    excludedCandidates = ListType(ModelType(Candidates))
+    requiredCandidates = ListType(ModelType(Candidates))
 
-class ExistingPlacementInfo(OSDFModel):
+
+class ServiceInfo(OSDFModel):
     serviceInstanceId = StringType(required=True)
-
-
-class DemandInfo(OSDFModel):
-    """Requested resources (sent as part of a request from client)"""
-    placementDemand = ListType(ModelType(PlacementDemand))
-    licenseDemand = ListType(ModelType(LicenseDemand))
+    modelInfo = ModelType(ModelMetaData, required=True)
+    serviceName = StringType(required=True)
 
 
 class SubscriberInfo(OSDFModel):
@@ -89,27 +90,16 @@ class SubscriberInfo(OSDFModel):
     subscriberCommonSiteId = StringType()
 
 
-class ServiceModelInfo(OSDFModel):
-    """ASDC Service model information"""
-    modelType = StringType(required=True)
-    modelInvariantId = StringType(required=True)
-    modelVersionId = StringType(required=True)
-    modelName = StringType(required=True)
-    modelVersion = StringType(required=True)
-
-
 class PlacementInfo(OSDFModel):
     """Information specific to placement optimization"""
-    serviceModelInfo = ModelType(ServiceModelInfo, required=True)
-    subscriberInfo = ModelType(SubscriberInfo, required=True)
-    demandInfo = ModelType(DemandInfo, required=True)
     requestParameters = DictType(BaseType)
-    policyId = ListType(StringType())
-    serviceInstanceId = StringType(required=True)
-    existingPlacement = ModelType(ExistingPlacementInfo)
+    placementDemands = ListType(ModelType(PlacementDemand), min_size=1)
+    subscriberInfo = ModelType(SubscriberInfo)
 
 
 class PlacementAPI(OSDFModel):
     """Request for placement optimization (specific to optimization and additional metadata"""
     requestInfo = ModelType(RequestInfo, required=True)
     placementInfo = ModelType(PlacementInfo, required=True)
+    licenseInfo = ModelType(LicenseInfo)
+    serviceInfo = ModelType(ServiceInfo, required=True)

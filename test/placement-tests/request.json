@@ -1,87 +1,101 @@
 {
-	"requestInfo": {
-		"transactionId": "xxx-xxx-xxxx",
-		"requestId": "yyy-yyy-yyyy",
-		"callbackUrl": "https://test.url.com:5000/callback/",
-		"sourceId": "so",
-		"optimizers": ["placement"],
-		"numSolutions": 1,
-		"timeout": 600
-	},
-	"placementInfo": {
-		"serviceModelInfo": {
-			"modelType": "service",
-			"modelInvariantId": "fad5f4d5-1c94-4890-927d-9cec6e82997f",
-			"modelVersionId": "6e13c5e1-f172-436c-9cc4-0d64c94eb7f4",
-			"modelName": "vCPE",
-			"modelVersion": "1.0"
-		},
-		"subscriberInfo": {
-			"globalSubscriberId": "SUB12_0325_UD_0833",
-			"subscriberName": "SUB_12_0325_UD_0833",
-			"subscriberCommonSiteId": "DALTX0101"
-		},
-		"demandInfo": {
-			"placementDemand": [{
-					"resourceInstanceType": "allotted",
-					"serviceResourceId": "61d563e8-e714-4393-8f99-cc480144a05e",
-					"resourceModuleName": "vGMuxInfra",
-					"exclusionCandidateInfo": [{
-							"candidateType": "cloud",
-							"candidates": ["MDT54NJ", "BDM78NJ"]
-						}, {
-							"candidateType": "service",
-							"candidates": ["RT76U8F789", "PO098HJG"]
-						}
-					],
-					"requiredCandidateInfo": [{
-							"candidateType": "cloud",
-							"candidates": ["DHU87NY"]
-						}, {
-							"candidateType": "service",
-							"candidates": ["YHT675YH"]
-						}
-					],
-					"resourceModelInfo": {
-						"modelCustomizationId": "",
-						"modelInvariantId": "h59988ce-3d81-4e07-81b5-53d3aa821134",
-						"modelName": "",
-						"modelVersion": "2.0",
-						"modelVersionId": "51d563e8-e714-4393-8f99-cc480144a05e",
-						"modelType": "allotted"
-					},
-					"tenantId": "",
-					"tenantName": ""
-				}, {
-					"resourceInstanceType": "allotted",
-					"serviceResourceId": "71d563e8-e714-4393-8f99-cc480144a05e",
-					"resourceModuleName": "vG",
-					"resourceModelInfo": {
-						"modelCustomizationId": "",
-						"modelInvariantId": "a59988ce-3d81-4e07-81b5-53d3aa821134",
-						"modelName": "",
-						"modelVersion": "2.0",
-						"modelVersionId": "91d563e8-e714-4393-8f99-cc480144a05e",
-						"modelType": "allotted"
-					},
-					"tenantId": "",
-					"tenantName": ""
-				}
-			],
-			"licenseDemand": []
-		},
-		"policyId": [
-			""
-		],
-		"serviceInstanceId": "1234-fsdf-23sdf-24kjnk",
-		"requestParameters": {
-
-				"commonSiteId": "DALTX0101",
-				"vendorName": "xyz",
-				"e2eVpnKey": "200",
-				"vcpeHostName": "USOSTCDALTX0101UJZZ11"
-
-		}
-
-	}
+  "requestInfo": {
+    "transactionId": "xxx-xxx-xxxx",
+    "requestId": "yyy-yyy-yyyy",
+    "callbackUrl": "https://wiki.onap.org:5000/callbackUrl/",
+    "sourceId": "SO",
+    "requestType": "create",
+    "numSolutions": 1,
+    "optimizers": ["placement"],
+    "timeout": 600
+  },
+  "placementInfo": {
+    "requestParameters": { "customerLatitude": 32.89748, "customerLongitude": -97.040443, "customerName": "xyz" },
+    "placementDemands": [
+        {
+            "resourceModuleName": "vGMuxInfra",
+            "serviceResourceId": "vGMuxInfra-xx",
+            "tenantId": "vGMuxInfra-tenant",
+            "resourceModelInfo": {
+                "modelInvariantId": "vGMuxInfra-modelInvariantId",
+                "modelVersionId": "vGMuxInfra-versionId",
+                "modelName": "vGMuxInfra-model",
+                "modelType": "resource",
+                "modelVersion": "1.0",
+                "modelCustomizationName": "vGMuxInfra-customeModelName"
+            }
+        },
+        {
+            "resourceModuleName": "vG",
+            "serviceResourceId": "71d563e8-e714-4393-8f99-cc480144a05e",
+            "tenantId": "vG-tenant",
+            "resourceModelInfo": {
+                "modelInvariantId": "vG-modelInvariantId",
+                "modelVersionId": "vG-versionId",
+                "modelName": "vG-model",
+                "modelType": "resource",
+                "modelVersion": "1.0",
+                "modelCustomizationName": "vG-customeModelName"
+            },
+            "existingCandidates": [
+                {
+                    "identifierType": "serviceInstanceId",
+                    "cloudOwner": "",
+                    "identifiers": ["gjhd-098-fhd-987"]
+                }
+            ],
+            "excludedCandidates": [
+                {
+                    "identifierType": "serviceInstanceId",
+                    "cloudOwner": "",
+                    "identifiers": ["gjhd-098-fhd-987"]
+                },
+                {
+                    "identifierType": "vimId",
+                    "cloudOwner": "vmware",
+                    "identifiers": ["NYMDT67"]
+                }
+            ],
+            "requiredCandidates": [
+                {
+                    "identifierType": "vimId",
+                    "cloudOwner": "amazon",
+                    "identifiers": ["TXAUS219"]
+                }
+            ]
+        }
+    ]
+  },
+  "serviceInfo": {
+    "serviceInstanceId": "d61b2543-5914-4b8f-8e81-81e38575b8ec",
+    "serviceName": "vCPE",
+    "modelInfo": {
+      "modelInvariantId": "vCPE-invariantId",
+      "modelVersionId": "vCPE-versionId",
+      "modelName": "vCPE-model",
+      "modelType": "service",
+      "modelVersion": "1.0",
+      "modelCustomizationName": "vCPE-customeModelName"
+    }
+  },
+  "licenseInfo": {
+      "licenseDemands": [
+        {
+          "resourceModuleName": "vGMuxInfra",
+          "serviceResourceId": "vGMuxInfra-xx",
+          "resourceModelInfo": {
+            "modelInvariantId": "vGMuxInfra-modelInvariantId",
+            "modelVersionId": "vGMuxInfra-versionId",
+            "modelName": "vGMuxInfra-model",
+            "modelType": "resource",
+            "modelVersion": "1.0",
+            "modelCustomizationName": "vGMuxInfra-customeModelName"
+          },
+          "existingLicenses": {
+            "entitlementPoolUUID": ["87257b49-9602-4ca1-9817-094e52bc873b", "43257b49-9602-4fe5-9337-094e52bc9435"],
+            "licenseKeyGroupUUID": ["87257b49-9602-4ca1-9817-094e52bc873b", "43257b49-9602-4fe5-9337-094e52bc9435"]
+          }
+        }
+      ]
+  }
 }

@@ -91,7 +91,7 @@ def handle_data_error(e):
     return response
 
 
-@app.route("/osdf/api/v2/placement", methods=["POST"])
+@app.route("/api/oof/v1/placement", methods=["POST"])
 @auth_basic.login_required
 def do_placement_opt():
     """Perform placement optimization after validating the request and fetching policies
