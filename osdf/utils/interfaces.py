@@ -16,7 +16,9 @@
 # -------------------------------------------------------------------------
 #
 
+import json
 import requests
+import yaml
 
 from osdf.config.base import osdf_config, creds_prefixes
 from osdf.logging.osdf_logging import MH, debug_log
@@ -33,6 +35,18 @@ def get_rest_client(request_json, service):
     config = osdf_config.deployment
     c_userid, c_passwd = config[prefix + "Username"], config[prefix + "Password"]
     return RestClient(url=callback_url, userid=c_userid, passwd=c_passwd)
+
+
+def json_from_file(file_name):
+    """Read a policy from a file"""
+    with open(file_name) as fid:
+        return json.load(fid)
+
+
+def yaml_from_file(file_name):
+    """Read a policy from a file"""
+    with open(file_name) as fid:
+        return yaml.load(fid)
 
 
 class RestClient(object):

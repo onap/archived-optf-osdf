@@ -15,9 +15,8 @@
 #
 # -------------------------------------------------------------------------
 #
+import re
 import unittest
-import json
-import yaml
 
 from osdf.adapters.local_data import local_policies
 
@@ -27,9 +26,12 @@ class TestLocalPolicies(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.folder = './test/policy-local-files'
-        self.invalid_policies = ['INVALID-one.json', 'INVALID-two.json']
-        self.valid_policies = ['CloudAttributePolicy_vG_1.json', 'CloudAttributePolicy_vGMuxInfra_1.json']
-       
+        self.valid_policies_file = self.folder + '/' + 'meta-valid-policies.txt'
+        self.invalid_policies_file = self.folder + '/' + 'meta-INVALID-policies.txt'
+        self.valid_policies = local_policies.get_policy_names_from_file(self.valid_policies_file)
+        self.invalid_policies = local_policies.get_policy_names_from_file(self.invalid_policies_file)
+
+
     def test_get_local_policies_no_policies(self):
         with self.assertRaises(FileNotFoundError):
              res = local_policies.get_local_policies(self.folder, self.invalid_policies)

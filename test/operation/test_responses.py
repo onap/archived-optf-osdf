@@ -28,7 +28,20 @@ class TestLocalPolicies(unittest.TestCase):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.folder = './test/policy-local-files'
         self.invalid_policies = ['INVALID-one.json', 'INVALID-two.json']
-        self.valid_policies = ['CloudAttributePolicy_vG_1.json', 'CloudAttributePolicy_vGMuxInfra_1.json']
+        self.valid_policies = [
+            'Affinity_vCPE_1.json',
+            'Capacity_vG_1.json',
+            'Distance_vG_1.json',
+            'Placement_Optimization_1.json',
+            'hpa_policy_vGMuxInfra_1.json',
+            'vnfPolicy_vG.json',
+            'Capacity_vGMuxInfra.json',
+            'Distance_vGMuxInfra_1.json',
+            'Min_Guarantee_vGMuxInfra_1.json',
+            'QueryPolicy_vCPE.json',
+            'hpa_policy_vG_1.json',
+            'vnfPolicy_vGMuxInfra.json'
+            ]
        
     def test_get_local_policies_no_policies(self):
         with self.assertRaises(FileNotFoundError):

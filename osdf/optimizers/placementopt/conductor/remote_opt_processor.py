@@ -43,11 +43,11 @@ def process_placement_opt(request_json, policies, osdf_config, prov_status):
 
         metrics_log.info(MH.inside_worker_thread(req_id))
         license_info = None
-        if 'licenseDemand' in request_json['placementInfo']['demandInfo']:
+        if request_json.get('licenseInfo', {}).get('licenseDemands'):
             license_info = license_optim(request_json)
 
         # Conductor only handles placement, only call Conductor if placementDemands exist
-        if 'placementDemand' in request_json['placementInfo']['demandInfo']:
+        if request_json.get('licenseInfo', {}).get('licenseDemands'):
             metrics_log.info(MH.requesting("placement/conductor", req_id))
             placement_response = conductor.request(request_json, osdf_config, policies, prov_status)
             if license_info:  # Attach license solution if it exists

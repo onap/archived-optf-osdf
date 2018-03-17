@@ -1,0 +1,21 @@
+{
+    "service": "capacityPolicy",
+    "policyName": "oofBeijing.capacityPolicy_vGMuxInfra",
+    "description": "Capacity policy for vGMuxInfra",
+    "templateVersion": "1702.03",
+    "version": "oofBeijing",
+    "priority": "5",
+    "riskType": "test",
+    "riskLevel": "2",
+    "guard": "False",
+    "content": {
+        "identity": "capacity_vGMuxInfra",
+        "policyScope": ["VCPE", "US", "INTERNATIONAL", "ip", "vG"],
+	"resources": ["vG"],
+        "capacityProperty": {
+            "cpu": {"value": 2, "operator": ">"},
+            "memory": {"value": 4, "operator": ">", "unit": "Gb"}
+        },
+        "policyType": "capacityPolicy"
+    }
+}

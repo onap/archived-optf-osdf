@@ -18,6 +18,7 @@
 
 import json
 import os
+import re
 
 
 def get_local_policies(local_policy_folder, local_policy_list, policy_id_list=None):
@@ -38,3 +39,13 @@ def get_local_policies(local_policy_folder, local_policy_list, policy_id_list=No
         with open(os.path.join(local_policy_folder, fname)) as fid:
             policies.append(json.load(fid))
     return policies
+
+
+def get_policy_names_from_file(fname_for_list_of_files):
+    """Get policy names; take care of comments, empty lines, etc"""
+    with open(fname_for_list_of_files) as fid:
+        return [
+            re.sub(r'#.*$', '', x).strip()  # remove inline comments and strip spaces
+            for x in fid
+            if not re.search(r'^#|^$', x.strip())  # remove blank or comments-only lines
+        ]

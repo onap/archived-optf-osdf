@@ -9,7 +9,7 @@ osdf_system:
 
 osdf_temp:  # special configuration required for "workarounds" or testing
     local_policies:
-        global_disabled: True
+        global_disabled: False
         local_placement_policies_enabled: True
         placement_policy_files_vcpe: # workaroud for policy platform glitches (or "work-arounds" for other components)
             - Affinity_vCPE_1.json

@@ -31,10 +31,12 @@ def group_policies(flat_policies):
     filter_policies = defaultdict(list)
     policy_name = []
     for policy in flat_policies:
-        policy_type = policy['content']['type']
+        policy_type = policy['content'].get('policyType')
+        if not policy_type:
+            continue
         if policy_type not in aggregated_policies:
             aggregated_policies[policy_type] = defaultdict(list)
-        for resource in policy['content']['policyScope']['resourceInstanceType']:
+        for resource in policy['content'].get('resourceInstanceType', []):
             aggregated_policies[policy_type][resource].append(policy)
     for policy_type in aggregated_policies:
         for resource in aggregated_policies[policy_type]:
@@ -42,7 +44,7 @@ def group_policies(flat_policies):
                 aggregated_policies[policy_type][resource].sort(key=lambda x: x['priority'], reverse=True)
                 policy = aggregated_policies[policy_type][resource][0]
                 if policy['policyName'] not in policy_name:
-                    filter_policies[policy['content']['type']].append(policy)
+                    filter_policies[policy['content']['policyType']].append(policy)
                     policy_name.append(policy['policyName'])
     return filter_policies
 
