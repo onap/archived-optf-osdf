@@ -1,0 +1,4 @@
+INVALID-policies/NO-FILE-EXISTS.json # non-existent policy file
+
+# missing policy name
+INVALID-policies/INVALID-Affinity_vCPE_1.json 

@@ -15,16 +15,20 @@
 #
 # -------------------------------------------------------------------------
 #
-
+import copy
 import json
+import yaml
+
 from osdf.utils.data_conversion import text_to_symbol
-# from osdf.utils import data_mapping
+
+policy_config_mapping = yaml.load(open('config/has_config.yaml')).get('policy_config_mapping')
+
 
 def gen_optimization_policy(vnf_list, optimization_policy):
     """Generate optimization policy details to pass to Conductor
     :param vnf_list: List of vnf's to used in placement request
-    :param optimization_policy: optimization policy information provided in the incoming request
-    :return: List of optimization policies in a format required by Conductor
+    :param optimization_policy: optimization objective policy information provided in the incoming request
+    :return: List of optimization objective policies in a format required by Conductor
     """
     optimization_policy_list = []
     for policy in optimization_policy:
@@ -47,7 +51,7 @@ def gen_optimization_policy(vnf_list, optimization_policy):
 
 
 def get_matching_vnf(resource, vnf_list):
-    
+
     for vnf in vnf_list:
         if resource in vnf:
             return vnf
@@ -57,20 +61,16 @@ def get_matching_vnf(resource, vnf_list):
 def get_matching_vnfs(resources, vnf_list, match_type="intersection"):
     """Get a list of matching VNFs from the list of resources
     :param resources:
-    :param vnf_list: List of vnf's to used in placement request
+    :param vnf_list: List of vnfs to used in placement request
     :param match_type: "intersection" or "all" or "any" (any => send all_vnfs if there is any intersection)
     :return: List of matching VNFs
     """
-    common_vnfs = []
-    for vnf in vnf_list:
-        for resource in resources:
-            if resource in vnf:
-                common_vnfs.append(vnf)
-    if match_type == "intersection":  # specifically requested intersection
-        return common_vnfs
-    elif common_vnfs or match_type == "all":  # ("any" and common) OR "all"
+    if match_type == "all":  # don't bother with any comparisons
         return resources
-    return None
+    common_vnfs = set(vnf_list) & set(resources)
+    if match_type == "intersection":  # specifically requested intersection
+        return list(common_vnfs)
+    return resources if common_vnfs else None  # "any" match => all resources to be returned
 
 
 def gen_policy_instance(vnf_list, resource_policy, match_type="intersection", rtype=None):
@@ -141,22 +141,11 @@ def gen_attribute_policy(vnf_list, attribute_policy):
     cur_policies, related_policies = gen_policy_instance(vnf_list, attribute_policy, rtype=None)
     for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
         properties = p_main['content']['cloudAttributeProperty']
+        attribute_mapping = policy_config_mapping['attributes']  # wanted attributes and mapping
         p_new[p_main['content']['identity']]['properties'] = {
-            'evaluate': {
-                'hypervisor': properties.get('hypervisor', ''),
-                'cloud_version': properties.get('cloudVersion', ''),
-                'cloud_type': properties.get('cloudType', ''),
-                'dataplane': properties.get('dataPlane', ''),
-                'network_roles': properties.get('networkRoles', ''),
-                'complex': properties.get('complex', ''),
-                'state': properties.get('state', ''),
-                'country': properties.get('country', ''),
-                'geo_region': properties.get('geoRegion', ''),
-                'exclusivity_groups': properties.get('exclusivityGroups', ''),
-                'replication_role': properties.get('replicationRole', '')
-            }
+            'evaluate': dict((k, properties.get(attribute_mapping.get(k))) for k in attribute_mapping.keys())
         }
-    return cur_policies
+    return cur_policies  # cur_policies gets updated in place...
 
 
 def gen_zone_policy(vnf_list, zone_policy):
@@ -168,39 +157,49 @@ def gen_zone_policy(vnf_list, zone_policy):
     return cur_policies
 
 
+def get_augmented_policy_attributes(policy_property, demand):
+    """Get policy attributes and augment them using policy_config_mapping and demand information"""
+    attributes = copy.copy(policy_property['attributes'])
+    remapping = policy_config_mapping['remapping']
+    extra = dict((x, demand['resourceModelInfo'][remapping[x]]) for x in attributes if x in remapping)
+    attributes.update(extra)
+    return attributes
+
+
+def get_candidates_demands(demand):
+    """Get demands related to candidates; e.g. excluded/required"""
+    res = {}
+    for k, v in policy_config_mapping['candidates'].items():
+        if k not in demand:
+            continue
+        res[v] = [{'inventory_type': x['candidateType'], 'candidate_id': x['candidates']} for x in demand[k]]
+    return res
+
+
+def get_policy_properties(demand, policies):
+    """Get policy_properties for cases where there is a match with the demand"""
+    for policy in policies:
+        if not set(policy['content'].get('resourceInstanceType', [])) & set(demand['resourceModuleName']):
+            continue  # no match for this policy
+        for policy_property in policy['content']['property']:
+            yield policy_property
+
+
 def get_demand_properties(demand, policies):
     """Get list demand properties objects (named tuples) from policy"""
-    def _get_candidates(candidate_info):
-        return [dict(inventory_type=x['candidateType'], candidate_id=x['candidates']) for x in candidate_info]
-    properties = []
-    for policy in policies:
-        for resourceInstanceType in policy['content']['resourceInstanceType']:
-            if resourceInstanceType in demand['resourceModuleName']:
-                for x in policy['content']['property']:
-                    property = dict(inventory_provider=x['inventoryProvider'], 
-                                    inventory_type=x['inventoryType'],
-                                    service_resource_id=demand['serviceResourceId'])
-                    if 'attributes' in x:
-                        attributes = {}
-                        for k,v in x['attributes'].items():
-                            # key=data_mapping.convert(k)
-                            key = k
-                            attributes[key] = v
-                            if(key=="model-invariant-id"):
-                                attributes[key]=demand['resourceModelInfo']['modelInvariantId']
-                            elif(key=="model-version-id"):
-                                attributes[key]=demand['resourceModelInfo']['modelVersionId']
-                        property.update({"attributes": attributes})
-                    if x['inventoryType'] == "cloud":
-                        property['region'] = {'get_param': "CHOSEN_REGION"}
-                    if 'exclusionCandidateInfo' in demand:
-                        property['excluded_candidates'] = _get_candidates(demand['exclusionCandidateInfo'])
-                    if 'requiredCandidateInfo' in demand:
-                        property['required_candidates'] = _get_candidates(demand['requiredCandidateInfo'])
-                    properties.append(property)
-    if len(properties) == 0:
-        properties.append(dict(customer_id="", service_type="", inventory_provider="", inventory_type=""))
-    return properties
+    demand_properties = []
+    for policy_property in get_policy_properties(demand, policies):
+        prop = dict(inventory_provider=policy_property['inventoryProvider'],
+                    inventory_type=policy_property['inventoryType'],
+                    service_resource_id=demand['serviceResourceId'])
+        if 'attributes' in policy_property:
+            prop['attributes'] = get_augmented_policy_attributes(policy_property, demand)
+        for k1, v1, k2, v2 in policy_config_mapping['extra_fields']:
+            if k1 == v1:
+                prop[k2] = v2
+        prop.update(get_candidates_demands(demand))  # for excluded and partial-rehoming cases
+        demand_properties.append(prop)
+    return demand_properties
 
 
 def gen_demands(req_json, vnf_policies):
@@ -210,7 +209,7 @@ def gen_demands(req_json, vnf_policies):
     :return: list of demand parameters to populate the Conductor API call
     """
     demand_dictionary = {}
-    for placementDemand in req_json['placementDemand']:
-        demand_dictionary.update({placementDemand['resourceModuleName']: get_demand_properties(placementDemand, vnf_policies)})
-
+    for demand in req_json['placementInfo']['placementDemands']:
+        demand_dictionary.update(
+            {demand['resourceModuleName']: get_demand_properties(demand, vnf_policies)})
     return demand_dictionary

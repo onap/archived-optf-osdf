@@ -37,6 +37,11 @@ class TestReqValidation(unittest.TestCase):
 
 class TestResponseValidation(unittest.TestCase):
 
+    def test_res_validation(self):
+        req_file = "./test/placement-tests/response.json"
+        req_json = json.loads(open(req_file).read())
+        self.assertEqual(PlacementResponse(req_json).validate(), None)
+
     def test_invalid_response(self):
         resp_json = {}
         self.assertRaises(ModelValidationError, lambda: PlacementResponse(resp_json).validate())

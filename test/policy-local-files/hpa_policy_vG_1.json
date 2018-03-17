@@ -1,0 +1,144 @@
+{
+    "service": "hpaPolicy",
+    "policyName": "oofBeijing.hpaPolicy_vG",
+    "description": "HPA policy for vG",
+    "templateVersion": "0.0.1",
+    "version": "1.0",
+    "priority": "3",
+    "riskType": "test",
+    "riskLevel": "2",
+    "guard": "False",
+    "content": {
+      "resources": "vG",
+      "identity": "hpaPolicy_vG",
+      "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG"],
+      "policyType": "hpaPolicy",
+      "flavorFeatures": [
+        {
+          "flavorLabel": "flavor_label_vm_01",
+          "flavorProperties":[
+            {
+              "hpa_feature" : "cpuTopology",
+              "mandatory" : "True",
+              "architecture": "generic",
+              "featureAttributes": [
+                {"attribute":"numCpuSockets", "values": "2","operator": ">=", "unit": ""},
+                {"attribute":"numCpuSockets", "values": "4","operator": "<=", "unit": ""},
+                {"attribute":"numCpuCores", "value": "2", "operator":">=", "unit": ""},
+                {"attribute":"numCpuCores", "value": "4", "operator":"<=", "unit": ""},
+                {"attribute":"numCpuThreads", "value": "4", "operator":">=", "unit": ""},
+                {"attribute":"numCpuThreads", "value": "8", "operator":"<=", "unit": ""}
+              ]
+            },
+            {
+              "hpa_feature" : "basicCapabilities",
+              "mandatory" : "True",
+              "architecture": "generic",
+              "featureAttributes": [
+                {"attribute": "numVirtualCpu", "value": "6", "operator": "=", "unit": ""},
+                {"attribute": "virtualMemSize", "value":"6", "operator": "=", "unit": "GB"}
+              ]
+            },
+            {
+              "hpa_feature" : "ovsDpdk",
+              "mandatory" : "False",
+              "score" : "3",
+              "architecture": "generic",
+              "featureAttributes": [
+                 {"attribute":"dataProcessingAccelerationLibrary", "value":"ovsDpdk_version", "operator": "=", "unit":""}
+              ]
+            },
+            {
+              "hpa_feature" : "cpuInstructionSetExtensions",
+              "mandatory" : "True",
+              "architecture": "INTEL-64",
+              "featureAttributes": [
+                {"attribute":"instructionSetExtensions", "value":["<CPUINST>", "<CPUINST>"], "operator": "ALL", "unit":""}
+              ]
+            }
+          ]
+        },
+        {
+          "flavorLabel": "flavor_label_vm_02",
+          "flavorProperties":[
+            {
+              "hpa_feature" : "cpuPinningy",
+              "mandatory" : "True",
+              "architecture": "generic",
+              "featureAttributes": [
+                {"attribute":"logicalCpuThreadPinningPolicy", "value":"<CPUTHREADPOLICY>", "operator": "=", "unit":""},
+                {"attribute":"logicalCpuPinningPolicy", "value": "<CPUPOLICY>","operator": "=", "unit":""}
+              ]
+            },
+            {
+              "hpa_feature" : "basicCapabilities",
+              "mandatory" : "True",
+              "architecture": "generic",
+              "featureAttributes": [
+                {"attribute": "numVirtualCpu", "value": "6", "operator": "=", "unit": ""},
+                {"attribute": "virtualMemSize", "value":"6", "operator": "=", "unit": "GB"}
+              ]
+            },
+            {
+              "hpa_feature" : "localStorage",
+              "mandatory" : "False",
+              "score" : "5",
+              "architecture": "generic",
+              "featureAttributes": [
+                {"attribute": "diskSize", "value": "2", "operator": "=", "unit": "GB"},  
+                {"attribute": "ephemeralDiskSize", "value": "2", "operator": "=", "unit": "GB"},
+                {"attribute": "swapMemSize", "value":"16", "operator": "=", "unit": "MB"}
+              ]
+            },
+            {
+              "hpa_feature" : "pcie",
+              "mandatory" : "True",
+              "architecture": "generic",
+              "featureAttributes": [
+                {"attribute": "pciCount", "value": "2", "operator": "=", "unit": ""},
+                {"attribute": "pciVendorId", "value":"8086", "operator": "=", "unit": ""},
+                {"attribute": "pciDeviceId", "value": "2", "operator": "=", "unit": ""},
+                {"attribute": "functionType", "value": "<PCITYPEVALUE>","operator": "=", "unit": ""}
+              ]
+            }
+          ]
+        },
+        {
+          "flavorLabel": "flavor_label_vm_03",
+          "flavorProperties":[
+            {
+              "hpa_feature" : "numa",
+              "mandatory" : "False",
+              "score" : "5",
+              "architecture": "generic",
+              "featureAttributes": [
+                {"attribute": "numaNodes", "value": "2", "operator": "=", "unit": ""},
+                {"attribute": "numaCpu-0", "values":"2", "operator": "=", "unit": ""},
+                {"attribute": "numaMem-0", "value": "2048", "operator": "=", "unit": "MB"},
+                {"attribute": "numaCpu-1", "values":"4", "operator": "=", "unit": ""},
+                {"attribute": "numaMem-1", "value": "4096", "operator": "=", "unit": "MB"}
+              ]
+            },
+            {
+              "hpa_feature" : "basicCapabilities",
+              "mandatory" : "True",
+              "architecture": "generic",
+              "featureAttributes": [
+                {"attribute": "numVirtualCpu", "value": "6", "operator": "=", "unit": ""},
+                {"attribute": "virtualMemSize", "value":"6", "operator": "=", "unit": "GB"}
+              ]
+            },
+            {
+              "hpa_feature" : "hugePages",
+              "mandatory" : "False",
+              "score" : "7",
+              "architecture": "generic",
+              "featureAttributes": [
+                 {"attribute": "memoryPageSize", "value": "<MEMORYPAGESIZE>", "operator": "=", "unit": ""}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+}

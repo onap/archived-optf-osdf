@@ -26,32 +26,39 @@ from schematics.types.compound import ModelType, ListType
 class LicenseSolution(OSDFModel):
     serviceResourceId = StringType(required=True)
     resourceModuleName = StringType(required=True)
-    entitlementPoolList = ListType(StringType(required=True))
-    licenseKeyGroupList = ListType(StringType(required=True))
+    entitlementPoolUUID = ListType(StringType(required=True))
+    licenseKeyGroupUUID = ListType(StringType(required=True))
+    entitlementPoolInvariantUUID = ListType(StringType(required=True))
+    licenseKeyGroupInvariantUUID = ListType(StringType(required=True))
+
+
+class Candidates(OSDFModel):
+    """Preferred candidate for a resource (sent as part of a request from client)"""
+    identifierType = StringType(required=True)
+    identifiers = ListType(StringType(required=True))
+    cloudOwner = StringType()
 
 
 class AssignmentInfo(OSDFModel):
-    variableName = StringType(required=True)
-    variableValue = StringType(required=True)
+    key = StringType(required=True)
+    value = StringType(required=True)
 
 
 class PlacementSolution(OSDFModel):
     serviceResourceId = StringType(required=True)
     resourceModuleName = StringType(required=True)
-    inventoryType = StringType(required=True)
-    serviceInstanceId = StringType()
-    cloudRegionId = StringType()
+    solution = ModelType(Candidates, required=True)
     assignmentInfo = ListType(ModelType(AssignmentInfo))
 
 
-class SolutionInfo(OSDFModel):
-    placement = ListType(ModelType(PlacementSolution), min_size=1)
-    license = ListType(ModelType(LicenseSolution), min_size=1)
+class Solution(OSDFModel):
+    placementSolutions = ListType(ListType(ModelType(PlacementSolution), min_size=1))
+    licenseSolutions = ListType(ModelType(LicenseSolution), min_size=1)
 
 
 class PlacementResponse(OSDFModel):
     transactionId = StringType(required=True)
     requestId = StringType(required=True)
-    requestState = StringType(required=True)
-    statusMessage = StringType(required=True)
-    solutionInfo = ModelType(SolutionInfo)
+    requestStatus = StringType(required=True)
+    statusMessage = StringType()
+    solutions = ModelType(Solution, required=True)

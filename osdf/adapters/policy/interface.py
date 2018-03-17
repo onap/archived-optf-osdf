@@ -110,9 +110,7 @@ def get_by_scope(rest_client, req, config_local, type_service):
     
     model_name = retrieve_node(req, pscope['service_name'])
     service_name = model_name
-    # service_name = data_mapping.get_request_service_type(req)
-    # if service_name is None:
-    #     service_name = data_mapping.get_service_type(model_name)
+
     scope = pscope['scope_{}'.format(service_name.lower())]
     subscriber_role, prov_status = get_subscriber_role(rest_client, req, pmain, service_name, scope)
     policy_type_list = pmain['policy_type_{}'.format(service_name.lower())]
@@ -134,9 +132,7 @@ def remote_api(req_json, osdf_config, service_type="placement"):
     :param service_type: the type of service to call: "placement", "scheduling"
     :return: all related policies and provStatus retrieved from Subscriber policy
     """
-#     if not req_json[service_type + "Info"]['policyId']:
-#         return []
-
+    prov_status = None
     config = osdf_config.deployment
     uid, passwd = config['policyPlatformUsername'], config['policyPlatformPassword']
     pcuid, pcpasswd = config['policyClientUsername'], config['policyClientPassword']
@@ -168,16 +164,18 @@ def local_policies_location(req_json, osdf_config, service_type):
     :param service_type: placement supported for now, but can be any other service
     :return: a tuple (folder, file_list) or None
     """
-    lp = osdf_config.core.get('osdf_hacks', {}).get('local_policies', {})
+    lp = osdf_config.core.get('osdf_temp', {}).get('local_policies', {})
     if lp.get('global_disabled'):
         return None  # short-circuit to disable all local policies
     if lp.get('local_{}_policies_enabled'.format(service_type)):
         if service_type == "scheduling":
             return lp.get('{}_policy_dir'.format(service_type)), lp.get('{}_policy_files'.format(service_type))
         else:
-            model_name = retrieve_node(req_json, osdf_config.core['policy_info'][service_type]['policy_scope']['service_name'])
-            service_name = data_mapping.get_service_type(model_name)
-            return lp.get('{}_policy_dir_{}'.format(service_type, service_name.lower())), lp.get('{}_policy_files_{}'.format(service_type, service_name.lower()))
+            required_node = osdf_config.core['policy_info'][service_type]['policy_scope']['service_name']
+            model_name = retrieve_node(req_json, required_node)
+            service_name = model_name  # TODO: data_mapping.get_service_type(model_name)
+            return lp.get('{}_policy_dir_{}'.format(service_type, service_name.lower())), \
+                   lp.get('{}_policy_files_{}'.format(service_type, service_name.lower()))
     return None
 
 
@@ -199,6 +197,6 @@ def get_policies(request_json, service_type):
             to_filter = request_json[service_type + "Info"]['policyId']
         policies = get_local_policies(local_info[0], local_info[1], to_filter)
     else:
-        policies, prov_status= remote_api(request_json, osdf_config, service_type)
+        policies, prov_status = remote_api(request_json, osdf_config, service_type)
         
     return policies, prov_status

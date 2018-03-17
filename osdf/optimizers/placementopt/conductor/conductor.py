@@ -78,7 +78,8 @@ def request(req_object, osdf_config, grouped_policies, prov_status):
             new_url = resp['plans'][0]['links'][0][0]['href']  # TODO: check why a list of lists
 
         if total_time >= max_timeout:
-            raise BusinessException("Conductor could not provide a solution within {} seconds, this transaction is timing out".format(max_timeout))
+            raise BusinessException("Conductor could not provide a solution within {} seconds,"
+                                    "this transaction is timing out".format(max_timeout))
         time.sleep(ping_wait_time)
         ctr += 1
         debug_log.debug("Attempt number {} url {}; prior status={}".format(ctr, new_url, resp['plans'][0]['status']))

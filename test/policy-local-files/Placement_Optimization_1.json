@@ -1,9 +1,9 @@
 {
     "service": "PlacementOptimizationPolicy",
-    "policyName": "PlacementOptimizationPolicy",
-    "description": "PlacementOptimizationPolicy",
+    "policyName": "oofBeijing.PlacementOptimizationPolicy_vGMuxInfra",
+    "description": "Placement Optimization Policy for vGMuxInfra",
     "templateVersion": "1702.03",
-    "version": "1707",
+    "version": "oofBeijing",
     "priority": "5",
     "riskType": "test",
     "riskLevel": "3",
@@ -15,7 +15,7 @@
                     "resource": ["vGMuxInfra"],
                     "customerLocationInfo": "customer_loc",
                     "parameter": "distance",
-                    "weight": "2",
+                    "weight": "1",
                     "operator": "product"
                 },
                 {
@@ -29,13 +29,8 @@
             "operator": "sum"
         },
         "identity": "optimization",
-        "policyScope": {
-            "serviceType": ["vCPE"],
-            "geoRegion": ["US", "INTERNATIONAL"],
-            "networkType": ["ip"],
-            "resourceInstanceType": ["vGMuxInfra","vG"]
-        },
-        "type": "placementOptimization",
+        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
+        "policyType": "placementOptimization",
         "objective": "minimize"
     }
 }

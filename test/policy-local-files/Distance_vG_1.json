@@ -1,0 +1,21 @@
+{
+  "service": "distancePolicy",
+  "policyName": "oofBeijing.distancePolicy_vG",
+  "description": "Distance Policy for vG",
+  "templateVersion": "0.0.1",
+  "version": "oofBeijing",
+  "priority": "3",
+  "riskType": "test",
+  "riskLevel": "2",
+  "guard": "False",
+  "content": {
+    "distanceProperties": {
+      "locationInfo": "customer_location",
+      "distance": { "value": "1500", "operator": "<", "unit": "km" }
+    },
+    "identity": "distance-vG",
+    "resources": ["vG"],
+    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG"],
+    "policyType": "distancePolicy"
+  }
+}

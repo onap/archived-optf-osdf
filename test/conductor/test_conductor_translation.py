@@ -15,23 +15,24 @@
 #
 # -------------------------------------------------------------------------
 #
+import mock
 import unittest
-import json
-import yaml
 
+from flask import Response
+from mock import patch
 from osdf.adapters.local_data import local_policies
-from osdf.optimizers.placementopt.conductor.api_builder import conductor_api_builder
-from osdf.utils.interfaces import json_from_file
+from osdf.optimizers.placementopt.conductor import translation as tr
+from osdf.utils.interfaces import json_from_file, yaml_from_file
 
 
-class TestConductorApiBuilder(unittest.TestCase):
+class TestConductorTranslation(unittest.TestCase):
 
     def setUp(self):
-        self.main_dir = ""
-        conductor_api_template = self.main_dir + "osdf/templates/conductor_interface.json"
-        parameter_data_file = self.main_dir + "test/placement-tests/request.json"
-        policy_data_path = self.main_dir + "test/policy-local-files/"
-        local_config_file = self.main_dir + "config/common_config.yaml"
+        main_dir = ""
+        conductor_api_template = main_dir + "osdf/templates/conductor_interface.json"
+        parameter_data_file = main_dir + "test/placement-tests/request.json"
+        policy_data_path = main_dir + "test/policy-local-files/"
+        local_config_file = main_dir + "config/common_config.yaml"
 
         valid_policies_list_file = policy_data_path + '/' + 'meta-valid-policies.txt'
         valid_policies_files = local_policies.get_policy_names_from_file(valid_policies_list_file)
@@ -39,17 +40,12 @@ class TestConductorApiBuilder(unittest.TestCase):
         self.request_json = json_from_file(parameter_data_file)
         self.policies = [json_from_file(policy_data_path + '/' + name) for name in valid_policies_files]
 
+    def tearDown(self):
+        pass
 
-    def test_conductor_api_call_builder(self):
-        main_dir = self.main_dir
-        conductor_api_template = main_dir + "osdf/templates/conductor_interface.json"
-        local_config_file = main_dir + "config/common_config.yaml"
-        request_json = self.request_json
-        policies = self.policies
-        local_config = yaml.load(open(local_config_file))
-        templ_string = conductor_api_builder(request_json, policies, local_config, [], conductor_api_template)
-        templ_json = json.loads(templ_string)
-        self.assertEqual(templ_json["name"], "yyy-yyy-yyyy")
+    def test_gen_demands(self):
+        res = tr.gen_demands(self.request_json, self.policies)
+        assert res is not None
 
 
 if __name__ == "__main__":

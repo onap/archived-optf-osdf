@@ -16,13 +16,6 @@
 # -------------------------------------------------------------------------
 #
 
-import json
-
-from requests import RequestException
-from osdf.adapters.sdc import sdc, constraint_handler
-from osdf.logging.osdf_logging import audit_log, metrics_log, MH
-from osdf.config.base import osdf_config
-
 
 def license_optim(request_json):
     """
@@ -32,25 +25,17 @@ def license_optim(request_json):
     :return: A tuple of licensekey-group-uuid-list and entitlement-group-uuid-list
     """
     req_id = request_json["requestInfo"]["requestId"]
-    config = osdf_config.deployment
 
-    model_name = request_json['placementInfo']['serviceModelInfo']['modelName']
-    # service_name = data_mapping.get_service_type(model_name)
+    model_name = request_json.get('placementInfo', {}).get('serviceInfo', {}).get('modelInfo', {}).get('modelName')
     service_name = model_name
 
     license_info = []
 
-    order_info = json.loads(request_json["placementInfo"]["requestParameters"])
-    if service_name == 'VPE':
-        data_mapping.normalize_user_params(order_info)
-    for licenseDemand in request_json['placementInfo']['demandInfo']['licenseDemand']:
-        metrics_log.info(MH.requesting("sdc", req_id))
-        license_artifacts = sdc.request(licenseDemand['resourceModelInfo']['modelVersionId'],request_json["requestInfo"]["requestId"], config)
-        entitlement_pool_uuids, license_key_group_uuids = constraint_handler.choose_license(license_artifacts,order_info, service_name)
+    for licenseDemand in request_json.get('placementInfo', {}).get('demandInfo', {}).get('licenseDemands', []):
         license_info.append(
             {'serviceResourceId': licenseDemand['serviceResourceId'],
              'resourceModuleName': licenseDemand['resourceModuleName'],
-             'entitlementPoolList': entitlement_pool_uuids,
-             'licenseKeyGroupList': license_key_group_uuids
+             'entitlementPoolList': "NOT SUPPORTED",
+             'licenseKeyGroupList': "NOT SUPPORTED"
              })
     return license_info

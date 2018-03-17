@@ -15,39 +15,51 @@
 #
 # -------------------------------------------------------------------------
 #
+import mock
 import unittest
-import json
-import yaml
-from osdf.optimizers.placementopt.conductor.remote_opt_processor import process_placement_opt
+
+from flask import Response
 from mock import patch
+from osdf.adapters.local_data import local_policies
+from osdf.optimizers.placementopt.conductor.remote_opt_processor import process_placement_opt
+from osdf.utils.interfaces import json_from_file, yaml_from_file
 
-class TestConductorApiBuilder(unittest.TestCase):
 
-    def test_conductor_api_call_builder(self):
-        #main_dir = ".."
+class TestProcessPlacementOpt(unittest.TestCase):
+
+    def setUp(self):
+        mock_req_accept_message = Response("Accepted Request", content_type='application/json; charset=utf-8')
+        self.patcher_req = patch('osdf.optimizers.placementopt.conductor.conductor.request',
+                                 return_value={"solutionInfo": {"placementInfo": "dummy"}})
+        self.patcher_req_accept = patch('osdf.operation.responses.osdf_response_for_request_accept',
+                                        return_value=mock_req_accept_message)
+        self.patcher_callback = patch(
+            'osdf.optimizers.placementopt.conductor.remote_opt_processor.process_placement_opt',
+            return_value=mock_req_accept_message)
+        self.patcher_RestClient = patch(
+            'osdf.utils.interfaces.RestClient', return_value=mock.MagicMock())
+        self.Mock_req = self.patcher_req.start()
+        self.Mock_req_accept = self.patcher_req_accept.start()
+        self.Mock_callback = self.patcher_callback.start()
+        self.Mock_RestClient = self.patcher_RestClient.start()
+
+    def tearDown(self):
+        patch.stopall()
+
+    def test_process_placement_opt(self):
         main_dir = ""
         conductor_api_template = main_dir + "osdf/templates/conductor_interface.json"
         parameter_data_file = main_dir + "test/placement-tests/request.json"
         policy_data_path = main_dir + "test/policy-local-files/"
         local_config_file = main_dir + "config/common_config.yaml"
 
-        policy_data_files = ["CloudAttributePolicy_vGMuxInfra_1.json",
-                            "CloudAttributePolicy_vG_1.json",
-                            "DistanceToLocationPolicy_vGMuxInfra_1.json",
-                            "DistanceToLocationPolicy_vG_1.json",
-                            "InventoryGroup_vGMuxInfra_1.json",
-                            "InventoryGroup_vG_1.json",
-                            "PlacementOptimizationPolicy.json",
-                            "ResourceInstancePolicy_vG_1.json",
-                            "VNFPolicy_vGMuxInfra_1.json",
-                            "VNFPolicy_vG_1.json",
-                            "ZonePolicy_vGMuxInfra_1.json",
-                            "ZonePolicy_vG_1.json"]
-        request_json = json.loads(open(parameter_data_file).read())
-        policies = [json.loads(open(policy_data_path + file).read()) for file in policy_data_files]
-        local_config = yaml.load(open(local_config_file))
-        with patch('osdf.optimizers.placementopt.conductor.conductor.request', return_value={"solutionInfo": {"placementInfo": "dummy"}}):
-            templ_string = process_placement_opt(request_json, policies, local_config, [])
+        valid_policies_list_file = policy_data_path + '/' + 'meta-valid-policies.txt'
+        valid_policies_files = local_policies.get_policy_names_from_file(valid_policies_list_file)
+
+        request_json = json_from_file(parameter_data_file)
+        policies = [json_from_file(policy_data_path + '/' + name) for name in valid_policies_files]
+        local_config = yaml_from_file(local_config_file)
+        templ_string = process_placement_opt(request_json, policies, local_config, [])
 
 
 if __name__ == "__main__":
