@@ -27,7 +27,7 @@ class TestLocalPolicies(unittest.TestCase):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.folder = './test/policy-local-files'
         self.valid_policies_file = self.folder + '/' + 'meta-valid-policies.txt'
-        self.invalid_policies_file = self.folder + '/' + 'meta-INVALID-policies.txt'
+        self.invalid_policies_file = self.folder + '/' + 'meta-invalid-policies.txt'
         self.valid_policies = local_policies.get_policy_names_from_file(self.valid_policies_file)
         self.invalid_policies = local_policies.get_policy_names_from_file(self.invalid_policies_file)
 
