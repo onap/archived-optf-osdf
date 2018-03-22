@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_28e1709a",
+        "filename": "osdf/adapters/policy/utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 2887
+      },
+      "writtenOn": "2018-03-22T18:31:09Z",
+      "side": 1,
+      "message": "This seems to be the util applicable that can be applicable beyond just policy. Should this be captured in the generic util library?",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 17
+      },
+      "revId": "139176363ab87c7ae55ef1f224182c66a4d8fc2c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_a8eca090",
+        "filename": "osdf/optimizers/licenseopt/simple_license_allocation.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2887
+      },
+      "writtenOn": "2018-03-22T18:31:09Z",
+      "side": 1,
+      "message": "Let\u0027s get rid of the license optimization code since it will be difficult to generate test cases without formal use case.",
+      "range": {
+        "startLine": 34,
+        "startChar": 83,
+        "endLine": 34,
+        "endChar": 97
+      },
+      "revId": "139176363ab87c7ae55ef1f224182c66a4d8fc2c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
