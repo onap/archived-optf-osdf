@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_d4250faf",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1361
+      },
+      "writtenOn": "2018-03-22T06:54:40Z",
+      "side": 1,
+      "message": "Does OSDF expose any ports?",
+      "revId": "1cbb861bbbc66ffee092ac8f00e99d7d7367cd75",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_143377f7",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1361
+      },
+      "writtenOn": "2018-03-22T06:54:40Z",
+      "side": 1,
+      "message": "Do we need license for Dockerfile?",
+      "revId": "1cbb861bbbc66ffee092ac8f00e99d7d7367cd75",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_f4512b0f",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1361
+      },
+      "writtenOn": "2018-03-22T06:54:40Z",
+      "side": 1,
+      "message": "When git clone is used there might be some file which need not go in for production. I have seen other projects pulling the zip files from nexus repository and install.\n\nFor now this is fine. But this needs to be revisited for both OSDF and has to contain what files are released.\nHope this reference helps, but not sure if this is the convention that ONAP follows https://wiki.onap.org/display/DW/VF-C+docker+image+build+guide",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 48
+      },
+      "revId": "1cbb861bbbc66ffee092ac8f00e99d7d7367cd75",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_148ff776",
+        "filename": "docker/build_image.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1361
+      },
+      "writtenOn": "2018-03-22T06:54:40Z",
+      "side": 1,
+      "message": "I believe staging image also needs to be build and pushed to docker repo. Please refer https://wiki.onap.org/display/DW/Independent+Versioning+and+Release+Process#IndependentVersioningandReleaseProcess-DI1:StandardTagFormat",
+      "revId": "1cbb861bbbc66ffee092ac8f00e99d7d7367cd75",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_946d47cf",
+        "filename": "docker/build_image.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1361
+      },
+      "writtenOn": "2018-03-22T06:54:40Z",
+      "side": 1,
+      "message": "Is this file pushed in another patch?",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "1cbb861bbbc66ffee092ac8f00e99d7d7367cd75",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
