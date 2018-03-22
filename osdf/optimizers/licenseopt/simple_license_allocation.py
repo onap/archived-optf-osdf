@@ -31,10 +31,10 @@ def license_optim(request_json):
 
     license_info = []
 
-    for licenseDemand in request_json.get('placementInfo', {}).get('demandInfo', {}).get('licenseDemands', []):
+    for demand in request_json.get('placementInfo', {}).get('demandInfo', {}).get('licenseDemands', []):
         license_info.append(
-            {'serviceResourceId': licenseDemand['serviceResourceId'],
-             'resourceModuleName': licenseDemand['resourceModuleName'],
+            {'serviceResourceId': demand['serviceResourceId'],
+             'resourceModuleName': demand['resourceModuleName'],
              'entitlementPoolList': "NOT SUPPORTED",
              'licenseKeyGroupList': "NOT SUPPORTED"
              })

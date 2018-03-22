@@ -16,17 +16,18 @@
 # -------------------------------------------------------------------------
 #
 
-import copy
 import json
+
 from jinja2 import Template
-from osdf.utils.programming_utils import list_flatten, dot_notation
+
 import osdf.optimizers.placementopt.conductor.translation as tr
 from osdf.adapters.policy.utils import group_policies
+from osdf.utils.programming_utils import list_flatten
 
 
 def conductor_api_builder(request_json, flat_policies: list, local_config, prov_status,
                           template="templates/conductor_interface.json"):
-    """Build a SNIRO southbound API call for Conductor/Placement optimization
+    """Build an OSDF southbound API call for HAS-Conductor/Placement optimization
     :param request_json: parameter data received from a client
     :param flat_policies: policy data received from the policy platform (flat policies)
     :param template: template to generate southbound API call to conductor
@@ -61,7 +62,6 @@ def conductor_api_builder(request_json, flat_policies: list, local_config, prov_
     req_info = request_json['requestInfo']
     model_name = request_json['serviceInfo']['serviceName']
     service_type = model_name
-    # service_type = data_mapping.get_service_type(model_name)
     service_info = local_config.get('service_info', {}).get(service_type, {})
     order_info = {}
     if 'orderInfo' in request_json["placementInfo"]:
@@ -72,7 +72,6 @@ def conductor_api_builder(request_json, flat_policies: list, local_config, prov_
         subs_com_site_id = request_json['placementInfo']['subscriberInfo'].get('subscriberCommonSiteId', "")
     rendered_req = None
     if service_type == 'vCPE':
-        # data_mapping.normalize_user_params(order_info)
         rendered_req = templ.render(
             requestType=request_type,
             chosenComplex=subs_com_site_id,
@@ -84,22 +83,8 @@ def conductor_api_builder(request_json, flat_policies: list, local_config, prov_
             limit=req_info['numSolutions'],
             serviceType=service_type,
             serviceInstance=request_json['serviceInfo']['serviceInstanceId'],
-            provStatus = prov_status,
-            chosenRegion=order_info.get('requestParameters',{}).get('lcpCloudRegionId'),
+            provStatus=prov_status,
+            chosenRegion=order_info.get('requestParameters', {}).get('lcpCloudRegionId'),
             json=json)
-    json_payload = json.dumps(json.loads(rendered_req)) # need this because template's JSON is ugly!
+    json_payload = json.dumps(json.loads(rendered_req))  # need this because template's JSON is ugly!
     return json_payload
-
-
-def retrieve_node(req_json, reference):
-    """
-    Get the child node(s) from the dot-notation [reference] and parent [req_json].
-    For placement and other requests, there are encoded JSONs inside the request or policy,
-    so we need to expand it and then do a search over the parent plus expanded JSON.
-    """
-    req_json_copy = copy.deepcopy(req_json)  # since we expand the JSON in place, we work on a copy
-    if 'orderInfo' in req_json_copy['placementInfo']:
-        req_json_copy['placementInfo']['orderInfo'] = json.loads(req_json_copy['placementInfo']['orderInfo'])
-    info = dot_notation(req_json_copy, reference)
-    return list_flatten(info) if isinstance(info, list) else info
-
