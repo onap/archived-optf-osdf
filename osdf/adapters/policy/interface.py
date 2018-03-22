@@ -1,4 +1,4 @@
-# -------------------------------------------------------------------------
+ # -------------------------------------------------------------------------
 #   Copyright (c) 2015-2017 AT&T Intellectual Property
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,12 +24,10 @@ import json
 from requests import RequestException
 from osdf.operation.exceptions import BusinessException
 from osdf.adapters.local_data.local_policies import get_local_policies
-from osdf.adapters.policy.utils import _regex_policy_name
+from osdf.adapters.policy.utils import policy_name_as_regex, retrieve_node
 from osdf.config.base import osdf_config
-from osdf.logging.osdf_logging import audit_log, MH, metrics_log, error_log, debug_log
+from osdf.logging.osdf_logging import audit_log, MH, metrics_log, debug_log
 from osdf.utils.interfaces import RestClient
-from osdf.optimizers.placementopt.conductor.api_builder import retrieve_node
-# from osdf.utils import data_mapping
 
 
 def get_by_name(rest_client, policy_name_list, wildcards=True):
@@ -38,7 +36,7 @@ def get_by_name(rest_client, policy_name_list, wildcards=True):
         try:
             query_name = policy_name
             if wildcards:
-                query_name = _regex_policy_name(query_name)
+                query_name = policy_name_as_regex(query_name)
             policy_list.append(rest_client.request(json={"policyName": query_name}))
         except RequestException as err:
             audit_log.warn("Error in fetching policy: " + policy_name)
@@ -68,46 +66,57 @@ def get_subscriber_role(rest_client, req, pmain, service_name, scope):
     """
     subscriber_role = "DEFAULT"
     prov_status = []
-    subs_name = get_subscriber_name(req, pmain)
+    subs_name = get_subscriber_name(req, pmain)  # what if there is no subs_name
     if subs_name == "DEFAULT":
         return subscriber_role, prov_status
-    
+
     policy_subs = pmain['policy_subscriber']
     policy_scope = {"policyName": "{}.*".format(scope),
                     "configAttributes": {
                         "serviceType": "{}".format(service_name),
                         "service": "{}".format(policy_subs)}
                     }
-    policy_list = []
     try:
-        policy_list.append(rest_client.request(json=policy_scope))
+        policy_list = rest_client.request(json=policy_scope)
     except RequestException as err:
-        audit_log.warn("Error in fetching policy for {}: ".format(policy_subs))
+        audit_log.warn("Error in fetching policy for {}, {}: ".format(policy_subs, err))
         return subscriber_role, prov_status
-            
-    formatted_policies = []
-    for x in itertools.chain(*policy_list):
-        if x['config'] is None:
+
+    policies = list(itertools.chain(*policy_list))
+    for x in policies:  
+        if not x['config']:  # some policy has no 'config' field, so it will be empty
             raise BusinessException("Config not found for policy with name %s" % x['policyName'])
-        else:
-            formatted_policies.append(json.loads(x['config']))
-    
-    for policy in formatted_policies:
+
+    formatted_policies = [json.loads(x['config']) for x in policies]
+    role, prov = _get_subscriber_role_from_policies(formatted_policies, subs_name, subscriber_role, prov_status)
+    return role, prov
+
+
+def _get_subscriber_role_from_policies(policies, subs_name, default_role, default_prov):
+    """
+    Get the first subscriber role found in policies
+    :param policies: JSON-loaded policies
+    :param subs_name: subscriber name
+    :param default_val: default role (e.g. "DEFAULT")
+    :param default_prov: default prov_status (e.g. [])
+    :return: role and prov_status
+    """
+    for policy in policies:
         property_list = policy['content']['property']
         for prop in property_list:
             if subs_name in prop['subscriberName']:
                 subs_role_list = prop['subscriberRole']
                 prov_status = prop['provStatus']
-                if isinstance(subs_role_list, list): # as list is returned
-                    return subs_role_list[0], prov_status
-    return subscriber_role, prov_status
-    
+                if isinstance(subs_role_list, list):
+                    return subs_role_list[0], prov_status   # TODO: check what to do otherwise
+    return default_role, default_prov
+
 
 def get_by_scope(rest_client, req, config_local, type_service):
     policy_list = []
     pmain = config_local['policy_info'][type_service]
     pscope = pmain['policy_scope']
-    
+
     model_name = retrieve_node(req, pscope['service_name'])
     service_name = model_name
 
@@ -198,5 +207,5 @@ def get_policies(request_json, service_type):
         policies = get_local_policies(local_info[0], local_info[1], to_filter)
     else:
         policies, prov_status = remote_api(request_json, osdf_config, service_type)
-        
+
     return policies, prov_status
