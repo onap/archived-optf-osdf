@@ -15,8 +15,12 @@
 #
 # -------------------------------------------------------------------------
 #
+import copy
+import json
 
 from collections import defaultdict
+
+from osdf.utils.programming_utils import dot_notation, list_flatten
 
 
 def group_policies(flat_policies):
@@ -27,29 +31,30 @@ def group_policies(flat_policies):
     :param flat_policies: list of flat policies
     :return: Filtered policies
     """
-    aggregated_policies = {}
-    filter_policies = defaultdict(list)
+    filtered_policies = defaultdict(list)
     policy_name = []
-    for policy in flat_policies:
+    policies = [x for x in flat_policies if x['content'].get('policy_type')]  # drop ones without 'policy_type'
+    policy_types = set([x['content'].get('policyType') for x in policies])
+    aggregated_policies = dict((x, defaultdict(list)) for x in policy_types)
+
+    for policy in policies:
         policy_type = policy['content'].get('policyType')
-        if not policy_type:
-            continue
-        if policy_type not in aggregated_policies:
-            aggregated_policies[policy_type] = defaultdict(list)
         for resource in policy['content'].get('resourceInstanceType', []):
             aggregated_policies[policy_type][resource].append(policy)
+
     for policy_type in aggregated_policies:
         for resource in aggregated_policies[policy_type]:
-            if len(aggregated_policies[policy_type][resource]) > 0:
+            if aggregated_policies[policy_type][resource]:
                 aggregated_policies[policy_type][resource].sort(key=lambda x: x['priority'], reverse=True)
-                policy = aggregated_policies[policy_type][resource][0]
-                if policy['policyName'] not in policy_name:
-                    filter_policies[policy['content']['policyType']].append(policy)
-                    policy_name.append(policy['policyName'])
-    return filter_policies
+                prioritized_policy = aggregated_policies[policy_type][resource][0]
+                if prioritized_policy['policyName'] not in policy_name:
+                    # TODO: Check logic here... should policy appear only once across all groups?
+                    filtered_policies[prioritized_policy['content']['policyType']].append(prioritized_policy)
+                    policy_name.append(prioritized_policy['policyName'])
+    return filtered_policies
 
 
-def _regex_policy_name(policy_name):
+def policy_name_as_regex(policy_name):
     """Get the correct policy name as a regex
     (e.g. OOF_HAS_vCPE.cloudAttributePolicy ends up in policy as OOF_HAS_vCPE.Config_MS_cloudAttributePolicy.1.xml
     So, for now, we query it as OOF_HAS_vCPE..*aicAttributePolicy.*)
@@ -58,3 +63,16 @@ def _regex_policy_name(policy_name):
     """
     p = policy_name.partition('.')
     return p[0] + p[1] + ".*" + p[2] + ".*"
+
+
+def retrieve_node(req_json, reference):
+    """
+    Get the child node(s) from the dot-notation [reference] and parent [req_json].
+    For placement and other requests, there are encoded JSONs inside the request or policy,
+    so we need to expand it and then do a search over the parent plus expanded JSON.
+    """
+    req_json_copy = copy.deepcopy(req_json)  # since we expand the JSON in place, we work on a copy
+    if 'orderInfo' in req_json_copy['placementInfo']:
+        req_json_copy['placementInfo']['orderInfo'] = json.loads(req_json_copy['placementInfo']['orderInfo'])
+    info = dot_notation(req_json_copy, reference)
+    return list_flatten(info) if isinstance(info, list) else info
