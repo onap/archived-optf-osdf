@@ -1,20 +1,24 @@
+references:
+    service_name:
+        source: request
+        value: serviceInfo.serviceName
+    subscriber_role:
+        source: SubscriberPolicy
+        value: content.properties.subscriberRole
+
 policy_info:
     placement:
         policy_fetch: by_scope
         policy_scope:
-            default_scope: XXX_1802
-            scope_vcpe: oof_beijing
-            service_name: placementInfo.serviceModelInfo.modelName
-        policy_subscriber: SubscriberPolicy
-        subscriber_name: placementInfo.subscriberInfo.subscriberName
-        policy_type_vcpe:
-            - CloudAttributePolicy
-            - DistanceToLocationPolicy
-            - instanceReservationPolicy
-            - PlacementOptimizationPolicy
-            - ResourceInstancePolicy
-            - VNFPolicy
-            - ZonePolicy
+            default_scope: OSDF_R2
+            vcpe_scope: OSDF_R2
+            secondary_scopes:
+                -
+                    - get_param: service_name
+                    - SubscriberPolicy
+                -
+                    - get_param: service_name
+                    - get_param: subscriber_role
     default:  # if no explicit service related information is needed
         policy_fetch: by_name
         policy_scope: none

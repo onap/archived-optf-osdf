@@ -25,6 +25,7 @@ from osdf.utils.interfaces import RestClient, json_from_file
 import yaml
 from mock import patch
 from osdf.optimizers.placementopt.conductor import translation
+from osdf.operation.exceptions import BusinessException
 
 
 class TestPolicyCalls(unittest.TestCase):
@@ -44,75 +45,56 @@ class TestPolicyCalls(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_get_subscriber_name(self):
-        req_json_obj = json.loads(open("./test/placement-tests/request_mso.json").read())
-        config_core = osdf_config.core
-        pmain = config_core['policy_info']['placement']
-        print(pmain)
-        subs_name = interface.get_subscriber_name(req_json_obj, pmain)
-        print("subscriber_name=", subs_name)
-        self.assertEquals(subs_name, "Avteet_Chayal")
+    def test_policy_api_call(self):
+        req_json_file = "./test/placement-tests/request.json"        # For tox change this to ./test/placement-tests/..
+        req_json = json.loads(open(req_json_file).read())
+        policy_response_file = "./test/placement-tests/policy_response.json"
+        policy_response = json.loads(open(policy_response_file).read())
+        with patch('osdf.adapters.policy.interface.policy_api_call', return_value=policy_response):
+            policy_list = interface.remote_api(req_json, osdf_config, service_type="placement")
+            self.assertIsNotNone(policy_list)
 
-    def test_get_subscriber_name_null(self):
-        req_json_file = "./test/placement-tests/request_mso_subs_name_null.json"
-        req_json_obj = json.loads(open(req_json_file).read())
-        config_core = osdf_config.core
-        
-        pmain = config_core['policy_info']['placement']
-        print(pmain)
-        subs_name = interface.get_subscriber_name(req_json_obj, pmain)
-        print("subscriber_name=", subs_name)
-        self.assertEquals(subs_name, "DEFAULT")
-    
-    def test_get_subscriber_name_blank(self):
-        req_json_file = "./test/placement-tests/request_mso_subs_name_blank.json"
-        req_json_obj = json.loads(open(req_json_file).read())
-        config_core = osdf_config.core
-        
-        pmain = config_core['policy_info']['placement']
-        print(pmain)
-        subs_name = interface.get_subscriber_name(req_json_obj, pmain)
-        print("subscriber_name=", subs_name)
-        self.assertEquals(subs_name, "DEFAULT")
-    
-    def test_get_subscriber_name_default(self):
-        req_json_file = "./test/placement-tests/request_mso_subs_name_default.json"
-        req_json_obj = json.loads(open(req_json_file).read())
-        config_core = osdf_config.core
-        
-        pmain = config_core['policy_info']['placement']
-        print(pmain)
-        subs_name = interface.get_subscriber_name(req_json_obj, pmain)
-        print("subscriber_name=", subs_name)
-        self.assertEquals(subs_name, "DEFAULT")
-    
-    def test_get_subscriber_name_none(self):
-        req_json_file = "./test/placement-tests/request_mso_subs_name_none.json"
-        req_json_obj = json.loads(open(req_json_file).read())
-        config_core = osdf_config.core
-        
-        pmain = config_core['policy_info']['placement']
-        print(pmain)
-        subs_name = interface.get_subscriber_name(req_json_obj, pmain)
-        print("subscriber_name=", subs_name)
-        self.assertEquals(subs_name, "DEFAULT")
+    def test_policy_api_call_failed_1(self):
+        req_json_file = "./test/placement-tests/request_error1.json"        # For tox change this to ./test/placement-tests/..
+        req_json = json.loads(open(req_json_file).read())
+        policy_response_file = "./test/placement-tests/policy_response.json"
+        policy_response = json.loads(open(policy_response_file).read())
+        with patch('osdf.adapters.policy.interface.policy_api_call', return_value=policy_response):
+            self.assertRaises(BusinessException,
+                              lambda: interface.remote_api(req_json, osdf_config, service_type="placement"))
+
+    def test_policy_api_call_failed_2(self):
+        req_json_file = "./test/placement-tests/request.json"        # For tox change this to ./test/placement-tests/..
+        req_json = json.loads(open(req_json_file).read())
+        policy_response_file = "./test/placement-tests/policy_response_error1.json"
+        policy_response = json.loads(open(policy_response_file).read())
+        with patch('osdf.adapters.policy.interface.policy_api_call', return_value=policy_response):
+            self.assertRaises(BusinessException,
+                              lambda: interface.remote_api(req_json, osdf_config, service_type="placement"))
+
+    def test_policy_api_call_failed_3(self):
+        req_json_file = "./test/placement-tests/request.json"        # For tox change this to ./test/placement-tests/..
+        req_json = json.loads(open(req_json_file).read())
+        policy_response_file = "./test/placement-tests/policy_response_error2.json"
+        policy_response = json.loads(open(policy_response_file).read())
+        with patch('osdf.adapters.policy.interface.policy_api_call', return_value=policy_response):
+            self.assertRaises(BusinessException,
+                              lambda: interface.remote_api(req_json, osdf_config, service_type="placement"))
     
     def test_get_by_scope(self):
         req_json_file = "./test/placement-tests/testScoperequest.json"
-        allPolicies = "./test/placement-tests/scopePolicies.json"
+        all_policies = "./test/placement-tests/policy_response.json"
         req_json_obj = json.loads(open(req_json_file).read())
-        req_json_obj2 = json.loads(open(allPolicies).read())
-        yamlFile = "./test/placement-tests/test_by_scope.yaml"
-        
-        with open(yamlFile) as yamlFile2:
-            policy_config_file = yaml.load(yamlFile2)
-            with patch('osdf.adapters.policy.interface.get_subscriber_role',
-                       return_value=('FFA Homing', [])) as mock_open:
-                with patch('osdf.utils.interfaces.RestClient.request', return_value=req_json_obj2):
-                    policiesList = interface.get_by_scope(RestClient, req_json_obj, policy_config_file, 'placement')
-                    self.assertTrue(policiesList, 'is null')
-                    self.assertRaises(Exception)
-    
+        req_json_obj2 = json.loads(open(all_policies).read())
+        yaml_file = "./test/placement-tests/test_by_scope.yaml"
+
+        with open(yaml_file) as yaml_file2:
+            policy_config_file = yaml.load(yaml_file2)
+            with patch('osdf.utils.interfaces.RestClient.request', return_value=req_json_obj2):
+                policies_list = interface.get_by_scope(RestClient, req_json_obj, policy_config_file, 'placement')
+                self.assertTrue(policies_list, 'is null')
+                self.assertRaises(Exception)
+
     def test_gen_demands(self):
         actionsList = []
         genDemandslist = []

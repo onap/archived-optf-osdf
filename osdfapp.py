@@ -104,17 +104,10 @@ def do_placement_opt():
     req_id = request_json['requestInfo']['requestId']
     g.request_id = req_id
     audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
-
     PlacementAPI(request_json).validate()
-
-    # Currently policies are being used only during placement, so only fetch them if placement demands is not empty
-    policies, prov_status = {}, None
-
-    if 'placementDemand' in request_json['placementInfo']['demandInfo']:
-        policies, prov_status = get_policies(request_json, "placement")
-
+    policies = get_policies(request_json, "placement")
     audit_log.info(MH.new_worker_thread(req_id, "[for placement]"))
-    t = Thread(target=process_placement_opt, args=(request_json, policies, osdf_config, prov_status))
+    t = Thread(target=process_placement_opt, args=(request_json, policies, osdf_config, ""))
     t.start()
     audit_log.info(MH.accepted_valid_request(req_id, request))
     return osdf.operation.responses.osdf_response_for_request_accept(
