@@ -33,7 +33,7 @@ function log_ts() {  # Log message with timestamp
 
 function build_image() {
      log_ts Building Image in folder: $PWD
-     docker build -t ${IMAGE_NAME}:${VERSION} -t ${IMAGE_NAME}:latest .
+     docker build -t ${IMAGE_NAME}:${VERSION} -t ${IMAGE_NAME}:latest -t ${IMAGE_NAME}:${STAGING} .
      log_ts ... Built
 }
 
