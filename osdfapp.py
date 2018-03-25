@@ -93,6 +93,12 @@ def handle_data_error(e):
     return response
 
 
+@app.route("/api/oof/v1/healthcheck", methods=["GET"])
+def do_osdf_health_check():
+    """Simple health check"""
+    return "OK"
+
+
 @app.route("/api/oof/v1/placement", methods=["POST"])
 @auth_basic.login_required
 def do_placement_opt():
