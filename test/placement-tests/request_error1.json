@@ -69,7 +69,6 @@
   },
   "serviceInfo": {
     "serviceInstanceId": "d61b2543-5914-4b8f-8e81-81e38575b8ec",
-    "serviceName": "vCPE",
     "modelInfo": {
       "modelInvariantId": "vCPE-invariantId",
       "modelVersionId": "vCPE-versionId",

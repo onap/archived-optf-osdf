@@ -25,6 +25,7 @@ from requests import RequestException
 from osdf.operation.exceptions import BusinessException
 from osdf.adapters.local_data.local_policies import get_local_policies
 from osdf.adapters.policy.utils import policy_name_as_regex, retrieve_node
+from osdf.utils.programming_utils import list_flatten, dot_notation
 from osdf.config.base import osdf_config
 from osdf.logging.osdf_logging import audit_log, MH, metrics_log, debug_log
 from osdf.utils.interfaces import RestClient
@@ -44,94 +45,74 @@ def get_by_name(rest_client, policy_name_list, wildcards=True):
     return policy_list
 
 
-def get_subscriber_name(req, pmain):
-    subs_name = retrieve_node(req, pmain['subscriber_name'])
-    if subs_name is None:
-        return "DEFAULT"
-    else:
-        subs_name_uc = subs_name.upper()
-        if subs_name_uc in ("DEFAULT", "NULL", ""):
-            subs_name = "DEFAULT"
-    return subs_name
-
-
-def get_subscriber_role(rest_client, req, pmain, service_name, scope):
-    """Make a request to policy and return subscriberRole
-    :param rest_client: rest client to make call
-    :param req: request object from MSO
-    :param pmain: main config that will have policy path information
-    :param service_name: the type of service to call: e.g. "vCPE
-    :param scope: the scope of policy to call: e.g. "OOF_HAS_vCPE".
-    :return: subscriberRole and provStatus retrieved from Subscriber policy
-    """
-    subscriber_role = "DEFAULT"
-    prov_status = []
-    subs_name = get_subscriber_name(req, pmain)  # what if there is no subs_name
-    if subs_name == "DEFAULT":
-        return subscriber_role, prov_status
-
-    policy_subs = pmain['policy_subscriber']
-    policy_scope = {"policyName": "{}.*".format(scope),
-                    "configAttributes": {
-                        "serviceType": "{}".format(service_name),
-                        "service": "{}".format(policy_subs)}
-                    }
-    try:
-        policy_list = rest_client.request(json=policy_scope)
-    except RequestException as err:
-        audit_log.warn("Error in fetching policy for {}, {}: ".format(policy_subs, err))
-        return subscriber_role, prov_status
-
-    policies = list(itertools.chain(*policy_list))
-    for x in policies:  
-        if not x['config']:  # some policy has no 'config' field, so it will be empty
-            raise BusinessException("Config not found for policy with name %s" % x['policyName'])
-
-    formatted_policies = [json.loads(x['config']) for x in policies]
-    role, prov = _get_subscriber_role_from_policies(formatted_policies, subs_name, subscriber_role, prov_status)
-    return role, prov
-
-
-def _get_subscriber_role_from_policies(policies, subs_name, default_role, default_prov):
-    """
-    Get the first subscriber role found in policies
-    :param policies: JSON-loaded policies
-    :param subs_name: subscriber name
-    :param default_val: default role (e.g. "DEFAULT")
-    :param default_prov: default prov_status (e.g. [])
-    :return: role and prov_status
-    """
-    for policy in policies:
-        property_list = policy['content']['property']
-        for prop in property_list:
-            if subs_name in prop['subscriberName']:
-                subs_role_list = prop['subscriberRole']
-                prov_status = prop['provStatus']
-                if isinstance(subs_role_list, list):
-                    return subs_role_list[0], prov_status   # TODO: check what to do otherwise
-    return default_role, default_prov
-
-
 def get_by_scope(rest_client, req, config_local, type_service):
+    """ Get policies by scopes as defined in the configuration file.
+    :param rest_client: a rest client object to make a call.
+    :param req: an optimization request.
+    :param config_local: application configuration file.
+    :param type_service: the type of optimization service.
+    :return: a list of policies.
+    """
     policy_list = []
-    pmain = config_local['policy_info'][type_service]
-    pscope = pmain['policy_scope']
+    references = config_local.get('references', {})
+    pscope = config_local.get('policy_info', {}).get(type_service, {}).get('policy_scope', {})
+    service_name = dot_notation(req, references.get('service_name', {}).get('value', None))
+    primary_scope = pscope['{}_scope'.format(service_name.lower() if service_name else "default")]
+    for sec_scope in pscope.get('secondary_scopes', []):
+        scope_fields, scope_fields_flatten = [], []
+        for field in sec_scope:
+            if 'get_param' in field:
+                scope_fields.append(get_scope_fields(field, references, req, list_flatten(policy_list)))
+            else:
+                scope_fields.append(field)
+        scope_fields_flatten = list_flatten(scope_fields)
+        policy_list.append(policy_api_call(rest_client, primary_scope, scope_fields_flatten))
+    return policy_list
 
-    model_name = retrieve_node(req, pscope['service_name'])
-    service_name = model_name
 
-    scope = pscope['scope_{}'.format(service_name.lower())]
-    subscriber_role, prov_status = get_subscriber_role(rest_client, req, pmain, service_name, scope)
-    policy_type_list = pmain['policy_type_{}'.format(service_name.lower())]
-    for policy_type in policy_type_list:
-        policy_scope = {"policyName": "{}.*".format(scope),
-                        "configAttributes": {
-                            "serviceType": "{}".format(service_name),
-                            "service": "{}".format(policy_type),
-                            "subscriberRole": "{}".format(subscriber_role)}
-                        }
-        policy_list.append(rest_client.request(json=policy_scope))
-    return policy_list, prov_status
+def get_scope_fields(field, references, req, policy_info):
+    """ Retrieve the values for scope fields from a request and policies as per the configuration
+    and references defined in a configuration file. If the value of a scope field missing in a request or
+    policies, throw an exception since correct policies cannot be retrieved.
+    :param field: details on a scope field from a configuration file.
+    :param references: references defined in a configuration file.
+    :param req: an optimization request.
+    :param policy_info: a list of policies.
+    :return: scope fields retrieved from a request and policies.
+    """
+    if references.get(field.get('get_param', ""), {}).get('source', None) == "request":
+        scope_field = dot_notation(req, references.get(field.get('get_param', ""), {}).get('value', ""))
+        if scope_field:
+            return scope_field
+        raise BusinessException("Field {} is missing a value in a request".format(
+            references.get(field.get('get_param', ""), {}).get('value', "").split('.')[-1]))
+    else:
+        scope_fields = []
+        for policy in policy_info:
+            policy_content = json.loads(policy.get('config', "{}"))
+            if policy_content.get('content', {}).get('policyType', "invalid_policy") == \
+                    references.get(field.get('get_param', ""), {}).get('source', None):
+                scope_fields.append(dot_notation(policy_content,
+                                                 references.get(field.get('get_param', ""), {}).get('value', "")))
+        scope_values = list_flatten(scope_fields)
+        if len(scope_values) > 0:
+            return scope_values
+        raise BusinessException("Field {} is missing a value in all policies of type {}".format(
+            references.get(field.get('get_param', ""), {}).get('value', "").split('.')[-1],
+            references.get(field.get('get_param', ""), {}).get('source', "")))
+
+
+def policy_api_call(rest_client, primary_scope, scope_fields):
+    """ Makes a getConfig API call to the policy system to retrieve policies matching a scope.
+    :param rest_client: rest client object to make a call
+    :param primary_scope: the primary scope of policies, which is a folder in the policy system
+    where policies are stored.
+    :param scope_fields: the secondary scope of policies, which is a collection of domain values.
+    :return: a list of policies matching both primary and secondary scopes.
+    """
+    api_call_body = {"policyName": "{}.*".format(primary_scope),
+                     "configAttributes": {"policyScope": "{}".format(scope_fields)}}
+    return rest_client.request(json=api_call_body)
 
 
 def remote_api(req_json, osdf_config, service_type="placement"):
@@ -141,7 +122,6 @@ def remote_api(req_json, osdf_config, service_type="placement"):
     :param service_type: the type of service to call: "placement", "scheduling"
     :return: all related policies and provStatus retrieved from Subscriber policy
     """
-    prov_status = None
     config = osdf_config.deployment
     uid, passwd = config['policyPlatformUsername'], config['policyPlatformPassword']
     pcuid, pcpasswd = config['policyClientUsername'], config['policyClientPassword']
@@ -154,17 +134,16 @@ def remote_api(req_json, osdf_config, service_type="placement"):
         policies = get_by_name(rc, req_json[service_type + "Info"]['policyId'], wildcards=True)
     elif osdf_config.core['policy_info'][service_type]['policy_fetch'] == "by_name_no_wildcards":
         policies = get_by_name(rc, req_json[service_type + "Info"]['policyId'], wildcards=False)
-    else:  # Get policy by scope
-        policies, prov_status = get_by_scope(rc, req_json, osdf_config.core, service_type)
+    else:
+        policies = get_by_scope(rc, req_json, osdf_config.core, service_type)
 
-    # policies in res are list of lists, so flatten them; also only keep config part
     formatted_policies = []
     for x in itertools.chain(*policies):
         if x['config'] is None:
             raise BusinessException("Config not found for policy with name %s" % x['policyName'])
         else:
             formatted_policies.append(json.loads(x['config']))
-    return formatted_policies, prov_status
+    return formatted_policies
 
 
 def local_policies_location(req_json, osdf_config, service_type):
@@ -206,6 +185,6 @@ def get_policies(request_json, service_type):
             to_filter = request_json[service_type + "Info"]['policyId']
         policies = get_local_policies(local_info[0], local_info[1], to_filter)
     else:
-        policies, prov_status = remote_api(request_json, osdf_config, service_type)
+        policies = remote_api(request_json, osdf_config, service_type)
 
     return policies, prov_status
