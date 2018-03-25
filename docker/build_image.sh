@@ -25,7 +25,7 @@ IMAGE_NAME=$DOCKER_REPOSITORY/$ORG/$PROJECT
 # Version properties
 source version.properties
 VERSION=$release_version
-STAGING=${release_version}-SNAPSHOT-$(date -u '+%Y%m%dT%H%M%SZ')
+STAGING=${release_version}-STAGING
 
 function log_ts() {  # Log message with timestamp
     echo [DEBUG LOG at $(date -u +%Y%m%d:%H%M%S)] "$@"
