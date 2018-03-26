@@ -1,0 +1,22 @@
+{
+    "service": "minGuaranteePolicy",
+    "policyName": "oofBeijing.minGuaranee_vGMuxInfra",
+    "description": "Min guarantee policy for vGMuxInfra",
+    "templateVersion": "1702.03",
+    "version": "oofBeijing",
+    "priority": "5",
+    "riskType": "test",
+    "riskLevel": "2",
+    "guard": "False",
+    "content": {
+        "identity": "minGuarantee_vGMuxInfra",
+        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
+        "minGuaranteeProperty": {
+            "cpu": "true",
+            "memory": "false",
+        },
+        "policyType": "minGuaranteePolicy",
+        "resources": ["vGMuxInfra"],
+		"applicableResources": "any"
+    }
+}

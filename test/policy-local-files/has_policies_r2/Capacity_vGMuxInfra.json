@@ -1,0 +1,22 @@
+{
+    "service": "capacityPolicy",
+    "policyName": "oofBeijing.capacityPolicy_vGMuxInfra",
+    "description": "Capacity policy for vGMuxInfra",
+    "templateVersion": "1702.03",
+    "version": "oofBeijing",
+    "priority": "5",
+    "riskType": "test",
+    "riskLevel": "2",
+    "guard": "False",
+    "content": {
+        "identity": "capacity_vGMuxInfra",
+        "policyScope": ["VCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
+	    "resources": ["vGMuxInfra"],
+        "capacityProperty": {
+            "controller": "multicloud",
+            "request": "{\"vCPU\": 10, \"Memory\": {\"quantity\": {\"get_param\": \"REQUIRED_MEM\"}, \"unit\": \"GB\"}, \"Storage\": {\"quantity\": {\"get_param\": \"REQUIRED_DISK\", \"unit\": \"GB\"}}}"
+        },
+        "policyType": "capacityPolicy",
+        "applicableResources": "any"
+    }
+}
