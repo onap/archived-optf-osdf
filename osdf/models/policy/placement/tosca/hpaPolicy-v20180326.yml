@@ -1,0 +1,96 @@
+tosca_definitions_version: tosca_simple_yaml_1_0_0
+node_types:
+    policy.nodes.hpaPolicy:
+        derived_from: policy.nodes.Root
+        properties:
+            policyScope:
+                type: list
+                description: scope where the policy is applicable
+                required: true
+                matchable: true
+                entry_schema:
+                    type: string
+            policyType:
+                type: list
+                description: type of a policy
+                required: true
+                matchable: true
+                entry_schema:
+                    type: string
+                    consraints:
+                    -   valid_values:
+                        - hpaPolicy
+            resource:
+                type: string
+                required: true
+            identity:
+                type: string
+                required: true
+            flavorFeatures:
+                type: list
+                required: true
+                entry_schema:
+                -   type: policy.data.flavorFeatures_properties
+data_types:
+    policy.data.flavorFeatures_properties:
+        derived_from: tosca.nodes.Root
+        properties:
+            flavorLabel:
+                type: string
+                required: true
+            flavorProperties:
+                type: list
+                required: true
+                entry_schema:
+                    type: policy.data.flavorProperties_properties
+    policy.data.flavorProperties_properties:
+        derived_from: tosca.nodes.Root
+        properties:
+            hpa-feature:
+                type: string
+                required: true
+            mandatory:
+                type: string
+                required: true
+            score:
+                type: string
+                required: true
+            architecture:
+                type: string
+                required: true
+            hpa-version:
+                type: string
+                required: true
+            hpa-feature-attributes:
+                type: list
+                required: true
+                entry_schema:
+                    type: policy.data.hpa-feature-attributes_properties
+    policy.data.hpa-feature-attributes_properties:
+        derived_from: tosca.nodes.Root
+        properties:
+            hpa-attribute-key:
+                type: string
+                required: true
+            hpa-attribute-value:
+                type: string
+                required: true
+            operator:
+                type: list
+                required: true
+                entry_schema:
+                    type: string
+                    constraints:
+                    -   valid_values:
+                        - <
+                        - <=
+                        - '>'
+                        - '>='
+                        - '='
+                        - '!='
+                        - any
+                        - all
+                        - subset
+            unit:
+                type: string
+                required: true
