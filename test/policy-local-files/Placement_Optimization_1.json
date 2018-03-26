@@ -29,7 +29,7 @@
             "operator": "sum"
         },
         "identity": "optimization",
-        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
+        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG", "placementOptimization"],
         "policyType": "placementOptimization",
         "objective": "minimize"
     }

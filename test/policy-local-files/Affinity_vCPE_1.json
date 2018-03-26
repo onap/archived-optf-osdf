@@ -1,21 +1,37 @@
 {
-    "service": "affinityPolicy",
-    "policyName": "oofBeijing.affinityPolicy_vcpe",
-    "description": "Affinity policy for vCPE",
-    "templateVersion": "1702.03",
+    "service": "optimizationQueryPolicy",
+    "policyName": "oofBeijing.queryPolicy_vCPE",
+    "description": "Optimization query policy for vCPE",
+    "templateVersion": "0.0.1",
     "version": "oofBeijing",
-    "priority": "5",
+    "priority": "3",
     "riskType": "test",
     "riskLevel": "2",
     "guard": "False",
     "content": {
-        "identity": "affinity_vCPE",
-        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
-        "affinityProperty": {
-            "qualifier": "different",
-            "category": "complex"
-        },
-        "policyType": "affinityPolicy",
-        "resources": ["vGMuxInfra", "vG"]
+        "queryProperties": [
+            {
+                "attribute": "locationId",
+                "value": "orderInfo.customerLocation"
+            },
+            {
+                "attribute": "id",
+                "value": "orderInfo.vpnInfo"
+            },
+            {
+                "attribute": "upstreamBW",
+                "value": "orderInfo.vpnInfo"
+            }
+        ],
+        "policyScope": [
+            "vCPE",
+            "US",
+            "INTERNATIONAL",
+            "ip",
+            "vGMuxInfra",
+            "vG",
+            "optimizationQueryPolicy"
+        ],
+        "policyType": "optimizationQueryPolicy"
     }
 }

@@ -15,7 +15,8 @@
     },
     "identity": "distance-vGMuxInfra",
     "resources": ["vGMuxInfra"],
-    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
-    "policyType": "distancePolicy"
+    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "distancePolicy"],
+    "policyType": "distancePolicy",
+    "applicableResources": "any"
   }
 }

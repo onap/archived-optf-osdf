@@ -10,10 +10,11 @@
     "guard": "False",
     "content": {
         "identity": "vnf_vG",
-        "policyScope": ["vCPE", "INTERNATIONAL", "ip", "vG"],
+        "policyScope": ["vCPE", "INTERNATIONAL", "ip", "vG", "vnf_policy"],
         "policyType": "vnf_policy",
         "resources": ["vG"],
-	"vnfProperties": [
+        "applicableResources": "any",
+	    "vnfProperties": [
             {
                 "inventoryProvider": "aai",
                 "serviceType": "",

@@ -3,10 +3,10 @@ Capacity_vGMuxInfra.json
 Capacity_vG_1.json
 Distance_vGMuxInfra_1.json
 Distance_vG_1.json
-Min_Guarantee_vGMuxInfra_1.json
 Placement_Optimization_1.json
 QueryPolicy_vCPE.json
 hpa_policy_vGMuxInfra_1.json
 hpa_policy_vG_1.json
+subscriber_policy.json
 vnfPolicy_vG.json
 vnfPolicy_vGMuxInfra.json
