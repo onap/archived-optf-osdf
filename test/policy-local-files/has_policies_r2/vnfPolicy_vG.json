@@ -1,0 +1,32 @@
+{
+    "service": "VnfPolicy",
+    "policyName": "oofBeijing.vnfPolicy_vG",
+    "description": "vnfPolicy",
+    "templateVersion": "1702.03",
+    "version": "oofBeijing",
+    "priority": "6",
+    "riskType": "test",
+    "riskLevel": "3",
+    "guard": "False",
+    "content": {
+        "identity": "vnf_vG",
+        "policyScope": ["vCPE", "INTERNATIONAL", "ip", "vG", "vnf_policy"],
+        "policyType": "vnf_policy",
+        "resources": ["vG"],
+        "applicableResources": "any",
+	    "vnfProperties": [
+            {
+                "inventoryProvider": "aai",
+                "serviceType": "",
+                "inventoryType": "cloud",
+                "customerId": ""
+            },
+            {
+                "inventoryProvider": "multicloud",
+                "serviceType": "HNGATEWAY",
+                "inventoryType": "service",
+                "customerId": "21014aa2-526b-11e6-beb8-9e71128cae77"
+            }
+        ]
+    }
+}
