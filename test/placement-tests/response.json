@@ -17,7 +17,8 @@
           { "key": "cloudOwner", "value": "amazon" },
           { "key": "vnfHostName", "value": "ahr344gh" },
           { "key": "isRehome", "value": "False" },
-          { "key": "cloudRegionId", "value": "1ac71fb8-ad43-4e16-9459-c3f372b8236d" }
+          { "key": "cloudRegionId", "value": "1ac71fb8-ad43-4e16-9459-c3f372b8236d" },
+          { "key":"flavors", "value": { "flavorLabel1": "vimFlavorX", "flavorLabel2": "vimFlavorY"}}
         ]
       },
       {

@@ -17,8 +17,8 @@
 #
 
 from .common import OSDFModel
-from schematics.types import StringType
-from schematics.types.compound import ModelType, ListType
+from schematics.types import BaseType, StringType
+from schematics.types.compound import ModelType, ListType, DictType
 
 
 # TODO: update osdf.models
@@ -41,7 +41,7 @@ class Candidates(OSDFModel):
 
 class AssignmentInfo(OSDFModel):
     key = StringType(required=True)
-    value = StringType(required=True)
+    value = BaseType(required=True)
 
 
 class PlacementSolution(OSDFModel):
