@@ -28,14 +28,13 @@ class TestMessageRouter(unittest.TestCase):
         mr = MR.MessageRouterClient(dmaap_url="https://MYHOST:3905")
 
     def test_valid_MR_with_base_urls(self):
-        base_urls = ["https://MYHOST1:3905/","https://MYHOST2:3905/"]
-        mr = MR.MessageRouterClient(mr_host_base_urls=base_urls, topic="MY-TOPIC")
+        base_urls = ["https://MYHOST1:3905/events/MY-TOPIC","https://MYHOST2:3905/events/MY-TOPIC"]
+        mr = MR.MessageRouterClient(dmaap_url=base_urls)
 
     def test_invalid_valid_MR_with_base_urls(self):
-        """Topic missing"""
-        base_urls = ["https://MYHOST1:3905/","https://MYHOST2:3905/"]
+        """No dmaap_url"""
         try:
-            mr = MR.MessageRouterClient(mr_host_base_urls=base_urls)
+            mr = MR.MessageRouterClient()
         except MessageBusConfigurationException:
             return
 
