@@ -50,14 +50,6 @@ def gen_optimization_policy(vnf_list, optimization_policy):
     return optimization_policy_list
 
 
-def get_matching_vnf(resource, vnf_list):
-
-    for vnf in vnf_list:
-        if resource in vnf:
-            return vnf
-    return resource
-
-
 def get_matching_vnfs(resources, vnf_list, match_type="intersection"):
     """Get a list of matching VNFs from the list of resources
     :param resources:
@@ -154,6 +146,24 @@ def gen_zone_policy(vnf_list, zone_policy):
     for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
         pmz = p_main['content']['affinityProperty']
         p_new[p_main['content']['identity']]['properties'] = {'category': pmz['category'], 'qualifier': pmz['qualifier']}
+    return cur_policies
+
+
+def gen_capacity_policy(vnf_list, capacity_policy):
+    """Get zone policies in order to populate the Conductor API call"""
+    cur_policies, related_policies = gen_policy_instance(vnf_list, capacity_policy, rtype=None)
+    for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
+        pmz = p_main['content']['capacityProperty']
+        p_new[p_main['content']['identity']]['properties'] = \
+            {"controller": pmz['controller'], 'request': json.loads(pmz['request'])}
+    return cur_policies
+
+
+def gen_hpa_policy(vnf_list, hpa_policy):
+    """Get zone policies in order to populate the Conductor API call"""
+    cur_policies, related_policies = gen_policy_instance(vnf_list, hpa_policy, rtype=None)
+    for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
+        p_new[p_main['content']['identity']]['properties'] = {'evaluate': p_main['content']['flavorFeatures']}
     return cur_policies
 
 

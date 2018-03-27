@@ -59,7 +59,7 @@ class TestProcessPlacementOpt(unittest.TestCase):
         request_json = json_from_file(parameter_data_file)
         policies = [json_from_file(policy_data_path + '/' + name) for name in valid_policies_files]
         local_config = yaml_from_file(local_config_file)
-        templ_string = process_placement_opt(request_json, policies, local_config, [])
+        templ_string = process_placement_opt(request_json, policies, local_config)
 
 
 if __name__ == "__main__":

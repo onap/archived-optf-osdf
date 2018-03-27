@@ -9,10 +9,10 @@
     "riskLevel": "2",
     "guard": "False",
     "content": {
-      "resources": "vGMuxInfra",
+      "resources": ["vGMuxInfra"],
       "identity": "hpaPolicy_vGMuxInfra",
       "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "hpaPolicy"],
-      "policyType": "hpaPolicy",
+      "policyType": "hpa",
       "flavorFeatures": [
         {
           "flavorLabel": "flavor_label_vm_01",

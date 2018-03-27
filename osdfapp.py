@@ -113,7 +113,7 @@ def do_placement_opt():
     PlacementAPI(request_json).validate()
     policies = get_policies(request_json, "placement")
     audit_log.info(MH.new_worker_thread(req_id, "[for placement]"))
-    t = Thread(target=process_placement_opt, args=(request_json, policies, osdf_config, ""))
+    t = Thread(target=process_placement_opt, args=(request_json, policies, osdf_config))
     t.start()
     audit_log.info(MH.accepted_valid_request(req_id, request))
     return osdf.operation.responses.osdf_response_for_request_accept(

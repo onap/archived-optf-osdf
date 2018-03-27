@@ -4,14 +4,12 @@
   "timeout": {{ timeout }},
   "limit": {{ limit }},
   "template": {
-    "homing_template_version": "2017-10-10",
+    "homing_template_version": "2018-02-01",
     "parameters": {
 	    "service_name": "{{ service_name }}",
         "service_id": "{{ service_id }}",
         "customer_lat": "{{ latitude }}",
-        "customer_long": "{{ longitude }}",
-        "REQUIRED_MEM": "{{ memory }}",
-        "REQUIRED_DISK": "{{ storage }}"
+        "customer_long": "{{ longitude }}"
     },
     "locations": {
         "customer_loc": {

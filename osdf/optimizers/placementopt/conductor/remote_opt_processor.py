@@ -26,7 +26,7 @@ from osdf.optimizers.licenseopt.simple_license_allocation import license_optim
 from osdf.utils.interfaces import get_rest_client
 
 
-def process_placement_opt(request_json, policies, osdf_config, prov_status):
+def process_placement_opt(request_json, policies, osdf_config):
     """Perform the work for placement optimization (e.g. call SDC artifact and make conductor request)
     NOTE: there is scope to make the requests to policy asynchronous to speed up overall performance
     :param request_json: json content from original request
@@ -49,7 +49,7 @@ def process_placement_opt(request_json, policies, osdf_config, prov_status):
         # Conductor only handles placement, only call Conductor if placementDemands exist
         if request_json.get('licenseInfo', {}).get('licenseDemands'):
             metrics_log.info(MH.requesting("placement/conductor", req_id))
-            placement_response = conductor.request(request_json, osdf_config, policies, prov_status)
+            placement_response = conductor.request(request_json, osdf_config, policies)
             if license_info:  # Attach license solution if it exists
                 placement_response['solutionInfo']['licenseInfo'] = license_info
         else:  # License selection only scenario
