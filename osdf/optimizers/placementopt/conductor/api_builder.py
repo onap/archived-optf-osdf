@@ -52,26 +52,17 @@ def conductor_api_builder(request_json, flat_policies: list, local_config, templ
     zone_policy_list = tr.gen_zone_policy(demand_vnf_name_list, gp['zone'])
     optimization_policy_list = tr.gen_optimization_policy(demand_vnf_name_list, gp['placementOptimization'])
     reservation_policy_list = tr.gen_reservation_policy(demand_vnf_name_list, gp['instance_reservation'])
+    capacity_policy_list = tr.gen_capacity_policy(demand_vnf_name_list, gp['vim_fit'])
+    hpa_policy_list = tr.gen_hpa_policy(demand_vnf_name_list, gp['hpa'])
     conductor_policies = [attribute_policy_list, distance_to_location_policy_list, inventory_policy_list,
-                          resource_instance_policy_list, resource_region_policy_list, zone_policy_list]
+                          resource_instance_policy_list, resource_region_policy_list, zone_policy_list,
+                          reservation_policy_list, capacity_policy_list, hpa_policy_list]
     filtered_policies = [x for x in conductor_policies if len(x) > 0]
     policy_groups = list_flatten(filtered_policies)
-    reservation_policies = [x for x in reservation_policy_list if len(x) > 0]
-    reservation_groups = list_flatten(reservation_policies)
     req_info = request_json['requestInfo']
     request_type = req_info.get('requestType', None)
-    service_type = request_json['serviceInfo']['serviceName']
-    service_info = local_config.get('service_info', {}).get(service_type, {})
-    order_info = {}
-    if 'orderInfo' in request_json["placementInfo"]:
-        order_info = json.loads(request_json["placementInfo"]["orderInfo"])
-
-    subs_com_site_id = ""
-    if 'subscriberInfo' in request_json['placementInfo']: 
-        subs_com_site_id = request_json['placementInfo']['subscriberInfo'].get('subscriberCommonSiteId', "")
     rendered_req = templ.render(
         requestType=request_type,
-        chosenComplex=subs_com_site_id,
         demand_list=demand_list,
         policy_groups=policy_groups,
         optimization_policies=optimization_policy_list,
@@ -81,7 +72,6 @@ def conductor_api_builder(request_json, flat_policies: list, local_config, templ
         service_type=request_json['serviceInfo']['serviceName'],
         service_id=request_json['serviceInfo']['serviceInstanceId'],
         provStatus="",
-        chosenRegion=order_info.get('requestParameters', {}).get('lcpCloudRegionId'),
         json=json)
     json_payload = json.dumps(json.loads(rendered_req))  # need this because template's JSON is ugly!
     return json_payload
