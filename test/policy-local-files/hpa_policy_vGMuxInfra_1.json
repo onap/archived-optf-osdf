@@ -11,49 +11,49 @@
     "content": {
       "resources": "vGMuxInfra",
       "identity": "hpaPolicy_vGMuxInfra",
-      "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
+      "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "hpaPolicy"],
       "policyType": "hpaPolicy",
       "flavorFeatures": [
         {
           "flavorLabel": "flavor_label_vm_01",
           "flavorProperties":[
             {
-              "hpa_feature" : "cpuTopology",
+              "hpa-feature" : "cpuTopology",
               "mandatory" : "True",
               "architecture": "generic",
-              "featureAttributes": [
-                {"attribute":"numCpuSockets", "values": "2","operator": ">=", "unit": ""},
-                {"attribute":"numCpuSockets", "values": "4","operator": "<=", "unit": ""},
-                {"attribute":"numCpuCores", "value": "2", "operator":">=", "unit": ""},
-                {"attribute":"numCpuCores", "value": "4", "operator":"<=", "unit": ""},
-                {"attribute":"numCpuThreads", "value": "4", "operator":">=", "unit": ""},
-                {"attribute":"numCpuThreads", "value": "8", "operator":"<=", "unit": ""}
+              "hpa-feature-attributes": [
+                {"hpa-attribute-key":"numCpuSockets", "hpa-attribute-value": "2","operator": ">=", "unit": ""},
+                {"hpa-attribute-key":"numCpuSockets", "hpa-attribute-value": "4","operator": "<=", "unit": ""},
+                {"hpa-attribute-key":"numCpuCores", "hpa-attribute-value": "2", "operator":">=", "unit": ""},
+                {"hpa-attribute-key":"numCpuCores", "hpa-attribute-value": "4", "operator":"<=", "unit": ""},
+                {"hpa-attribute-key":"numCpuThreads", "hpa-attribute-value": "4", "operator":">=", "unit": ""},
+                {"hpa-attribute-key":"numCpuThreads", "hpa-attribute-value": "8", "operator":"<=", "unit": ""}
               ]
             },
             {
-              "hpa_feature" : "basicCapabilities",
+              "hpa-feature" : "basicCapabilities",
               "mandatory" : "True",
               "architecture": "generic",
-              "featureAttributes": [
-                {"attribute": "numVirtualCpu", "value": "6", "operator": "=", "unit": ""},
-                {"attribute": "virtualMemSize", "value":"6", "operator": "=", "unit": "GB"}
+              "hpa-feature-attributes": [
+                {"hpa-attribute-key": "numVirtualCpu", "hpa-attribute-value": "6", "operator": "=", "unit": ""},
+                {"hpa-attribute-key": "virtualMemSize", "hpa-attribute-value":"6", "operator": "=", "unit": "GB"}
               ]
             },
             {
-              "hpa_feature" : "ovsDpdk",
+              "hpa-feature" : "ovsDpdk",
               "mandatory" : "False",
               "score" : "3",
               "architecture": "generic",
-              "featureAttributes": [
-                 {"attribute":"dataProcessingAccelerationLibrary", "value":"ovsDpdk_version", "operator": "=", "unit":""}
+              "hpa-feature-attributes": [
+                 {"hpa-attribute-key":"dataProcessingAccelerationLibrary", "hpa-attribute-value":"ovsDpdk_version", "operator": "=", "unit":""}
               ]
             },
             {
-              "hpa_feature" : "cpuInstructionSetExtensions",
+              "hpa-feature" : "cpuInstructionSetExtensions",
               "mandatory" : "True",
               "architecture": "INTEL-64",
-              "featureAttributes": [
-                {"attribute":"instructionSetExtensions", "value":["<CPUINST>", "<CPUINST>"], "operator": "ALL", "unit":""}
+              "hpa-feature-attributes": [
+                {"hpa-attribute-key":"instructionSetExtensions", "hpa-attribute-value":["<CPUINST>", "<CPUINST>"], "operator": "ALL", "unit":""}
               ]
             }
           ]
@@ -62,43 +62,43 @@
           "flavorLabel": "flavor_label_vm_02",
           "flavorProperties":[
             {
-              "hpa_feature" : "cpuPinningy",
+              "hpa-feature" : "cpuPinningy",
               "mandatory" : "True",
               "architecture": "generic",
-              "featureAttributes": [
-                {"attribute":"logicalCpuThreadPinningPolicy", "value":"<CPUTHREADPOLICY>", "operator": "=", "unit":""},
-                {"attribute":"logicalCpuPinningPolicy", "value": "<CPUPOLICY>","operator": "=", "unit":""}
+              "hpa-feature-attributes": [
+                {"hpa-attribute-key":"logicalCpuThreadPinningPolicy", "hpa-attribute-value":"<CPUTHREADPOLICY>", "operator": "=", "unit":""},
+                {"hpa-attribute-key":"logicalCpuPinningPolicy", "hpa-attribute-value": "<CPUPOLICY>","operator": "=", "unit":""}
               ]
             },
             {
-              "hpa_feature" : "basicCapabilities",
+              "hpa-feature" : "basicCapabilities",
               "mandatory" : "True",
               "architecture": "generic",
-              "featureAttributes": [
-                {"attribute": "numVirtualCpu", "value": "6", "operator": "=", "unit": ""},
-                {"attribute": "virtualMemSize", "value":"6", "operator": "=", "unit": "GB"}
+              "hpa-feature-attributes": [
+                {"hpa-attribute-key": "numVirtualCpu", "hpa-attribute-value": "6", "operator": "=", "unit": ""},
+                {"hpa-attribute-key": "virtualMemSize", "hpa-attribute-value":"6", "operator": "=", "unit": "GB"}
               ]
             },
             {
-              "hpa_feature" : "localStorage",
+              "hpa-feature" : "localStorage",
               "mandatory" : "False",
               "score" : "5",
               "architecture": "generic",
-              "featureAttributes": [
-                {"attribute": "diskSize", "value": "2", "operator": "=", "unit": "GB"},  
-                {"attribute": "ephemeralDiskSize", "value": "2", "operator": "=", "unit": "GB"},
-                {"attribute": "swapMemSize", "value":"16", "operator": "=", "unit": "MB"}
+              "hpa-feature-attributes": [
+                {"hpa-attribute-key": "diskSize", "hpa-attribute-value": "2", "operator": "=", "unit": "GB"},
+                {"hpa-attribute-key": "ephemeralDiskSize", "hpa-attribute-value": "2", "operator": "=", "unit": "GB"},
+                {"hpa-attribute-key": "swapMemSize", "hpa-attribute-value":"16", "operator": "=", "unit": "MB"}
               ]
             },
             {
-              "hpa_feature" : "pcie",
+              "hpa-feature" : "pcie",
               "mandatory" : "True",
               "architecture": "generic",
-              "featureAttributes": [
-                {"attribute": "pciCount", "value": "2", "operator": "=", "unit": ""},
-                {"attribute": "pciVendorId", "value":"8086", "operator": "=", "unit": ""},
-                {"attribute": "pciDeviceId", "value": "2", "operator": "=", "unit": ""},
-                {"attribute": "functionType", "value": "<PCITYPEVALUE>","operator": "=", "unit": ""}
+              "hpa-feature-attributes": [
+                {"hpa-attribute-key": "pciCount", "hpa-attribute-value": "2", "operator": "=", "unit": ""},
+                {"hpa-attribute-key": "pciVendorId", "hpa-attribute-value":"8086", "operator": "=", "unit": ""},
+                {"hpa-attribute-key": "pciDeviceId", "hpa-attribute-value": "2", "operator": "=", "unit": ""},
+                {"hpa-attribute-key": "functionType", "hpa-attribute-value": "<PCITYPEVALUE>","operator": "=", "unit": ""}
               ]
             }
           ]
@@ -107,34 +107,34 @@
           "flavorLabel": "flavor_label_vm_03",
           "flavorProperties":[
             {
-              "hpa_feature" : "numa",
+              "hpa-feature" : "numa",
               "mandatory" : "False",
               "score" : "5",
               "architecture": "generic",
-              "featureAttributes": [
-                {"attribute": "numaNodes", "value": "2", "operator": "=", "unit": ""},
-                {"attribute": "numaCpu-0", "values":"2", "operator": "=", "unit": ""},
-                {"attribute": "numaMem-0", "value": "2048", "operator": "=", "unit": "MB"},
-                {"attribute": "numaCpu-1", "values":"4", "operator": "=", "unit": ""},
-                {"attribute": "numaMem-1", "value": "4096", "operator": "=", "unit": "MB"}
+              "hpa-feature-attributes": [
+                {"hpa-attribute-key": "numaNodes", "hpa-attribute-value": "2", "operator": "=", "unit": ""},
+                {"hpa-attribute-key": "numaCpu-0", "hpa-attribute-value":"2", "operator": "=", "unit": ""},
+                {"hpa-attribute-key": "numaMem-0", "hpa-attribute-value": "2048", "operator": "=", "unit": "MB"},
+                {"hpa-attribute-key": "numaCpu-1", "hpa-attribute-value":"4", "operator": "=", "unit": ""},
+                {"hpa-attribute-key": "numaMem-1", "value": "4096", "operator": "=", "unit": "MB"}
               ]
             },
             {
-              "hpa_feature" : "basicCapabilities",
+              "hpa-feature" : "basicCapabilities",
               "mandatory" : "True",
               "architecture": "generic",
-              "featureAttributes": [
-                {"attribute": "numVirtualCpu", "value": "6", "operator": "=", "unit": ""},
-                {"attribute": "virtualMemSize", "value":"6", "operator": "=", "unit": "GB"}
+              "hpa-feature-attributes": [
+                {"hpa-attribute-key": "numVirtualCpu", "hpa-attribute-value": "6", "operator": "=", "unit": ""},
+                {"hpa-attribute-key": "virtualMemSize", "hpa-attribute-value":"6", "operator": "=", "unit": "GB"}
               ]
             },
             {
-              "hpa_feature" : "hugePages",
+              "hpa-feature" : "hugePages",
               "mandatory" : "False",
               "score" : "7",
               "architecture": "generic",
-              "featureAttributes": [
-                 {"attribute": "memoryPageSize", "value": "<MEMORYPAGESIZE>", "operator": "=", "unit": ""}
+              "hpa-feature-attributes": [
+                 {"hpa-attribute-key": "memoryPageSize", "hpa-attribute-value": "<MEMORYPAGESIZE>", "operator": "=", "unit": ""}
               ]
             }
           ]

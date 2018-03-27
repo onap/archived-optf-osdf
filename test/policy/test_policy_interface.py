@@ -51,10 +51,6 @@ class TestPolicyInterface(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_gen_demands(self):
-        res = tr.gen_demands(self.request_json, self.policies)
-        assert res is not None
-
     def test_get_by_name(self):
         pol.get_by_name(mock.MagicMock(), self.valid_policies_files[0])
 

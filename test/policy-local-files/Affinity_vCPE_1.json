@@ -15,7 +15,8 @@
             "qualifier": "different",
             "category": "complex"
         },
-        "policyType": "affinityPolicy",
-        "resources": ["vGMuxInfra", "vG"]
+        "policyType": "zone",
+        "resources": ["vGMuxInfra", "vG"],
+        "applicableResources": "all"
     }
 }

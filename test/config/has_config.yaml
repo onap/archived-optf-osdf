@@ -10,7 +10,7 @@ policy_config_mapping:
         country: country,
         geo_region: geoRegion,
         exclusivity_groups: exclusivityGroups,
-        replication_role: replicationRole,
+        replication_role: replicationRole
     remapping:
         model-invariant-id: modelInvariantId,
         model-version-id: modelVersionId
