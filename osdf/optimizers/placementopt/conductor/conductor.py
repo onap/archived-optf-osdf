@@ -126,27 +126,32 @@ def conductor_response_processor(conductor_response, raw_response, req_id):
     """
     composite_solutions = []
     name_map = {"physical-location-id": "cloudClli", "host_id": "vnfHostName",
-                "cloud_version": "cloudVersion", "cloud_owner": "cloudOwner"}
+                "cloud_version": "cloudVersion", "cloud_owner": "cloudOwner",
+                "cloud": "cloudRegionId", "service": "serviceInstanceId", "is_rehome": "isRehome",
+                "location_id": "locationId", "location_type": "locationType"}
     for reco in conductor_response['plans'][0]['recommendations']:
         for resource in reco.keys():
             c = reco[resource]['candidate']
             solution = {
                 'resourceModuleName': resource,
-                'serviceResourceId': reco[resource]['service_resource_id'],
-                'inventoryType': c['inventory_type'],
-                'serviceInstanceId': c['candidate_id'] if c['inventory_type'] == "service" else "",
-                'cloudRegionId': c['location_id'],
+                'serviceResourceId': reco[resource].get('service_resource_id', ""),
+                'solution': {"identifier": c['inventory_type'],
+                             'identifiers': [c['candidate_id']],
+                             'cloudOwner': c.get('cloud_owner', "")},
                 'assignmentInfo': []
             }
+            for key, value in c.items():
+                if key in ["location_id", "location_type", "is_rehome", "host_id"]:
+                    try:
+                        solution['assignmentInfo'].append({"key": name_map.get(key, key), "value": value})
+                    except KeyError:
+                        debug_log.debug("The key[{}] is not mapped and will not be returned in assignment info".format(key))
 
             for key, value in reco[resource]['attributes'].items():
                 try:
-                    solution['assignmentInfo'].append({"variableName": name_map[key], "variableValue": value})
+                    solution['assignmentInfo'].append({"key": name_map.get(key, key), "value": value})
                 except KeyError:
                     debug_log.debug("The key[{}] is not mapped and will not be returned in assignment info".format(key))
-
-            if c.get('host_id'):
-                solution['assignmentInfo'].append({'variableName': name_map['host_id'], 'variableValue': c['host_id']})
             composite_solutions.append(solution)
 
     request_state = conductor_response['plans'][0]['status']
@@ -155,14 +160,15 @@ def conductor_response_processor(conductor_response, raw_response, req_id):
 
     solution_info = {}
     if composite_solutions:
-        solution_info['placementInfo'] = composite_solutions
+        solution_info.setdefault('placementSolutions', [])
+        solution_info['placementSolutions'].append(composite_solutions)
 
     resp = {
         "transactionId": transaction_id,
         "requestId": req_id,
         "requestState": request_state,
         "statusMessage": status_message,
-        "solutionInfo": solution_info
+        "solutions": solution_info
     }
     return resp
 
