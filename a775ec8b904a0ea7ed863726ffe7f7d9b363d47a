@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_6248d5cc",
+        "filename": "osdf/templates/conductor_interface.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1361
+      },
+      "writtenOn": "2018-03-27T20:08:48Z",
+      "side": 0,
+      "message": "Is this intended to be removed?",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 40
+      },
+      "revId": "a775ec8b904a0ea7ed863726ffe7f7d9b363d47a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
