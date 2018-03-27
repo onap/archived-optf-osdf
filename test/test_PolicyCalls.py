@@ -80,7 +80,7 @@ class TestPolicyCalls(unittest.TestCase):
         with patch('osdf.adapters.policy.interface.policy_api_call', return_value=policy_response):
             self.assertRaises(BusinessException,
                               lambda: interface.remote_api(req_json, osdf_config, service_type="placement"))
-    
+
     def test_get_by_scope(self):
         req_json_file = "./test/placement-tests/testScoperequest.json"
         all_policies = "./test/placement-tests/policy_response.json"
@@ -100,7 +100,9 @@ class TestPolicyCalls(unittest.TestCase):
         genDemandslist = []
         req_json = "./test/placement-tests/request.json"
         req_json = json.loads(open(req_json).read())
-        genDemands = translation.gen_demands(req_json, self.policies)
+        # need to run this only on vnf policies
+        vnf_policies = [x for x in self.policies if x["content"]["policyType"] == "vnfPolicy"]
+        genDemands = translation.gen_demands(req_json, vnf_policies)
         for action in req_json['placementInfo']['placementDemands']:
             actionsList.append(action['resourceModuleName'])
         for key2,value in genDemands.items():

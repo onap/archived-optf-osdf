@@ -10,12 +10,13 @@
     "guard": "False",
     "content": {
         "identity": "capacity_vGMuxInfra",
-        "policyScope": ["VCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
-	"resources": ["vGMuxInfra"],
+        "policyScope": ["VCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vim_fit"],
+	    "resources": ["vGMuxInfra"],
         "capacityProperty": {
-            "cpu": {"value": 2, "operator": ">"},
-            "memory": {"value": 4, "operator": ">", "unit": "Gb"}
+            "controller": "multicloud",
+            "request": "{\"vCPU\": 10, \"Memory\": {\"quantity\": {\"get_param\": \"REQUIRED_MEM\"}, \"unit\": \"GB\"}, \"Storage\": {\"quantity\": {\"get_param\": \"REQUIRED_DISK\", \"unit\": \"GB\"}}}"
         },
-        "policyType": "capacityPolicy"
+        "policyType": "vim_fit",
+        "applicableResources": "any"
     }
 }

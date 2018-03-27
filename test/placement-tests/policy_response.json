@@ -93,7 +93,7 @@
     "policyConfigMessage": "Config Retrieved! ",
     "policyConfigStatus": "CONFIG_RETRIEVED",
     "type": "JSON",
-    "config": "{\"service\":\"capacityPolicy\",\"policyName\":\"oofBeijing.capacityPolicy_vG\",\"description\":\"Capacity policy for vG\",\"templateVersion\":\"1702.03\",\"version\":\"oofBeijing\",\"priority\":\"5\",\"riskType\":\"test\",\"riskLevel\":\"2\",\"guard\":\"False\",\"content\":{\"identity\":\"capacity_vG\",\"policyScope\":[\"VCPE\",\"US\",\"INTERNATIONAL\",\"ip\",\"vG\"],\"resources\":[\"vG\"],\"capacityProperty\":{\"cpu\":{\"value\":2,\"operator\":\">\"},\"memory\":{\"value\":4,\"operator\":\">\",\"unit\":\"GB\"}},\"policyType\":\"capacityPolicy\",\"applicableResources\":\"any\"}}",
+    "config": "{\"service\": \"capacityPolicy\", \"policyName\": \"oofBeijing.capacityPolicy_vG\", \"description\": \"Capacity policy for vG\", \"templateVersion\": \"1702.03\", \"version\": \"oofBeijing\", \"priority\": \"5\", \"riskType\": \"test\", \"riskLevel\": \"2\", \"guard\": \"False\", \"content\": {\"identity\": \"capacity_vG\", \"policyScope\": [\"VCPE\", \"US\", \"INTERNATIONAL\", \"ip\", \"vG\", \"vim_fit\"], \"resources\": [\"vG\"], \"capacityProperty\": {\"controller\": \"multicloud\", \"request\": \"{\\\"vCPU\\\": 10, \\\"Memory\\\": {\\\"quantity\\\": {\\\"get_param\\\": \\\"REQUIRED_MEM\\\"}, \\\"unit\\\": \\\"GB\\\"}, \\\"Storage\\\": {\\\"quantity\\\": {\\\"get_param\\\": \\\"REQUIRED_DISK\\\", \\\"unit\\\": \\\"GB\\\"}}}\"}, \"policyType\": \"vim_fit\", \"applicableResources\": \"any\"}}",
     "policyName": "oofBeijing.Config_MS_capacityPolicy_vG.1.xml",
     "policyVersion": "1",
     "matchingConditions": {
@@ -111,7 +111,7 @@
     "policyConfigMessage": "Config Retrieved! ",
     "policyConfigStatus": "CONFIG_RETRIEVED",
     "type": "JSON",
-    "config": "{\"service\":\"optimizationQueryPolicy\",\"policyName\":\"oofBeijing.queryPolicy_vCPE\",\"description\":\"Optimization query policy for vCPE\",\"templateVersion\":\"0.0.1\",\"version\":\"oofBeijing\",\"priority\":\"3\",\"riskType\":\"test\",\"riskLevel\":\"2\",\"guard\":\"False\",\"content\":{\"queryProperties\":[{\"attribute\":\"locationId\",\"value\":\"orderInfo.customerLocation\"},{\"attribute\":\"id\",\"value\":\"orderInfo.vpnInfo\"},{\"attribute\":\"upstreamBW\",\"value\":\"orderInfo.vpnInfo\"}],\"policyScope\":[\"vCPE\",\"US\",\"INTERNATIONAL\",\"ip\",\"vGMuxInfra\",\"vG\"],\"policyType\":\"optimizationQueryPolicy\"}}",
+    "config": "{\"service\": \"optimizationQueryPolicy\", \"policyName\": \"oofBeijing.queryPolicy_vCPE\", \"description\": \"Optimization query policy for vCPE\", \"templateVersion\": \"0.0.1\", \"version\": \"oofBeijing\", \"priority\": \"3\", \"riskType\": \"test\", \"riskLevel\": \"2\", \"guard\": \"False\", \"content\": {\"queryProperties\": [{\"attribute\": \"locationId\", \"attribute_location\": \"customerLocation\", \"value\": \"\"}, {\"attribute\": \"id\", \"attribute_location\": \"vpnInfo.vpnId\", \"value\": \"\"}, {\"attribute\": \"upstreamBW\", \"attribute_location\": \"vpnInfo.upstreamBW\", \"value\": \"\"}, {\"attribute\": \"customerLatitude\", \"attribute_location\": \"customerLatitude\", \"value\": 32.89748}, {\"attribute\": \"customerLongitude\", \"attribute_location\": \"customerLongitude\", \"value\": -97.040443}], \"policyScope\": [\"vCPE\", \"US\", \"INTERNATIONAL\", \"ip\", \"vGMuxInfra\", \"vG\", \"optimizationQueryPolicy\"], \"policyType\": \"optimizationQueryPolicy\"}}",
     "policyName": "oofBeijing.Config_MS_queryPolicy_vCPE.1.xml",
     "policyVersion": "1",
     "matchingConditions": {
@@ -165,7 +165,7 @@
     "policyConfigMessage": "Config Retrieved! ",
     "policyConfigStatus": "CONFIG_RETRIEVED",
     "type": "JSON",
-    "config": "{\"service\":\"capacityPolicy\",\"policyName\":\"oofBeijing.capacityPolicy_vGMuxInfra\",\"description\":\"Capacity policy for vGMuxInfra\",\"templateVersion\":\"1702.03\",\"version\":\"oofBeijing\",\"priority\":\"5\",\"riskType\":\"test\",\"riskLevel\":\"2\",\"guard\":\"False\",\"content\":{\"identity\":\"capacity_vGMuxInfra\",\"policyScope\":[\"VCPE\",\"US\",\"INTERNATIONAL\",\"ip\",\"vGMuxInfra\"],\"resources\":[\"vGMuxInfra\"],\"capacityProperty\":{\"cpu\":{\"value\":2,\"operator\":\">\"},\"memory\":{\"value\":4,\"operator\":\">\",\"unit\":\"GB\"}},\"policyType\":\"capacityPolicy\",\"applicableResources\":\"any\"}}",
+    "config": "{\"service\": \"capacityPolicy\", \"policyName\": \"oofBeijing.capacityPolicy_vGMuxInfra\", \"description\": \"Capacity policy for vGMuxInfra\", \"templateVersion\": \"1702.03\", \"version\": \"oofBeijing\", \"priority\": \"5\", \"riskType\": \"test\", \"riskLevel\": \"2\", \"guard\": \"False\", \"content\": {\"identity\": \"capacity_vGMuxInfra\", \"policyScope\": [\"VCPE\", \"US\", \"INTERNATIONAL\", \"ip\", \"vGMuxInfra\", \"vim_fit\"], \"resources\": [\"vGMuxInfra\"], \"capacityProperty\": {\"controller\": \"multicloud\", \"request\": \"{\\\"vCPU\\\": 10, \\\"Memory\\\": {\\\"quantity\\\": {\\\"get_param\\\": \\\"REQUIRED_MEM\\\"}, \\\"unit\\\": \\\"GB\\\"}, \\\"Storage\\\": {\\\"quantity\\\": {\\\"get_param\\\": \\\"REQUIRED_DISK\\\", \\\"unit\\\": \\\"GB\\\"}}}\"}, \"policyType\": \"vim_fit\", \"applicableResources\": \"any\"}}",
     "policyName": "oofBeijing.Config_MS_capacityPolicy_vGMuxInfra.1.xml",
     "policyVersion": "1",
     "matchingConditions": {

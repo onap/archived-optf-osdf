@@ -15,7 +15,8 @@
     },
     "identity": "distance-vG",
     "resources": ["vG"],
-    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG"],
-    "policyType": "distancePolicy"
+    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG", "distancePolicy"],
+    "policyType": "distance_to_location",
+    "applicableResources": "any"
   }
 }

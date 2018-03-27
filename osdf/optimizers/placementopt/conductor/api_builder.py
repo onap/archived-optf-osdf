@@ -21,12 +21,11 @@ import json
 from jinja2 import Template
 
 import osdf.optimizers.placementopt.conductor.translation as tr
-from osdf.adapters.policy.utils import group_policies
+from osdf.adapters.policy.utils import group_policies_gen
 from osdf.utils.programming_utils import list_flatten
 
 
-def conductor_api_builder(request_json, flat_policies: list, local_config, prov_status,
-                          template="templates/conductor_interface.json"):
+def conductor_api_builder(request_json, flat_policies: list, local_config, template="templates/conductor_interface.json"):
     """Build an OSDF southbound API call for HAS-Conductor/Placement optimization
     :param request_json: parameter data received from a client
     :param flat_policies: policy data received from the policy platform (flat policies)
@@ -36,7 +35,7 @@ def conductor_api_builder(request_json, flat_policies: list, local_config, prov_
     :return: json to be sent to Conductor/placement optimization
     """
     templ = Template(open(template).read())
-    gp = group_policies(flat_policies)
+    gp = group_policies_gen(flat_policies, local_config)
     demand_vnf_name_list = []
 
     for placementDemand in request_json['placementInfo']['placementDemands']:
@@ -60,31 +59,29 @@ def conductor_api_builder(request_json, flat_policies: list, local_config, prov_
     reservation_policies = [x for x in reservation_policy_list if len(x) > 0]
     reservation_groups = list_flatten(reservation_policies)
     req_info = request_json['requestInfo']
-    model_name = request_json['serviceInfo']['serviceName']
-    service_type = model_name
+    request_type = req_info.get('requestType', None)
+    service_type = request_json['serviceInfo']['serviceName']
     service_info = local_config.get('service_info', {}).get(service_type, {})
     order_info = {}
     if 'orderInfo' in request_json["placementInfo"]:
         order_info = json.loads(request_json["placementInfo"]["orderInfo"])
-    request_type = req_info.get('requestType', None)
+
     subs_com_site_id = ""
     if 'subscriberInfo' in request_json['placementInfo']: 
         subs_com_site_id = request_json['placementInfo']['subscriberInfo'].get('subscriberCommonSiteId', "")
-    rendered_req = None
-    if service_type == 'vCPE':
-        rendered_req = templ.render(
-            requestType=request_type,
-            chosenComplex=subs_com_site_id,
-            demand_list=demand_list,
-            policy_groups=policy_groups,
-            optimization_policies=optimization_policy_list,
-            name=req_info['requestId'],
-            timeout=req_info['timeout'],
-            limit=req_info['numSolutions'],
-            serviceType=service_type,
-            serviceInstance=request_json['serviceInfo']['serviceInstanceId'],
-            provStatus=prov_status,
-            chosenRegion=order_info.get('requestParameters', {}).get('lcpCloudRegionId'),
-            json=json)
+    rendered_req = templ.render(
+        requestType=request_type,
+        chosenComplex=subs_com_site_id,
+        demand_list=demand_list,
+        policy_groups=policy_groups,
+        optimization_policies=optimization_policy_list,
+        name=req_info['requestId'],
+        timeout=req_info['timeout'],
+        limit=req_info['numSolutions'],
+        service_type=request_json['serviceInfo']['serviceName'],
+        service_id=request_json['serviceInfo']['serviceInstanceId'],
+        provStatus="",
+        chosenRegion=order_info.get('requestParameters', {}).get('lcpCloudRegionId'),
+        json=json)
     json_payload = json.dumps(json.loads(rendered_req))  # need this because template's JSON is ugly!
     return json_payload

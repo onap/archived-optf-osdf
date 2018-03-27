@@ -29,8 +29,8 @@ class TestConductorApiBuilder(unittest.TestCase):
     def setUp(self):
         self.main_dir = ""
         conductor_api_template = self.main_dir + "osdf/templates/conductor_interface.json"
-        parameter_data_file = self.main_dir + "test/placement-tests/request.json"
-        policy_data_path = self.main_dir + "test/policy-local-files/"
+        parameter_data_file = self.main_dir + "test/placement-tests/request.json"    # "test/placement-tests/request.json"
+        policy_data_path = self.main_dir + "test/policy-local-files"                 # "test/policy-local-files"
         local_config_file = self.main_dir + "config/common_config.yaml"
 
         valid_policies_list_file = policy_data_path + '/' + 'meta-valid-policies.txt'
@@ -42,12 +42,12 @@ class TestConductorApiBuilder(unittest.TestCase):
 
     def test_conductor_api_call_builder(self):
         main_dir = self.main_dir
-        conductor_api_template = main_dir + "osdf/templates/conductor_interface.json"
+        conductor_api_template = main_dir + "osdf/templates/conductor_interface.json" # "osdf/templates/conductor_interface.json"
         local_config_file = main_dir + "config/common_config.yaml"
         request_json = self.request_json
         policies = self.policies
         local_config = yaml.load(open(local_config_file))
-        templ_string = conductor_api_builder(request_json, policies, local_config, [], conductor_api_template)
+        templ_string = conductor_api_builder(request_json, policies, local_config, conductor_api_template)
         templ_json = json.loads(templ_string)
         self.assertEqual(templ_json["name"], "yyy-yyy-yyyy")
 

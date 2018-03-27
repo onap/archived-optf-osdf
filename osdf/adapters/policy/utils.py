@@ -19,7 +19,7 @@ import copy
 import json
 
 from collections import defaultdict
-
+import itertools
 from osdf.utils.programming_utils import dot_notation, list_flatten
 
 
@@ -33,13 +33,13 @@ def group_policies(flat_policies):
     """
     filtered_policies = defaultdict(list)
     policy_name = []
-    policies = [x for x in flat_policies if x['content'].get('policy_type')]  # drop ones without 'policy_type'
+    policies = [x for x in flat_policies if x['content'].get('policyType')]  # drop ones without 'policy_type'
     policy_types = set([x['content'].get('policyType') for x in policies])
     aggregated_policies = dict((x, defaultdict(list)) for x in policy_types)
 
     for policy in policies:
         policy_type = policy['content'].get('policyType')
-        for resource in policy['content'].get('resourceInstanceType', []):
+        for resource in policy['content'].get('resources', []):
             aggregated_policies[policy_type][resource].append(policy)
 
     for policy_type in aggregated_policies:
@@ -51,6 +51,38 @@ def group_policies(flat_policies):
                     # TODO: Check logic here... should policy appear only once across all groups?
                     filtered_policies[prioritized_policy['content']['policyType']].append(prioritized_policy)
                     policy_name.append(prioritized_policy['policyName'])
+    return filtered_policies
+
+
+def group_policies_gen(flat_policies, config):
+    """Filter policies using the following steps:
+    1. Apply prioritization among the policies that are sharing the same policy type and resource type
+    2. Remove redundant policies that may applicable across different types of resource
+    3. Filter policies based on type and return
+    :param flat_policies: list of flat policies
+    :return: Filtered policies
+    """
+    filtered_policies = defaultdict(list)
+    policy_name = []
+    policies = [x for x in flat_policies if x['content'].get('policyType')]  # drop ones without 'policy_type'
+    priority = config.get('policy_info', {}).get('prioritization_attributes', {})
+    aggregated_policies = dict()
+    for plc in policies:
+        attrs = [dot_notation(plc, dot_path) for key in priority.keys() for dot_path in priority[key]]
+        attrs_list  = [x if isinstance(x, list) else [x] for x in attrs]
+        attributes = [list_flatten(x) if isinstance(x, list) else x for x in attrs_list]
+        for y in itertools.product(*attributes):
+            aggregated_policies.setdefault(y, [])
+            aggregated_policies[y].append(plc)
+
+    for key in aggregated_policies.keys():
+        aggregated_policies[key].sort(key=lambda x: x['priority'], reverse=True)
+        prioritized_policy = aggregated_policies[key][0]
+        if prioritized_policy['policyName'] not in policy_name:
+            # TODO: Check logic here... should policy appear only once across all groups?
+            filtered_policies[prioritized_policy['content']['policyType']].append(prioritized_policy)
+            policy_name.append(prioritized_policy['policyName'])
+
     return filtered_policies
 
 

@@ -44,7 +44,9 @@ class TestConductorTranslation(unittest.TestCase):
         pass
 
     def test_gen_demands(self):
-        res = tr.gen_demands(self.request_json, self.policies)
+        # need to run this only on vnf policies
+        vnf_policies = [x for x in self.policies if x["content"]["policyType"] == "vnfPolicy"]
+        res = tr.gen_demands(self.request_json, vnf_policies)
         assert res is not None
 
 

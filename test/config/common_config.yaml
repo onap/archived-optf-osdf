@@ -38,6 +38,14 @@ references:
         value: content.properties.subscriberRole
 
 policy_info:
+    prioritization_attributes:
+        policy_type:
+            - content.policyType
+        resources:
+            - content.resources
+            - content.objectiveParameter.parameterAttributes.resources
+        service_name:
+            - content.serviceName
     placement:
         policy_fetch: by_scope
         policy_scope:

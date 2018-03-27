@@ -37,8 +37,8 @@ def gen_optimization_policy(vnf_list, optimization_policy):
 
         for attr in content['objectiveParameter']['parameterAttributes']:
             parameter = attr['parameter'] if attr['parameter'] == "cloud_version" else attr['parameter']+"_between"
-            for res in attr['resource']:
-                vnf = get_matching_vnf(res, vnf_list)
+            vnfs = get_matching_vnfs(attr['resources'], vnf_list)
+            for vnf in vnfs:
                 value = [vnf] if attr['parameter'] == "cloud_version" else [attr['customerLocationInfo'], vnf]
                 parameter_list.append({
                     attr['operator']: [attr['weight'], {parameter: value}]
@@ -66,7 +66,7 @@ def get_matching_vnfs(resources, vnf_list, match_type="intersection"):
     :return: List of matching VNFs
     """
     if match_type == "all":  # don't bother with any comparisons
-        return resources
+        return resources if set(resources) <= set(vnf_list) else None
     common_vnfs = set(vnf_list) & set(resources)
     if match_type == "intersection":  # specifically requested intersection
         return list(common_vnfs)
@@ -87,8 +87,8 @@ def gen_policy_instance(vnf_list, resource_policy, match_type="intersection", rt
     related_policies = []
     for policy in resource_policy:
         pc = policy['content']
-        demands = get_matching_vnfs(pc['resourceInstanceType'], vnf_list, match_type=match_type)
-        resource = {pc['identity']: {'type': pc['type'], 'demands': demands}}
+        demands = get_matching_vnfs(pc['resources'], vnf_list, match_type=match_type)
+        resource = {pc['identity']: {'type': pc['policyType'], 'demands': demands}}
 
         if rtype:
             resource[pc['identity']]['properties'] = {'controller': pc[rtype]['controller'],
@@ -127,10 +127,10 @@ def gen_distance_to_location_policy(vnf_list, distance_to_location_policy):
     """Get policies governing distance-to-location for VNFs in order to populate the Conductor API call"""
     cur_policies, related_policies = gen_policy_instance(vnf_list, distance_to_location_policy, rtype=None)
     for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
-        properties = p_main['content']['distanceToLocationProperty']
-        pcp_d = properties['distanceCondition']
+        properties = p_main['content']['distanceProperties']
+        pcp_d = properties['distance']
         p_new[p_main['content']['identity']]['properties'] = {
-            'distance': text_to_symbol[pcp_d['operator']] + " " + pcp_d['value'].lower(),
+            'distance': pcp_d['operator'] + " " + pcp_d['value'].lower() + " " + pcp_d['unit'].lower(),
             'location': properties['locationInfo']
         }
     return cur_policies
@@ -150,9 +150,9 @@ def gen_attribute_policy(vnf_list, attribute_policy):
 
 def gen_zone_policy(vnf_list, zone_policy):
     """Get zone policies in order to populate the Conductor API call"""
-    cur_policies, related_policies = gen_policy_instance(vnf_list, zone_policy, rtype=None)
+    cur_policies, related_policies = gen_policy_instance(vnf_list, zone_policy, match_type="all", rtype=None)
     for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
-        pmz = p_main['content']['zoneProperty']
+        pmz = p_main['content']['affinityProperty']
         p_new[p_main['content']['identity']]['properties'] = {'category': pmz['category'], 'qualifier': pmz['qualifier']}
     return cur_policies
 
@@ -179,9 +179,9 @@ def get_candidates_demands(demand):
 def get_policy_properties(demand, policies):
     """Get policy_properties for cases where there is a match with the demand"""
     for policy in policies:
-        if not set(policy['content'].get('resourceInstanceType', [])) & set(demand['resourceModuleName']):
+        if demand['resourceModuleName'] not in set(policy['content'].get('resources', [])):
             continue  # no match for this policy
-        for policy_property in policy['content']['property']:
+        for policy_property in policy['content']['vnfProperties']:
             yield policy_property
 
 

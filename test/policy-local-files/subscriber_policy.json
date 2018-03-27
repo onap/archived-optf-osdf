@@ -16,6 +16,7 @@
                 "subscriberRole": ["PVT Homing"],
                 "provStatus": ["CAPPED"]
         },
-        "policyType": "subscriberPolicy"
+        "policyType": "subscriberPolicy",
+        "serviceName": "vCPE"
     }
 }
