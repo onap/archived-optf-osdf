@@ -47,3 +47,5 @@ ENV PATH /mz-dist:$PATH
 # OSDF
 RUN git clone http://gerrit.onap.org/r/optf/osdf \
     && pip install --no-cache-dir -r osdf/requirements.txt
+
+CMD [ "/osdf/osdfapp.sh" ]

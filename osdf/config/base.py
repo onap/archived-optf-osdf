@@ -23,7 +23,7 @@ import osdf.config.credentials as creds
 from osdf.utils.programming_utils import DotDict
 
 config_spec = {
-    "deployment": os.environ.get("OSDF_MANAGER_CONFIG_FILE", "config/osdf_config.yaml"),
+    "deployment": os.environ.get("OSDF_CONFIG_FILE", "config/osdf_config.yaml"),
     "core": "config/common_config.yaml"
     }
 

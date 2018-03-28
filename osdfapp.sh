@@ -18,36 +18,14 @@
 # -------------------------------------------------------------------------
 #
 
-# Call osdf app after setting LD_LIBRARY_PATH for oracle client, postgres client, etc.
-
 cd $(dirname $0)
 
-# Environment variables below are for ORACLE_HOME and such things, and not needed for 1707 onwards
-# . ../dependencies/env.sh
+# bash ../etc/make-certs.sh  # create the https certificates if they are not present
 
-bash ../etc/make-certs.sh  # create the https certificates if they are not present
+LOGS=logs
+mkdir -p $LOGS
 
-set -e
+export OSDF_CONFIG_FILE=${1:-/opt/app/osdf_config.yaml}  # this file may be passed by invoker
+[ ! -e "$OSDF_CONFIG_FILE" ] && unset OSDF_CONFIG_FILE
 
-mkdir -p logs
-
-if [ ! -e "osdf-optim" ]; then
-(
-  mkdir tmp
-  cd tmp
-  tar xzf ../../dependencies/SNIROOptimizationPack.tgz
-  mv osdf ../osdf-optim
-  cd ../osdf-optim/pywheels
-  pip install docopt* jsonschema*
-)
-cp etc/run-case-local.sh osdf-optim/run/
-fi
-
-if [ $# -ge 1 ]; then
-   export SNIRO_MANAGER_CONFIG_FILE="$1"  # this file is passed by the DCAE controller
-fi
-
-# export FLASK_APP=osdfapp.py
-
-# flask run
-python osdfapp.py # running the app 
+python osdfapp.py 2>$LOGS/err.log 1>$LOGS/out.log < /dev/null & # running the app 
