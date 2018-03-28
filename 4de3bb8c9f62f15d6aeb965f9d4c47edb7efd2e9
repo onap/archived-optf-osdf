@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_b8a4cdb9",
+        "filename": "test/policy-local-files/has_policies_r2/QueryPolicy_vCPE.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2018-03-28T02:30:23Z",
+      "side": 0,
+      "message": "1. attribute_location - to keep it consistent across all policies, shouldn\u0027t this be following camelCase convention for naming?",
+      "revId": "4de3bb8c9f62f15d6aeb965f9d4c47edb7efd2e9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_78ae459a",
+        "filename": "test/policy-local-files/has_policies_r2/QueryPolicy_vCPE.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2018-03-28T02:30:23Z",
+      "side": 0,
+      "message": "I suggest either we should put \"attributeLocation\" and \"attributeValue\" OR \"location\" and  \"value\".\nMy vote for the later one.",
+      "revId": "4de3bb8c9f62f15d6aeb965f9d4c47edb7efd2e9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
