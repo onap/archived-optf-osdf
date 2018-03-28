@@ -159,9 +159,7 @@ def local_policies_location(req_json, osdf_config, service_type):
         if service_type == "scheduling":
             return lp.get('{}_policy_dir'.format(service_type)), lp.get('{}_policy_files'.format(service_type))
         else:
-            required_node = osdf_config.core['policy_info'][service_type]['policy_scope']['service_name']
-            model_name = retrieve_node(req_json, required_node)
-            service_name = model_name  # TODO: data_mapping.get_service_type(model_name)
+            service_name = req_json['serviceInfo']['serviceName']  # TODO: data_mapping.get_service_type(model_name)
             return lp.get('{}_policy_dir_{}'.format(service_type, service_name.lower())), \
                    lp.get('{}_policy_files_{}'.format(service_type, service_name.lower()))
     return None
@@ -173,7 +171,6 @@ def get_policies(request_json, service_type):
     :param service_type: the type of service to call: "placement", "scheduling"
     :return: policies associated with this request and provStatus retrieved from Subscriber policy
     """
-    prov_status = []
     req_info = request_json['requestInfo']
     req_id = req_info['requestId']
     metrics_log.info(MH.requesting("policy", req_id))
@@ -187,4 +184,4 @@ def get_policies(request_json, service_type):
     else:
         policies = remote_api(request_json, osdf_config, service_type)
 
-    return policies, prov_status
+    return policies

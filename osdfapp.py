@@ -116,8 +116,10 @@ def do_placement_opt():
     t = Thread(target=process_placement_opt, args=(request_json, policies, osdf_config))
     t.start()
     audit_log.info(MH.accepted_valid_request(req_id, request))
-    return osdf.operation.responses.osdf_response_for_request_accept(
-        req_id=req_id, text="Accepted placement request. Response will be posted to callback URL")
+    return osdf.operation.responses.osdf_response_for_request_accept(request_id=req_id,
+                                                                     transaction_id=request_json['transactionId'],
+                                                                     request_status="accepted",
+                                                                     status_message="")
 
 
 @app.errorhandler(500)

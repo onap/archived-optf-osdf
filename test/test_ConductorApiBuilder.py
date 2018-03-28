@@ -39,7 +39,6 @@ class TestConductorApiBuilder(unittest.TestCase):
         self.request_json = json_from_file(parameter_data_file)
         self.policies = [json_from_file(policy_data_path + '/' + name) for name in valid_policies_files]
 
-
     def test_conductor_api_call_builder(self):
         main_dir = self.main_dir
         conductor_api_template = main_dir + "osdf/templates/conductor_interface.json" # "osdf/templates/conductor_interface.json"

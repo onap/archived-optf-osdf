@@ -40,6 +40,8 @@ ERROR_TEMPLATE = Template("""
 ACCEPTED_MESSAGE_TEMPLATE = Template("""
 {
    "requestId": "{{ request_id }}",
-   "text": "{{ description }}"
+   "transactionId": "{{ transaction_id }}",
+   "requestStatus": "{{ request_status }}",
+   "statusMessage": "{{ status_message }}"
 }
 """)

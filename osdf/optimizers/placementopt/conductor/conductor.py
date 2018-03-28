@@ -186,8 +186,8 @@ def conductor_no_solution_processor(conductor_response, raw_response, request_id
     """
     status_message = conductor_response["plans"][0].get("message")
     templ = Template(open(template_placement_response).read())
-    return json.loads(templ.render(composite_solutions=[], requestId=request_id,
+    return json.loads(templ.render(composite_solutions=[], requestId=request_id, license_solutions=[],
                                    transactionId=raw_response.headers.get('transaction_id', ""),
-                                   statusMessage=status_message, json=json))
+                                   requestState="completed", statusMessage=status_message, json=json))
 
 

@@ -21,15 +21,19 @@ from flask import Response
 from osdf import ACCEPTED_MESSAGE_TEMPLATE
 
 
-def osdf_response_for_request_accept(req_id="", text="", response_code=202, as_http=True):
+def osdf_response_for_request_accept(request_id="", transaction_id="", request_status="", status_message="",
+                                     response_code=202, as_http=True):
     """Helper method to create a response object for request acceptance, so that the object can be sent to a client
-    :param req_id: request ID provided by the caller
-    :param text: extra text description about accepting the request (e.g. "Request accepted")
+    :param request_id: request ID provided by the caller
+    :param transaction_id: transaction ID provided by the caller
+    :param request_status: the status of a request
+    :param status_message: details on the status of a request
     :param response_code: the HTTP status code to send -- default is 202 (accepted)
     :param as_http: whether to send response as HTTP response object or as a string
     :return: if as_http is True, return a HTTP Response object. Otherwise, return json-encoded-message
     """
-    response_message = ACCEPTED_MESSAGE_TEMPLATE.render(description=text, request_id=req_id)
+    response_message = ACCEPTED_MESSAGE_TEMPLATE.render(request_id=request_id, transaction_id=transaction_id,
+                                                        request_status=request_status, status_message=status_message)
     if not as_http:
         return response_message
 

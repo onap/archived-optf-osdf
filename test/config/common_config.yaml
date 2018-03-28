@@ -11,15 +11,16 @@ osdf_temp:  # special configuration required for "workarounds" or testing
     local_policies:
         global_disabled: False
         local_placement_policies_enabled: True
+        placement_policy_dir_vcpe: "../test/policy-local-files/"
         placement_policy_files_vcpe: # workaroud for policy platform glitches (or "work-arounds" for other components)
             - Affinity_vCPE_1.json
             - Capacity_vGMuxInfra.json
             - Capacity_vG_1.json
             - Distance_vGMuxInfra_1.json
             - Distance_vG_1.json
-            - Min_Guarantee_vGMuxInfra_1.json
             - Placement_Optimization_1.json
             - QueryPolicy_vCPE.json
+            - QueryPolicy_vCPE_2.json
             - hpa_policy_vGMuxInfra_1.json
             - hpa_policy_vG_1.json
             - vnfPolicy_vG.json

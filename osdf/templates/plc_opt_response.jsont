@@ -1,14 +1,10 @@
 {
   "requestId": "{{requestId}}",
   "transactionId": "{{transacationId}}",
-  "startTime": "{{startTime}}",
-  "responseTime": "{{responseTime}}",
-  "requestType": "{{requestType}}",
   "requestState": "{{requestState}}",
-  "statusMessage": "{{statusMessage}}",
-  "percentProgress": "{{percentProgress}}",
-  "solutionInfo": {
-      "placement": {{ json.dumps(composite_solutions) }},
-      "licenseInfo":{ "featureGroupId": "{{featureGroupId}}" }
+  "statusMessage": "{{statusMessage}}"
+  "solutions": {
+      "placementSolutions": {{ json.dumps(composite_solutions) }},
+      "licenseSolutions":{{ json.dumps(license_solutions) }}
   }
 }

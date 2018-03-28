@@ -103,8 +103,6 @@ def retrieve_node(req_json, reference):
     For placement and other requests, there are encoded JSONs inside the request or policy,
     so we need to expand it and then do a search over the parent plus expanded JSON.
     """
-    req_json_copy = copy.deepcopy(req_json)  # since we expand the JSON in place, we work on a copy
-    if 'orderInfo' in req_json_copy['placementInfo']:
-        req_json_copy['placementInfo']['orderInfo'] = json.loads(req_json_copy['placementInfo']['orderInfo'])
+    req_json_copy = copy.deepcopy(req_json)
     info = dot_notation(req_json_copy, reference)
     return list_flatten(info) if isinstance(info, list) else info
