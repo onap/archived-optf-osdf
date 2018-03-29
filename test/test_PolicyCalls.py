@@ -52,11 +52,19 @@ class TestPolicyCalls(unittest.TestCase):
         return req_json, resp_json
 
     def test_policy_api_call(self):
-        req_json, policy_response = self.get_req_resp("./test/placement-tests/request.json",
-                                                      "./test/placement-tests/policy_response.json")
+        req_json, policy_response = self.get_req_resp("test/placement-tests/request.json",
+                                                      "test/placement-tests/policy_response.json")
         with patch('osdf.adapters.policy.interface.policy_api_call', return_value=policy_response):
             policy_list = interface.remote_api(req_json, osdf_config, service_type="placement")
             self.assertIsNotNone(policy_list)
+
+    def test_policy_api_call2(self):
+        req_json, policy_response = self.get_req_resp("test/placement-tests/request.json",
+                                                      "test/placement-tests/policy_response2.json")
+        with patch('osdf.adapters.policy.interface.policy_api_call', return_value=policy_response):
+            policy_list = interface.remote_api(req_json, osdf_config, service_type="placement")
+            policy_type = [policy['content']['policyType'] for policy in policy_list]
+            self.assertEqual(set(policy_type), {'hpaPolicy', 'SubscriberPolicy'})
 
     def failure_policy_call(self, req_json_file, resp_json_file):
         req_json, policy_response = self.get_req_resp(req_json_file, resp_json_file)
@@ -87,20 +95,19 @@ class TestPolicyCalls(unittest.TestCase):
                 self.assertRaises(Exception)
 
     def test_gen_demands(self):
-        actionsList = []
-        genDemandslist = []
+        actions_list, gen_demands_list = [], []
         req_json = "./test/placement-tests/request.json"
         req_json = json.loads(open(req_json).read())
         # need to run this only on vnf policies
         vnf_policies = [x for x in self.policies if x["content"]["policyType"] == "vnfPolicy"]
-        genDemands = translation.gen_demands(req_json, vnf_policies)
+        gen_demands = translation.gen_demands(req_json, vnf_policies)
         for action in req_json['placementInfo']['placementDemands']:
-            actionsList.append(action['resourceModuleName'])
-        for key2,value in genDemands.items():
-            genDemandslist.append(key2)
-        self.assertListEqual(genDemandslist, actionsList, 'generated demands are not equal to the passed input'
-                                                          '[placementDemand][resourceModuleName] list')
-           
+            actions_list.append(action['resourceModuleName'])
+        for key2,value in gen_demands.items():
+            gen_demands_list.append(key2)
+        self.assertListEqual(gen_demands_list, actions_list, 'generated demands are not equal to the passed input'
+                                                        '[placementDemand][resourceModuleName] list')
+
     def test_local_policy_location(self):
         req_json = json_from_file("./test/placement-tests/request.json")
         return interface.local_policies_location(req_json, osdf_config, service_type="placement")
