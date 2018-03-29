@@ -51,23 +51,24 @@ def get_by_scope(rest_client, req, config_local, type_service):
     :param req: an optimization request.
     :param config_local: application configuration file.
     :param type_service: the type of optimization service.
-    :return: a list of policies.
+    :return: policies in the form of list of list where inner list contains policies for a single a scope.
     """
-    policy_list = []
+    scope_policies = []
     references = config_local.get('references', {})
     pscope = config_local.get('policy_info', {}).get(type_service, {}).get('policy_scope', {})
     service_name = dot_notation(req, references.get('service_name', {}).get('value', None))
     primary_scope = pscope['{}_scope'.format(service_name.lower() if service_name else "default")]
     for sec_scope in pscope.get('secondary_scopes', []):
-        scope_fields, scope_fields_flatten = [], []
+        policies, scope_fields = [], []
         for field in sec_scope:
-            if 'get_param' in field:
-                scope_fields.append(get_scope_fields(field, references, req, list_flatten(policy_list)))
-            else:
-                scope_fields.append(field)
-        scope_fields_flatten = list_flatten(scope_fields)
-        policy_list.append(policy_api_call(rest_client, primary_scope, scope_fields_flatten))
-    return policy_list
+            scope_fields.extend([get_scope_fields(field, references, req, list_flatten(scope_policies))
+                                if 'get_param' in field else field])
+        scope_fields = set(list_flatten(scope_fields))
+        for scope in scope_fields:
+            policies.extend(policy_api_call(rest_client, primary_scope, scope))
+        scope_policies.append([policy for policy in policies
+                              if scope_fields <= set(json.loads(policy['config'])['content']['policyScope'])])
+    return scope_policies
 
 
 def get_scope_fields(field, references, req, policy_info):
@@ -80,38 +81,36 @@ def get_scope_fields(field, references, req, policy_info):
     :param policy_info: a list of policies.
     :return: scope fields retrieved from a request and policies.
     """
-    if references.get(field.get('get_param', ""), {}).get('source', None) == "request":
-        scope_field = dot_notation(req, references.get(field.get('get_param', ""), {}).get('value', ""))
+    ref_source = references.get(field.get('get_param', ""), {}).get('source')
+    ref_value = references.get(field.get('get_param', ""), {}).get('value')
+    if ref_source == "request":
+        scope_field = dot_notation(req, ref_value)
         if scope_field:
             return scope_field
-        raise BusinessException("Field {} is missing a value in a request".format(
-            references.get(field.get('get_param', ""), {}).get('value', "").split('.')[-1]))
+        raise BusinessException("Field {} is missing a value in a request".format(ref_value.split('.')[-1]))
     else:
         scope_fields = []
         for policy in policy_info:
             policy_content = json.loads(policy.get('config', "{}"))
-            if policy_content.get('content', {}).get('policyType', "invalid_policy") == \
-                    references.get(field.get('get_param', ""), {}).get('source', None):
-                scope_fields.append(dot_notation(policy_content,
-                                                 references.get(field.get('get_param', ""), {}).get('value', "")))
+            if policy_content.get('content', {}).get('policyType', "invalid_policy") == ref_source:
+                scope_fields.append(dot_notation(policy_content, ref_value))
         scope_values = list_flatten(scope_fields)
         if len(scope_values) > 0:
             return scope_values
         raise BusinessException("Field {} is missing a value in all policies of type {}".format(
-            references.get(field.get('get_param', ""), {}).get('value', "").split('.')[-1],
-            references.get(field.get('get_param', ""), {}).get('source', "")))
+            ref_value.split('.')[-1], ref_source))
 
 
-def policy_api_call(rest_client, primary_scope, scope_fields):
+def policy_api_call(rest_client, primary_scope, scope_field):
     """ Makes a getConfig API call to the policy system to retrieve policies matching a scope.
     :param rest_client: rest client object to make a call
     :param primary_scope: the primary scope of policies, which is a folder in the policy system
     where policies are stored.
-    :param scope_fields: the secondary scope of policies, which is a collection of domain values.
+    :param scope_field: the secondary scope of policies, which is a collection of domain values.
     :return: a list of policies matching both primary and secondary scopes.
     """
     api_call_body = {"policyName": "{}.*".format(primary_scope),
-                     "configAttributes": {"policyScope": "{}".format(scope_fields)}}
+                     "configAttributes": {"policyScope": "{}".format(scope_field)}}
     return rest_client.request(json=api_call_body)
 
 
