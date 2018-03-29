@@ -51,14 +51,15 @@ def get_by_scope(rest_client, req, config_local, type_service):
     :param req: an optimization request.
     :param config_local: application configuration file.
     :param type_service: the type of optimization service.
-    :return: a list of policies.
+    :return: a list of policies related to a scope.
     """
-    policy_list = []
+    policy_list, scope_policies = [], []
     references = config_local.get('references', {})
     pscope = config_local.get('policy_info', {}).get(type_service, {}).get('policy_scope', {})
     service_name = dot_notation(req, references.get('service_name', {}).get('value', None))
     primary_scope = pscope['{}_scope'.format(service_name.lower() if service_name else "default")]
     for sec_scope in pscope.get('secondary_scopes', []):
+        policies = []
         scope_fields, scope_fields_flatten = [], []
         for field in sec_scope:
             if 'get_param' in field:
@@ -66,8 +67,12 @@ def get_by_scope(rest_client, req, config_local, type_service):
             else:
                 scope_fields.append(field)
         scope_fields_flatten = list_flatten(scope_fields)
-        policy_list.append(policy_api_call(rest_client, primary_scope, scope_fields_flatten))
-    return policy_list
+        for scope in scope_fields_flatten:
+            policies.append(policy_api_call(rest_client, primary_scope, scope))
+        policy_list = list_flatten(policies)
+        scope_policies.append([policy for policy in policy_list
+                              if set(scope_fields_flatten) <= set(json.loads(policy['config'])['content']['policyScope'])])
+    return scope_policies
 
 
 def get_scope_fields(field, references, req, policy_info):
@@ -102,16 +107,16 @@ def get_scope_fields(field, references, req, policy_info):
             references.get(field.get('get_param', ""), {}).get('source', "")))
 
 
-def policy_api_call(rest_client, primary_scope, scope_fields):
+def policy_api_call(rest_client, primary_scope, scope_field):
     """ Makes a getConfig API call to the policy system to retrieve policies matching a scope.
     :param rest_client: rest client object to make a call
     :param primary_scope: the primary scope of policies, which is a folder in the policy system
     where policies are stored.
-    :param scope_fields: the secondary scope of policies, which is a collection of domain values.
+    :param scope_field: the secondary scope of policies, which is a collection of domain values.
     :return: a list of policies matching both primary and secondary scopes.
     """
     api_call_body = {"policyName": "{}.*".format(primary_scope),
-                     "configAttributes": {"policyScope": "{}".format(scope_fields)}}
+                     "configAttributes": {"policyScope": "{}".format(scope_field)}}
     return rest_client.request(json=api_call_body)
 
 
