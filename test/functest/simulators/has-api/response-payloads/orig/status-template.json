@@ -1,0 +1,13 @@
+{
+  "status": "template",
+  "name": "Plan Name 1",
+  "links": [
+    [
+      {
+        "href": "http://conductor:8091/v1/plans/plan_id",
+        "rel": "self"
+      }
+    ]
+  ],
+  "id": "plan_id"
+}

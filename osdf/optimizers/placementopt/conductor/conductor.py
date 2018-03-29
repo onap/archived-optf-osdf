@@ -32,12 +32,12 @@ from osdf.utils.interfaces import RestClient
 from osdf.operation.exceptions import BusinessException
 
 
-def request(req_object, osdf_config, grouped_policies):
+def request(req_object, osdf_config, flat_policies):
     """
     Process a placement request from a Client (build Conductor API call, make the call, return result)
     :param req_object: Request parameters from the client
     :param osdf_config: Configuration specific to SNIRO application (core + deployment)
-    :param grouped_policies: policies related to placement (fetched based on request, and grouped by policy type)
+    :param flat_policies: policies related to placement (fetched based on request)
     :param prov_status: provStatus retrieved from Subscriber policy
     :return: response from Conductor (accounting for redirects from Conductor service
     """
@@ -53,7 +53,7 @@ def request(req_object, osdf_config, grouped_policies):
     ping_wait_time = config.get('conductorPingWaitTime', 60)
 
     rc = RestClient(userid=uid, passwd=passwd, method="GET", log_func=debug_log.debug, headers=headers)
-    conductor_req_json_str = conductor_api_builder(req_object, grouped_policies, local_config)
+    conductor_req_json_str = conductor_api_builder(req_object, flat_policies, local_config)
     conductor_req_json = json.loads(conductor_req_json_str)
 
     debug_log.debug("Sending first Conductor request for request_id {}".format(req_id))

@@ -1,0 +1,23 @@
+{
+  "service": "optimizationQueryPolicy",
+  "policyName": "oofBeijing.queryPolicy_vCPE",
+  "description": "Optimization query policy for vCPE",
+  "templateVersion": "0.0.1",
+  "version": "oofBeijing",
+  "priority": "3",
+  "riskType": "test",
+  "riskLevel": "2",
+  "guard": "False",
+  "content": {
+    "queryProperties": [
+      {"attribute":"locationId", "attribute_location": "customerLocation", "value": ""},
+      {"attribute":"id", "attribute_location": "vpnInfo.vpnId", "value": ""},
+      {"attribute":"upstreamBW", "attribute_location": "vpnInfo.upstreamBW", "value": ""},
+      {"attribute":"customerLatitude", "attribute_location": "customerLatitude", "value": 32.89748},
+      {"attribute":"customerLongitude", "attribute_location": "customerLongitude", "value": -97.040443}
+    ],
+    "serviceName": "vCPE",
+    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG", "optimizationQueryPolicy"],
+    "policyType": "optimizationQueryPolicy"
+  }
+}

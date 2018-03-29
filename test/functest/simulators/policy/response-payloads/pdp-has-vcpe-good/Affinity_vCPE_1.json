@@ -1,0 +1,22 @@
+{
+    "service": "affinityPolicy",
+    "policyName": "oofBeijing.affinityPolicy_vcpe",
+    "description": "Affinity policy for vCPE",
+    "templateVersion": "1702.03",
+    "version": "oofBeijing",
+    "priority": "5",
+    "riskType": "test",
+    "riskLevel": "2",
+    "guard": "False",
+    "content": {
+        "identity": "affinity_vCPE",
+        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
+        "affinityProperty": {
+            "qualifier": "different",
+            "category": "complex"
+        },
+        "policyType": "zone",
+        "resources": ["vGMuxInfra", "vG"],
+        "applicableResources": "all"
+    }
+}

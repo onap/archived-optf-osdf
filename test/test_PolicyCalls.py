@@ -45,41 +45,32 @@ class TestPolicyCalls(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def get_req_resp(self, req_file, resp_file):
+        """Get request/response from files"""
+        req_json = json_from_file(req_file)
+        resp_json = json_from_file(resp_file)
+        return req_json, resp_json
+
     def test_policy_api_call(self):
-        req_json_file = "./test/placement-tests/request.json"
-        req_json = json.loads(open(req_json_file).read())
-        policy_response_file = "./test/placement-tests/policy_response.json"
-        policy_response = json.loads(open(policy_response_file).read())
+        req_json, policy_response = self.get_req_resp("./test/placement-tests/request.json",
+                                                      "./test/placement-tests/policy_response.json")
         with patch('osdf.adapters.policy.interface.policy_api_call', return_value=policy_response):
             policy_list = interface.remote_api(req_json, osdf_config, service_type="placement")
             self.assertIsNotNone(policy_list)
 
-    def test_policy_api_call_failed_1(self):
-        req_json_file = "./test/placement-tests/request_error1.json"
-        req_json = json.loads(open(req_json_file).read())
-        policy_response_file = "./test/placement-tests/policy_response.json"
-        policy_response = json.loads(open(policy_response_file).read())
+    def failure_policy_call(self, req_json_file, resp_json_file):
+        req_json, policy_response = self.get_req_resp(req_json_file, resp_json_file)
         with patch('osdf.adapters.policy.interface.policy_api_call', return_value=policy_response):
             self.assertRaises(BusinessException,
                               lambda: interface.remote_api(req_json, osdf_config, service_type="placement"))
 
-    def test_policy_api_call_failed_2(self):
-        req_json_file = "./test/placement-tests/request.json"
-        req_json = json.loads(open(req_json_file).read())
-        policy_response_file = "./test/placement-tests/policy_response_error1.json"
-        policy_response = json.loads(open(policy_response_file).read())
-        with patch('osdf.adapters.policy.interface.policy_api_call', return_value=policy_response):
-            self.assertRaises(BusinessException,
-                              lambda: interface.remote_api(req_json, osdf_config, service_type="placement"))
-
-    def test_policy_api_call_failed_3(self):
-        req_json_file = "./test/placement-tests/request.json"
-        req_json = json.loads(open(req_json_file).read())
-        policy_response_file = "./test/placement-tests/policy_response_error2.json"
-        policy_response = json.loads(open(policy_response_file).read())
-        with patch('osdf.adapters.policy.interface.policy_api_call', return_value=policy_response):
-            self.assertRaises(BusinessException,
-                              lambda: interface.remote_api(req_json, osdf_config, service_type="placement"))
+    def test_policy_api_call_failed_multi(self):
+        prefix = "./test/placement-tests"
+        fail_cases = [("request_error1.json", "policy_response.json"),
+                      ("request.json", "policy_response_error1.json"),
+                      ("request.json", "policy_response_error2.json")]
+        for req, resp in fail_cases:
+            self.failure_policy_call(prefix + "/" + req, prefix + "/" + resp)
 
     def test_get_by_scope(self):
         req_json_file = "./test/placement-tests/testScoperequest.json"
@@ -110,5 +101,10 @@ class TestPolicyCalls(unittest.TestCase):
         self.assertListEqual(genDemandslist, actionsList, 'generated demands are not equal to the passed input'
                                                           '[placementDemand][resourceModuleName] list')
            
+    def test_local_policy_location(self):
+        req_json = json_from_file("./test/placement-tests/request.json")
+        return interface.local_policies_location(req_json, osdf_config, service_type="placement")
+
+
 if __name__ == '__main__':
     unittest.main()
