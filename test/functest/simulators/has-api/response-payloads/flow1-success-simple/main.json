@@ -1,0 +1,13 @@
+{
+  "status": "template",
+  "name": "Plan Name 1",
+  "links": [
+    [
+      {
+        "href": "http://localhost:5000/simulated/oof/has-api/flow1-success-simple/status-solving.json",
+        "rel": "self"
+      }
+    ]
+  ],
+  "id": "plan_id"
+}

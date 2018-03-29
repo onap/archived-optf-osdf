@@ -25,7 +25,8 @@ from osdf.adapters.policy.utils import group_policies_gen
 from osdf.utils.programming_utils import list_flatten
 
 
-def conductor_api_builder(request_json, flat_policies: list, local_config, template="templates/conductor_interface.json"):
+def conductor_api_builder(request_json, flat_policies: list, local_config,
+                          template="osdf/templates/conductor_interface.json"):
     """Build an OSDF southbound API call for HAS-Conductor/Placement optimization
     :param request_json: parameter data received from a client
     :param flat_policies: policy data received from the policy platform (flat policies)

@@ -1,0 +1,22 @@
+{
+    "service": "capacityPolicy",
+    "policyName": "oofBeijing.capacityPolicy_vG",
+    "description": "Capacity policy for vG",
+    "templateVersion": "1702.03",
+    "version": "oofBeijing",
+    "priority": "5",
+    "riskType": "test",
+    "riskLevel": "2",
+    "guard": "False",
+    "content": {
+        "identity": "capacity_vG",
+        "policyScope": ["VCPE", "US", "INTERNATIONAL", "ip", "vG", "vim_fit"],
+	    "resources": ["vG"],
+        "capacityProperty": {
+            "controller": "multicloud",
+            "request": "{\"vCPU\": 10, \"Memory\": {\"quantity\": 16, \"unit\": \"GB\"}, \"Storage\": {\"quantity\": 40, \"unit\": \"GB\"}}"
+        },
+        "policyType": "vim_fit",
+        "applicableResources": "any"
+    }
+}

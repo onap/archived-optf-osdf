@@ -1,0 +1,64 @@
+{
+  "plans": [
+    {
+      "status": "done",
+      "id": "plan_id",
+      "name": "Plan Name 1",
+      "links": [
+        [
+          {
+            "href": "http://conductor:8091/v1/plans/plan_id",
+            "rel": "self"
+          }
+        ]
+      ],
+      "recommendations": [
+        {
+          "vG": {
+            "inventory_provider": "aai",
+            "candidate": {
+              "candidate_id": "DLLSTX1A",
+              "cloud_owner": "CloudOwner1",
+              "inventory_type": "cloud",
+              "location_id": "DLLSTX1A",
+              "location_type": "openstack-cloud"
+            },
+            "attributes": {
+              "flavors": {
+                "flavor_label_1": "vim_flavor_X",
+                "flavor_label_2": "vim_flavor_Y"
+              },
+              "cloud_owner": "CloudOwner1",
+              "physical-location-id": "DLLSTX1A",
+              "cloud_version": "3.0",
+              "vim-id": "CloudOwner1_DLLSTX1A"
+            }
+          }
+        },
+        {
+          "vGMuxInfra": {
+            "attributes": {
+              "host_id": "vgmux_host_name",
+              "cloud_owner": "CloudOwner1",
+              "physical-location-id": "DLLSTX1A",
+              "service_instance_id": "21d5f3e8-e714-4383-8f99-cc480144505a",
+              "cloud_version": "3.0",
+              "vim-id": "CloudOwner1_DLLSTX1A"
+            },
+            "inventory_provider": "aai",
+            "service_resource_id": "12345",
+            "candidate": {
+              "is_rehome": "false",
+              "location_id": "DLLSTX1A",
+              "inventory_type": "service",
+              "candidate_id": "21d5f3e8-e714-4383-8f99-cc480144505a",
+              "host_id": "vgmux_host_name",
+              "cloud_owner": "CloudOwner1",
+              "location_type": "openstack-cloud"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
