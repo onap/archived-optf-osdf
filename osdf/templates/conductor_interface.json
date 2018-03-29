@@ -8,8 +8,8 @@
     "parameters": {
 	    "service_name": "{{ service_name }}",
         "service_id": "{{ service_id }}",
-        "customer_lat": "{{ latitude }}",
-        "customer_long": "{{ longitude }}"
+        "customer_lat": {{ latitude }},
+        "customer_long": {{ longitude }}
     },
     "locations": {
         "customer_loc": {

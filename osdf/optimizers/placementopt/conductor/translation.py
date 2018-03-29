@@ -20,8 +20,28 @@ import json
 import yaml
 
 from osdf.utils.data_conversion import text_to_symbol
+from osdf.utils.programming_utils import dot_notation
 
 policy_config_mapping = yaml.load(open('config/has_config.yaml')).get('policy_config_mapping')
+
+
+def get_opt_query_data(req_json, policies):
+    """
+    Fetch service and order specific details from the requestParameters field of a request.
+    :param req_json: a request file
+    :param policies: A set of policies
+    :return: A dictionary with service and order-specific attributes.
+    """
+    req_param_dict = {}
+    if 'requestParameters' in req_json["placementInfo"]:
+        req_params = req_json["placementInfo"]["requestParameters"]
+        for policy in policies:
+            for queryProp in policy['content']['queryProperties']:
+                attr_val = queryProp['value'] if 'value' in queryProp and queryProp['value'] != "" \
+                    else dot_notation(req_params, queryProp['attribute_location'])
+                if attr_val is not None:
+                    req_param_dict.update({queryProp['attribute']: attr_val})
+    return req_param_dict
 
 
 def gen_optimization_policy(vnf_list, optimization_policy):
