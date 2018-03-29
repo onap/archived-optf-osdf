@@ -3,7 +3,7 @@
     "policyConfigMessage": "Config Retrieved! ",
     "policyConfigStatus": "CONFIG_RETRIEVED",
     "type": "JSON",
-    "config": "{\"service\":\"SubscriberPolicy\",\"policyName\":\"oofBeijing.SubscriberPolicy_v1\",\"description\":\"Subscriber Policy\",\"templateVersion\":\"0.0.1\",\"version\":\"oofBeijing\",\"priority\":\"1\",\"riskType\":\"test\",\"riskLevel\":\"3\",\"guard\":\"False\",\"content\":{\"identity\":\"subscriber\",\"policyScope\":[\"vCPE\",\"subscriber_x\",\"subscriber_y\"],\"properties\":{\"subscriberName\":[\"subscriber_x\",\"subscriber_y\"],\"subscriberRole\":[],\"provStatus\":[\"CAPPED\"]},\"policyType\":\"SubscriberPolicy\"}}",
+    "config": "{\"service\":\"SubscriberPolicy\",\"policyName\":\"oofBeijing.SubscriberPolicy_v1\",\"description\":\"Subscriber Policy\",\"templateVersion\":\"0.0.1\",\"version\":\"oofBeijing\",\"priority\":\"1\",\"riskType\":\"test\",\"riskLevel\":\"3\",\"guard\":\"False\",\"content\":{\"identity\":\"subscriber\",\"policyScope\":[\"vCPE\",\"SubscriberPolicy\",\"subscriber_x\",\"subscriber_y\"],\"properties\":{\"subscriberName\":[\"subscriber_x\",\"subscriber_y\"],\"subscriberRole\":[],\"provStatus\":[\"CAPPED\"]},\"policyType\":\"SubscriberPolicy\"}}",
     "policyName": "oofBeijing.Config_MS_SubscriberPolicy_v1.1.xml",
     "policyVersion": "1",
     "matchingConditions": {

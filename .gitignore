@@ -112,3 +112,8 @@ venv.bak/
 # pyCharm
 .idea/
 xunit*.xml
+
+# Functional testing
+test/functest/
+simulator-logs
+config/simulated-config
