@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_a029d98a",
+        "filename": "osdf/adapters/policy/interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 2197
+      },
+      "writtenOn": "2018-03-30T21:51:04Z",
+      "side": 1,
+      "message": "set()",
+      "range": {
+        "startLine": 62,
+        "startChar": 37,
+        "endLine": 62,
+        "endChar": 39
+      },
+      "revId": "f8983469b5176dc25d08041503392ff1c7af5806",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_4020159b",
+        "filename": "osdf/adapters/policy/interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 2197
+      },
+      "writtenOn": "2018-03-30T21:51:04Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 64,
+        "startChar": 25,
+        "endLine": 64,
+        "endChar": 31
+      },
+      "revId": "f8983469b5176dc25d08041503392ff1c7af5806",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_6023d1a7",
+        "filename": "osdf/adapters/policy/interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 2197
+      },
+      "writtenOn": "2018-03-30T21:51:04Z",
+      "side": 1,
+      "message": "Now, you can remove this line",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 53
+      },
+      "revId": "f8983469b5176dc25d08041503392ff1c7af5806",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_003a0dcd",
+        "filename": "osdf/adapters/policy/interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 2197
+      },
+      "writtenOn": "2018-03-30T21:51:04Z",
+      "side": 1,
+      "message": "Do you want to \"append\" or extend? If you want a list of lists, suggest updating that information in the docstring",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 29
+      },
+      "revId": "f8983469b5176dc25d08041503392ff1c7af5806",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_a050f90a",
+        "filename": "osdf/adapters/policy/interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 2197
+      },
+      "writtenOn": "2018-03-30T21:51:04Z",
+      "side": 1,
+      "message": "this is used twice, so suggest another variable and refer to it: e.g ref_value_short \u003d ref_value.split(\u0027.\u0027)[-1]",
+      "range": {
+        "startLine": 90,
+        "startChar": 83,
+        "endLine": 90,
+        "endChar": 106
+      },
+      "revId": "f8983469b5176dc25d08041503392ff1c7af5806",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_2035c9da",
+        "filename": "osdf/adapters/policy/interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 2197
+      },
+      "writtenOn": "2018-03-30T21:51:04Z",
+      "side": 1,
+      "message": "Can be very confusing: scope_fields and scope_values refer to similar thing (whereas field and values refer to different things in tables)\n\nWhy not use scope_fields.extend above and drop this line altogether?",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 49
+      },
+      "revId": "f8983469b5176dc25d08041503392ff1c7af5806",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_c033c5f4",
+        "filename": "osdf/adapters/policy/interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 2197
+      },
+      "writtenOn": "2018-03-30T21:51:04Z",
+      "side": 1,
+      "message": "Use pythonic way of \"if not scope_values\"?",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 33
+      },
+      "revId": "f8983469b5176dc25d08041503392ff1c7af5806",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
