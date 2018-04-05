@@ -62,6 +62,21 @@ class TestProcessPlacementOpt(unittest.TestCase):
         templ_string = process_placement_opt(request_json, policies, local_config)
 
 
+    def test_process_placement_opt_placementDemand(self):
+        main_dir = ""
+        parameter_data_file = main_dir + "test/placement-tests/request_placement.json"
+        policy_data_path = main_dir + "test/policy-local-files/"
+        local_config_file = main_dir + "config/common_config.yaml"
+
+        valid_policies_list_file = policy_data_path + '/' + 'meta-valid-policies.txt'
+        valid_policies_files = local_policies.get_policy_names_from_file(valid_policies_list_file)
+
+        request_json = json_from_file(parameter_data_file)
+        policies = [json_from_file(policy_data_path + '/' + name) for name in valid_policies_files]
+        local_config = yaml_from_file(local_config_file)
+        templ_string = process_placement_opt(request_json, policies, local_config)        
+
+
 if __name__ == "__main__":
     unittest.main()
 

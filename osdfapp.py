@@ -117,7 +117,7 @@ def do_placement_opt():
     t.start()
     audit_log.info(MH.accepted_valid_request(req_id, request))
     return osdf.operation.responses.osdf_response_for_request_accept(request_id=req_id,
-                                                                     transaction_id=request_json['transactionId'],
+                                                                     transaction_id=request_json['requestInfo']['transactionId'],
                                                                      request_status="accepted",
                                                                      status_message="")
 
