@@ -1,7 +1,7 @@
 {
   "requestId": "{{requestId}}",
   "transactionId": "{{transacationId}}",
-  "requestState": "{{requestState}}",
+  "requestStatus": "{{requestStatus}}",
   "statusMessage": "{{statusMessage}}"
   "solutions": {
       "placementSolutions": {{ json.dumps(composite_solutions) }},

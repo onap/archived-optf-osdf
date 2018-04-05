@@ -154,7 +154,7 @@ def conductor_response_processor(conductor_response, raw_response, req_id):
                     debug_log.debug("The key[{}] is not mapped and will not be returned in assignment info".format(key))
             composite_solutions.append(solution)
 
-    request_state = conductor_response['plans'][0]['status']
+    request_status = conductor_response['plans'][0]['status']
     transaction_id = raw_response.headers.get('transaction_id', "")
     status_message = conductor_response.get('plans')[0].get('message', "")
 
@@ -166,7 +166,7 @@ def conductor_response_processor(conductor_response, raw_response, req_id):
     resp = {
         "transactionId": transaction_id,
         "requestId": req_id,
-        "requestState": request_state,
+        "requestStatus": request_status,
         "statusMessage": status_message,
         "solutions": solution_info
     }
@@ -188,6 +188,6 @@ def conductor_no_solution_processor(conductor_response, raw_response, request_id
     templ = Template(open(template_placement_response).read())
     return json.loads(templ.render(composite_solutions=[], requestId=request_id, license_solutions=[],
                                    transactionId=raw_response.headers.get('transaction_id', ""),
-                                   requestState="completed", statusMessage=status_message, json=json))
+                                   requestStatus="completed", statusMessage=status_message, json=json))
 
 
