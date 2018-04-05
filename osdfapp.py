@@ -45,6 +45,7 @@ from requests import RequestException
 from schematics.exceptions import DataError
 from osdf.logging.osdf_logging import MH, audit_log, error_log, debug_log
 from osdf.models.api.placementRequest import PlacementAPI
+from osdf.operation.responses import osdf_response_for_request_accept as req_accept
 
 ERROR_TEMPLATE = osdf.ERROR_TEMPLATE
 
@@ -116,11 +117,9 @@ def do_placement_opt():
     t = Thread(target=process_placement_opt, args=(request_json, policies, osdf_config))
     t.start()
     audit_log.info(MH.accepted_valid_request(req_id, request))
-    return osdf.operation.responses.osdf_response_for_request_accept(request_id=req_id,
-                                                                     transaction_id=request_json['transactionId'],
-                                                                     request_status="accepted",
-                                                                     status_message="")
-
+    return req_accept(request_id=req_id,
+                      transaction_id=request_json['requestInfo']['transactionId'],
+                      request_status="accepted", status_message="")
 
 @app.errorhandler(500)
 def internal_failure(error):
