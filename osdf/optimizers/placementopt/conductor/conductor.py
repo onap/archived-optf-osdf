@@ -135,7 +135,7 @@ def conductor_response_processor(conductor_response, raw_response, req_id):
             solution = {
                 'resourceModuleName': resource,
                 'serviceResourceId': reco[resource].get('service_resource_id', ""),
-                'solution': {"identifier": c['inventory_type'],
+                'solution': {"identifier": name_map.get(c['inventory_type'], c['inventory_type']),
                              'identifiers': [c['candidate_id']],
                              'cloudOwner': c.get('cloud_owner', "")},
                 'assignmentInfo': []
