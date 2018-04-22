@@ -34,6 +34,8 @@ RUN apt-get update -y \
     && easy_install3 pip \
     && pip install --upgrade virtualenv pip wheel 
 
+RUN ln -s /usr/bin/python3.5 /usr/bin/python
+
 # Minizinc
 RUN wget -q $MZN_DL_URL -O mz.tgz \
     && tar xzf mz.tgz \
