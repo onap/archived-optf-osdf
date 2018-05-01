@@ -1,10 +1,20 @@
 .. This work is licensed under a Creative Commons Attribution 4.0 International License.
 
-Optimization Service Design Framework (OOF-OSDF)
-================================================
+
+Optimization Framework: Optimization Service Design Framework (OSDF)
+=============================================
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 1
 
-   apis/OOF_HAS_R2_Interface.rst
-   release-notes.rst
+   ./sections/architecture.rst
+   ./sections/offeredapis.rst
+   ./sections/consumedapis.rst
+   ./sections/delivery.rst
+   ./sections/logging.rst
+   ./sections/installation.rst
+   ./sections/configuration.rst
+   ./sections/administration.rst
+   ./sections/humaninterfaces.rst
+   ./sections/release-notes.rst
+
