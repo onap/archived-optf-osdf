@@ -1,13 +1,29 @@
-import logging
+# -------------------------------------------------------------------------
+#   Copyright (c) 2015-2017 AT&T Intellectual Property
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+# -------------------------------------------------------------------------
+#
+
 import traceback
 import uuid
 
-import logging
-from logging.handlers import RotatingFileHandler
+from .ecomp_common_v1.CommonLogger import CommonLogger
 from osdf.utils.programming_utils import MetaSingleton
 
 
-def log_handlers_pre_onap(config_file="config/pre_onap_logging_common_v1.config",
+def log_handlers_pre_onap(config_file="config/onap_logging_common_v1.config",
                           service_name="OOF_OSDF"):
     """
     Convenience handlers for logging to different log files
@@ -24,9 +40,8 @@ def log_handlers_pre_onap(config_file="config/pre_onap_logging_common_v1.config"
     X["metrics"].info("an INFO message for the metrics log")
     X["debug"].debug("a DEBUG message for the debug log")
     """
-    # Keeping main_params as a place-holder for ONAP related logging needs
-    # main_params = dict(instanceUUID=uuid.uuid1(), serviceName=service_name, configFile=config_file)
-    return dict((x, logging.getLogger(x))   # keep **main_params as a placeholder for ONAP fields
+    main_params = dict(instanceUUID=uuid.uuid1(), serviceName=service_name, configFile=config_file)
+    return dict((x, CommonLogger(logKey=x, **main_params))
                 for x in ["error", "metrics", "audit", "debug"])
 
 
@@ -214,6 +229,7 @@ class OOF_OSDFLogMessageFormatter(object):
 
 MH = OOF_OSDFLogMessageFormatter
 error_log, metrics_log, audit_log, debug_log = OOF_OSDFLogMessageHelper().get_handlers()
+
 
 def warn_audit_error(msg):
     """Log the message to error_log.warn and audit_log.warn"""

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # -------------------------------------------------------------------------
 #   Copyright (c) 2015-2017 AT&T Intellectual Property
 #
@@ -18,14 +16,25 @@
 # -------------------------------------------------------------------------
 #
 
-cd $(dirname $0)
+test:
+	rm -f /tmp/cl.*.log
+	python CommonLogger.py
+	rm -f /tmp/cl.*.log
+	python3 CommonLogger.py -k -v
+	# python CommonLogger_test.py
+	# python3 CommonLogger_test.py
 
-# bash ../etc/make-certs.sh  # create the https certificates if they are not present
+# STAGEDIR is overridden in ../makefile
+STAGEDIR=/tmp
 
-LOGS=logs
-mkdir -p $LOGS
+build: CommonLogger.html
+	mkdir -p $(STAGEDIR)/python
+	cp -p *.py *.config *.md CommonLogger.html $(STAGEDIR)/python
+	chmod a+x $(STAGEDIR)/python/*.py
 
-export OSDF_CONFIG_FILE=${1:-/opt/app/osdf_config.yaml}  # this file may be passed by invoker
-[ ! -e "$OSDF_CONFIG_FILE" ] && unset OSDF_CONFIG_FILE
+CommonLogger.html: CommonLogger.py
+	pydoc -w ./CommonLogger.py
 
-python osdfapp.py 2>$LOGS/err.log 1>$LOGS/out.log < /dev/null  # running the app
+clean:
+	rm -rf __pycache__ *.pyc CommonLogger.html
+	rm -rf *~ 
