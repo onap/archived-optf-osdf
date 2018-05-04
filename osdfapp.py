@@ -97,6 +97,7 @@ def handle_data_error(e):
 @app.route("/api/oof/v1/healthcheck", methods=["GET"])
 def do_osdf_health_check():
     """Simple health check"""
+    audit_log.info("A health check request is processed!")
     return "OK"
 
 
