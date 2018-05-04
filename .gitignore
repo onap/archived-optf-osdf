@@ -112,3 +112,6 @@ venv.bak/
 # pyCharm
 .idea/
 xunit*.xml
+
+# Simulator Logs
+simulator-logs
