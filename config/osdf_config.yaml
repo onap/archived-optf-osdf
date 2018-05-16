@@ -10,7 +10,7 @@ conductorPingWaitTime: 60  # seconds to wait before calling the conductor retry 
 conductorMaxRetries: 30  # if we don't get something in 30 minutes, give up
 
 # Policy Platform -- requires ClientAuth, Authorization, and Environment
-policyPlatformUrl: http://onap-pdp:8081/pdp/api/getConfig # Policy Dev platform URL
+policyPlatformUrl: http://policy.api.simpledemo.onap.org:8081/pdp/api/getConfig # Policy Dev platform URL
 policyPlatformEnv: TEST  # Environment for policy platform
 policyPlatformUsername: testpdp   # Policy platform username.
 policyPlatformPassword: alpha123   # Policy platform password.
