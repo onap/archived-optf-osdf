@@ -5,19 +5,19 @@ odfPasswordForSO: ""   # The OSDF Manager password for MSO.
 soUsername: ""   # SO username for call back.
 soPassword: ""   # SO password for call back.
 
-conductorUrl: "https://OOF-HAS-CONDUCTOR-HOST:8091"
-conductorUsername: "CONDUCTOR-USER"
-conductorPassword: "CONDUCTOR-PASSWD"
+conductorUrl: https://localhost:8091/v1/plans/
+conductorUsername: admin1
+conductorPassword: plan.15
 conductorPingWaitTime: 60  # seconds to wait before calling the conductor retry URL
 conductorMaxRetries: 30  # if we don't get something in 30 minutes, give up
 
 # Policy Platform -- requires ClientAuth, Authorization, and Environment
-policyPlatformUrl: https://POLICY-URL:8081/pdp/getConfig # Policy Dev platform URL
+policyPlatformUrl: http://policy.api.simpledemo.onap.org:8081/pdp/api/getConfig # Policy Dev platform URL
 policyPlatformEnv: TEST  # Environment for policy platform
-policyPlatformUsername: POLICY-USER   # Policy platform username.
-policyPlatformPassword: POLICY-PASSWD   # Policy platform password.
-policyClientUsername: POLICY-CLIENT-USER   # For use with ClientAuth
-policyClientPassword: POLICY-CLIENT-PASSWD   # For use with ClientAuth
+policyPlatformUsername: testpdp   # Policy platform username.
+policyPlatformPassword: alpha123   # Policy platform password.
+policyClientUsername: python   # For use with ClientAuth
+policyClientPassword: test   # For use with ClientAuth
 
 messageReaderHosts: https://DMAAP-HOST1:3905,https://DMAAP-HOST2:3905,https://DMAAP-HOST3:3905
 messageReaderTopic: org.onap.oof.osdf.multicloud
