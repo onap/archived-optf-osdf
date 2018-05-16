@@ -56,10 +56,10 @@ policy_info:
             secondary_scopes:
                 -
                     - get_param: service_name
-                    - SubscriberPolicy
-                -
-                    - get_param: service_name
-                    - get_param: subscriber_role
+                    - US
+    #            -
+    #                - get_param: service_name
+    #                - get_param: subscriber_role
     default:  # if no explicit service related information is needed
         policy_fetch: by_name
         policy_scope: none
