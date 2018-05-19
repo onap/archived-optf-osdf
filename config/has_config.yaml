@@ -11,7 +11,9 @@ policy_config_mapping:
         geo_region: geoRegion,
         exclusivity_groups: exclusivityGroups,
         replication_role: replicationRole,
-    remapping:
+        customer-id: customerId,
+        service-type: serviceResourceId,
+        equipment-role: equipmentRole,
         model-invariant-id: modelInvariantId,
         model-version-id: modelVersionId
     candidates:

@@ -33,11 +33,14 @@ def get_local_policies(local_policy_folder, local_policy_list, policy_id_list=No
     :return: get policies
     """
     policies = []
-    for fname in local_policy_list:  # ugly removal of .json from file name
-        if policy_id_list and fname[:-5] not in policy_id_list:
-            continue
-        with open(os.path.join(local_policy_folder, fname)) as fid:
-            policies.append(json.load(fid))
+    if policy_id_list:
+        for policy_id in policy_id_list:
+            with open(os.path.join(local_policy_folder, policy_id + ".json")) as fid:
+                policies.append(json.load(fid))
+    else:
+        for fname in local_policy_list:
+            with open(os.path.join(local_policy_folder, fname)) as fid:
+                policies.append(json.load(fid))
     return policies
 
 

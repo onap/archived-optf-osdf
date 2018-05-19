@@ -1,9 +1,9 @@
 {
-  "service": "distancePolicy",
-  "policyName": "oofBeijing.distancePolicy_vGMuxInfra",
+  "service": "distance_to_location",
+  "policyName": "OSDF_R2.Distance_vGMuxInfra",
   "description": "Distance Policy for vGMuxInfra",
-  "templateVersion": "0.0.1",
-  "version": "oofBeijing",
+  "templateVersion": "OpenSource.version.1",
+  "version": "test1",
   "priority": "3",
   "riskType": "test",
   "riskLevel": "2",
@@ -15,8 +15,8 @@
     },
     "identity": "distance-vGMuxInfra",
     "resources": ["vGMuxInfra"],
-    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "distancePolicy"],
-    "policyType": "distance_to_location",
+    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
+    "policyType": "distancePolicy",
     "applicableResources": "any"
   }
 }

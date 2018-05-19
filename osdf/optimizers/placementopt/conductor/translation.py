@@ -221,12 +221,21 @@ def get_demand_properties(demand, policies):
     for policy_property in get_policy_properties(demand, policies):
         prop = dict(inventory_provider=policy_property['inventoryProvider'],
                     inventory_type=policy_property['inventoryType'],
-                    service_resource_id=demand['serviceResourceId'])
-        if 'attributes' in policy_property:
-            prop['attributes'] = get_augmented_policy_attributes(policy_property, demand)
-        for k1, v1, k2, v2 in policy_config_mapping['extra_fields']:
-            if k1 == v1:
-                prop[k2] = v2
+                    service_type=demand['serviceResourceId'])
+        attributes = policy_config_mapping['attributes']
+        prop['attributes'] = {
+            'customer-id': policy_property['customerId'],
+            'orchestration-status': "",
+            'model-invariant-id': demand['resourceModelInfo']['modelInvariantId'],
+            'model-version-id': demand['resourceModelInfo']['modelVersionId'],
+            'service-type': demand['serviceResourceId'],
+            'equipment-role': policy_property['equipmentRole']
+        }
+        # if 'attributes' in policy_property:
+        #     prop['attributes'] = get_augmented_policy_attributes(policy_property, demand)
+        # for k1, v1, k2, v2 in policy_config_mapping['extra_fields']:
+        #     if k1 == v1:
+        #         prop[k2] = v2
         prop.update(get_candidates_demands(demand))  # for excluded and partial-rehoming cases
         demand_properties.append(prop)
     return demand_properties

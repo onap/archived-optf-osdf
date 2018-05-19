@@ -1,23 +1,21 @@
 {
   "service": "optimizationQueryPolicy",
-  "policyName": "oofBeijing.queryPolicy_vCPE",
+  "policyName": "OSDF_R2.QueryPolicy_vCPE",
   "description": "Optimization query policy for vCPE",
-  "templateVersion": "0.0.1",
-  "version": "oofBeijing",
+  "templateVersion": "OpenSource.version.1",
+  "version": "test1",
   "priority": "3",
   "riskType": "test",
   "riskLevel": "2",
   "guard": "False",
   "content": {
     "queryProperties": [
-      {"attribute":"locationId", "attribute_location": "customerLocation", "value": ""},
-      {"attribute":"id", "attribute_location": "vpnInfo.vpnId", "value": ""},
-      {"attribute":"upstreamBW", "attribute_location": "vpnInfo.upstreamBW", "value": ""},
-      {"attribute":"customerLatitude", "attribute_location": "customerLatitude", "value": 32.89748},
-      {"attribute":"customerLongitude", "attribute_location": "customerLongitude", "value": -97.040443}
+      {"attribute":"customerLatitude", "attribute_location": "customerLatitude"},
+      {"attribute":"customerLongitude", "attribute_location": "customerLongitude"}
     ],
+    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
+    "policyType": "optimizationQueryPolicy",
     "serviceName": "vCPE",
-    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG", "optimizationQueryPolicy"],
-    "policyType": "optimizationQueryPolicy"
+    "identity": "vCPE_Query_Policy"
   }
 }

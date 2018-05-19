@@ -1,18 +1,18 @@
 {
     "service": "hpaPolicy",
-    "policyName": "oofBeijing.hpaPolicy_vG",
+    "policyName": "OSDF_R2.hpa_policy_vG_1",
     "description": "HPA policy for vG",
-    "templateVersion": "0.0.1",
-    "version": "1.0",
+    "templateVersion": "OpenSource.version.1",
+    "version": "test1",
     "priority": "3",
     "riskType": "test",
     "riskLevel": "2",
     "guard": "False",
     "content": {
-      "resources": ["vG"],
+      "resources": "vG",
       "identity": "hpaPolicy_vG",
-      "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG", "hpaPolicy"],
-      "policyType": "hpa",
+      "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG"],
+      "policyType": "hpaPolicy",
       "flavorFeatures": [
         {
           "flavorLabel": "flavor_label_vm_01",
@@ -85,7 +85,7 @@
               "score" : "5",
               "architecture": "generic",
               "hpa-feature-attributes": [
-                {"hpa-attribute-key": "diskSize", "hpa-attribute-value": "2", "operator": "=", "unit": "GB"},  
+                {"hpa-attribute-key": "diskSize", "hpa-attribute-value": "2", "operator": "=", "unit": "GB"},
                 {"hpa-attribute-key": "ephemeralDiskSize", "hpa-attribute-value": "2", "operator": "=", "unit": "GB"},
                 {"hpa-attribute-key": "swapMemSize", "hpa-attribute-value":"16", "operator": "=", "unit": "MB"}
               ]

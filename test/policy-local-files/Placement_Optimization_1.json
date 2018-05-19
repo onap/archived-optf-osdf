@@ -1,9 +1,9 @@
 {
-    "service": "PlacementOptimizationPolicy",
-    "policyName": "oofBeijing.PlacementOptimizationPolicy_vGMuxInfra",
+    "service": "placementOptimization",
+    "policyName": "OSDF_R2.Placement_Optimization_1",
     "description": "Placement Optimization Policy for vGMuxInfra",
-    "templateVersion": "1702.03",
-    "version": "oofBeijing",
+    "templateVersion": "OpenSource.version.1",
+    "version": "test1",
     "priority": "5",
     "riskType": "test",
     "riskLevel": "3",
@@ -29,7 +29,7 @@
             "operator": "sum"
         },
         "identity": "optimization",
-        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG", "placementOptimization"],
+        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
         "policyType": "placementOptimization",
         "objective": "minimize"
     }

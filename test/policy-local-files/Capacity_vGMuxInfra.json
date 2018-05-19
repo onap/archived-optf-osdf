@@ -1,20 +1,20 @@
 {
-    "service": "capacityPolicy",
-    "policyName": "oofBeijing.capacityPolicy_vGMuxInfra",
+    "service": "vim_fit",
+    "policyName": "OSDF_R2.Capacity_vGMuxInfra",
     "description": "Capacity policy for vGMuxInfra",
-    "templateVersion": "1702.03",
-    "version": "oofBeijing",
+    "templateVersion": "OpenSource.version.1",
+    "version": "test1",
     "priority": "5",
     "riskType": "test",
     "riskLevel": "2",
     "guard": "False",
     "content": {
         "identity": "capacity_vGMuxInfra",
-        "policyScope": ["VCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vim_fit"],
+        "policyScope": ["VCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
 	    "resources": ["vGMuxInfra"],
         "capacityProperty": {
             "controller": "multicloud",
-            "request": "{\"vCPU\": 10, \"Memory\": {\"quantity\": 16, \"unit\": \"GB\"}, \"Storage\": {\"quantity\": 40, \"unit\": \"GB\"}}"
+            "request": "{\"vCPU\": 10, \"Memory\": {\"quantity\": {\"get_param\": \"REQUIRED_MEM\"}, \"unit\": \"GB\"}, \"Storage\": {\"quantity\": {\"get_param\": \"REQUIRED_DISK\"}, \"unit\": \"GB\"}}"
         },
         "policyType": "vim_fit",
         "applicableResources": "any"

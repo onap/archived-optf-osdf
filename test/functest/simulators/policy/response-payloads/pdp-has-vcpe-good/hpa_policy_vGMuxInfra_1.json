@@ -1,18 +1,18 @@
 {
     "service": "hpaPolicy",
-    "policyName": "oofBeijing.hpaPolicy_vGMuxInfra",
+    "policyName": "OSDF_R2.hpa_policy_vGMuxInfra_1",
     "description": "HPA policy for vGMuxInfra",
-    "templateVersion": "0.0.1",
-    "version": "1.0",
+    "templateVersion": "OpenSource.version.1",
+    "version": "test1",
     "priority": "3",
     "riskType": "test",
     "riskLevel": "2",
     "guard": "False",
     "content": {
-      "resources": ["vGMuxInfra"],
+      "resources": "vGMuxInfra",
       "identity": "hpaPolicy_vGMuxInfra",
-      "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "hpaPolicy"],
-      "policyType": "hpa",
+      "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
+      "policyType": "hpaPolicy",
       "flavorFeatures": [
         {
           "flavorLabel": "flavor_label_vm_01",

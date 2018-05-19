@@ -1,10 +1,10 @@
 {
-    "service": "affinityPolicy",
-    "policyName": "oofBeijing.affinityPolicy_vcpe",
-    "description": "Affinity policy for vCPE",
-    "templateVersion": "1702.03",
-    "version": "oofBeijing",
-    "priority": "5",
+    "service": "zone",
+    "policyName": "OSDF_R2.Affinity_vCPE_1",
+    "description": "Optimization query policy for vCPE",
+    "templateVersion": "OpenSource.version.1",
+    "version": "test1",
+    "priority": "3",
     "riskType": "test",
     "riskLevel": "2",
     "guard": "False",
@@ -16,7 +16,6 @@
             "category": "complex"
         },
         "policyType": "zone",
-        "resources": ["vGMuxInfra", "vG"],
-        "applicableResources": "all"
+        "resources": ["vGMuxInfra", "vG"]
     }
 }

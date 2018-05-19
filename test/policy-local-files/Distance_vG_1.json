@@ -1,9 +1,9 @@
 {
-  "service": "distancePolicy",
-  "policyName": "oofBeijing.distancePolicy_vG",
+  "service": "distance_to_location",
+  "policyName": "OSDF_R2.Distance_vG_1",
   "description": "Distance Policy for vG",
-  "templateVersion": "0.0.1",
-  "version": "oofBeijing",
+  "templateVersion": "OpenSource.version.1",
+  "version": "test1",
   "priority": "3",
   "riskType": "test",
   "riskLevel": "2",
@@ -15,8 +15,8 @@
     },
     "identity": "distance-vG",
     "resources": ["vG"],
-    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG", "distancePolicy"],
-    "policyType": "distance_to_location",
+    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG"],
+    "policyType": "distancePolicy",
     "applicableResources": "any"
   }
 }

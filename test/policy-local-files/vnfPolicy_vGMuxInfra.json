@@ -1,31 +1,27 @@
 {
-    "service": "VnfPolicy",
-    "policyName": "oofBeijing.vnfPolicy_vGMuxInfra",
+    "service": "vnfPolicy",
+    "policyName": "OSDF_R2.vnfPolicy_vGMuxInfra",
     "description": "vnfPolicy",
-    "templateVersion": "1702.03",
-    "version": "oofBeijing",
+    "templateVersion": "OpenSource.version.1",
+    "version": "test1",
     "priority": "6",
     "riskType": "test",
     "riskLevel": "3",
     "guard": "False",
     "content": {
         "identity": "vnf_vGMuxInfra",
-        "policyScope": ["vCPE", "INTERNATIONAL", "ip", "vGMuxInfra", "vnf_policy"],
+        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
         "policyType": "vnfPolicy",
         "resources": ["vGMuxInfra"],
         "applicableResources": "any",
-	"vnfProperties": [
+	    "vnfProperties": [
             {
                 "inventoryProvider": "aai",
-                "serviceType": "",
-                "inventoryType": "cloud",
-                "customerId": ""
-            },
-            {
-                "inventoryProvider": "multicloud",
-                "serviceType": "HNGATEWAY",
+                "serviceType": "vGMuxInfra",
                 "inventoryType": "service",
-                "customerId": "21014aa2-526b-11e6-beb8-9e71128cae77"
+                "customerId": "",
+                "orchestrationStatus": "",
+                "equipmentRole": ""
             }
         ]
     }
