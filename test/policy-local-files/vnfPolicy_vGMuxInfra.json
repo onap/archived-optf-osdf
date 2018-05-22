@@ -17,9 +17,9 @@
 	    "vnfProperties": [
             {
                 "inventoryProvider": "aai",
-                "serviceType": "vGMuxInfra",
+                "serviceType": "vGMuxInfra-xx",
                 "inventoryType": "service",
-                "customerId": "",
+                "customerId": "SDN-ETHERNET-INTERNET",
                 "orchestrationStatus": "",
                 "equipmentRole": ""
             }

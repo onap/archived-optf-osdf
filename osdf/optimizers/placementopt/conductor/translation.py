@@ -224,7 +224,7 @@ def get_demand_properties(demand, policies):
                     service_type=demand['serviceResourceId'])
         attributes = policy_config_mapping['attributes']
         prop['attributes'] = {
-            'customer-id': policy_property['customerId'],
+            'global-customer-id': policy_property['customerId'],
             'orchestration-status': "",
             'model-invariant-id': demand['resourceModelInfo']['modelInvariantId'],
             'model-version-id': demand['resourceModelInfo']['modelVersionId'],
