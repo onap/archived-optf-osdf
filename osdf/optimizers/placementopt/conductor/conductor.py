@@ -106,7 +106,7 @@ def initial_request_to_conductor(rc, conductor_url, conductor_req_json):
         raise RequestException(response=raw_resp, request=raw_resp.request)
     time.sleep(10)  # 10 seconds wait time to avoid being too quick!
     plan_url = resp["links"][0][0]["href"]
-    debug_log.debug("Attemping to read the plan from the conductor provided url {}".format(plan_url))
+    debug_log.debug("Attempting to read the plan from the conductor provided url {}".format(plan_url))
     raw_resp = rc.request(raw_response=True, url=plan_url)  # TODO: check why a list of lists for links
     resp = raw_resp.json()
 

@@ -222,21 +222,16 @@ def get_demand_properties(demand, policies):
         prop = dict(inventory_provider=policy_property['inventoryProvider'],
                     inventory_type=policy_property['inventoryType'],
                     service_type=demand['serviceResourceId'])
-        attributes = policy_config_mapping['attributes']
-        prop['attributes'] = {
-            'global-customer-id': policy_property['customerId'],
-            'orchestration-status': "",
-            'model-invariant-id': demand['resourceModelInfo']['modelInvariantId'],
-            'model-version-id': demand['resourceModelInfo']['modelVersionId'],
-            'service-type': demand['serviceResourceId'],
-            'equipment-role': policy_property['equipmentRole']
-        }
-        # if 'attributes' in policy_property:
-        #     prop['attributes'] = get_augmented_policy_attributes(policy_property, demand)
-        # for k1, v1, k2, v2 in policy_config_mapping['extra_fields']:
-        #     if k1 == v1:
-        #         prop[k2] = v2
-        prop.update(get_candidates_demands(demand))  # for excluded and partial-rehoming cases
+        prop['attributes'] = dict()
+        prop['attributes'].update({'global-customer-id': policy_property['customerId']}
+                                  if policy_property['customerId'] else {})
+        prop['attributes'].update({'model-invariant-id': demand['resourceModelInfo']['modelInvariantId']}
+                                  if demand['resourceModelInfo']['modelInvariantId'] else {})
+        prop['attributes'].update({'model-version-id': demand['resourceModelInfo']['modelVersionId']}
+                                  if demand['resourceModelInfo']['modelVersionId'] else {})
+        prop['attributes'].update({'equipment-role': policy_property['equipmentRole']}
+                                  if policy_property['equipmentRole'] else {})
+        prop.update(get_candidates_demands(demand))
         demand_properties.append(prop)
     return demand_properties
 

@@ -12,7 +12,7 @@
         "identity": "affinity_vCPE",
         "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
         "affinityProperty": {
-            "qualifier": "different",
+            "qualifier": "same",
             "category": "complex"
         },
         "policyType": "zone",
