@@ -6,5 +6,8 @@ Installation
 Installing from the Source Code
 ------------------------------------
 Get code from the Linux Foundation Projects page
+
+.. code-block:: bash
+
     $ git clone https://gerrit.onap.org/r/optf/osdf
 

@@ -25,7 +25,7 @@ Request Header
 +----------------+-----------+-------------------------------------------------------------------------------------------+
 | Header Name    | Required  | Description                                                                               |
 +================+===========+===========================================================================================+
-| Accept         | N         | Determines the format of the body of the response. Valid value is “application/json”    |
+| Accept         | N         | Determines the format of the body of the response. Valid value is “application/json”      |
 +----------------+-----------+-------------------------------------------------------------------------------------------+
 | Authorization  | Y         | Supplies Basic Authentication credentials for the request. If the Authorization header is |
 |                |           | missing, then an HTTP 400 Invalid Request response is returned. If the string supplied is |

@@ -2,7 +2,7 @@
 
 
 Optimization Framework: Optimization Service Design Framework (OSDF)
-=============================================
+=========================================================================
 
 .. toctree::
    :maxdepth: 1
