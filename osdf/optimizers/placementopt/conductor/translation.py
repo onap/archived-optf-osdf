@@ -247,6 +247,7 @@ def gen_demands(req_json, vnf_policies):
     """
     demand_dictionary = {}
     for demand in req_json['placementInfo']['placementDemands']:
-        demand_dictionary.update(
-            {demand['resourceModuleName']: get_demand_properties(demand, vnf_policies)})
+        prop = get_demand_properties(demand, vnf_policies)
+        if len(prop) > 0:
+            demand_dictionary.update({demand['resourceModuleName']: prop})
     return demand_dictionary
