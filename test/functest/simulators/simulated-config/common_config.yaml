@@ -23,6 +23,7 @@ osdf_temp:  # special configuration required for "workarounds" or testing
             - hpa_policy_vG_1.json
             - vnfPolicy_vG.json
             - vnfPolicy_vGMuxInfra.json
+            - subscriber_policy.json
 service_info:
     vCPE:
         vcpeHostName: requestParameters.vcpeHostName

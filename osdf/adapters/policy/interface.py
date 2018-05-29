@@ -64,6 +64,7 @@ def get_by_scope(rest_client, req, config_local, type_service):
             scope_fields.extend([get_scope_fields(field, references, req, list_flatten(scope_policies))
                                 if 'get_param' in field else field])
         scope_fields = set(list_flatten(scope_fields))
+        scope_fields = set([x.lower() for x in scope_fields])
         for scope in scope_fields:
             policies.extend(policy_api_call(rest_client, primary_scope, scope))
         scope_policies.append([policy for policy in policies

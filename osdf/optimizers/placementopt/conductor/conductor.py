@@ -154,7 +154,8 @@ def conductor_response_processor(conductor_response, raw_response, req_id):
                     debug_log.debug("The key[{}] is not mapped and will not be returned in assignment info".format(key))
             composite_solutions.append(solution)
 
-    request_status = conductor_response['plans'][0]['status']
+    request_status = "completed" if conductor_response['plans'][0]['status'] == "done" \
+        else conductor_response['plans'][0]['status']
     transaction_id = raw_response.headers.get('transaction_id', "")
     status_message = conductor_response.get('plans')[0].get('message', "")
 

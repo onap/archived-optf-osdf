@@ -77,11 +77,13 @@ def get_matching_vnfs(resources, vnf_list, match_type="intersection"):
     :param match_type: "intersection" or "all" or "any" (any => send all_vnfs if there is any intersection)
     :return: List of matching VNFs
     """
+    resources_lcase = [x.lower() for x in resources]
     if match_type == "all":  # don't bother with any comparisons
-        return resources if set(resources) <= set(vnf_list) else None
-    common_vnfs = set(vnf_list) & set(resources)
+        return resources if set(resources_lcase) <= set(vnf_list) else None
+    common_vnfs = set(vnf_list) & set(resources_lcase)
+    common_resources = [x for x in resources if x.lower() in common_vnfs]
     if match_type == "intersection":  # specifically requested intersection
-        return list(common_vnfs)
+        return list(common_resources)
     return resources if common_vnfs else None  # "any" match => all resources to be returned
 
 
@@ -209,7 +211,8 @@ def get_candidates_demands(demand):
 def get_policy_properties(demand, policies):
     """Get policy_properties for cases where there is a match with the demand"""
     for policy in policies:
-        if demand['resourceModuleName'] not in set(policy['content'].get('resources', [])):
+        policy_demands = set([x.lower() for x in policy['content'].get('resources', [])])
+        if demand['resourceModuleName'].lower() not in policy_demands:
             continue  # no match for this policy
         for policy_property in policy['content']['vnfProperties']:
             yield policy_property

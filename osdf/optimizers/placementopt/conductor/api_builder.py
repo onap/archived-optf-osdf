@@ -40,12 +40,11 @@ def conductor_api_builder(request_json, flat_policies: list, local_config,
     demand_vnf_name_list = []
 
     for placementDemand in request_json['placementInfo']['placementDemands']:
-        demand_vnf_name_list.append(placementDemand['resourceModuleName'])
-
+        demand_vnf_name_list.append(placementDemand['resourceModuleName'].lower())
     demand_list = tr.gen_demands(request_json, gp['vnfPolicy'])
     attribute_policy_list = tr.gen_attribute_policy(demand_vnf_name_list, gp['attribute'])
     distance_to_location_policy_list = tr.gen_distance_to_location_policy(
-        demand_vnf_name_list, gp['distance_to_location'])
+        demand_vnf_name_list, gp['distancePolicy'])
     inventory_policy_list = tr.gen_inventory_group_policy(demand_vnf_name_list, gp['inventory_group'])
     resource_instance_policy_list = tr.gen_resource_instance_policy(
         demand_vnf_name_list, gp['instance_fit'])

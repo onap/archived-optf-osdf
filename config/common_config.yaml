@@ -9,7 +9,7 @@ osdf_system:
 
 osdf_temp:  # special configuration required for "workarounds" or testing
     local_policies:
-        global_disabled: False
+        global_disabled: True
         local_placement_policies_enabled: True
         placement_policy_dir_vcpe: "./test/policy-local-files/"
         placement_policy_files_vcpe: # workaroud for policy platform glitches (or "work-arounds" for other components)
