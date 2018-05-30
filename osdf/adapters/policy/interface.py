@@ -57,7 +57,8 @@ def get_by_scope(rest_client, req, config_local, type_service):
     references = config_local.get('references', {})
     pscope = config_local.get('policy_info', {}).get(type_service, {}).get('policy_scope', {})
     service_name = dot_notation(req, references.get('service_name', {}).get('value', None))
-    primary_scope = pscope['{}_scope'.format(service_name.lower() if service_name else "default")]
+    primary_scope = pscope['{}_scope'.format(service_name.lower() if pscope.get(service_name + "_scope", None)
+                                             else "default")]
     for sec_scope in pscope.get('secondary_scopes', []):
         policies, scope_fields = [], []
         for field in sec_scope:

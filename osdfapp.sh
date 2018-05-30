@@ -25,7 +25,7 @@ cd $(dirname $0)
 LOGS=logs
 mkdir -p $LOGS
 
-export OSDF_CONFIG_FILE=${1:-/opt/app/osdf_config.yaml}  # this file may be passed by invoker
+export OSDF_CONFIG_FILE=${1:-/opt/app/config/osdf_config.yaml}  # this file may be passed by invoker
 [ ! -e "$OSDF_CONFIG_FILE" ] && unset OSDF_CONFIG_FILE
 
 python osdfapp.py 2>$LOGS/err.log 1>$LOGS/out.log < /dev/null  # running the app 
