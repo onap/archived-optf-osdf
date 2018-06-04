@@ -60,9 +60,9 @@ None.
 OPTFRA code has been formally scanned during build time using NexusIQ and no Critical vulnerability was found.
 
 Quick Links:
- 	- `OPTFRA project page <https://wiki.onap.org/display/DW/Optimization+Framework+Project>`_
+    - `OPTFRA project page <https://wiki.onap.org/display/DW/Optimization+Framework+Project>`_
  	
- 	- `Passing Badge information for OPTFRA <https://bestpractices.coreinfrastructure.org/en/projects/1720>`_
+    - `Passing Badge information for OPTFRA <https://bestpractices.coreinfrastructure.org/en/projects/1720>`_
 
 **Upgrade Notes**
 
