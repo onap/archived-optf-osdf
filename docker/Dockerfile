@@ -19,6 +19,14 @@
 
 FROM ubuntu:16.04
 
+ARG MVN_ARTIFACT_VERSION
+ARG REPO
+ARG HTTP_PROXY=${HTTP_PROXY}
+ARG HTTPS_PROXY=${HTTPS_PROXY}
+
+ENV http_proxy $HTTP_PROXY
+ENV https_proxy $HTTPS_PROXY
+
 ENV OSDF_PORT "8699"
 EXPOSE ${OSDF_PORT}
 
@@ -28,7 +36,7 @@ ENV MZN_GH_BASE https://github.com/MiniZinc/MiniZincIDE
 ENV MZN_DL_URL ${MZN_GH_BASE}/releases/download/${MZN}/${MZN_BASENAME}.tgz
 
 RUN apt-get update -y \
-    && apt-get install -y vim wget libmpfr-dev \
+    && apt-get install -y vim unzip wget libmpfr-dev \
     && apt-get install -y git libqt5printsupport5 build-essential \
     && apt-get install -y python3 python3-setuptools python3-dev \
     && easy_install3 pip \
@@ -47,7 +55,11 @@ ENV SHELL /bin/bash
 ENV PATH /mz-dist:$PATH
 
 # OSDF
-RUN git clone http://gerrit.onap.org/r/optf/osdf \
-    && pip install --no-cache-dir -r osdf/requirements.txt
+WORKDIR /opt/osdf
+RUN wget -O /opt/osdf.zip "https://nexus.onap.org/service/local/artifact/maven/redirect?r=${REPO}&g=org.onap.optf.osdf&a=optf-osdf&e=zip&v=${MVN_ARTIFACT_VERSION}" && \
+    unzip -q -o -B /opt/osdf.zip -d /opt/ && \
+    rm -f /opt/osdf.zip
+RUN mkdir -p /var/log/onap/optf/osdf/
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD [ "/osdf/osdfapp.sh" ]
+CMD [ "/opt/osdf/osdfapp.sh" ]
