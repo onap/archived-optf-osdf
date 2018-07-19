@@ -25,28 +25,47 @@ IMAGE_NAME=$DOCKER_REPOSITORY/$ORG/$PROJECT
 # Version properties
 source version.properties
 VERSION=$release_version
+SNAPSHOT=$snapshot_version
 STAGING=${release_version}-STAGING
+TIMESTAMP=$(date +"%Y%m%dT%H%M%S")Z
+
+BUILD_ARGS="--no-cache"
+if [ $HTTP_PROXY ]; then
+    BUILD_ARGS+=" --build-arg HTTP_PROXY=${HTTP_PROXY}"
+fi
+if [ $HTTPS_PROXY ]; then
+    BUILD_ARGS+=" --build-arg HTTPS_PROXY=${HTTPS_PROXY}"
+fi
 
 function log_ts() {  # Log message with timestamp
     echo [DEBUG LOG at $(date -u +%Y%m%d:%H%M%S)] "$@"
 }
 
 function build_image() {
-     log_ts Building Image in folder: $PWD
-     docker build -t ${IMAGE_NAME}:${VERSION} -t ${IMAGE_NAME}:latest -t ${IMAGE_NAME}:${STAGING} .
-     log_ts ... Built
+    log_ts Building Image in folder: $PWD with build arguments ${BUILD_ARGS}
+    docker build ${BUILD_ARGS} -t ${IMAGE_NAME}:latest .
+    log_ts ... Built
+}
+
+function tag_image() {
+    log_ts Tagging images: ${IMAGE_NAME}:\{$SNAPSHOT-${TIMESTAMP},$STAGING-${TIMESTAMP},latest\}
+    docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${SNAPSHOT}-${TIMESTAMP}
+    docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${STAGING}-${TIMESTAMP}
+    docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:latest
+    log_ts ... Tagged images
 }
 
 function push_image(){
-     log_ts Pushing images: ${IMAGE_NAME}:\{$VERSION,$STAGING,latest\}
-     docker push ${IMAGE_NAME}:${VERSION}
-     docker push ${IMAGE_NAME}:${STAGING}
-     docker push ${IMAGE_NAME}:latest
-     log_ts ... Pushed images
+    log_ts Pushing images: ${IMAGE_NAME}:\{$SNAPSHOT-${TIMESTAMP},$STAGING-${TIMESTAMP},latest\}
+    docker push ${IMAGE_NAME}:${SNAPSHOT}-${TIMESTAMP}
+    docker push ${IMAGE_NAME}:${STAGING}-${TIMESTAMP}
+    docker push ${IMAGE_NAME}:latest
+    log_ts ... Pushed images
 }
 
 (
-  cd $(dirname $0)
-  build_image
-  push_image
+    cd $(dirname $0)
+    build_image
+    tag_image
+    push_image
 )
