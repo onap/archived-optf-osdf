@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da7095c5_ecc40661",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 35
+      },
+      "writtenOn": "2018-07-24T19:00:12Z",
+      "side": 1,
+      "message": "You should check the version number and retrieve from the \"snapshots\" repo or the \"releases\" repo as approproiate.",
+      "range": {
+        "startLine": 57,
+        "startChar": 90,
+        "endLine": 57,
+        "endChar": 99
+      },
+      "revId": "b607e82b5054eb286a121bc16822b04db1015f03",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
