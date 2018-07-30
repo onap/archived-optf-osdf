@@ -43,6 +43,7 @@ function log_ts() {  # Log message with timestamp
 
 function get_artifact_version() {
     log_ts Get Maven Artifact version from pom.xml
+    apt-get install xmllint
     MVN_ARTIFACT_VERSION=`echo -e "setns x=http://maven.apache.org/POM/4.0.0 \n  xpath /x:project/x:version/text() "| xmllint --shell pom.xml | grep content | sed 's/.*content=//'`
     log_ts Maven artifact version for OSDF is $MVN_ARTIFACT_VERSION
     if [[ "$MVN_ARTIFACT_VERSION" =~ SNAPSHOT ]]; then
@@ -84,5 +85,5 @@ function push_image(){
     cd $(dirname $0)
     build_image
     tag_image
-    push_image
+    #push_image
 )
