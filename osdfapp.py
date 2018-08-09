@@ -122,6 +122,16 @@ def do_placement_opt():
                       transaction_id=request_json['requestInfo']['transactionId'],
                       request_status="accepted", status_message="")
 
+
+@app.route("/api/oof/v1/route", method=["POST"])
+@auth_basic.login_required
+def do_placement_opt():
+    """Perform the basic route calculations and returnn the vpn-bindings
+	TODO:Need to add the new class for the route in the API and model to provide this function
+    """
+    return "OK"
+
+
 @app.errorhandler(500)
 def internal_failure(error):
     """Returned when unexpected coding errors occur during initial synchronous processing"""
