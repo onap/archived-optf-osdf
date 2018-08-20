@@ -22,15 +22,15 @@ from requests.auth import HTTPBasicAuth
 
 class RouteOpt:
 
-   """
-   This values will need to deleted.. 
-   only added for the debug purpose 
-   """
+    """
+    This values will need to deleted.. 
+    only added for the debug purpose 
+    """
     aai_host = "https:\\192.168.17.26:8443"
     aai_headers = {
         "X-TransactionId": "9999",
         "X-FromAppId": "OOF",
-        "Content-Type": "applicatoin/json",
+        "Content-Type": "application/json",
         "Real-Time": "true"
     }
 
@@ -52,16 +52,16 @@ class RouteOpt:
 
         logical_links = self.get_logical_links()
 
-            """
-            TODO: Logic to be extended for the repose filling
-            """
+        """
+        TODO: Logic to be extended for the repose filling
+        """
 
             
-        def get_logical_links(self):
+    def get_logical_links(self):
         """
-                    This method returns list of all cross ONAP links
-                    from /aai/v14/network/logical-links?operation-status="Up"
-                    :return: logical-links[]
+        This method returns list of all cross ONAP links
+        from /aai/v14/network/logical-links?operation-status="Up"
+        :return: logical-links[]
         """
         logical_link_url = "/aai/v14/network/logical-links?operation-status=\"Up\""
         aai_req_url = self.aai_host + logical_link_url
