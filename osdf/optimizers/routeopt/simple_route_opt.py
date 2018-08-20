@@ -30,7 +30,7 @@ class RouteOpt:
     aai_headers = {
         "X-TransactionId": "9999",
         "X-FromAppId": "OOF",
-        "Content-Type": "applicatoin/json",
+        "Content-Type": "application/json",
         "Real-Time": "true"
     }
 
