@@ -22,15 +22,15 @@ from requests.auth import HTTPBasicAuth
 
 class RouteOpt:
 
-   """
-   This values will need to deleted.. 
-   only added for the debug purpose 
-   """
+    """
+    This values will need to deleted.. 
+    only added for the debug purpose 
+    """
     aai_host = "https:\\192.168.17.26:8443"
     aai_headers = {
         "X-TransactionId": "9999",
         "X-FromAppId": "OOF",
-        "Content-Type": "applicatoin/json",
+        "Content-Type": "application/json",
         "Real-Time": "true"
     }
 
