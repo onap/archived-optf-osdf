@@ -46,6 +46,7 @@ from schematics.exceptions import DataError
 from osdf.logging.osdf_logging import MH, audit_log, error_log, debug_log
 from osdf.models.api.placementRequest import PlacementAPI
 from osdf.operation.responses import osdf_response_for_request_accept as req_accept
+from osdf.optimizers.routeopt.simple_route_opt import RouteOpt
 
 ERROR_TEMPLATE = osdf.ERROR_TEMPLATE
 
@@ -129,7 +130,9 @@ def do_route_calc():
     """Perform the basic route calculations and returnn the vpn-bindings
     TODO:Need to add the new class for the route in the API and model to provide this function
     """
-    return "OK"
+    request_json = request.get_json()
+    audit_log.info("Calculate Route request received!")
+    return RouteOpt.getRoute(request_json)
 
 
 @app.errorhandler(500)
