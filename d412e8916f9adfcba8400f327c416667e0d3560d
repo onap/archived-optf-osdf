@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_d09ab86d",
+        "filename": "osdf/optimizers/routeopt/simple_route_opt.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2018-08-21T00:47:09Z",
+      "side": 1,
+      "message": "Should consider using a templating mechanism like we have for Conductor when we implement this in full.",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 14
+      },
+      "revId": "d412e8916f9adfcba8400f327c416667e0d3560d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_10911052",
+        "filename": "osdf/optimizers/routeopt/simple_route_opt.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2018-08-21T00:47:09Z",
+      "side": 1,
+      "message": "Use EELF compliant logging [Okay for getting things started].",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "d412e8916f9adfcba8400f327c416667e0d3560d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_90a520b7",
+        "filename": "osdf/optimizers/routeopt/simple_route_opt.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2018-08-21T00:47:09Z",
+      "side": 1,
+      "message": "Okay to get things started for the Aug POC, but we\u0027ll need to clean up and move these to a config file. I\u0027ve created tasks so that we don\u0027t forget to come back to it.",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 54
+      },
+      "revId": "d412e8916f9adfcba8400f327c416667e0d3560d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
