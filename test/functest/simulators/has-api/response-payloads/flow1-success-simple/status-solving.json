@@ -6,7 +6,7 @@
       "links": [
         [
           {
-            "href": "http://localhost:5000/simulated/oof/has-api/flow1-success-simple/status-done.json",
+            "href": "http://127.0.0.1:5000/simulated/oof/has-api/flow1-success-simple/status-done.json",
             "rel": "self"
           }
         ]

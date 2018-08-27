@@ -20,7 +20,7 @@
 
 # This script is in osdf/test/functest/scripts/
 
-SCRIPTDIR=$(dirname $(readlink -f $0))
+SCRIPTDIR=$(dirname $(greadlink -f $0))
 FUNC_TEST_DIR=$(dirname $SCRIPTDIR)
 TEST_DIR=$(dirname $FUNC_TEST_DIR)
 OSDF_DIR=$(dirname $TEST_DIR)
@@ -42,8 +42,8 @@ SIMULATORS_DIR=$FUNC_TEST_DIR/simulators
     XPID=$(ps -x | grep "python oof_dependencies_simulators.py" | grep -v grep | awk '{print $1}')
     echo "simulator pid " $XPID
     if [ -z "$XPID" ]; then
-      python oof_dependencies_simulators.py & # > simulator-logs 2>&1 &
-      sleep 20
+      python oof_dependencies_simulators.py simulator-logs 2>&1 &
+      sleep 10
     fi
 ) 
 
