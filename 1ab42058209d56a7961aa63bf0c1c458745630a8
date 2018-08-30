@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a76adc5_4c7c9eb5",
+        "filename": "osdf/optimizers/routeopt/simple_route_opt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1883
+      },
+      "writtenOn": "2018-08-30T14:07:57Z",
+      "side": 1,
+      "message": "We should avoid hard coded port numbers.",
+      "revId": "1ab42058209d56a7961aa63bf0c1c458745630a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_2367fab8",
         "filename": "osdf/optimizers/routeopt/simple_route_opt.py",
         "patchSetId": 1
