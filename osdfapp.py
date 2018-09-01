@@ -132,6 +132,37 @@ def do_route_calc():
     """
     request_json = request.get_json()
     audit_log.info("Calculate Route request received!")
+        src_access_node_id = ""
+    dst_access_node_id = ""
+    try:
+        src_access_node_id = request_json["srcPort"]["src-access-node-id"]
+        audit_log.info("!1")
+        audit_log.info( src_access_node_id )
+        dst_access_node_id = request_json["dstPort"]["dst-access-node-id"]
+        audit_log.info("2")
+    except Exception as ex:
+        audit_log.info("3")
+    audit_log.info("4")
+    # for the case of request_json for same domain, return the same node with destination 
+
+update
+    if src_access_node_id == dst_access_node_id:
+        audit_log.info("5")
+        data ='{'\
+              '"vpns":['\
+              '{'\
+              '"access-topology-id": "' + request["srcPort"]["src-access-topology-id"]+'",'\
+              '"access-client-id": "' + request["srcPort"]["src-access-client-id"] +'",'\
+              '"access-provider-id": "' + request["srcPort"]["src-access-provider-id"]+'",'\
+              '"access-node-id": "' + request["srcPort"]["src-access-node-id"]+ '",'\
+              '"src-access-ltp-id": "' + request["srcPort"]["src-access-ltp-id"]+ '",'\
+              '"dst-access-ltp-id": "' + request["dstPort"]["dst-access-ltp-id"]  +'"'\
+              '}'\
+              ']'\
+            '}'
+        return data
+    else:
+        return RouteOpt.getRoute(request_json)
     return RouteOpt.getRoute(request_json)
 
 
