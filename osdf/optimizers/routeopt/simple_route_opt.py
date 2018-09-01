@@ -42,9 +42,9 @@ class RouteOpt:
         :param logical_link:
         :return:
         """
-        for relationship in logical_link["logical-links"]["relationsihp-list"]["relationship"]:
+        for relationship in logical_link["logical-links"]["relationship-list"]["relationship"]:
             if relationship["related-to"] == "p-interface":
-                if "external" in relationship["related-link"]:
+                if "ext-aai-network" in relationship["related-link"]:
                     return True
         return False
 
@@ -60,18 +60,19 @@ class RouteOpt:
         
         # for the case of request for same domain, return the same node with destination update
         if src_access_node_id == dst_access_node_id:
-            return {
-                [
-                    {
-                        "access-topology-id": request["srcPort"]["src-access-topology-id"],
-                        "access-client-id": request["srcPort"]["access-client-id"],
-                        "access-provider-id": request["srcPort"]["access-provider-id"],
-                        "access-node-id": request["srcPort"]["access-node-id"],
-                        "src-access-ltp-id": request["srcPort"]["src-access-ltp-id"],
-                        "dst-access-ltp-id": request["dstPort"]["dst-access-ltp-id"]
-                    }
-                ]
-            } 
+            data = '{'\
+                '"vpns":"['\
+                    '{'\
+                        '"access-topology-id": "' + request["srcPort"]["src-access-topology-id"] + '",'\
+                        '"access-client-id": "' + request["srcPort"]["src-access-client-id"] + '",'\
+                        '"access-provider-id": "' + request["srcPort"]["src-access-provider-id"]+ '",'\
+                        '"access-node-id": "' + request["srcPort"]["src-access-node-id"]+ '",'\
+                        '"src-access-ltp-id": "' + request["srcPort"]["src-access-ltp-id"]+ '",'\
+                        '"dst-access-ltp-id": "' + request["dstPort"]["dst-access-ltp-id"]  +'"'\
+                    '}'\
+                ']'\
+            '}'
+            return data
 
         ingress_p_interface = None
         egress_p_interface = None
@@ -84,33 +85,36 @@ class RouteOpt:
                 if not self.isCrossONAPLink(logical_link):
 
                     # link is in local ONAP
-                    for relationship in logical_link["logical-links"]["relationsihp-list"]["relationship"]:
+                    for relationship in logical_link["logical-links"]["relationship-list"]["relationship"]:
                         if relationship["related-to"] == "p-interface":
                             if src_access_node_id in relationship["related-link"]:
                                 ingress_p_interface = relationship["related-link"].split("/")[-1]
                             if dst_access_node_id in relationship["related-link"]:
                                 egress_p_interface = relationship["related-link"].split("/")[-1]
 
-            return {
-                [
-                    {
-                        "access-topology-id": request["srcPort"]["src-access-topology-id"],
-                        "access-client-id": request["srcPort"]["access-client-id"],
-                        "access-provider-id": request["srcPort"]["access-provider-id"],
-                        "access-node-id": request["srcPort"]["access-node-id"],
-                        "src-access-ltp-id": request["srcPort"]["src-access-ltp-id"],
-                        "dst-access-ltp-id": ingress_p_interface
-                    },
-                    {
-                        "access-topology-id": request["dstPort"]["access-topology-id"],
-                        "access-client-id": request["dstPort"]["access-client-id"],
-                        "access-provider-id": request["dstPort"]["access-provider-id"],
-                        "access-node-id": request["dstPort"]["access-node-id"],
-                        "src-access-ltp-id": egress_p_interface,
-                        "dst-access-ltp-id": request["dstPort"]["dst-access-ltp-id"]
-                    }
-                ]
-            }
+            data = '{'\
+                '"vpns":['\
+                    '{'\
+                        '"access-topology-id": "' + request["srcPort"]["src-access-topology-id"] + '",'\
+                        '"access-client-id": "' + request["srcPort"]["src-access-client-id"] + '",'\
+                        '"access-provider-id": "' + request["srcPort"]["src-access-provider-id"]+ '",'\
+                        '"access-node-id": "' + request["srcPort"]["src-access-node-id"]+ '",'\
+                        '"src-access-ltp-id": "' + request["srcPort"]["src-access-ltp-id"]+ '",'\
+                        '"dst-access-ltp-id": "' + ingress_p_interface +'"'\
+                    '},'\
+                    '{' \
+                        '"access-topology-id": "' + request["dstPort"]["dst-access-topology-id"] + '",' \
+                        '"access-topology-id": "' + request["dstPort"]["dst-access-topology-id"]+ '",' \
+                        '"access-provider-id": "' + request["dstPort"]["dst-access-provider-id"]+ '",' \
+                        '"access-node-id": "' + request["dstPort"]["dst-access-node-id"]+ '",' \
+                        '"src-access-ltp-id": "' + egress_p_interface + '",' \
+                        '"dst-access-ltp-id": "' + request["dstPort"]["dst-access-ltp-id"] + '"' \
+                    '}'\
+                ']'\
+            '}'
+
+
+            return data
 
 
 
@@ -125,7 +129,7 @@ class RouteOpt:
                                 auth=HTTPBasicAuth("", ""))
 
         if response.status_code == 200:
-            return response.json
+            return response.json()
 
 
     def get_logical_links(self):
@@ -142,4 +146,4 @@ class RouteOpt:
                      auth=HTTPBasicAuth("", ""))
 
         if response.status_code == 200:
-            return response.json
+            return response.json()
