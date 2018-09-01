@@ -125,13 +125,44 @@ def do_placement_opt():
 
 
 @app.route("/api/oof/v1/route", methods=["POST"])
-@auth_basic.login_required
 def do_route_calc():
     """Perform the basic route calculations and returnn the vpn-bindings
     TODO:Need to add the new class for the route in the API and model to provide this function
     """
     request_json = request.get_json()
     audit_log.info("Calculate Route request received!")
+        src_access_node_id = ""
+    dst_access_node_id = ""
+    try:
+        src_access_node_id = request_json["srcPort"]["src-access-node-id"]
+        audit_log.info("!1")
+        audit_log.info( src_access_node_id )
+        dst_access_node_id = request_json["dstPort"]["dst-access-node-id"]
+        audit_log.info("2")
+    except Exception as ex:
+        audit_log.info("3 ")
+        error_log.error("Exception while retriving the src and dst node info")
+    audit_log.info("4")
+    # for the case of request_json for same domain, return the same node with destination 
+
+update
+    if src_access_node_id == dst_access_node_id:
+        audit_log.info("src and dst are same")
+        data ='{'\
+              '"vpns":['\
+              '{'\
+              '"access-topology-id": "' + request["srcPort"]["src-access-topology-id"]+'",'\
+              '"access-client-id": "' + request["srcPort"]["src-access-client-id"] +'",'\
+              '"access-provider-id": "' + request["srcPort"]["src-access-provider-id"]+'",'\
+              '"access-node-id": "' + request["srcPort"]["src-access-node-id"]+ '",'\
+              '"src-access-ltp-id": "' + request["srcPort"]["src-access-ltp-id"]+ '",'\
+              '"dst-access-ltp-id": "' + request["dstPort"]["dst-access-ltp-id"]  +'"'\
+              '}'\
+              ']'\
+            '}'
+        return data
+    else:
+        return RouteOpt.getRoute(request_json)
     return RouteOpt.getRoute(request_json)
 
 
