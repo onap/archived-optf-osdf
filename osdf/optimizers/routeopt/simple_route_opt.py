@@ -26,7 +26,9 @@ class RouteOpt:
     This values will need to deleted.. 
     only added for the debug purpose 
     """
-    aai_host = "https:\\192.168.17.26:8443"
+    # DNS server and standard port of AAI.. 
+    # TODO: read the port from the configuration and add to DNS
+    aai_host = "https://aai.api.simpledemo.onap.org:8443"
     aai_headers = {
         "X-TransactionId": "9999",
         "X-FromAppId": "OOF",
