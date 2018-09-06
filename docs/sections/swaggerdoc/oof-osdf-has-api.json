@@ -1,0 +1,587 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is the ONAP OOF OSDF (Optimization Service Design Framework) API",
+    "version" : "1.0.0",
+    "title" : "OSDF API",
+    "contact" : {
+      "email" : "frank.sandoval@oamtechnologies.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "securityDefinitions" : {
+    "basicAuth" : {
+      "type" : "basic",
+      "description" : "HTTP Basic Auth"
+    }
+  },
+  "security" : [ {
+    "basicAuth" : [ ]
+  } ],
+  "paths" : {
+    "/v2/placement" : {
+      "post" : {
+        "summary" : "create/update a placement",
+        "operationId" : "createPlacement",
+        "description" : "create/update a placement",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "placementRequest",
+          "description" : "placement request",
+          "schema" : {
+            "$ref" : "#/definitions/PlacementRequest"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "An optimization solution is found."
+          },
+          "202" : {
+            "description" : "An optimization request is accepted"
+          },
+          "400" : {
+            "description" : "bad request"
+          },
+          "401" : {
+            "description" : "Request body is not compliant with the API definition"
+          },
+          "404" : {
+            "description" : "The server cannot find the requested URI"
+          },
+          "405" : {
+            "description" : "The requested method is not supported by a server."
+          },
+          "500" : {
+            "description" : "The server encountered an internal server error or timed out"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "PlacementRequest" : {
+      "type" : "object",
+      "required" : [ "requestInfo", "placementInfo", "licenseInfo", "serviceInfo" ],
+      "properties" : {
+        "requestInfo" : {
+          "$ref" : "#/definitions/RequestInfo"
+        },
+        "placementInfo" : {
+          "$ref" : "#/definitions/PlacementInfo"
+        },
+        "licenseInfo" : {
+          "$ref" : "#/definitions/LicenseInfo"
+        },
+        "serviceInfo" : {
+          "$ref" : "#/definitions/ServiceInfo"
+        }
+      }
+    },
+    "RequestInfo" : {
+      "type" : "object",
+      "required" : [ "transactionId", "requestId", "callbackUrl", "sourceId", "requestType", "optimizers", "timeout" ],
+      "properties" : {
+        "transactionId" : {
+          "type" : "string",
+          "format" : "uuid",
+          "description" : "unique ID to track an ONAP transaction",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "requestId" : {
+          "type" : "string",
+          "format" : "uuid",
+          "description" : "A unique ID to track multiple requests associated with a transaction",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "callbackUrl" : {
+          "type" : "string",
+          "format" : "url",
+          "description" : "The end point of a callback service where recommendations are posted.",
+          "example" : "myDomain.com/myCallback"
+        },
+        "callbackHeader" : {
+          "type" : "string",
+          "description" : "JSON blob. The header information a client expecting in a async callback.",
+          "example" : {
+            "blob" : "content"
+          }
+        },
+        "sourceId" : {
+          "type" : "string",
+          "description" : "The unique ID of a client making an optimization call.",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "requestType" : {
+          "type" : "string",
+          "enum" : [ "create", "update", "delete" ],
+          "description" : "The type of a request",
+          "example" : "create"
+        },
+        "numSolutions" : {
+          "type" : "integer",
+          "description" : "Expected number of solutions.",
+          "example" : 1
+        },
+        "optimizers" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "placement" ]
+          },
+          "description" : "A list of optimization services.",
+          "example" : "placement"
+        },
+        "timeout" : {
+          "type" : "integer",
+          "description" : "A tolerance window (in second) for expecting solutions.",
+          "example" : 5
+        }
+      }
+    },
+    "PlacementInfo" : {
+      "type" : "object",
+      "required" : [ "requestParameters", "placementDemands" ],
+      "properties" : {
+        "requestParameters" : {
+          "type" : "string",
+          "description" : "JSON blob. A service ordering information",
+          "example" : {
+            "blob" : "content"
+          }
+        },
+        "placementDemands" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PlacementDemand"
+          },
+          "description" : "The resource information for a placement service"
+        },
+        "subscriberInfo" : {
+          "type" : "object",
+          "items" : {
+            "$ref" : "#/definitions/SubscriberInfo"
+          },
+          "description" : "The information of a service subscriber."
+        }
+      }
+    },
+    "PlacementDemand" : {
+      "type" : "object",
+      "required" : [ "resourceModuleName", "serviceResourceId", "resourceModelInfo" ],
+      "properties" : {
+        "resourceModuleName" : {
+          "type" : "string",
+          "description" : "A resource name as defined in a service mode",
+          "example" : "myResourceName"
+        },
+        "serviceResourceId" : {
+          "type" : "string",
+          "description" : "A unique resource Id with a local scope between client and OOF.",
+          "example" : "myResourceId"
+        },
+        "givenPlacement" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object",
+            "properties" : {
+              "key" : {
+                "type" : "string"
+              },
+              "value" : {
+                "type" : "string"
+              }
+            }
+          },
+          "description" : "placement parameters defined in the ordering system, keyname include tenantId",
+          "example" : {
+            "tenantId" : "1"
+          }
+        },
+        "resourceModelInfo" : {
+          "$ref" : "#/definitions/ModelMetaData",
+          "description" : "Resource model information as defined in SDC"
+        },
+        "existingCandidates" : {
+          "$ref" : "#/definitions/Candidates",
+          "description" : "The existing placement information of a resource."
+        },
+        "excludedCandidates" : {
+          "$ref" : "#/definitions/Candidates",
+          "description" : "Candidates that need to be excluded from solutions."
+        },
+        "requiredCandidates" : {
+          "$ref" : "#/definitions/Candidates",
+          "description" : "Candidates that must be included in solutions."
+        }
+      }
+    },
+    "ModelMetaData" : {
+      "type" : "object",
+      "required" : [ "modelInvariantId", "modelVersionId" ],
+      "properties" : {
+        "modelInvariantId" : {
+          "type" : "string",
+          "description" : "A model invariant Id as defined in a service model.",
+          "example" : "my model invariant Id"
+        },
+        "modelVersionId" : {
+          "type" : "string",
+          "description" : "A unique model Id as defined in a service model.",
+          "example" : "my unique model Id"
+        },
+        "modelName" : {
+          "type" : "string",
+          "description" : "A model name as defined in a service model",
+          "example" : "my model name"
+        },
+        "modelType" : {
+          "type" : "string",
+          "description" : "A model type as defined in a service model.",
+          "example" : "my model type"
+        },
+        "modelVersion" : {
+          "type" : "string",
+          "description" : "A model version as defined in a service model.",
+          "example" : "my model version"
+        },
+        "modelCustomizationName" : {
+          "type" : "string",
+          "description" : "A model customization name as defined in a service model.",
+          "example" : "my model customization"
+        }
+      }
+    },
+    "Candidates" : {
+      "type" : "object",
+      "required" : [ "identifierType", "identifiers" ],
+      "properties" : {
+        "identifierType" : {
+          "type" : "string",
+          "enum" : [ "service_instance_id", "vnf_name", "cloud_region_id" ],
+          "description" : "The type of a candidate.",
+          "example" : "service_instance_id"
+        },
+        "identifiers" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "description" : "A list of identifiers.",
+          "example" : "candidateId"
+        },
+        "cloudOwner" : {
+          "type" : "string",
+          "description" : "The name of a cloud owner. Only required if identifierType is cloud_region_id",
+          "example" : "cloud_owner"
+        }
+      }
+    },
+    "SubscriberInfo" : {
+      "type" : "object",
+      "required" : [ "globalSubscriberId", "subscriberName", "subscriberCommonSiteId" ],
+      "properties" : {
+        "globalSubscriberId" : {
+          "type" : "string",
+          "description" : "An ID of a subscriber.",
+          "example" : "subscriber_id"
+        },
+        "subscriberName" : {
+          "type" : "string",
+          "description" : "The name of a subscriber. If the name is not known, the value must be 'unknown'",
+          "example" : "subscriber_name"
+        },
+        "subscriberCommonSiteId" : {
+          "type" : "string",
+          "description" : "Id representing a subscriber location",
+          "example" : "subscriber_location_id"
+        }
+      }
+    },
+    "LicenseInfo" : {
+      "type" : "object",
+      "required" : [ "licenseDemands" ],
+      "properties" : {
+        "licenseDemands" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LicenseDemands"
+          },
+          "description" : "A list of resources for license selection"
+        }
+      }
+    },
+    "LicenseDemands" : {
+      "type" : "object",
+      "required" : [ "resourceModuleName", "serviceResourceId", "resourceModelInfo" ],
+      "properties" : {
+        "resourceModuleName" : {
+          "type" : "string",
+          "description" : "A resource name as defined in a service model.",
+          "example" : "service_instance_id"
+        },
+        "serviceResourceId" : {
+          "type" : "string",
+          "description" : "A unique resource Id with a local scope between client and OOF.",
+          "example" : "service_instance_id"
+        },
+        "resourceModelInfo" : {
+          "$ref" : "#/definitions/ModelMetaData",
+          "description" : "Resource model information as defined in a service model."
+        },
+        "existingLicenses" : {
+          "$ref" : "#/definitions/LicenseModel",
+          "description" : "Existing license information assigned to a resource."
+        }
+      }
+    },
+    "LicenseModel" : {
+      "type" : "object",
+      "required" : [ "entitlementPoolUUID", "licenseKeyGroupUUID" ],
+      "properties" : {
+        "entitlementPoolUUID" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "description" : "Entitlement pool UUIDs associated with a resource.",
+          "example" : "candidateId"
+        },
+        "licenseKeyGroupUUID" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "description" : "License key groups associated with a resource",
+          "example" : "candidateId"
+        }
+      }
+    },
+    "SynchronousResponse" : {
+      "type" : "object",
+      "required" : [ "requestId", "transactionId", "requestStatus" ],
+      "properties" : {
+        "requestId" : {
+          "type" : "string",
+          "format" : "uuid",
+          "description" : "A unique Id for an ONAP transaction",
+          "example" : "ONAP transaction id"
+        },
+        "transactionId" : {
+          "type" : "string",
+          "format" : "uuid",
+          "description" : "A unique ID to track multiple requests associated with a transaction.",
+          "example" : "requests id"
+        },
+        "statusMessage" : {
+          "type" : "string",
+          "description" : "Reasoning if a requestStatus is failure.",
+          "example" : "requestStatus"
+        },
+        "requestStatus" : {
+          "type" : "string",
+          "enum" : [ "success", "failure" ],
+          "description" : "The status of a request.",
+          "example" : "success"
+        }
+      }
+    },
+    "AsynchronousResponse" : {
+      "type" : "object",
+      "required" : [ "requestId", "transactionId", "requestStatus", "solutions" ],
+      "properties" : {
+        "requestId" : {
+          "type" : "string",
+          "format" : "uuid",
+          "description" : "A unique Id for an ONAP transaction",
+          "example" : "ONAP transaction id"
+        },
+        "transactionId" : {
+          "type" : "string",
+          "format" : "uuid",
+          "description" : "A unique ID to track multiple requests associated with a transaction.",
+          "example" : "requests id"
+        },
+        "statusMessage" : {
+          "type" : "string",
+          "description" : "Reasoning if a requestStatus is failure.",
+          "example" : "requestStatus"
+        },
+        "requestStatus" : {
+          "type" : "string",
+          "enum" : [ "success", "failure" ],
+          "description" : "The status of a request.",
+          "example" : "success"
+        },
+        "solutions" : {
+          "$ref" : "#/definitions/Solutions",
+          "description" : "Solutions related to a request."
+        }
+      }
+    },
+    "Solutions" : {
+      "type" : "object",
+      "required" : [ "placementSolutions", "licenseSolutions" ],
+      "properties" : {
+        "placementSolutions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ComprehensiveSolution"
+          },
+          "description" : "A list of placement solutions."
+        },
+        "licenseSolutions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LicenseSolution"
+          },
+          "description" : "A list of license solutions."
+        }
+      }
+    },
+    "ComprehensiveSolution" : {
+      "type" : "object",
+      "required" : [ "placementSolutions" ],
+      "properties" : {
+        "placementSolutions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PlacementSolution"
+          },
+          "description" : "A list of placement solutions."
+        }
+      }
+    },
+    "PlacementSolution" : {
+      "type" : "object",
+      "required" : [ "resourceModuleName", "serviceResourceId", "identifierType", "identifier" ],
+      "properties" : {
+        "resourceModuleName" : {
+          "type" : "string",
+          "description" : "The name of a resource as defined in the service model",
+          "example" : "resource name"
+        },
+        "serviceResourceId" : {
+          "type" : "string",
+          "description" : "A resource Id as defined in a service model.",
+          "example" : "resource id"
+        },
+        "identifierType" : {
+          "type" : "string",
+          "enum" : [ "service_instance_id" ],
+          "description" : "The type of a candidate.",
+          "example" : "candidate type"
+        },
+        "identifier" : {
+          "type" : "string",
+          "description" : "The id of a candidate.",
+          "example" : "candidate id"
+        },
+        "assignmentInfo" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AssignmentInfo"
+          },
+          "description" : "Additional information related to a candidate."
+        }
+      }
+    },
+    "AssignmentInfo" : {
+      "type" : "object",
+      "required" : [ "key", "value" ],
+      "properties" : {
+        "key" : {
+          "type" : "string",
+          "description" : "An attribute name",
+          "example" : "attribute name"
+        },
+        "value" : {
+          "type" : "string",
+          "description" : "An attribute value.",
+          "example" : "attribute value"
+        }
+      }
+    },
+    "LicenseSolution" : {
+      "type" : "object",
+      "required" : [ "resourceModuleName", "serviceResourceId", "entitlementPoolUUID", "licenseKeyGroupUUID", "entitlementPoolInvariantUUID", "licenseKeyGroupInvariantUUID" ],
+      "properties" : {
+        "resourceModuleName" : {
+          "type" : "string",
+          "description" : "A resource name as defined in a service",
+          "example" : "resource name"
+        },
+        "serviceResourceId" : {
+          "type" : "string",
+          "description" : "A resource Id as defined in a service.",
+          "example" : "resource Id"
+        },
+        "entitlementPoolUUID" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "description" : "A list of entitlementPoolUUIDs",
+          "example" : "entitlementPoolUUID"
+        },
+        "licenseKeyGroupUUID" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "description" : "A list of licenseKeyGroupUUID.",
+          "example" : "licenseKeyGroupUUID"
+        },
+        "entitlementPoolInvariantUUID" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "description" : "A list of entitlementPoolInvariantUUID",
+          "example" : "entitlementPoolInvariantUUID"
+        },
+        "licenseKeyGroupInvariantUUID" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "description" : "A list of licenseKeyGroupInvariantUUID",
+          "example" : "licenseKeyGroupInvariantUUID"
+        }
+      }
+    },
+    "ServiceInfo" : {
+      "type" : "object",
+      "required" : [ "serviceInstanceId", "modelInfo", "serviceName" ],
+      "properties" : {
+        "serviceInstanceId" : {
+          "type" : "string",
+          "description" : "A service instance id associated with a request.",
+          "example" : "service_instance_id"
+        },
+        "modelInfo" : {
+          "$ref" : "#/definitions/ModelMetaData",
+          "description" : "A list of identifiers."
+        },
+        "serviceName" : {
+          "type" : "string",
+          "description" : "The name of a service",
+          "example" : "service_name"
+        }
+      }
+    }
+  },
+  "schemes" : [ "https" ],
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/oof-osdf/v1"
+}
