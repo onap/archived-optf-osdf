@@ -24,6 +24,7 @@ import sys
 from threading import Thread  # for scaling up, may need celery with RabbitMQ or redis
 
 from flask import Flask, request, Response, g
+from requests.auth import HTTPBasicAuth
 
 import osdf
 import pydevd
@@ -33,6 +34,7 @@ import osdf.config.credentials
 import osdf.config.loader
 import osdf.operation.error_handling
 import osdf.operation.responses
+import requests
 import traceback
 from osdf.adapters.policy.interface import get_policies
 from osdf.config.base import osdf_config
@@ -145,32 +147,7 @@ def do_route_calc():
     """
     request_json = request.get_json()
     audit_log.info("Calculate Route request received!")
-    src_access_node_id = ""
-    dst_access_node_id = ""
-    try:
-        src_access_node_id = request_json["srcPort"]["src-access-node-id"]
-        audit_log.info( src_access_node_id )
-        dst_access_node_id = request_json["dstPort"]["dst-access-node-id"]
-    except Exception as ex:
-        error_log.error("Exception while retriving the src and dst node info")
-    # for the case of request_json for same domain, return the same node with destination update
-    if src_access_node_id == dst_access_node_id:
-        audit_log.info("src and dst are same")
-        data = '{'\
-                '"vpns":['\
-                    '{'\
-                        '"access-topology-id": "' + request_json["srcPort"]["src-access-topology-id"] + '",'\
-                        '"access-client-id": "' + request_json["srcPort"]["src-access-client-id"] + '",'\
-                        '"access-provider-id": "' + request_json["srcPort"]["src-access-provider-id"]+ '",'\
-                        '"access-node-id": "' + request_json["srcPort"]["src-access-node-id"]+ '",'\
-                        '"src-access-ltp-id": "' + request_json["srcPort"]["src-access-ltp-id"]+ '",'\
-                        '"dst-access-ltp-id": "' + request_json["dstPort"]["dst-access-ltp-id"]  +'"'\
-                    '}'\
-                ']'\
-            '}'
-        return data
-    else:
-        return RouteOpt.getRoute(request_json)
+    return RouteOpt().getRoute(request_json)
 
 @app.route("/api/oof/v1/pci", methods=["POST"])
 @auth_basic.login_required
@@ -196,7 +173,6 @@ def internal_failure(error):
     response = Response(internal_error_message, content_type='application/json; charset=utf-8')
     response.status_code = 500
     return response
-
 
 def get_options(argv):
     program_version_string = '%%prog %s' % "v1.0"
