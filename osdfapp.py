@@ -125,15 +125,93 @@ def do_placement_opt():
 
 
 @app.route("/api/oof/v1/route", methods=["POST"])
-@auth_basic.login_required
 def do_route_calc():
-    """Perform the basic route calculations and returnn the vpn-bindings
-    TODO:Need to add the new class for the route in the API and model to provide this function
+    """
+    Perform the basic route calculations and returnn the vpn-bindings
     """
     request_json = request.get_json()
     audit_log.info("Calculate Route request received!")
-    return RouteOpt.getRoute(request_json)
+    src_access_node_id = ""
+    dst_access_node_id = ""
+    try:
+        src_access_node_id = request_json["srcPort"]["src-access-node-id"]
+        audit_log.info( src_access_node_id )
+        dst_access_node_id = request_json["dstPort"]["dst-access-node-id"]
+    except Exception as ex:
+        error_log.error("Exception while retriving the src and dst node info")
+    # for the case of request_json for same domain, return the same node with destination update
+    if src_access_node_id == dst_access_node_id:
+        audit_log.info("src and dst are same")
+        data = '{'\
+                '"vpns":['\
+                    '{'\
+                        '"access-topology-id": "' + request_json["srcPort"]["src-access-topology-id"] + '",'\
+                        '"access-client-id": "' + request_json["srcPort"]["src-access-client-id"] + '",'\
+                        '"access-provider-id": "' + request_json["srcPort"]["src-access-provider-id"]+ '",'\
+                        '"access-node-id": "' + request_json["srcPort"]["src-access-node-id"]+ '",'\
+                        '"src-access-ltp-id": "' + request_json["srcPort"]["src-access-ltp-id"]+ '",'\
+                        '"dst-access-ltp-id": "' + request_json["dstPort"]["dst-access-ltp-id"]  +'"'\
+                    '}'\
+                ']'\
+            '}'
+        return data
+    else:
+        logical_link_url = "/aai/v13/network/logical-links?operation-status=up"
+        aai_req_url = "https://aai.api.simpledemo.onap.org:8443" + logical_link_url
 
+        response = requests.get(aai_req_url,
+                     headers=self.aai_headers,
+                     auth=HTTPBasicAuth("", ""))
+
+        logical_links =  None
+        if response.status_code == 200:
+            logical_links = response.json
+        
+        audit_log.info("6")
+        audit_log.info(logical_links)
+        egress_p_interface = None
+        ingress_p_interface = None
+
+        # take the logical link where both the p-interface in same onap
+        if logical_links != None:
+            for logical_link in logical_links["results"]:
+                if not self.isCrossONAPLink(logical_link):
+                    # link is in local ONAP
+                    for relationship in logical_link["logical-links"]["relationship-list"]["relationship"]:
+                        if relationship["related-to"] == "p-interface":
+                            if src_access_node_id in relationship["related-link"]:
+                                i_interface = relationship["related-link"].split("/")[-1]
+                                ingress_p_interface = i_interface.split("-")[-1]
+                                audit_log.info("7")
+                                audit_log.info(ingress_p_interface)
+                            if dst_access_node_id in relationship["related-link"]:
+                                e_interface = relationship["related-link"].split("/")[-1]
+                                egress_p_interface = e_interface.split("-")[-1]
+                                audit_log.info("8")
+                                audit_log.info(egress_p_interface)
+        data = '{'\
+                '"vpns":['\
+                        '{'\
+                        '"access-topology-id": "' + request["srcPort"]["src-access-topology-id"] + '",'\
+                        '"access-client-id": "' + request["srcPort"]["src-access-client-id"] + '",'\
+                        '"access-provider-id": "' + request["srcPort"]["src-access-provider-id"]+ '",'\
+                        '"access-node-id": "' + request["srcPort"]["src-access-node-id"]+ '",'\
+                        '"src-access-ltp-id": "' + request["srcPort"]["src-access-ltp-id"]+ '",'\
+                        '"dst-access-ltp-id": "' + ingress_p_interface +'"'\
+                '},'\
+                '{' \
+                        '"access-topology-id": "' + request["dstPort"]["dst-access-topology-id"] + '",' \
+                        '"access-topology-id": "' + request["dstPort"]["dst-access-topology-id"]+ '",' \
+                        '"access-provider-id": "' + request["dstPort"]["dst-access-provider-id"]+ '",' \
+                        '"access-node-id": "' + request["dstPort"]["dst-access-node-id"]+ '",' \
+                        '"src-access-ltp-id": "' + egress_p_interface + '",' \
+                        '"dst-access-ltp-id": "' + request["dstPort"]["dst-access-ltp-id"] + '"' \
+                '}'\
+            ']'\
+        '}'
+        audit_log.info("9")
+        audit_log.info(data)
+        return data
 
 @app.errorhandler(500)
 def internal_failure(error):
@@ -142,6 +220,18 @@ def internal_failure(error):
     response = Response(internal_error_message, content_type='application/json; charset=utf-8')
     response.status_code = 500
     return response
+
+
+def isCrossONAPLink(self, logical_link):
+    """
+    This method checks if cross link is cross onap
+    :param logical_link:
+    :return:
+    """
+    for relationship in logical_link["logical-links"]["relationsihp-list"]["relationship"]:
+        if relationship["related-to"] == "external-aai-network":
+            return True
+    return False
 
 
 def get_options(argv):
