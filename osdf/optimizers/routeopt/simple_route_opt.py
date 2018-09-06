@@ -36,16 +36,15 @@ class RouteOpt:
         "Real-Time": "true"
     }
 
-    def isCrossONAPLink(self, logical_link):
+    def isCrossONAPLink(logical_link):
         """
         This method checks if cross link is cross onap
         :param logical_link:
         :return:
         """
-        for relationship in logical_link["logical-links"]["relationship-list"]["relationship"]:
-            if relationship["related-to"] == "p-interface":
-                if "ext-aai-network" in relationship["related-link"]:
-                    return True
+        for relationship in logical_link["relationship-list"]["relationship"]:
+            if relationship["related-to"] == "external-aai-network":
+                return True
         return False
 
     def getRoute(self, request):
@@ -62,21 +61,8 @@ class RouteOpt:
         ingress_p_interface = None
         egress_p_interface = None
 
-        logical_links = self.get_logical_links()
-
-        # take the logical link where both the p-interface in same onap
-        if logical_links != None:
-            for logical_link in logical_links["results"]:
-                if not self.isCrossONAPLink(logical_link):
-
-                    # link is in local ONAP
-                    for relationship in logical_link["logical-links"]["relationship-list"]["relationship"]:
-                        if relationship["related-to"] == "p-interface":
-                            if src_access_node_id in relationship["related-link"]:
-                                ingress_p_interface = relationship["related-link"].split("/")[-1]
-                            if dst_access_node_id in relationship["related-link"]:
-                                egress_p_interface = relationship["related-link"].split("/")[-1]
-
+        # for the case of request_json for same domain, return the same node with destination update
+        if src_access_node_id == dst_access_node_id:
             data = '{'\
                 '"vpns":['\
                     '{'\
@@ -85,20 +71,48 @@ class RouteOpt:
                         '"access-provider-id": "' + request["srcPort"]["src-access-provider-id"]+ '",'\
                         '"access-node-id": "' + request["srcPort"]["src-access-node-id"]+ '",'\
                         '"src-access-ltp-id": "' + request["srcPort"]["src-access-ltp-id"]+ '",'\
-                        '"dst-access-ltp-id": "' + ingress_p_interface +'"'\
-                    '},'\
-                    '{' \
-                        '"access-topology-id": "' + request["dstPort"]["dst-access-topology-id"] + '",' \
-                        '"access-topology-id": "' + request["dstPort"]["dst-access-topology-id"]+ '",' \
-                        '"access-provider-id": "' + request["dstPort"]["dst-access-provider-id"]+ '",' \
-                        '"access-node-id": "' + request["dstPort"]["dst-access-node-id"]+ '",' \
-                        '"src-access-ltp-id": "' + egress_p_interface + '",' \
-                        '"dst-access-ltp-id": "' + request["dstPort"]["dst-access-ltp-id"] + '"' \
+                        '"dst-access-ltp-id": "' + request["dstPort"]["dst-access-ltp-id"]  +'"'\
                     '}'\
                 ']'\
             '}'
             return data
+        else:
+            logical_links = self.get_logical_links()
 
+            # take the logical link where both the p-interface in same onap
+            if logical_links != None:
+                for logical_link in logical_links.get("logical-link"):
+                    if not self.isCrossONAPLink(logical_link):
+                        # link is in local ONAP
+                        for relationship in logical_link["relationship-list"]["relationship"]:
+                            if relationship["related-to"] == "p-interface":
+                                if src_access_node_id in relationship["related-link"]:
+                                    i_interface = relationship["related-link"].split("/")[-1]
+                                    ingress_p_interface = i_interface.split("-")[-1]
+                                if dst_access_node_id in relationship["related-link"]:
+                                    e_interface = relationship["related-link"].split("/")[-1]
+                                    egress_p_interface = e_interface.split("-")[-1]
+                        data = '{'\
+                                '"vpns":['\
+                                        '{'\
+                                        '"access-topology-id": "' + request["srcPort"]["src-access-topology-id"] + '",'\
+                                        '"access-client-id": "' + request["srcPort"]["src-access-client-id"] + '",'\
+                                        '"access-provider-id": "' + request["srcPort"]["src-access-provider-id"]+ '",'\
+                                        '"access-node-id": "' + request["srcPort"]["src-access-node-id"]+ '",'\
+                                        '"src-access-ltp-id": "' + request["srcPort"]["src-access-ltp-id"]+ '",'\
+                                        '"dst-access-ltp-id": "' + ingress_p_interface +'"'\
+                                '},'\
+                                '{' \
+                                        '"access-topology-id": "' + request["dstPort"]["dst-access-topology-id"] + '",' \
+                                        '"access-topology-id": "' + request["dstPort"]["dst-access-topology-id"]+ '",' \
+                                        '"access-provider-id": "' + request["dstPort"]["dst-access-provider-id"]+ '",' \
+                                        '"access-node-id": "' + request["dstPort"]["dst-access-node-id"]+ '",' \
+                                        '"src-access-ltp-id": "' + egress_p_interface + '",' \
+                                        '"dst-access-ltp-id": "' + request["dstPort"]["dst-access-ltp-id"] + '"' \
+                                '}'\
+                            ']'\
+                        '}'
+                        return data
 
 
     def get_pinterface(self, url):
@@ -109,7 +123,8 @@ class RouteOpt:
         aai_req_url = self.aai_host + url
         response = requests.get(aai_req_url,
                                 headers=self.aai_headers,
-                                auth=HTTPBasicAuth("", ""))
+                                auth=HTTPBasicAuth("AAI", "AAI"),
+                                verify=False)
 
         if response.status_code == 200:
             return response.json()
@@ -121,12 +136,14 @@ class RouteOpt:
         from /aai/v14/network/logical-links?operation-status="Up"
         :return: logical-links[]
         """
-        logical_link_url = "/aai/v14/network/logical-links?operation-status=\"Up\""
+        logical_link_url = "/aai/v13/network/logical-links?operational-status=up"
         aai_req_url = self.aai_host + logical_link_url
 
         response = requests.get(aai_req_url,
                      headers=self.aai_headers,
-                     auth=HTTPBasicAuth("", ""))
+                     auth=HTTPBasicAuth("AAI", "AAI"),
+                     verify=False)
 
+        logical_links =  None
         if response.status_code == 200:
             return response.json()
