@@ -37,6 +37,10 @@ osdfPlacementPassword: testpwd
 osdfPlacementSOUsername: so_test
 osdfPlacementSOPassword: so_testpwd
 
+# Credentials for the OOF placement service - VFC
+osdfPlacementVFCUsername: vfc_test
+osdfPlacementVFCPassword: vfc_testpwd
+
 # Credentials for the OOF CM scheduling service - Generic
 osdfCMSchedulerUsername: test1
 osdfCMSchedulerPassword: testpwd1
