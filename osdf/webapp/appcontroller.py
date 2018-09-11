@@ -22,6 +22,7 @@ from flask import Response
 import json
 import osdf
 from osdf.config.base import http_basic_auth_credentials
+from osdf.adapters.aaf import aaf_authentication as aaf_auth
 
 auth_basic = HTTPBasicAuth()
 
@@ -45,3 +46,14 @@ def auth_error():
     response.headers.add('content-length', len(unauthorized_message))
     response.status_code = 401
     return response
+
+
+@auth_basic.verify_password
+def verify_pw(username, password):
+    is_aaf_enabled = osdf.deployment.get('is_aaf_enabled', False)
+    if is_aaf_enabled:
+        return aaf_auth.authenticate(username, password)
+    else:
+        pw = get_pw(username)
+        return pw == password
+    return False
