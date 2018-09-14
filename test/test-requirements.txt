@@ -2,3 +2,4 @@ coverage
 moto
 pytest
 pytest-tap
+requests-mock
