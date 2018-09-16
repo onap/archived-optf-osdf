@@ -128,7 +128,7 @@ def conductor_response_processor(conductor_response, raw_response, req_id):
     name_map = {"physical-location-id": "cloudClli", "host_id": "vnfHostName",
                 "cloud_version": "cloudVersion", "cloud_owner": "cloudOwner",
                 "cloud": "cloudRegionId", "service": "serviceInstanceId", "is_rehome": "isRehome",
-                "location_id": "locationId", "location_type": "locationType"}
+                "location_id": "locationId", "location_type": "locationType", "directives": "oofDirectives"}
     for reco in conductor_response['plans'][0]['recommendations']:
         for resource in reco.keys():
             c = reco[resource]['candidate']
