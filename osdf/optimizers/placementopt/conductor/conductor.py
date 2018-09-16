@@ -48,6 +48,15 @@ def request(req_object, osdf_config, flat_policies):
     req_id = req_object['requestInfo']['requestId']
     transaction_id = req_object['requestInfo']['transactionId']
     headers = dict(transaction_id=transaction_id)
+    placement_ver_enabled = config.get('placementVersioningEnabled', False)
+
+    if placement_ver_enabled:
+        cond_minor_version = config.get('conductorMinorVersion', None)
+        if cond_minor_version is not None:
+            x_minor_version = str(cond_minor_version)
+            headers.update({'X-MinorVersion': x_minor_version})
+        debug_log.debug(
+            "Versions set in HTTP header to conductor: X-MinorVersion: {} ".format(x_minor_version))
 
     max_retries = config.get('conductorMaxRetries', 30)
     ping_wait_time = config.get('conductorPingWaitTime', 60)
@@ -82,14 +91,17 @@ def request(req_object, osdf_config, flat_policies):
                                     "this transaction is timing out".format(max_timeout))
         time.sleep(ping_wait_time)
         ctr += 1
-        debug_log.debug("Attempt number {} url {}; prior status={}".format(ctr, new_url, resp['plans'][0]['status']))
+        debug_log.debug(
+            "Attempt number {} url {}; prior status={}".format(ctr, new_url, resp['plans'][0]['status']))
         total_time += ping_wait_time
 
         try:
             raw_resp = rc.request(new_url, raw_response=True)
             resp = raw_resp.json()
         except RequestException as e:
-            debug_log.debug("Conductor attempt {} for request_id {} has failed because {}".format(ctr, req_id, str(e)))
+            debug_log.debug(
+                "Conductor attempt {} for request_id {} has failed because {}".format(ctr, req_id,
+                                                                                      str(e)))
 
 
 def initial_request_to_conductor(rc, conductor_url, conductor_req_json):
@@ -143,15 +155,20 @@ def conductor_response_processor(conductor_response, raw_response, req_id):
             for key, value in c.items():
                 if key in ["location_id", "location_type", "is_rehome", "host_id"]:
                     try:
-                        solution['assignmentInfo'].append({"key": name_map.get(key, key), "value": value})
+                        solution['assignmentInfo'].append(
+                            {"key": name_map.get(key, key), "value": value})
                     except KeyError:
-                        debug_log.debug("The key[{}] is not mapped and will not be returned in assignment info".format(key))
+                        debug_log.debug(
+                            "The key[{}] is not mapped and will not be returned in assignment info".format(
+                                key))
 
             for key, value in reco[resource]['attributes'].items():
                 try:
                     solution['assignmentInfo'].append({"key": name_map.get(key, key), "value": value})
                 except KeyError:
-                    debug_log.debug("The key[{}] is not mapped and will not be returned in assignment info".format(key))
+                    debug_log.debug(
+                        "The key[{}] is not mapped and will not be returned in assignment info".format(
+                            key))
             composite_solutions.append(solution)
 
     request_status = "completed" if conductor_response['plans'][0]['status'] == "done" \
