@@ -15,12 +15,25 @@
       "policyType": "hpaPolicy",
       "flavorFeatures": [
         {
-          "flavorLabel": "flavor_label_vm_01",
+          "id": "vgmux_1",
+          "type": "vnfc",
+          "directives": [
+            {
+              "type": "flavor_directives",
+              "attributes": [
+                {
+                  "attribute_name": "flavor_label_vm_01",
+                  "attribute_value": ""
+                }
+              ]
+            }
+          ],
           "flavorProperties":[
             {
               "hpa-feature" : "cpuTopology",
               "mandatory" : "True",
               "architecture": "generic",
+              "directives": [],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key":"numCpuSockets", "hpa-attribute-value": "2","operator": ">=", "unit": ""},
                 {"hpa-attribute-key":"numCpuSockets", "hpa-attribute-value": "4","operator": "<=", "unit": ""},
@@ -34,6 +47,7 @@
               "hpa-feature" : "basicCapabilities",
               "mandatory" : "True",
               "architecture": "generic",
+              "directives": [],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key": "numVirtualCpu", "hpa-attribute-value": "6", "operator": "=", "unit": ""},
                 {"hpa-attribute-key": "virtualMemSize", "hpa-attribute-value":"6", "operator": "=", "unit": "GB"}
@@ -44,6 +58,7 @@
               "mandatory" : "False",
               "score" : "3",
               "architecture": "generic",
+              "directives": [],
               "hpa-feature-attributes": [
                  {"hpa-attribute-key":"dataProcessingAccelerationLibrary", "hpa-attribute-value":"ovsDpdk_version", "operator": "=", "unit":""}
               ]
@@ -52,6 +67,7 @@
               "hpa-feature" : "cpuInstructionSetExtensions",
               "mandatory" : "True",
               "architecture": "INTEL-64",
+              "directives":[],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key":"instructionSetExtensions", "hpa-attribute-value":["<CPUINST>", "<CPUINST>"], "operator": "ALL", "unit":""}
               ]
@@ -59,12 +75,25 @@
           ]
         },
         {
-          "flavorLabel": "flavor_label_vm_02",
+          "id": "vgmux_2",
+          "type": "vnfc",
+          "directives": [
+            {
+              "type": "flavor_directives",
+              "attributes": [
+                {
+                  "attribute_name": "flavor_label_vm_02",
+                  "attribute_value": ""
+                }
+              ]
+            }
+          ],
           "flavorProperties":[
             {
               "hpa-feature" : "cpuPinningy",
               "mandatory" : "True",
               "architecture": "generic",
+              "directives":[],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key":"logicalCpuThreadPinningPolicy", "hpa-attribute-value":"<CPUTHREADPOLICY>", "operator": "=", "unit":""},
                 {"hpa-attribute-key":"logicalCpuPinningPolicy", "hpa-attribute-value": "<CPUPOLICY>","operator": "=", "unit":""}
@@ -74,6 +103,7 @@
               "hpa-feature" : "basicCapabilities",
               "mandatory" : "True",
               "architecture": "generic",
+              "directives":[],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key": "numVirtualCpu", "hpa-attribute-value": "6", "operator": "=", "unit": ""},
                 {"hpa-attribute-key": "virtualMemSize", "hpa-attribute-value":"6", "operator": "=", "unit": "GB"}
@@ -84,6 +114,7 @@
               "mandatory" : "False",
               "score" : "5",
               "architecture": "generic",
+              "directives":[],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key": "diskSize", "hpa-attribute-value": "2", "operator": "=", "unit": "GB"},
                 {"hpa-attribute-key": "ephemeralDiskSize", "hpa-attribute-value": "2", "operator": "=", "unit": "GB"},
@@ -94,6 +125,7 @@
               "hpa-feature" : "pcie",
               "mandatory" : "True",
               "architecture": "generic",
+              "directives":[],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key": "pciCount", "hpa-attribute-value": "2", "operator": "=", "unit": ""},
                 {"hpa-attribute-key": "pciVendorId", "hpa-attribute-value":"8086", "operator": "=", "unit": ""},
@@ -104,13 +136,26 @@
           ]
         },
         {
-          "flavorLabel": "flavor_label_vm_03",
+          "id": "vgmux_3",
+          "type": "vnfc",
+          "directives": [
+            {
+              "type": "flavor_directives",
+              "attributes": [
+                {
+                  "attribute_name": "flavor_label_vm_03",
+                  "attribute_value": ""
+                }
+              ]
+            }
+          ],
           "flavorProperties":[
             {
               "hpa-feature" : "numa",
               "mandatory" : "False",
               "score" : "5",
               "architecture": "generic",
+              "directives":[],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key": "numaNodes", "hpa-attribute-value": "2", "operator": "=", "unit": ""},
                 {"hpa-attribute-key": "numaCpu-0", "hpa-attribute-value":"2", "operator": "=", "unit": ""},
@@ -123,6 +168,7 @@
               "hpa-feature" : "basicCapabilities",
               "mandatory" : "True",
               "architecture": "generic",
+              "directives":[],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key": "numVirtualCpu", "hpa-attribute-value": "6", "operator": "=", "unit": ""},
                 {"hpa-attribute-key": "virtualMemSize", "hpa-attribute-value":"6", "operator": "=", "unit": "GB"}
@@ -133,6 +179,7 @@
               "mandatory" : "False",
               "score" : "7",
               "architecture": "generic",
+              "directives":[],
               "hpa-feature-attributes": [
                  {"hpa-attribute-key": "memoryPageSize", "hpa-attribute-value": "<MEMORYPAGESIZE>", "operator": "=", "unit": ""}
               ]
