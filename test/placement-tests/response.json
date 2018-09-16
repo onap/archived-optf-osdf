@@ -6,44 +6,114 @@
   "solutions": {
     "placementSolutions": [
       [
-      {
-        "resourceModuleName": "vGMuxInfra",
-        "serviceResourceId": "someResourceId",
-        "solution": {
+        {
+          "resourceModuleName": "vGMuxInfra",
+          "serviceResourceId": "someResourceId",
+          "solution": {
             "identifierType": "serviceInstanceId",
-            "identifiers": ["gjhd-098-fhd-987"]
+            "identifiers": [
+              "gjhd-098-fhd-987"
+            ]
+          },
+          "assignmentInfo": [
+            {
+              "key": "cloudOwner",
+              "value": "amazon"
+            },
+            {
+              "key": "vnfHostName",
+              "value": "ahr344gh"
+            },
+            {
+              "key": "isRehome",
+              "value": "False"
+            },
+            {
+              "key": "cloudRegionId",
+              "value": "1ac71fb8-ad43-4e16-9459-c3f372b8236d"
+            },
+            {
+              "key": "oof_directives",
+              "value": {
+                "directives": [
+                  {
+                    "id": "vgmux_1",
+                    "type": "vnfc",
+                    "directives": [
+                      {
+                        "type": "flavor_directives",
+                        "attributes": [
+                          {
+                            "attribute_name": "flavorLabel1",
+                            "attribute_value": "vimFlavorX"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "vgmux_2",
+                    "type": "vnfc",
+                    "directives": [
+                      {
+                        "type": "flavor_directives",
+                        "attributes": [
+                          {
+                            "attribute_name": "flavorLabel2",
+                            "attribute_value": "vimFlavorY"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
         },
-        "assignmentInfo": [
-          { "key": "cloudOwner", "value": "amazon" },
-          { "key": "vnfHostName", "value": "ahr344gh" },
-          { "key": "isRehome", "value": "False" },
-          { "key": "cloudRegionId", "value": "1ac71fb8-ad43-4e16-9459-c3f372b8236d" },
-          { "key":"flavors", "value": { "flavorLabel1": "vimFlavorX", "flavorLabel2": "vimFlavorY"}}
-        ]
-      },
-      {
-        "resourceModuleName": "vG",
-        "serviceResourceId": "someResourceId",
-        "solution": {
+        {
+          "resourceModuleName": "vG",
+          "serviceResourceId": "someResourceId",
+          "solution": {
             "identifierType": "cloudRegionId",
             "cloudOwner": "amazon",
-            "identifiers": ["gjhd-098-fhd-987"]
-        },
-        "assignmentInfo": [
-          { "key": "cloudOwner", "value": "amazon" },
-          { "key": "cloudRegionId", "value": "1ac71fb8-ad43-4e16-9459-c3f372b8236d" }
-        ]
-      }
+            "identifiers": [
+              "gjhd-098-fhd-987"
+            ]
+          },
+          "assignmentInfo": [
+            {
+              "key": "cloudOwner",
+              "value": "amazon"
+            },
+            {
+              "key": "cloudRegionId",
+              "value": "1ac71fb8-ad43-4e16-9459-c3f372b8236d"
+            }
+          ]
+        }
       ]
     ],
     "licenseSolutions": [
       {
         "resourceModuleName": "vGMuxInfra",
         "serviceResourceId": "someResourceId",
-        "entitlementPoolUUID": ["1ac71fb8-ad43-4e16-9459-c3f372b8236d", "834fc71fb8-ad43-4fh7-9459-c3f372b8236f"],
-        "licenseKeyGroupUUID": ["1ac71fb8-ad43-4e16-9459-c3f372b8236d", "834fc71fb8-ad43-4fh7-9459-c3f372b8236f"],
-        "entitlementPoolInvariantUUID": ["1ac71fb8-ad43-4e16-9459-c3f372b8236d", "834fc71fb8-ad43-4fh7-9459-c3f372b8236f"],
-        "licenseKeyGroupInvariantUUID": ["1ac71fb8-ad43-4e16-9459-c3f372b8236d", "834fc71fb8-ad43-4fh7-9459-c3f372b8236f"]
+        "entitlementPoolUUID": [
+          "1ac71fb8-ad43-4e16-9459-c3f372b8236d",
+          "834fc71fb8-ad43-4fh7-9459-c3f372b8236f"
+        ],
+        "licenseKeyGroupUUID": [
+          "1ac71fb8-ad43-4e16-9459-c3f372b8236d",
+          "834fc71fb8-ad43-4fh7-9459-c3f372b8236f"
+        ],
+        "entitlementPoolInvariantUUID": [
+          "1ac71fb8-ad43-4e16-9459-c3f372b8236d",
+          "834fc71fb8-ad43-4fh7-9459-c3f372b8236f"
+        ],
+        "licenseKeyGroupInvariantUUID": [
+          "1ac71fb8-ad43-4e16-9459-c3f372b8236d",
+          "834fc71fb8-ad43-4fh7-9459-c3f372b8236f"
+        ]
       }
     ]
   }
