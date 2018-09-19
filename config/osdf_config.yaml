@@ -1,3 +1,15 @@
+placementVersioningEnabled: False
+
+# Placement API latest version numbers to be set in HTTP header
+placementMajorVersion: "1"
+placementMinorVersion: "0"
+placementPatchVersion: "0"
+
+# Placement API default version numbers to be set in HTTP header
+placementDefaultMajorVersion: "1"
+placementDefaultMinorVersion: "0"
+placementDefaultPatchVersion: "0"
+
 # Credentials for SO
 soUsername: ""   # SO username for call back.
 soPassword: ""   # SO password for call back.
@@ -8,6 +20,8 @@ conductorUsername: admin1
 conductorPassword: plan.15
 conductorPingWaitTime: 60  # seconds to wait before calling the conductor retry URL
 conductorMaxRetries: 30  # if we don't get something in 30 minutes, give up
+# versions to be set in HTTP header
+conductorMinorVersion: 0
 
 # Policy Platform -- requires ClientAuth, Authorization, and Environment
 policyPlatformUrl: http://policy.api.simpledemo.onap.org:8081/pdp/api/getConfig # Policy Dev platform URL
