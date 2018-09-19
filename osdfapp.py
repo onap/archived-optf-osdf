@@ -49,7 +49,6 @@ from osdf.models.api.pciOptimizationRequest import PCIOptimizationAPI
 from osdf.operation.responses import osdf_response_for_request_accept as req_accept
 from osdf.optimizers.routeopt.simple_route_opt import RouteOpt
 from osdf.optimizers.pciopt.pci_opt_processor import process_pci_optimation
-from osdf.utils import api_data_utils
 
 ERROR_TEMPLATE = osdf.ERROR_TEMPLATE
 
@@ -108,16 +107,6 @@ def do_osdf_health_check():
 @app.route("/api/oof/v1/placement", methods=["POST"])
 @auth_basic.login_required
 def do_placement_opt():
-    return placement_rest_api()
-
-
-@app.route("/api/oof/placement/v1", methods=["POST"])
-@auth_basic.login_required
-def do_placement_opt_common_versioning():
-    return placement_rest_api()
-
-
-def placement_rest_api():
     """Perform placement optimization after validating the request and fetching policies
     Make a call to the call-back URL with the output of the placement request.
     Note: Call to Conductor for placement optimization may have redirects, so account for them
@@ -126,7 +115,6 @@ def placement_rest_api():
     req_id = request_json['requestInfo']['requestId']
     g.request_id = req_id
     audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
-    api_version_info = api_data_utils.retrieve_version_info(request, req_id)
     PlacementAPI(request_json).validate()
     policies = get_policies(request_json, "placement")
     audit_log.info(MH.new_worker_thread(req_id, "[for placement]"))
@@ -135,7 +123,7 @@ def placement_rest_api():
     audit_log.info(MH.accepted_valid_request(req_id, request))
     return req_accept(request_id=req_id,
                       transaction_id=request_json['requestInfo']['transactionId'],
-                      version_info=api_version_info, request_status="accepted", status_message="")
+                      request_status="accepted", status_message="")
 
 
 @app.route("/api/oof/v1/route", methods=["POST"])
@@ -180,9 +168,10 @@ def do_pci_optimization():
     g.request_id = req_id
     audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
     PCIOptimizationAPI(request_json).validate()
-    policies = get_policies(request_json, "pciopt")
+    #disable policy retrieval
+    # policies = get_policies(request_json, "pciopt")
     audit_log.info(MH.new_worker_thread(req_id, "[for pciopt]"))
-    t = Thread(target=process_pci_optimation, args=(request_json, policies, osdf_config))
+    t = Thread(target=process_pci_optimation, args=(request_json, osdf_config, None))
     t.start()
     audit_log.info(MH.accepted_valid_request(req_id, request))
     return req_accept(request_id=req_id,
