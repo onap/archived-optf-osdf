@@ -56,3 +56,14 @@ aaf_sms_url: https://aaf-sms.onap:10443
 aaf_sms_timeout: 30
 secret_domain: osdf #Replace with the UUID
 aaf_ca_certs: ssl_certs/aaf_root_ca.cer
+
+# config db api
+configDbUrl: http://config.db.url:8080
+configDbUserName: osdf
+configDbPassword: passwd
+configDbGetCellListUrl: 'SDNCConfigDBAPI/getCellList'
+configDbGetNbrListUrl: 'SDNCConfigDBAPI/getNbrList'
+
+# Credentials for PCIHandler
+pciHMSUsername: ""   # pcihandler username for call back.
+pciHMSPassword: ""   # pcihandler password for call back.

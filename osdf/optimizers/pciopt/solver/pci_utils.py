@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------
-#   Copyright (c) 2015-2017 AT&T Intellectual Property
+#   Copyright (c) 2018 AT&T Intellectual Property
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -16,21 +16,24 @@
 # -------------------------------------------------------------------------
 #
 
-import os
 
-import osdf.config.credentials as creds
-import osdf.config.loader as config_loader
-from osdf.utils.programming_utils import DotDict
+def get_id(network_cell_info, cell_id):
+    for i in network_cell_info['cell_list']:
+        if i['cell_id'] == cell_id:
+            return i['id']
+    return None
 
-config_spec = {
-    "deployment": os.environ.get("OSDF_CONFIG_FILE", "config/osdf_config.yaml"),
-    "core": "config/common_config.yaml"
-}
 
-osdf_config = DotDict(config_loader.all_configs(**config_spec))
+def get_cell_id(network_cell_info, id):
+    for i in network_cell_info['cell_list']:
+        if i['id'] == id:
+            return i['cell_id']
+    return None
 
-http_basic_auth_credentials = creds.load_credentials(osdf_config)
-
-dmaap_creds = creds.dmaap_creds()
-
-creds_prefixes = {"so": "so", "cm": "cmPortal", "pcih": "pciHMS"}
+def get_pci_value(network_cell_info, id):
+    cell_id = get_cell_id(network_cell_info, id)
+    for i in network_cell_info['cell_list']:
+        for j in i['nbr_list']:
+            if cell_id == j['cellId']:
+                return j['pciValue']
+    return None
