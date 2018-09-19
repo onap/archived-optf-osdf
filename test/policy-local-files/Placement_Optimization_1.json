@@ -24,6 +24,12 @@
                     "parameter": "distance",
                     "weight": "1",
                     "operator": "product"
+                },
+                {
+                    "resources": ["vG"],
+                    "parameter": "hpa_score",
+                    "weight": "200",
+                    "operator": "product"
                 }
             ],
             "operator": "sum"

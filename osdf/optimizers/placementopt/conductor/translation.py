@@ -54,7 +54,7 @@ def gen_optimization_policy(vnf_list, optimization_policy):
     for policy in optimization_policy:
         content = policy['content']
         parameter_list = []
-        parameters = ["cloud_version"]
+        parameters = ["cloud_version", "hpa_score"]
 
         for attr in content['objectiveParameter']['parameterAttributes']:
             parameter = attr['parameter'] if attr['parameter'] in parameters else attr['parameter']+"_between"
