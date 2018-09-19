@@ -16,21 +16,25 @@
 # -------------------------------------------------------------------------
 #
 
-import os
+from schematics.types import StringType, IntType
+from schematics.types.compound import ModelType, ListType
 
-import osdf.config.credentials as creds
-import osdf.config.loader as config_loader
-from osdf.utils.programming_utils import DotDict
+from .common import OSDFModel
 
-config_spec = {
-    "deployment": os.environ.get("OSDF_CONFIG_FILE", "config/osdf_config.yaml"),
-    "core": "config/common_config.yaml"
-}
 
-osdf_config = DotDict(config_loader.all_configs(**config_spec))
+class PCISolution(OSDFModel):
+    cellId = StringType(required=True)
+    pci = IntType(required=True)
 
-http_basic_auth_credentials = creds.load_credentials(osdf_config)
 
-dmaap_creds = creds.dmaap_creds()
+class Solution(OSDFModel):
+    networkId = StringType(required=True)
+    pciSolutions = ListType(ListType(ModelType(PCISolution), min_size=1))
 
-creds_prefixes = {"so": "so", "cm": "cmPortal", "pcih": "pciHMS"}
+
+class PCIOptimizationResponse(OSDFModel):
+    transactionId = StringType(required=True)
+    requestId = StringType(required=True)
+    requestStatus = StringType(required=True)
+    statusMessage = StringType()
+    solutions = ModelType(Solution, required=True)

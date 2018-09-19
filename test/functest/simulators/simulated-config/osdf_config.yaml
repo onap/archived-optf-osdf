@@ -32,3 +32,15 @@ sdcONAPInstanceID: ONAP-OSDF
 osdfPlacementUrl: "http://127.0.0.1:24699/osdf/api/v2/placement"
 osdfPlacementUsername: "test"
 osdfPlacementPassword: "testpwd"
+
+# config db api
+configDbUrl: http://127.0.0.1:5000/simulated/configdb
+configDbUserName: osdf
+configDbPassword: passwd
+configDbGetCellListUrl: 'getCellList'
+configDbGetNbrListUrl: 'getNbrList'
+
+# Credentials for PCIHandler
+pciHMSUsername: ""   # pcihandler username for call back.
+pciHMSPassword: ""   # pcihandler password for call back.
+
