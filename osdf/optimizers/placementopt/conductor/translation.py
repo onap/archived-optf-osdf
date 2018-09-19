@@ -54,12 +54,13 @@ def gen_optimization_policy(vnf_list, optimization_policy):
     for policy in optimization_policy:
         content = policy['content']
         parameter_list = []
+        parameters = ["cloud_version"]
 
         for attr in content['objectiveParameter']['parameterAttributes']:
-            parameter = attr['parameter'] if attr['parameter'] == "cloud_version" else attr['parameter']+"_between"
+            parameter = attr['parameter'] if attr['parameter'] in parameters else attr['parameter']+"_between"
             vnfs = get_matching_vnfs(attr['resources'], vnf_list)
             for vnf in vnfs:
-                value = [vnf] if attr['parameter'] == "cloud_version" else [attr['customerLocationInfo'], vnf]
+                value = [vnf] if attr['parameter'] in parameters else [attr['customerLocationInfo'], vnf]
                 parameter_list.append({
                     attr['operator']: [attr['weight'], {parameter: value}]
                 })
