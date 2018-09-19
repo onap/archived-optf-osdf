@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_f574e268",
+        "filename": "osdfapp.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1361
+      },
+      "writtenOn": "2018-09-19T23:26:30Z",
+      "side": 1,
+      "message": "Is this change intended as part of pci optimization changes?",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 23
+      },
+      "revId": "da3bdd4647a5f0023c12beab5268769570d5f13f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
