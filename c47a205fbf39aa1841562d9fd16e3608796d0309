@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_317a7724",
+        "filename": "osdf/utils/api_data_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2018-09-19T02:41:02Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 27
+      },
+      "revId": "c47a205fbf39aa1841562d9fd16e3608796d0309",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d1746337",
+        "filename": "test/test_api_data_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2018-09-19T02:41:02Z",
+      "side": 1,
+      "message": "Please add license header",
+      "revId": "c47a205fbf39aa1841562d9fd16e3608796d0309",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
