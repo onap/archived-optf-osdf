@@ -20,7 +20,6 @@ import traceback
 from requests import RequestException
 
 from osdf.logging.osdf_logging import metrics_log, MH, error_log
-from osdf.models.api.pciOptimizationResponse import PCIOptimizationResponse, Solution, PCISolution
 from osdf.operation.error_handling import build_json_error_body
 from osdf.utils.interfaces import get_rest_client
 from .configdb import request as config_request
@@ -44,26 +43,9 @@ def process_pci_optimation(request_json, osdf_config, flat_policies):
     try:
         rc = get_rest_client(request_json, service="pcih")
         req_id = request_json["requestInfo"]["requestId"]
-        transaction_id = request_json['requestInfo']['transactionId']
         cell_info_list, network_cell_info = config_request(request_json, osdf_config, flat_policies)
 
-        pci_response = PCIOptimizationResponse()
-        pci_response.transactionId = transaction_id
-        pci_response.requestId = req_id
-        pci_response.requestStatus = 'success'
-        pci_response.solutions = Solution()
-        pci_response.solutions.networkId = request_json['cellInfo']['networkId']
-        pci_response.solutions.pciSolutions = []
-
-        for cell in request_json['cellInfo']['cellIdList']:
-            pci_solution = optimize(cell['cellId'], network_cell_info, cell_info_list)
-            error_log.error(pci_solution)
-            sol = pci_solution[0]['pci']
-            for k, v in sol.items():
-                response = PCISolution()
-                response.cellId = get_cell_id(network_cell_info, k)
-                response.pci = get_pci_value(network_cell_info, v)
-                pci_response.solutions.pciSolutions.append(response)
+        pci_response = get_solutions(cell_info_list, network_cell_info, request_json)
 
         metrics_log.info(MH.inside_worker_thread(req_id))
     except Exception as err:
@@ -82,3 +64,36 @@ def process_pci_optimation(request_json, osdf_config, flat_policies):
         rc.request(json=pci_response, noresponse=True)
     except RequestException:  # can't do much here but log it and move on
         error_log.error("Error sending asynchronous notification for {} {}".format(req_id, traceback.format_exc()))
+
+
+def get_solutions(cell_info_list, network_cell_info, request_json):
+    pci_response = {
+        "transactionId": request_json['requestInfo']['transactionId'],
+        "requestId": request_json["requestInfo"]["requestId"],
+        "requestStatus": "completed",
+        "statusMessage": "success"
+    }
+    solutions = [
+        {
+            'networkId': request_json['cellInfo']['networkId'],
+            'pciSolutions': build_solution_list(cell_info_list, network_cell_info, request_json)
+        }
+    ]
+    # "solutions": {'networkId': request_json['cellInfo']['networkId']}}
+    pci_response['solutions'] = solutions
+    return pci_response
+
+
+def build_solution_list(cell_info_list, network_cell_info, request_json):
+    solution_list = []
+    for cell in request_json['cellInfo']['cellIdList']:
+        opt_solution = optimize(cell, network_cell_info, cell_info_list)
+        error_log.error(opt_solution)
+        sol = opt_solution[0]['pci']
+        for k, v in sol.items():
+            response = {
+                'cellId': get_cell_id(network_cell_info, k),
+                'pci': get_pci_value(network_cell_info, v)
+            }
+            solution_list.append(response)
+    return solution_list

@@ -81,3 +81,7 @@ configDbGetNbrListUrl: 'SDNCConfigDBAPI/getNbrList'
 # Credentials for PCIHandler
 pciHMSUsername: ""   # pcihandler username for call back.
 pciHMSPassword: ""   # pcihandler password for call back.
+
+# Credentials for the OOF PCI Opt service
+osdfPCIOptUsername: pci_test
+osdfPCIOptPassword: pci_testpwd
