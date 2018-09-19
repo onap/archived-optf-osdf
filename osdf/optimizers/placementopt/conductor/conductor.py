@@ -48,6 +48,14 @@ def request(req_object, osdf_config, flat_policies):
     req_id = req_object['requestInfo']['requestId']
     transaction_id = req_object['requestInfo']['transactionId']
     headers = dict(transaction_id=transaction_id)
+    placement_ver_enabled = config.get('placementVersioningEnabled', False)
+    
+    if placement_ver_enabled:
+        cond_minor_version = config.get('conductorMinorVersion', None) 
+        if cond_minor_version is not None:
+            x_minor_version = str(cond_minor_version)
+            headers.update({'X-MinorVersion': x_minor_version})
+        debug_log.debug("Versions set in HTTP header to conductor: X-MinorVersion: {} ".format(x_minor_version))
 
     max_retries = config.get('conductorMaxRetries', 30)
     ping_wait_time = config.get('conductorPingWaitTime', 60)

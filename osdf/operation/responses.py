@@ -19,9 +19,15 @@
 from flask import Response
 
 from osdf import ACCEPTED_MESSAGE_TEMPLATE
-
+from osdf.logging.osdf_logging import debug_log
 
 def osdf_response_for_request_accept(request_id="", transaction_id="", request_status="", status_message="",
+                                     version_info = {
+                                          'placementVersioningEnabled': False,
+                                          'placementMajorVersion': '1',
+                                          'placementMinorVersion': '0',
+                                          'placementPatchVersion': '0'
+                                      },
                                      response_code=202, as_http=True):
     """Helper method to create a response object for request acceptance, so that the object can be sent to a client
     :param request_id: request ID provided by the caller
@@ -39,5 +45,20 @@ def osdf_response_for_request_accept(request_id="", transaction_id="", request_s
 
     response = Response(response_message, content_type='application/json; charset=utf-8')
     response.headers.add('content-length', len(response_message))
+    
+    placement_ver_enabled = version_info['placementVersioningEnabled']
+    
+    if placement_ver_enabled:
+        placement_minor_version = version_info['placementMinorVersion']
+        placement_patch_version = version_info['placementPatchVersion']
+        placement_major_version = version_info['placementMajorVersion']
+        x_latest_version = placement_major_version+'.'+placement_minor_version+'.'+placement_patch_version
+        response.headers.add('X-MinorVersion', placement_minor_version)
+        response.headers.add('X-PatchVersion', placement_patch_version)
+        response.headers.add('X-LatestVersion', x_latest_version)
+        
+        debug_log.debug("Versions set in HTTP header for synchronous response: X-MinorVersion: {}  X-PatchVersion: {}  X-LatestVersion: {}"
+                        .format(placement_minor_version, placement_patch_version, x_latest_version))
+    
     response.status_code = response_code
     return response
