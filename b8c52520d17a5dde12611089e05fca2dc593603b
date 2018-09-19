@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_710eaf8d",
+        "filename": "test/placement-tests/conductor_response.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2018-09-19T02:56:53Z",
+      "side": 1,
+      "message": "The corresponding changes for the final response to SO should be taken care as well. You may need to update the below to cover that scenario.\n\nhttps://gerrit.onap.org/r/gitweb?p\u003doptf/osdf.git;a\u003dblob;f\u003dtest/placement-tests/response.json;h\u003d92751ac8a5212c32a92156b1f12f38d627f66239;hb\u003db8c52520d17a5dde12611089e05fca2dc593603b",
+      "revId": "b8c52520d17a5dde12611089e05fca2dc593603b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
