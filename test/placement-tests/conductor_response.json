@@ -24,9 +24,65 @@
               "location_type": "openstack-cloud"
             },
             "attributes": {
-              "flavors": {
-                "flavor_label_1": "vim_flavor_X",
-                "flavor_label_2": "vim_flavor_Y"
+              "directives": {
+                "directives": [
+                {
+                  "id": "vFW_0",
+                  "type": "<vnfc/tocsa.nodes.nfv.Vdu.Compute>",
+                  "directives": [
+                    {
+                      "type": "flavor_directives",
+                      "attributes": [
+                        {
+                          "attribute_name": "oof_returned_flavor_label_for_firewall",
+                          "attribute_value": "vim_flavor_X"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "sriovNICNetwork_directives",
+                      "attributes": [
+                        {
+                          "attribute_name": "oof_returned_vnic_type_for_firewall_protected",
+                          "attribute_value": "direct"
+                        },
+                        {
+                          "attribute_name": "oof_returned_provider_network_for_firewall_protected",
+                          "attribute_value": "physnet1"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "sriovNICNetwork_directives",
+                      "attributes": [
+                        {
+                          "attribute_name": "oof_returned_vnic_type_for_firewall_unprotected",
+                          "attribute_value": "direct"
+                        },
+                        {
+                          "attribute_name": "oof_returned_provider_network_for_firewall_unprotected",
+                          "attribute_value": "physnet2"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "vFW_1",
+                  "type": "<vnfc/tocsa.nodes.nfv.Vdu.Compute>",
+                  "directives": [
+                    {
+                      "type": "flavor_directives",
+                      "attributes": [
+                        {
+                          "attribute_name": "oof_returned_flavor_label_for_generator",
+                          "attribute_value": "vim_flavor_Y"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
               },
               "cloud_owner": "CloudOwner1",
               "physical-location-id": "DLLSTX1A",
