@@ -67,7 +67,7 @@
               "hpa-feature" : "cpuInstructionSetExtensions",
               "mandatory" : "True",
               "architecture": "INTEL-64",
-              "directives":[],
+              "directives": [],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key":"instructionSetExtensions", "hpa-attribute-value":["<CPUINST>", "<CPUINST>"], "operator": "ALL", "unit":""}
               ]
@@ -93,7 +93,7 @@
               "hpa-feature" : "cpuPinningy",
               "mandatory" : "True",
               "architecture": "generic",
-              "directives":[],
+              "directives": [],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key":"logicalCpuThreadPinningPolicy", "hpa-attribute-value":"<CPUTHREADPOLICY>", "operator": "=", "unit":""},
                 {"hpa-attribute-key":"logicalCpuPinningPolicy", "hpa-attribute-value": "<CPUPOLICY>","operator": "=", "unit":""}
@@ -103,7 +103,7 @@
               "hpa-feature" : "basicCapabilities",
               "mandatory" : "True",
               "architecture": "generic",
-              "directives":[],
+              "directives": [],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key": "numVirtualCpu", "hpa-attribute-value": "6", "operator": "=", "unit": ""},
                 {"hpa-attribute-key": "virtualMemSize", "hpa-attribute-value":"6", "operator": "=", "unit": "GB"}
@@ -114,7 +114,7 @@
               "mandatory" : "False",
               "score" : "5",
               "architecture": "generic",
-              "directives":[],
+              "directives": [],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key": "diskSize", "hpa-attribute-value": "2", "operator": "=", "unit": "GB"},
                 {"hpa-attribute-key": "ephemeralDiskSize", "hpa-attribute-value": "2", "operator": "=", "unit": "GB"},
@@ -125,7 +125,7 @@
               "hpa-feature" : "pcie",
               "mandatory" : "True",
               "architecture": "generic",
-              "directives":[],
+              "directives": [],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key": "pciCount", "hpa-attribute-value": "2", "operator": "=", "unit": ""},
                 {"hpa-attribute-key": "pciVendorId", "hpa-attribute-value":"8086", "operator": "=", "unit": ""},
@@ -155,7 +155,7 @@
               "mandatory" : "False",
               "score" : "5",
               "architecture": "generic",
-              "directives":[],
+              "directives": [],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key": "numaNodes", "hpa-attribute-value": "2", "operator": "=", "unit": ""},
                 {"hpa-attribute-key": "numaCpu-0", "hpa-attribute-value":"2", "operator": "=", "unit": ""},
@@ -168,7 +168,7 @@
               "hpa-feature" : "basicCapabilities",
               "mandatory" : "True",
               "architecture": "generic",
-              "directives":[],
+              "directives": [],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key": "numVirtualCpu", "hpa-attribute-value": "6", "operator": "=", "unit": ""},
                 {"hpa-attribute-key": "virtualMemSize", "hpa-attribute-value":"6", "operator": "=", "unit": "GB"}
@@ -179,7 +179,7 @@
               "mandatory" : "False",
               "score" : "7",
               "architecture": "generic",
-              "directives":[],
+              "directives": [],
               "hpa-feature-attributes": [
                  {"hpa-attribute-key": "memoryPageSize", "hpa-attribute-value": "<MEMORYPAGESIZE>", "operator": "=", "unit": ""}
               ]
