@@ -20,6 +20,7 @@
 Simulators for dependencies of OSDF (e.g. HAS-API, Policy, SO-callback, etc.)
 """
 import glob
+import json
 from flask import Flask, jsonify, request
 
 from osdf.utils.interfaces import json_from_file
@@ -77,7 +78,10 @@ def get_policies(sub_component):
     """
     main_dir = "policy/response-payloads/" + sub_component
     files = glob.glob("{}/*.json".format(main_dir))
-    return jsonify([json_from_file(x) for x in files])
+    list_json = []
+    for x in files:
+        list_json.append({"config": json.dumps(json_from_file(x))})
+    return jsonify(list_json)
 
 
 @app.route("/simulated/configdb/getCellList", methods=["GET"])
@@ -98,4 +102,4 @@ def get_nbr_list():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
