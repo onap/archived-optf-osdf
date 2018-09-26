@@ -155,14 +155,16 @@ def do_pci_optimization():
     g.request_id = req_id
     audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
     PCIOptimizationAPI(request_json).validate()
-    policies = get_policies(request_json, "pciopt")
+    #disable policy retrieval
+    # policies = get_policies(request_json, "pciopt")
     audit_log.info(MH.new_worker_thread(req_id, "[for pciopt]"))
-    t = Thread(target=process_pci_optimation, args=(request_json, policies, osdf_config))
+    t = Thread(target=process_pci_optimation, args=(request_json, osdf_config, None))
     t.start()
     audit_log.info(MH.accepted_valid_request(req_id, request))
     return req_accept(request_id=req_id,
                       transaction_id=request_json['requestInfo']['transactionId'],
                       request_status="accepted", status_message="")
+
 
 @app.errorhandler(500)
 def internal_failure(error):
