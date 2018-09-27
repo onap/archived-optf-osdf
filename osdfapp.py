@@ -20,36 +20,35 @@
 OSDF Manager Main Flask Application
 """
 
-import sys
-from threading import Thread  # for scaling up, may need celery with RabbitMQ or redis
-
-from flask import Flask, request, Response, g
-
-import osdf
-import pydevd
 import json
-import osdf.adapters.policy.interface
-import osdf.config.credentials
-import osdf.config.loader
-import osdf.operation.error_handling
-import osdf.operation.responses
+import sys
 import traceback
-from schematics.exceptions import DataError
-from requests import RequestException
 from optparse import OptionParser
+from threading import \
+    Thread  # for scaling up, may need celery with RabbitMQ or redis
+
+import pydevd
+from flask import Flask, request, Response, g
+from requests import RequestException
+from schematics.exceptions import DataError
+
+import osdf.operation.responses
 from osdf.adapters.policy.interface import get_policies
 from osdf.config.base import osdf_config
-from osdf.optimizers.placementopt.conductor.remote_opt_processor import process_placement_opt
-from osdf.webapp.appcontroller import auth_basic
-from osdf.operation.exceptions import BusinessException
-from osdf.operation.error_handling import request_exception_to_json_body, internal_error_message
 from osdf.logging.osdf_logging import MH, audit_log, error_log, debug_log
-from osdf.models.api.placementRequest import PlacementAPI
 from osdf.models.api.pciOptimizationRequest import PCIOptimizationAPI
-from osdf.operation.responses import osdf_response_for_request_accept as req_accept
-from osdf.optimizers.routeopt.simple_route_opt import RouteOpt
+from osdf.models.api.placementRequest import PlacementAPI
+from osdf.operation.error_handling import request_exception_to_json_body, \
+    internal_error_message
+from osdf.operation.exceptions import BusinessException
+from osdf.operation.responses import \
+    osdf_response_for_request_accept as req_accept
 from osdf.optimizers.pciopt.pci_opt_processor import process_pci_optimation
+from osdf.optimizers.placementopt.conductor.remote_opt_processor import \
+    process_placement_opt
+from osdf.optimizers.routeopt.simple_route_opt import RouteOpt
 from osdf.utils import api_data_utils
+from osdf.webapp.appcontroller import auth_basic
 
 ERROR_TEMPLATE = osdf.ERROR_TEMPLATE
 
@@ -207,6 +206,8 @@ if __name__ == "__main__":
         common_app_opts.update({'ssl_context': tuple(ssl_opts)})
 
     opts = get_options(sys.argv)
+    # TODO(Dileep): Uncomment once Helm charts to preload secrets available
+    # sms.load_secrets()
     if not opts.local and not opts.devtest:  # normal deployment
         app.run(port=internal_port, debug=False, **common_app_opts)
     else:
