@@ -207,6 +207,8 @@ if __name__ == "__main__":
         common_app_opts.update({'ssl_context': tuple(ssl_opts)})
 
     opts = get_options(sys.argv)
+    # TODO(Dileep): Uncomment once Helm charts to preload secrets available
+    # sms.load_secrets()
     if not opts.local and not opts.devtest:  # normal deployment
         app.run(port=internal_port, debug=False, **common_app_opts)
     else:
