@@ -44,7 +44,7 @@ class RouteOpt:
         :return:
         """
         for relationship in logical_link["relationship-list"]["relationship"]:
-            if relationship["related-to"] == "external-aai-network":
+            if relationship["related-to"] == "ext-aai-network":
                 return True
         return False
 
