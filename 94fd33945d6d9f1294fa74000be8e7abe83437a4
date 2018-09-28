@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_d8677224",
+        "filename": "test/functest/simulators/policy/response-payloads/pdp-has-vcpe-good/hpa_policy_vG_1.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1361
+      },
+      "writtenOn": "2018-09-28T16:35:55Z",
+      "side": 1,
+      "message": "Is this change intended?",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 31
+      },
+      "revId": "94fd33945d6d9f1294fa74000be8e7abe83437a4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_786c1e09",
+        "filename": "test/functest/simulators/policy/response-payloads/pdp-has-vcpe-good/hpa_policy_vG_1.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1361
+      },
+      "writtenOn": "2018-09-28T16:35:55Z",
+      "side": 1,
+      "message": "Ruoyu to confirm if this change is correct.",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 51
+      },
+      "revId": "94fd33945d6d9f1294fa74000be8e7abe83437a4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
