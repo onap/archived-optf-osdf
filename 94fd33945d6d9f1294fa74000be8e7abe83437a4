@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bada0100_70d8f053",
+        "filename": "test/functest/simulators/policy/response-payloads/pdp-has-vcpe-good/hpa_policy_vG_1.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 2977
+      },
+      "writtenOn": "2018-09-29T01:36:32Z",
+      "side": 1,
+      "message": "The name should be pciePassthrough",
+      "range": {
+        "startLine": 125,
+        "startChar": 31,
+        "endLine": 125,
+        "endChar": 35
+      },
+      "revId": "94fd33945d6d9f1294fa74000be8e7abe83437a4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_d8677224",
         "filename": "test/functest/simulators/policy/response-payloads/pdp-has-vcpe-good/hpa_policy_vG_1.json",
         "patchSetId": 3
@@ -13,6 +36,30 @@
       "writtenOn": "2018-09-28T16:35:55Z",
       "side": 1,
       "message": "Is this change intended?",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 31
+      },
+      "revId": "94fd33945d6d9f1294fa74000be8e7abe83437a4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_10b404f1",
+        "filename": "test/functest/simulators/policy/response-payloads/pdp-has-vcpe-good/hpa_policy_vG_1.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 2977
+      },
+      "writtenOn": "2018-09-29T01:36:32Z",
+      "side": 1,
+      "message": "Yes. Now the SRIOV directives should be under the feature \u0027sriovNICNetwork\u0027.",
+      "parentUuid": "1a76adc5_d8677224",
       "range": {
         "startLine": 128,
         "startChar": 0,
@@ -41,6 +88,29 @@
         "startChar": 39,
         "endLine": 133,
         "endChar": 51
+      },
+      "revId": "94fd33945d6d9f1294fa74000be8e7abe83437a4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_f0caa06d",
+        "filename": "test/functest/simulators/policy/response-payloads/pdp-has-vcpe-good/hpa_policy_vG_1.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 2977
+      },
+      "writtenOn": "2018-09-29T01:36:32Z",
+      "side": 1,
+      "message": "No longer have this attribute in pciePassthrough.",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 133,
+        "endChar": 122
       },
       "revId": "94fd33945d6d9f1294fa74000be8e7abe83437a4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
