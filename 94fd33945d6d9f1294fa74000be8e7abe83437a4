@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_2526a469",
+        "filename": "test/functest/simulators/policy/response-payloads/pdp-has-vcpe-good/hpa_policy_vG_1.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2018-10-02T14:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_70d8f053",
+      "range": {
+        "startLine": 125,
+        "startChar": 31,
+        "endLine": 125,
+        "endChar": 35
+      },
+      "revId": "94fd33945d6d9f1294fa74000be8e7abe83437a4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_d8677224",
         "filename": "test/functest/simulators/policy/response-payloads/pdp-has-vcpe-good/hpa_policy_vG_1.json",
         "patchSetId": 3
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_452ba830",
+        "filename": "test/functest/simulators/policy/response-payloads/pdp-has-vcpe-good/hpa_policy_vG_1.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2018-10-02T14:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_10b404f1",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 31
+      },
+      "revId": "94fd33945d6d9f1294fa74000be8e7abe83437a4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_786c1e09",
         "filename": "test/functest/simulators/policy/response-payloads/pdp-has-vcpe-good/hpa_policy_vG_1.json",
         "patchSetId": 3
@@ -106,6 +154,30 @@
       "writtenOn": "2018-09-29T01:36:32Z",
       "side": 1,
       "message": "No longer have this attribute in pciePassthrough.",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 133,
+        "endChar": 122
+      },
+      "revId": "94fd33945d6d9f1294fa74000be8e7abe83437a4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_051da00f",
+        "filename": "test/functest/simulators/policy/response-payloads/pdp-has-vcpe-good/hpa_policy_vG_1.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2018-10-02T14:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_f0caa06d",
       "range": {
         "startLine": 133,
         "startChar": 16,
