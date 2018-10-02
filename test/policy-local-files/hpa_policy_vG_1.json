@@ -122,15 +122,14 @@
               ]
             },
             {
-              "hpa-feature" : "pcie",
+              "hpa-feature" : "pciePassthrough",
               "mandatory" : "True",
               "architecture": "generic",
               "directives": [],
               "hpa-feature-attributes": [
                 {"hpa-attribute-key": "pciCount", "hpa-attribute-value": "2", "operator": "=", "unit": ""},
                 {"hpa-attribute-key": "pciVendorId", "hpa-attribute-value":"8086", "operator": "=", "unit": ""},
-                {"hpa-attribute-key": "pciDeviceId", "hpa-attribute-value": "2", "operator": "=", "unit": ""},
-                {"hpa-attribute-key": "functionType", "hpa-attribute-value": "<PCITYPEVALUE>","operator": "=", "unit": ""}
+                {"hpa-attribute-key": "pciDeviceId", "hpa-attribute-value": "2", "operator": "=", "unit": ""}
               ]
             }
           ]
