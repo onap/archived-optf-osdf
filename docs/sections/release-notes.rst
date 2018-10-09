@@ -15,7 +15,7 @@ Version: 1.1.1
 **New Features**
 
 
-The ONAP Optimization Framework (OOF) is new in Beijing. A summary of features incldues: 
+The ONAP Optimization Framework (OOF) is new in Beijing. A summary of features includes: 
 
 * Baseline HAS functionality
     * support for VCPE use case
