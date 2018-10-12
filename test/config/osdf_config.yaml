@@ -1,3 +1,15 @@
+placementVersioningEnabled: False
+
+# Placement API latest version numbers to be set in HTTP header
+placementMajorVersion: "1"
+placementMinorVersion: "0"
+placementPatchVersion: "0"
+
+# Placement API default version numbers to be set in HTTP header
+placementDefaultMajorVersion: "1"
+placementDefaultMinorVersion: "0"
+placementDefaultPatchVersion: "0"
+
 osdfUserNameForSO: ""   # The OSDF Manager username for MSO.
 odfPasswordForSO: ""   # The OSDF Manager password for MSO.
 
@@ -10,6 +22,8 @@ conductorUsername: "CONDUCTOR-USER"
 conductorPassword: "CONDUCTOR-PASSWD"
 conductorPingWaitTime: 60  # seconds to wait before calling the conductor retry URL
 conductorMaxRetries: 30  # if we don't get something in 30 minutes, give up
+# versions to be set in HTTP header
+conductorMinorVersion: 0
 
 # Policy Platform -- requires ClientAuth, Authorization, and Environment
 policyPlatformUrl: https://POLICY-URL:8081/pdp/getConfig # Policy Dev platform URL
