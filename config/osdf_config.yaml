@@ -1,4 +1,4 @@
-placementVersioningEnabled: False
+placementVersioningEnabled: True
 
 # Placement API latest version numbers to be set in HTTP header
 placementMajorVersion: "1"
