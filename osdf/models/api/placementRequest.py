@@ -48,7 +48,7 @@ class ModelMetaData(OSDFModel):
     modelName = StringType()
     modelType = StringType()
     modelVersion = StringType()
-    modelCustomizationName = StringType(required=True)
+    modelCustomizationName = StringType()
 
 
 class LicenseModel(OSDFModel):
