@@ -1,3 +1,15 @@
+placementVersioningEnabled: True
+
+# Placement API latest version numbers to be set in HTTP header
+placementMajorVersion: "1"
+placementMinorVersion: "0"
+placementPatchVersion: "0"
+
+# Placement API default version numbers to be set in HTTP header
+placementDefaultMajorVersion: "1"
+placementDefaultMinorVersion: "0"
+placementDefaultPatchVersion: "0"
+
 osdfUserNameForSO: ""   # The OSDF Manager username for MSO.
 odfPasswordForSO: ""   # The OSDF Manager password for MSO.
 
