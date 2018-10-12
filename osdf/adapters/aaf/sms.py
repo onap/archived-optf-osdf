@@ -21,6 +21,8 @@
 
 from onapsmsclient import Client
 
+import osdf.config.base as cfg_base
+import osdf.config.credentials as creds
 import osdf.config.loader as config_loader
 from osdf.config.base import osdf_config
 from osdf.logging.osdf_logging import debug_log
@@ -98,6 +100,8 @@ def load_secrets():
     config['pciHMSPassword'] = secret_dict['pciHMS']['Password']
     config['osdfPCIOptUsername'] = secret_dict['osdfPCIOpt']['UserName']
     config['osdfPCIOptPassword'] = secret_dict['osdfPCIOpt']['Password']
+    cfg_base.http_basic_auth_credentials = creds.load_credentials(osdf_config)
+    cfg_base.dmaap_creds = creds.dmaap_creds()
 
 
 def delete_secrets():

@@ -52,3 +52,17 @@ aaf_cache_expiry_hrs: 3
 aaf_url: https://aaftest.simpledemo.onap.org:8095
 aaf_user_roles:
     - /api/oof/v1/placement:org.onap.osdf.access|*|read ALL
+
+# Secret Management Service from AAF
+aaf_sms_url: https://aaf-sms.onap:10443
+aaf_sms_timeout: 30
+secret_domain: osdf
+aaf_ca_certs: ssl_certs/aaf_root_ca.cer
+
+# Credentials for PCIHandler
+pciHMSUsername: ""   # pcihandler username for call back.
+pciHMSPassword: ""   # pcihandler password for call back.
+
+# Credentials for the OOF PCI Opt service
+osdfPCIOptUsername: PCI-OSDF-USER
+osdfPCIOptPassword: PCI-OSDF-PASSWD

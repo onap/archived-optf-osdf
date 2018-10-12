@@ -10,14 +10,8 @@ placementDefaultMajorVersion: "1"
 placementDefaultMinorVersion: "0"
 placementDefaultPatchVersion: "0"
 
-# Credentials for SO
-soUsername: ""   # SO username for call back.
-soPassword: ""   # SO password for call back.
-
-# Credentials for Conductor
+# Config for Conductor
 conductorUrl: http://172.17.0.6:8091/v1/plans/
-conductorUsername: admin1
-conductorPassword: plan.15
 conductorPingWaitTime: 60  # seconds to wait before calling the conductor retry URL
 conductorMaxRetries: 30  # if we don't get something in 30 minutes, give up
 # versions to be set in HTTP header
@@ -26,39 +20,16 @@ conductorMinorVersion: 0
 # Policy Platform -- requires ClientAuth, Authorization, and Environment
 policyPlatformUrl: http://policy.api.simpledemo.onap.org:8081/pdp/api/getConfig # Policy Dev platform URL
 policyPlatformEnv: TEST  # Environment for policy platform
-policyPlatformUsername: testpdp   # Policy platform username.
-policyPlatformPassword: alpha123   # Policy platform password.
-policyClientUsername: python   # For use with ClientAuth
-policyClientPassword: test   # For use with ClientAuth
 
-# Credentials for DMaaP
+# Config for DMaaP
 messageReaderHosts: NA
 messageReaderTopic: NA
-messageReaderAafUserId: NA
-messageReaderAafPassword: NA
 
-# Credentials for SDC
+# Config for SDC
 sdcUrl: NA
-sdcUsername: NA
-sdcPassword: NA
 sdcONAPInstanceID: NA
 
-# Credentials for the OOF placement service - Generic
-osdfPlacementUsername: test
-osdfPlacementPassword: testpwd
-
-# Credentials for the OOF placement service - SO
-osdfPlacementSOUsername: so_test
-osdfPlacementSOPassword: so_testpwd
-
-# Credentials for the OOF placement service - VFC
-osdfPlacementVFCUsername: vfc_test
-osdfPlacementVFCPassword: vfc_testpwd
-
-# Credentials for the OOF CM scheduling service - Generic
-osdfCMSchedulerUsername: test1
-osdfCMSchedulerPassword: testpwd1
-
+# AAF Authentication config
 is_aaf_enabled: False
 aaf_cache_expiry_hrs: 3
 aaf_url: https://aaftest.simpledemo.onap.org:8095
@@ -73,15 +44,5 @@ aaf_ca_certs: ssl_certs/aaf_root_ca.cer
 
 # config db api
 configDbUrl: http://config.db.url:8080
-configDbUserName: osdf
-configDbPassword: passwd
 configDbGetCellListUrl: 'SDNCConfigDBAPI/getCellList'
 configDbGetNbrListUrl: 'SDNCConfigDBAPI/getNbrList'
-
-# Credentials for PCIHandler
-pciHMSUsername: ""   # pcihandler username for call back.
-pciHMSPassword: ""   # pcihandler password for call back.
-
-# Credentials for the OOF PCI Opt service
-osdfPCIOptUsername: pci_test
-osdfPCIOptPassword: pci_testpwd

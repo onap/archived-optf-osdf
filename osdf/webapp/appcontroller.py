@@ -21,7 +21,8 @@ from flask_httpauth import HTTPBasicAuth
 from flask import Response
 import json
 import osdf
-from osdf.config.base import http_basic_auth_credentials, osdf_config
+import osdf.config.base as cfg_base
+from osdf.config.base import osdf_config
 from osdf.adapters.aaf import aaf_authentication as aaf_auth
 
 auth_basic = HTTPBasicAuth()
@@ -38,7 +39,8 @@ unauthorized_message = json.dumps(error_body)
 def get_pw(username):
     end_point = request.url.split('/')[-1]
     auth_group = osdf.end_point_auth_mapping.get(end_point)
-    return http_basic_auth_credentials[auth_group].get(username) if auth_group else None
+    return cfg_base.http_basic_auth_credentials[auth_group].get(
+        username) if auth_group else None
 
 @auth_basic.error_handler
 def auth_error():

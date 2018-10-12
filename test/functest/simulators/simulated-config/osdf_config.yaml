@@ -47,6 +47,19 @@ osdfPlacementUrl: "http://127.0.0.1:24699/osdf/api/v2/placement"
 osdfPlacementUsername: "test"
 osdfPlacementPassword: "testpwd"
 
+# AAF Authentication config
+is_aaf_enabled: False
+aaf_cache_expiry_hrs: 3
+aaf_url: https://aaftest.simpledemo.onap.org:8095
+aaf_user_roles:
+    - /api/oof/v1/placement:org.onap.osdf.access|*|read ALL
+
+# Secret Management Service from AAF
+aaf_sms_url: https://aaf-sms.onap:10443
+aaf_sms_timeout: 30
+secret_domain: osdf
+aaf_ca_certs: ssl_certs/aaf_root_ca.cer
+
 # config db api
 configDbUrl: http://127.0.0.1:5000/simulated/configdb
 configDbUserName: osdf
