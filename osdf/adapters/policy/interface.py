@@ -113,7 +113,7 @@ def policy_api_call(rest_client, primary_scope, scope_field):
     """
     api_call_body = {"policyName": "{}.*".format(primary_scope),
                      "configAttributes": {"policyScope": "{}".format(scope_field)}}
-    return rest_client.request(json=api_call_body)
+    return rest_client.request(json=api_call_body, verify="/opt/app/ssl-cert/aaf_root_ca.cer")
 
 
 def remote_api(req_json, osdf_config, service_type="placement"):
