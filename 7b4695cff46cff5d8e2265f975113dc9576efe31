@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_bd034b0c",
+        "filename": "docker/cert-client-init.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1361
+      },
+      "writtenOn": "2018-10-19T22:31:16Z",
+      "side": 1,
+      "message": "can we take the ssl_cert from the osdf/ssl_certs/aaf_root_ca.cer, this we can change the certificate if aaf issues a new one.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 64
+      },
+      "revId": "7b4695cff46cff5d8e2265f975113dc9576efe31",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_5d0a5f22",
+        "filename": "osdfapp.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1361
+      },
+      "writtenOn": "2018-10-19T22:31:16Z",
+      "side": 1,
+      "message": "minor nit tab.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 1
+      },
+      "revId": "7b4695cff46cff5d8e2265f975113dc9576efe31",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_7d0de336",
+        "filename": "osdfapp.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1361
+      },
+      "writtenOn": "2018-10-19T22:31:16Z",
+      "side": 1,
+      "message": "minor nit tab",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 1
+      },
+      "revId": "7b4695cff46cff5d8e2265f975113dc9576efe31",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
