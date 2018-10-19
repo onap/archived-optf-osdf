@@ -28,4 +28,10 @@ mkdir -p $LOGS
 export OSDF_CONFIG_FILE=${1:-/opt/app/config/osdf_config.yaml}  # this file may be passed by invoker
 [ ! -e "$OSDF_CONFIG_FILE" ] && unset OSDF_CONFIG_FILE
 
+if [ -e /etc/ssl/certs/aafcacert.pem ]; then
+	export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+else
+	export REQUESTS_CA_BUNDLE=/opt/app/ssl_cert/aaf_root_ca.cer
+fi
+
 python osdfapp.py 2>$LOGS/err.log 1>$LOGS/out.log < /dev/null  # running the app 

@@ -62,4 +62,7 @@ RUN wget -O /opt/osdf.zip "https://nexus.onap.org/service/local/artifact/maven/r
 RUN mkdir -p /var/log/onap/optf/osdf/
 RUN pip install --no-cache-dir -r requirements.txt
 
+ADD cert-client-init.sh /tmp/cert-client-init.sh
+RUN bash -x /tmp/cert-client-init.sh
+
 CMD [ "/opt/osdf/osdfapp.sh" ]
