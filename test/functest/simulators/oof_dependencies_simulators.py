@@ -24,7 +24,7 @@ import json
 import os
 from flask import Flask, jsonify, request
 
-from osdf.utils.interfaces import json_from_file
+from osdf.utils.interfaces import json_from_file, yaml_from_file
 
 app = Flask(__name__)
 
@@ -107,6 +107,37 @@ def get_nbr_list():
     data, status = get_payload_for_simulated_component('configdb', 'getNbrList-' + request.args.get('cellId') + '.json')
     if not status:
         return jsonify(data)
+    return jsonify(data), 503
+
+
+@app.route("/v1/sms/domain/osdf/secret", methods=["GET"])
+def sms_api_call():
+    file_name = "aaf_sms/response-payloads/preload_secrets.yaml"
+    data = yaml_from_file(file_name)
+    if not data:
+        data, status = {"Error": "Unable to read File {}".format(file_name)}, 503
+    data, status = data, None
+    if not status:
+        secrets = []
+        for s in data['secrets']:
+            secrets.append(s['name'])
+        data = {"secretnames": secrets}
+        return jsonify(data)
+    return jsonify(data), 503
+
+
+@app.route("/v1/sms/domain/osdf/secret/<secret_name>", methods=["GET"])
+def sms_secret_api_call(secret_name):
+    file_name = "aaf_sms/response-payloads/preload_secrets.yaml"
+    data = yaml_from_file(file_name)
+    if not data:
+        data, status = {"Error": "Unable to read File {}".format(file_name)}, 503
+    data, status = data, None
+    if not status:
+        for s in data['secrets']:
+            if s['name'] == secret_name:
+                return jsonify(s)
+
     return jsonify(data), 503
 
 
