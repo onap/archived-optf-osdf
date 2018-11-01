@@ -17,66 +17,70 @@
 #
 
 import itertools
-
 import os
+
 import pymzn
 
-from osdf.logging.osdf_logging import debug_log
 from .pci_utils import get_id
 
 BASE_DIR = os.path.dirname(__file__)
 MZN_FILE_NAME = os.path.join(BASE_DIR, 'no_conflicts_no_confusion.mzn')
 
 
-def pci_optimize(cell_id, network_cell_info, cell_info_list):
-    debug_log.debug("Cell ID {} ".format(cell_id))
-    dzn_data = {}
-    dzn_data['NUM_NODES'] = len(cell_info_list)
-    dzn_data['NUM_PCIS'] = len(cell_info_list)
-
-    conflict_edges = get_conflict_edges(cell_id, network_cell_info)
-
-    dzn_data['NUM_CONFLICT_EDGES'] = len(conflict_edges)
-    dzn_data['CONFLICT_EDGES'] = conflict_edges
-
-    confusion_edges = get_confusion_edges(cell_id, network_cell_info)
-
-    dzn_data['NUM_CONFUSION_EDGES'] = len(confusion_edges)
-    dzn_data['CONFUSION_EDGES'] = confusion_edges
+def pci_optimize(network_cell_info, cell_info_list):
+    conflict_edges = get_neighbor_list(network_cell_info)
+    confusion_edges = get_second_level_neighbor(network_cell_info, conflict_edges)
+    dzn_data = {
+        'NUM_NODES': len(cell_info_list),
+        'NUM_PCIS': len(cell_info_list),
+        'NUM_NEIGHBORS': len(conflict_edges),
+        'NEIGHBORS': get_list(conflict_edges),
+        'NUM_SECOND_LEVEL_NEIGHBORS': len(confusion_edges),
+        'SECOND_LEVEL_NEIGHBORS': get_list(confusion_edges)
+    }
 
     return solve(dzn_data)
+
+
+def get_list(edge_list):
+    array_list = []
+    for s in edge_list:
+        array_list.append([s[0],s[1]])
+    return sorted(array_list)
+
 
 def solve(dzn_data):
     return pymzn.minizinc(MZN_FILE_NAME, data=dzn_data)
 
 
-def get_conflict_edges(cell_id, network_cell_info):
-    conflict_edges = []
+def get_neighbor_list(network_cell_info):
+    neighbor_list = set()
     for cell in network_cell_info['cell_list']:
-
-        if cell_id == cell['cell_id']:
-            add_to_conflict_edges(network_cell_info, cell, conflict_edges)
-    return conflict_edges
+        add_to_neighbor_list(network_cell_info, cell, neighbor_list)
+    return neighbor_list
 
 
-def add_to_conflict_edges(network_cell_info, cell, conflict_edges):
-    cell_id = cell['cell_id']
+def add_to_neighbor_list(network_cell_info, cell, neighbor_list):
     for nbr in cell.get('nbr_list', []):
-        conflict_edges.append([get_id(network_cell_info, cell_id), get_id(network_cell_info, nbr['cellId'])])
+        host_id = cell['id']
+        nbr_id = get_id(network_cell_info, nbr['cellId'])
+        if host_id != nbr_id:
+            entry = sorted([host_id, nbr_id])
+            neighbor_list.add((entry[0], entry[1]))
 
 
-
-def get_confusion_edges(cell_id, network_cell_info):
-    confusion_edges = []
+def get_second_level_neighbor(network_cell_info, neighbor_list):
+    second_neighbor_list = set()
     for cell in network_cell_info['cell_list']:
-        if cell_id == cell['cell_id']:
-            return add_to_confusion_edges(network_cell_info, cell)
-    return confusion_edges
+        comb_list = build_second_level_list(network_cell_info, cell)
+        for comb in comb_list:
+            s = sorted(comb)
+            second_neighbor_list.add((s[0], s[1]))
+    return sorted(second_neighbor_list)
 
 
-def add_to_confusion_edges(network_cell_info, cell):
-    cell_id = cell['cell_id']
-    nbr_list = []
+def build_second_level_list(network_cell_info, cell):
+    second_nbr_list = []
     for nbr in cell.get('nbr_list', []):
-        nbr_list.append(get_id(network_cell_info, nbr['cellId']))
-    return [list(elem) for elem in list(itertools.combinations(nbr_list, 2))]
+        second_nbr_list.append(get_id(network_cell_info, nbr['cellId']))
+    return [list(elem) for elem in list(itertools.combinations(second_nbr_list, 2))]

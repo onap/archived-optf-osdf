@@ -15,6 +15,7 @@
 %
 % -------------------------------------------------------------------------
 %
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Parameters and its assertions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -27,21 +28,21 @@ int: NUM_PCIS;
 
 % Number of edges between neighbor nodes. There is a edge (i,j) if and only
 % if nodes i and j are neighbors, i.e., an user equipment (UE) can make
-% handoff between i and j. Such edges are used to avoid **CONFLICTS**, i.e.,
+% handoff between i and j. Such edges are used to avoid **COLLISION**, i.e.,
 % to guarantee that nodes i and j have different PCIs.
-int: NUM_CONFLICT_EDGES;
+int: NUM_NEIGHBORS;
 
 % Each line represents an edge between direct neighbors as defined before.
-array[1..NUM_CONFLICT_EDGES, 1..2] of int: CONFLICT_EDGES; 
+array[1..NUM_NEIGHBORS, 1..2] of int: NEIGHBORS;
 
 % Number of undirect neighbor pairs (j, k) such that both j and k are direct
-% neighbors of node i, i.e., (j, k) exits if and only if exists (i, j) and 
+% neighbors of node i, i.e., (j, k) exits if and only if exists (i, j) and
 % (i, k). Nodes (i, k) can generate "confunsions" in the network if they have
 % the same PCI. Such edges are used to avoid/minimize **CONFUSIONS**.
-int: NUM_CONFUSION_EDGES;
+int: NUM_SECOND_LEVEL_NEIGHBORS;
 
 % Each line represents an edge between undirect neighbors as defined before.
-array[1..NUM_CONFUSION_EDGES, 1..2] of int: CONFUSION_EDGES; 
+array[1..NUM_SECOND_LEVEL_NEIGHBORS, 1..2] of int: SECOND_LEVEL_NEIGHBORS;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Decision variables
@@ -54,10 +55,10 @@ array[0..NUM_NODES-1] of var 0..NUM_PCIS-1: pci;
 % Constraints
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Direct neighbors must have different PCIs for avoid **CONFLICTS**.
-constraint 
-forall(i in 1..NUM_CONFLICT_EDGES)(
-    pci[CONFLICT_EDGES[i, 1]] != pci[CONFLICT_EDGES[i, 2]]
+% Direct neighbors must have different PCIs for avoid **COLLISION**.
+constraint
+forall(i in 1..NUM_NEIGHBORS)(
+    pci[NEIGHBORS[i, 1]] != pci[NEIGHBORS[i, 2]]
 );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,8 +67,9 @@ forall(i in 1..NUM_CONFLICT_EDGES)(
 
 % Total number of confusions.
 var int: total_confusions =
-    sum([bool2int(pci[CONFUSION_EDGES[i, 1]] == pci[CONFUSION_EDGES[i, 2]])
-         | i in 1..NUM_CONFUSION_EDGES]);
+    sum([bool2int(pci[SECOND_LEVEL_NEIGHBORS[i, 1]] ==
+                  pci[SECOND_LEVEL_NEIGHBORS[i, 2]])
+         | i in 1..NUM_SECOND_LEVEL_NEIGHBORS]);
 
 % Minimize the total number of confusions.
 solve :: int_search(pci, smallest, indomain_min, complete)
@@ -78,18 +80,19 @@ minimize total_confusions;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 output
-["PCI assigment"] ++ 
+["PCI assigment"] ++
 ["\nnode,pci"] ++
 [
     "\n" ++ show(node) ++ "," ++ show(pci[node])
 | node in 0..NUM_NODES-1
 ] ++
 
-["\n\nConfusions"] ++ 
+["\n\nConfusions"] ++
 ["\nTotal confusions: " ++ show(total_confusions)] ++
 ["\nConfusion pairs"] ++
 [
-    "\n" ++ show(CONFUSION_EDGES[i, 1]) ++ "," ++ show(CONFUSION_EDGES[i, 2])
-| i in 1..NUM_CONFUSION_EDGES where 
-  fix(pci[CONFUSION_EDGES[i, 1]] == pci[CONFUSION_EDGES[i, 2]])
+    "\n" ++ show(SECOND_LEVEL_NEIGHBORS[i, 1]) ++ "," ++
+    show(SECOND_LEVEL_NEIGHBORS[i, 2])
+| i in 1..NUM_SECOND_LEVEL_NEIGHBORS where
+  fix(pci[SECOND_LEVEL_NEIGHBORS[i, 1]] == pci[SECOND_LEVEL_NEIGHBORS[i, 2]])
 ]
