@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9adffdf1_78a695c3",
+        "filename": "osdf/models/policy/placement/tosca/hpaPolicy-v20181031.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2018-11-01T16:41:27Z",
+      "side": 1,
+      "message": "Updated as per review.",
+      "parentUuid": "9adffdf1_55ffdc01",
+      "range": {
+        "startLine": 83,
+        "startChar": 26,
+        "endLine": 83,
+        "endChar": 30
+      },
+      "revId": "0917c1b86b2ca2c584791a12cc941cd9ff92b78c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adffdf1_9280fa8c",
         "filename": "osdf/models/policy/placement/tosca/hpaPolicy-v20181031.yml",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-11-01T07:40:16Z",
       "side": 1,
       "message": "This need to be false here.Thanks",
+      "range": {
+        "startLine": 127,
+        "startChar": 25,
+        "endLine": 127,
+        "endChar": 30
+      },
+      "revId": "0917c1b86b2ca2c584791a12cc941cd9ff92b78c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_18abc98a",
+        "filename": "osdf/models/policy/placement/tosca/hpaPolicy-v20181031.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2018-11-01T16:41:27Z",
+      "side": 1,
+      "message": "Updated as per review.",
+      "parentUuid": "9adffdf1_9280fa8c",
       "range": {
         "startLine": 127,
         "startChar": 25,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9adffdf1_d8cd4188",
+        "filename": "osdf/models/policy/placement/tosca/queryPolicy-v20181031.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2018-11-01T16:41:27Z",
+      "side": 1,
+      "message": "Though this has rendered successfully in policy gui but have updated as per review comment to follow correct syntax.",
+      "parentUuid": "9adffdf1_d2af622a",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "0917c1b86b2ca2c584791a12cc941cd9ff92b78c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adffdf1_f2ace637",
         "filename": "osdf/models/policy/placement/tosca/vnfPolicy-v20181031.yml",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2018-11-01T07:19:35Z",
       "side": 1,
       "message": "need 4 spaces",
+      "range": {
+        "startLine": 44,
+        "startChar": 19,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "0917c1b86b2ca2c584791a12cc941cd9ff92b78c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_b8c4fd5f",
+        "filename": "osdf/models/policy/placement/tosca/vnfPolicy-v20181031.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2018-11-01T16:41:27Z",
+      "side": 1,
+      "message": "Though this has rendered successfully in policy gui but have updated as per review comment to follow correct syntax",
+      "parentUuid": "9adffdf1_f2ace637",
       "range": {
         "startLine": 44,
         "startChar": 19,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9adffdf1_d8954189",
+        "filename": "test/functest/simulators/simulated-config/common_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2018-11-01T16:41:27Z",
+      "side": 1,
+      "message": "The csit simulator doesn\u0027t use this config and rather makes a call to the simulated url with predefined response as flat policy files.\n\nAlso, I will submit all unit test changes for Casablanca together in a separate patch.",
+      "parentUuid": "9adffdf1_b2a65e52",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 34
+      },
+      "revId": "0917c1b86b2ca2c584791a12cc941cd9ff92b78c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adffdf1_5263721a",
         "filename": "test/functest/simulators/simulated-config/common_config.yaml",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2018-11-01T07:19:35Z",
       "side": 1,
       "message": "OSDF_CASABLANCA?",
+      "range": {
+        "startLine": 54,
+        "startChar": 24,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "0917c1b86b2ca2c584791a12cc941cd9ff92b78c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_f892859e",
+        "filename": "test/functest/simulators/simulated-config/common_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2018-11-01T16:41:27Z",
+      "side": 1,
+      "message": "The csit simulator doesn\u0027t use this config and rather makes a call to the simulated url with predefined response as flat policy files.\n\nAlso, I will submit all unit test changes for Casablanca together in a separate patch.",
+      "parentUuid": "9adffdf1_5263721a",
       "range": {
         "startLine": 54,
         "startChar": 24,
