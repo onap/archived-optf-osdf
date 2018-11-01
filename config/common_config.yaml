@@ -16,16 +16,27 @@ osdf_temp:  # special configuration required for "workarounds" or testing
             - Affinity_vCPE_1.json
             #- Capacity_vGMuxInfra.json
             #- Capacity_vG_1.json
-            - Distance_vGMuxInfra_1.json
             - Distance_vG_1.json
+            - Distance_vGMuxInfra_1.json
+            - hpa_policy_vG_1.json
+            - hpa_policy_vGMuxInfra_1.json
             - Placement_Optimization_1.json
             - QueryPolicy_vCPE.json
-            #- hpa_policy_vGMuxInfra_1.json
-            #- hpa_policy_vG_1.json
             - vnfPolicy_vG.json
             - vnfPolicy_vGMuxInfra.json
+        placement_policy_dir_vfw: "./test/policy-local-files/"
+        placement_policy_files_vfw: # workaroud for policy platform glitches (or "work-arounds" for other components)
+            #- Capacity_vFW_1.json
+            - Distance_vFW_1.json
+            - hpa_policy_vFW_1.json
+            - Placement_Optimization_1.json
+            - QueryPolicy_vFW.json
+            - vnfPolicy_vFW.json
 service_info:
     vCPE:
+        vcpeHostName: requestParameters.vcpeHostName
+        e2eVpnKey: requestParameters.e2eVpnKey
+    vFW:
         vcpeHostName: requestParameters.vcpeHostName
         e2eVpnKey: requestParameters.e2eVpnKey
 
@@ -50,8 +61,9 @@ policy_info:
     placement:
         policy_fetch: by_scope
         policy_scope:
-            default_scope: OSDF_R2
-            vcpe_scope: OSDF_R2
+            default_scope: OSDF_CASABLANCA
+            vcpe_scope: OSDF_CASABLANCA
+            vfw_scope: OSDF_CASABLANCA
             secondary_scopes:
                 -
                     - get_param: service_name

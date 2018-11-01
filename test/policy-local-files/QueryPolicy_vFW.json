@@ -1,7 +1,7 @@
 {
   "service": "queryPolicy",
-  "policyName": "OSDF_CASABLANCA.QueryPolicy_vCPE",
-  "description": "Query policy for vCPE",
+  "policyName": "OSDF_CASABLANCA.QueryPolicy_vFW",
+  "description": "Query policy for vFW",
   "templateVersion": "OpenSource.version.1",
   "version": "test1",
   "priority": "3",
@@ -13,9 +13,9 @@
       {"attribute":"customerLatitude", "attribute_location": "customerLatitude"},
       {"attribute":"customerLongitude", "attribute_location": "customerLongitude"}
     ],
-    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
+    "policyScope": ["vFW", "US", "INTERNATIONAL", "ip"],
     "policyType": "request_param_query",
-    "serviceName": "vCPE",
-    "identity": "vCPE_Query_Policy"
+    "serviceName": "vFW",
+    "identity": "vFW_Query_Policy"
   }
 }

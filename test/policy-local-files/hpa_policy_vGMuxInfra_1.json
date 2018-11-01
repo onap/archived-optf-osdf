@@ -1,6 +1,6 @@
 {
     "service": "hpaPolicy",
-    "policyName": "OSDF_R2.hpa_policy_vGMuxInfra_1",
+    "policyName": "OSDF_CASABLANCA.hpa_policy_vGMuxInfra_1",
     "description": "HPA policy for vGMuxInfra",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",
@@ -9,10 +9,10 @@
     "riskLevel": "2",
     "guard": "False",
     "content": {
-      "resources": "vGMuxInfra",
-      "identity": "hpaPolicy_vGMuxInfra",
+      "resources": ["vGMuxInfra"],
+      "identity": "hpa-vGMuxInfra",
       "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
-      "policyType": "hpaPolicy",
+      "policyType": "hpa",
       "flavorFeatures": [
         {
           "id": "vgmux_1",

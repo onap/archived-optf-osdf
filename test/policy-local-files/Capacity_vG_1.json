@@ -1,6 +1,6 @@
 {
     "service": "vim_fit",
-    "policyName": "OSDF_R2.Capacity_vG_1",
+    "policyName": "OSDF_CASABLANCA.Capacity_vG_1",
     "description": "Capacity policy for vG",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",

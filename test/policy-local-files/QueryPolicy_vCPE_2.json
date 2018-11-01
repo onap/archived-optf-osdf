@@ -1,10 +1,10 @@
 {
-  "service": "optimizationQueryPolicy",
-  "policyName": "oofBeijing.queryPolicy_vCPE",
-  "description": "Optimization query policy for vCPE",
-  "templateVersion": "0.0.1",
-  "version": "oofBeijing",
-  "priority": "5",
+  "service": "queryPolicy",
+  "policyName": "OSDF_CASABLANCA.queryPolicy_vCPE",
+  "description": "Query policy for vCPE",
+  "templateVersion": "OpenSource.version.1",
+  "version": "test1",
+  "priority": "3",
   "riskType": "test",
   "riskLevel": "2",
   "guard": "False",
@@ -17,7 +17,8 @@
       {"attribute":"customerLongitude", "attribute_location": "customerLongitude", "value": 2.2}
     ],
     "serviceName": "vCPE",
-    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG", "optimizationQueryPolicy"],
-    "policyType": "optimizationQueryPolicy"
+    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
+    "policyType": "request_param_query",
+    "identity": "vCPE_Query_Policy"
   }
 }

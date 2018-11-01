@@ -19,10 +19,12 @@ node_types:
                     type: string
                     consraints:
                     -   valid_values:
-                        - hpaPolicy
-            resource:
-                type: string
+                        - hpa
+            resources:
+                type: list
                 required: true
+                entry_schema:
+                    type: string
             identity:
                 type: string
                 required: true
@@ -30,7 +32,7 @@ node_types:
                 type: list
                 required: true
                 entry_schema:
-                -   type: policy.data.flavorFeatures_properties
+                   type: policy.data.flavorFeatures_properties
 data_types:
     policy.data.flavorFeatures_properties:
         derived_from: tosca.nodes.Root

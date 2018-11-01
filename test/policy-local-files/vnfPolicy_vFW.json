@@ -1,6 +1,6 @@
 {
     "service": "vnfPolicy",
-    "policyName": "OSDF_CASABLANCA.vnfPolicy_vG",
+    "policyName": "OSDF_CASABLANCA.vnfPolicy_vFW",
     "description": "vnfPolicy",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",
@@ -9,10 +9,10 @@
     "riskLevel": "3",
     "guard": "False",
     "content": {
-        "identity": "vnf_vG",
-        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG"],
+        "identity": "vnf_vFW",
+        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vFW"],
         "policyType": "vnfPolicy",
-        "resources": ["vG"],
+        "resources": ["vFW"],
         "applicableResources": "any",
 	    "vnfProperties": [
             {

@@ -1,7 +1,7 @@
 {
   "service": "distancePolicy",
-  "policyName": "OSDF_CASABLANCA.Distance_vGMuxInfra",
-  "description": "Distance Policy for vGMuxInfra",
+  "policyName": "OSDF_CASABLANCA.Distance_vFW_1",
+  "description": "Distance Policy for vFW",
   "templateVersion": "OpenSource.version.1",
   "version": "test1",
   "priority": "3",
@@ -11,11 +11,11 @@
   "content": {
     "distanceProperties": {
       "locationInfo": "customer_loc",
-      "distance": { "value": "500", "operator": "<", "unit": "km" }
+      "distance": { "value": "100", "operator": "<", "unit": "km" }
     },
-    "identity": "distance-vGMuxInfra",
-    "resources": ["vGMuxInfra"],
-    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
+    "identity": "distance-vFW",
+    "resources": ["vFW"],
+    "policyScope": ["vFW", "US", "INTERNATIONAL", "ip"],
     "policyType": "distance_to_location",
     "applicableResources": "any"
   }

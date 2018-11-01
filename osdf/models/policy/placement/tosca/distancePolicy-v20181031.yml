@@ -19,7 +19,7 @@ node_types:
                     type: string
                     consraints:
                     -   valid_values:
-                        - distancePolicy
+                        - distance_to_location
             identity:
                 type: string
                 required: true

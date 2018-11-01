@@ -19,7 +19,7 @@ node_types:
                     type: string
                     consraints:
                     -   valid_values:
-                        - optimizationPolicy
+                        - placement_optimization
             identity:
                 type: string
                 required: true

@@ -1,6 +1,6 @@
 {
-    "service": "placementOptimization",
-    "policyName": "OSDF_R2.Placement_Optimization_1",
+    "service": "optimizationPolicy",
+    "policyName": "OSDF_CASABLANCA.Placement_Optimization_1",
     "description": "Placement Optimization Policy for vGMuxInfra",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",
@@ -30,13 +30,26 @@
                     "parameter": "hpa_score",
                     "weight": "200",
                     "operator": "product"
+                },
+                {
+                    "resources": ["vFW"],
+                    "customerLocationInfo": "customer_loc",
+                    "parameter": "distance",
+                    "weight": "100",
+                    "operator": "product"
+                },
+                {
+                    "resources": ["vFW"],
+                    "parameter": "hpa_score",
+                    "weight": "200",
+                    "operator": "product"
                 }
             ],
             "operator": "sum"
         },
         "identity": "optimization",
         "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
-        "policyType": "placementOptimization",
+        "policyType": "placement_optimization",
         "objective": "minimize"
     }
 }

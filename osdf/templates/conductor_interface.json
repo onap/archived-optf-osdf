@@ -6,10 +6,12 @@
   "template": {
     "homing_template_version": "2017-10-10",
     "parameters": {
-	    "service_name": "{{ service_name }}",
+	    "service_name": "{{ service_type }}",
         "service_id": "{{ service_id }}",
         "customer_lat": {{ latitude }},
-        "customer_long": {{ longitude }}
+        "customer_long": {{ longitude }},
+        "REQUIRED_DISK": "{{ required_disk }}",
+        "REQUIRED_MEM": "{{ required_mem }}"
     },
     "locations": {
         "customer_loc": {

@@ -1,6 +1,6 @@
 {
     "service": "hpaPolicy",
-    "policyName": "OSDF_CASABLANCA.hpa_policy_vG_1",
+    "policyName": "OSDF_R2.hpa_policy_vG_1",
     "description": "HPA policy for vG",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",
@@ -9,10 +9,10 @@
     "riskLevel": "2",
     "guard": "False",
     "content": {
-      "resources": ["vG"],
-      "identity": "hpa-vG",
+      "resources": "vG",
+      "identity": "hpaPolicy_vG",
       "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG"],
-      "policyType": "hpa",
+      "policyType": "hpaPolicy",
       "flavorFeatures": [
         {
           "id": "vg_1",

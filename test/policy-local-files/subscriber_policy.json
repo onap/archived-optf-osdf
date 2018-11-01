@@ -1,9 +1,9 @@
 {
-    "service": "SubscriberPolicy",
-    "policyName": "oofBeijing.SubscriberPolicy_v1",
+    "service": "subscriberPolicy",
+    "policyName": "OSDF_CASABLANCA.SubscriberPolicy_v1",
     "description": "Subscriber Policy",
-    "templateVersion": "0.0.1",
-    "version": "oofBeijing",
+    "templateVersion": "OpenSource.version.1",
+    "version": "test1",
     "priority": "1",
     "riskType": "test",
     "riskLevel": "3",

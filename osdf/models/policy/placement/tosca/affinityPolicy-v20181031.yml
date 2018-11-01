@@ -19,7 +19,7 @@ node_types:
                     type: string
                     consraints:
                     -   valid_values:
-                        - affinityPolicy
+                        - zone
             identity:
                 type: string
                 required: true

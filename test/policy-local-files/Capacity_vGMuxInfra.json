@@ -1,6 +1,6 @@
 {
     "service": "vim_fit",
-    "policyName": "OSDF_R2.Capacity_vGMuxInfra",
+    "policyName": "OSDF_CASABLANCA.Capacity_vGMuxInfra",
     "description": "Capacity policy for vGMuxInfra",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",
