@@ -32,11 +32,11 @@ node_types:
                     -   valid_values:
                         - minimize
                         - maximize
-            objectiveParameters:
-                type: policy.data.objectiveParameters_properties
+            objectiveParameter:
+                type: policy.data.objectiveParameter_properties
                 required: true
 data_types:
-    policy.data.objectiveParameters_properties:
+    policy.data.objectiveParameter_properties:
         derived_from: tosca.nodes.Root
         properties:
             parameterAttributes:

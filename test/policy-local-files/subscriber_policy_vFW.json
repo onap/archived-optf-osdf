@@ -1,7 +1,7 @@
 {
     "service": "subscriberPolicy",
     "policyName": "OSDF_CASABLANCA.SubscriberPolicy_v1",
-    "description": "Subscriber Policy",
+    "description": "Subscriber Policy for VFW",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",
     "priority": "1",
@@ -9,14 +9,14 @@
     "riskLevel": "3",
     "guard": "False",
     "content": {
-        "identity": "subscriber",
-        "policyScope": ["vCPE", "subscriber_x", "subscriber_y", "subscriberPolicy"],
+        "identity": "subscriber_vFW",
+        "policyScope": ["vFW", "subscriber_x", "subscriber_y", "subscriberPolicy"],
         "properties": {
                 "subscriberName": ["subscriber_x", "subscriber_y"],
                 "subscriberRole": ["PVT Homing"],
                 "provStatus": ["CAPPED"]
         },
         "policyType": "subscriberPolicy",
-        "serviceName": "vCPE"
+        "serviceName": "vFW"
     }
 }

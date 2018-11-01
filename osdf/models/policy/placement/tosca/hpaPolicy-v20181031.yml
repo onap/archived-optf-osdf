@@ -32,7 +32,7 @@ node_types:
                 type: list
                 required: true
                 entry_schema:
-                   type: policy.data.flavorFeatures_properties
+                   type:policy.data.flavorFeatures_properties
 data_types:
     policy.data.flavorFeatures_properties:
         derived_from: tosca.nodes.Root
