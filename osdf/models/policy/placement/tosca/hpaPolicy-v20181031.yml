@@ -32,7 +32,7 @@ node_types:
                 type: list
                 required: true
                 entry_schema:
-                   type:policy.data.flavorFeatures_properties
+                    type:policy.data.flavorFeatures_properties
 data_types:
     policy.data.flavorFeatures_properties:
         derived_from: tosca.nodes.Root
@@ -80,7 +80,7 @@ data_types:
                 required: true
             score:
                 type: string
-                required: true
+                required: false
             architecture:
                 type: string
                 required: true
@@ -124,4 +124,4 @@ data_types:
                         - subset
             unit:
                 type: string
-                required: true
+                required: false
