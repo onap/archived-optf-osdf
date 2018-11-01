@@ -42,20 +42,20 @@ def request(req_object, osdf_config, flat_policies):
 
     cell_list_response['network_id'] = network_id
 
+    ts = dt.strftime(dt.now(), '%Y-%m-%d %H:%M:%S%z')
+
     rc = RestClient(userid=uid, passwd=passwd, method="GET", log_func=debug_log.debug, headers=headers)
 
-    cell_list_url = '{}/{}?networkId={}'.format(config['configDbUrl'], config['configDbGetCellListUrl'], network_id)
+    cell_list_url = '{}/{}/{}/{}'.format(config['configDbUrl'], config['configDbGetCellListUrl'], network_id, ts)
 
     cell_list_resp = rc.request(raw_response=True, url=cell_list_url)
     cell_resp = cell_list_resp.json()
-    ts = dt.strftime(dt.now(), '%Y-%m-%dT%H:%M:%S%z')
 
     cell_list = []
     count = 0
     for cell_id in cell_resp:
         cell_info = {'cell_id': cell_id, 'id': count}
-        nbr_list_url = '{}/{}?cellId={}&ts={}'.format(config['configDbUrl'], config['configDbGetNbrListUrl'], cell_id,
-                                                      ts)
+        nbr_list_url = '{}/{}/{}/{}'.format(config['configDbUrl'], config['configDbGetNbrListUrl'], cell_id, ts)
         nbr_list_raw = rc.request(url=nbr_list_url, raw_response=True)
         cell_info['nbr_list'] = nbr_list_raw.json()
         cell_list.append(cell_info)
