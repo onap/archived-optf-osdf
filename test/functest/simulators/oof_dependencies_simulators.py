@@ -93,18 +93,18 @@ def get_policies(sub_component):
     return jsonify(list_json)
 
 
-@app.route("/simulated/configdb/getCellList", methods=["GET"])
-def get_cell_list():
+@app.route("/simulated/configdb/getCellList/<network_id>/<ts>", methods=["GET"])
+def get_cell_list(network_id, ts):
     data, status = get_payload_for_simulated_component('configdb',
-                                                       'getCellList-' + request.args.get('networkId') + '.json')
+                                                       'getCellList-' + network_id + '.json')
     if not status:
         return jsonify(data)
     return jsonify(data), 503
 
 
-@app.route("/simulated/configdb/getNbrList", methods=["GET"])
-def get_nbr_list():
-    data, status = get_payload_for_simulated_component('configdb', 'getNbrList-' + request.args.get('cellId') + '.json')
+@app.route("/simulated/configdb/getNbrList/<cell_id>/<ts>", methods=["GET"])
+def get_nbr_list(cell_id, ts):
+    data, status = get_payload_for_simulated_component('configdb', 'getNbrList-' + cell_id + '.json')
     if not status:
         return jsonify(data)
     return jsonify(data), 503

@@ -44,7 +44,6 @@ def process_pci_optimation(request_json, osdf_config, flat_policies):
         rc = get_rest_client(request_json, service="pcih")
         req_id = request_json["requestInfo"]["requestId"]
         cell_info_list, network_cell_info = config_request(request_json, osdf_config, flat_policies)
-
         pci_response = get_solutions(cell_info_list, network_cell_info, request_json)
 
         metrics_log.info(MH.inside_worker_thread(req_id))
@@ -83,13 +82,13 @@ def get_solutions(cell_info_list, network_cell_info, request_json):
 
 def build_solution_list(cell_info_list, network_cell_info, request_json):
     solution_list = []
-    for cell in request_json['cellInfo']['cellIdList']:
-        opt_solution = optimize(cell, network_cell_info, cell_info_list)
-        sol = opt_solution[0]['pci']
-        for k, v in sol.items():
-            response = {
-                'cellId': get_cell_id(network_cell_info, k),
-                'pci': get_pci_value(network_cell_info, v)
-            }
-            solution_list.append(response)
+    # for cell in request_json['cellInfo']['cellIdList']:
+    opt_solution = optimize(network_cell_info, cell_info_list)
+    sol = opt_solution[0]['pci']
+    for k, v in sol.items():
+        response = {
+            'cellId': get_cell_id(network_cell_info, k),
+            'pci': get_pci_value(network_cell_info, v)
+        }
+        solution_list.append(response)
     return solution_list
