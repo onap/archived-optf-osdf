@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9adffdf1_9280fa8c",
+        "filename": "osdf/models/policy/placement/tosca/hpaPolicy-v20181031.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 2977
+      },
+      "writtenOn": "2018-11-01T07:40:16Z",
+      "side": 1,
+      "message": "This need to be false here.Thanks",
+      "range": {
+        "startLine": 127,
+        "startChar": 25,
+        "endLine": 127,
+        "endChar": 30
+      },
+      "revId": "0917c1b86b2ca2c584791a12cc941cd9ff92b78c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adffdf1_d2af622a",
         "filename": "osdf/models/policy/placement/tosca/queryPolicy-v20181031.yml",
         "patchSetId": 1
