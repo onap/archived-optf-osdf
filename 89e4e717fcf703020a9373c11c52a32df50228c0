@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9adffdf1_24ca28a2",
+        "filename": "osdf/models/policy/placement/tosca/optimizationPolicy-v20181031.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2018-11-02T18:55:16Z",
+      "side": 1,
+      "message": "this should be customerLocationInfo. PlacementOptimization policy has the field \"customerLocationInfo\"",
+      "parentUuid": "9adffdf1_093e1db9",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "89e4e717fcf703020a9373c11c52a32df50228c0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adffdf1_a94a7153",
         "filename": "test/policy-local-files/pwt-it-policies/vnfPolicy_vFW.json",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9adffdf1_784d3072",
+        "filename": "test/policy-local-files/pwt-it-policies/vnfPolicy_vFW.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2018-11-02T18:55:16Z",
+      "side": 1,
+      "message": "removed extra spaces",
+      "parentUuid": "9adffdf1_a94a7153",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 5
+      },
+      "revId": "89e4e717fcf703020a9373c11c52a32df50228c0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adffdf1_c947b54a",
         "filename": "test/policy-local-files/vnfPolicy_vFW.json",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-11-02T06:21:32Z",
       "side": 1,
       "message": "whitespace alignment",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 4
+      },
+      "revId": "89e4e717fcf703020a9373c11c52a32df50228c0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_d830dcea",
+        "filename": "test/policy-local-files/vnfPolicy_vFW.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2018-11-02T18:55:16Z",
+      "side": 1,
+      "message": "removed extra spaces",
+      "parentUuid": "9adffdf1_c947b54a",
       "range": {
         "startLine": 17,
         "startChar": 0,
