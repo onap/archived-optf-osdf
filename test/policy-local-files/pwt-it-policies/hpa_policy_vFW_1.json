@@ -9,7 +9,7 @@
   "riskLevel": "2",
   "guard": "False",
   "content": {
-    "resources": ["vFW"],
+    "resources": ["vFW", "7400fd06C75f4a44A68f"],
     "identity": "hpa-vFW",
     "policyScope": ["vfw", "us", "international", "ip"],
     "policyType": "hpa",

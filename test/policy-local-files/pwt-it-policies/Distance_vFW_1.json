@@ -14,7 +14,7 @@
       "distance": { "value": "100", "operator": "<", "unit": "km" }
     },
     "identity": "distance-vFW",
-    "resources": ["vFW"],
+    "resources": ["vFW", "7400fd06C75f4a44A68f"],
     "policyScope": ["vfw", "us", "international", "ip"],
     "policyType": "distance_to_location",
     "applicableResources": "any"
