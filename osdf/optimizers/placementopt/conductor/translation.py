@@ -225,7 +225,8 @@ def get_demand_properties(demand, policies):
     for policy_property in get_policy_properties(demand, policies):
         prop = dict(inventory_provider=policy_property['inventoryProvider'],
                     inventory_type=policy_property['inventoryType'],
-                    service_type=demand['serviceResourceId'])
+                    service_type=demand['serviceResourceId'],
+                    service_resource_id=demand['serviceResourceId'])
         prop['attributes'] = dict()
         prop['attributes'].update({'global-customer-id': policy_property['customerId']}
                                   if policy_property['customerId'] else {})
