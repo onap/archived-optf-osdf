@@ -12,7 +12,7 @@
         "identity": "vnf_vFW",
         "policyScope": ["vfw", "us", "international", "ip"],
         "policyType": "vnfPolicy",
-        "resources": ["vFW"],
+        "resources": ["vFW", "7400fd06C75f4a44A68f"],
         "applicableResources": "any",
 	"vnfProperties": [
             {

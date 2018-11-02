@@ -62,7 +62,7 @@ data_types:
             resources:
                 type: string
                 required: true
-            customerLocation:
+            customerLocationInfo:
                 type: string
                 required: true
             parameter:
