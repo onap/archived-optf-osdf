@@ -17,6 +17,7 @@
 #
 
 import traceback
+
 from requests import RequestException
 
 from osdf.logging.osdf_logging import metrics_log, MH, error_log
@@ -66,15 +67,16 @@ def process_pci_optimation(request_json, osdf_config, flat_policies):
 
 
 def get_solutions(cell_info_list, network_cell_info, request_json):
+    status, solutions = build_solution_list(cell_info_list, network_cell_info, request_json)
     return {
         "transactionId": request_json['requestInfo']['transactionId'],
         "requestId": request_json["requestInfo"]["requestId"],
         "requestStatus": "completed",
-        "statusMessage": "success",
+        "statusMessage": status,
         "solutions": [
             {
                 'networkId': request_json['cellInfo']['networkId'],
-                'pciSolutions': build_solution_list(cell_info_list, network_cell_info, request_json)
+                'pciSolutions': solutions
             }
         ]
     }
@@ -82,13 +84,20 @@ def get_solutions(cell_info_list, network_cell_info, request_json):
 
 def build_solution_list(cell_info_list, network_cell_info, request_json):
     solution_list = []
-    # for cell in request_json['cellInfo']['cellIdList']:
-    opt_solution = optimize(network_cell_info, cell_info_list)
-    sol = opt_solution[0]['pci']
-    for k, v in sol.items():
-        response = {
-            'cellId': get_cell_id(network_cell_info, k),
-            'pci': get_pci_value(network_cell_info, v)
-        }
-        solution_list.append(response)
-    return solution_list
+    status = "success"
+    req_id = request_json["requestInfo"]["requestId"]
+    try:
+        opt_solution = optimize(network_cell_info, cell_info_list)
+        sol = opt_solution[0]['pci']
+        for k, v in sol.items():
+            old_pci = get_pci_value(network_cell_info, k)
+            if old_pci != v:
+                response = {
+                    'cellId': get_cell_id(network_cell_info, k),
+                    'pci': v
+                }
+                solution_list.append(response)
+    except RuntimeError:
+        error_log.error("Failed finding solution for {} {}".format(req_id, traceback.format_exc()))
+        status = "failed"
+    return status, solution_list

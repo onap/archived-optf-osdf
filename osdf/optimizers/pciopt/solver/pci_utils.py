@@ -30,6 +30,7 @@ def get_cell_id(network_cell_info, id):
             return i['cell_id']
     return None
 
+
 def get_pci_value(network_cell_info, id):
     cell_id = get_cell_id(network_cell_info, id)
     for i in network_cell_info['cell_list']:
