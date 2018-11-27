@@ -17,6 +17,7 @@
 #
 
 import traceback
+
 from requests import RequestException
 
 from osdf.logging.osdf_logging import metrics_log, MH, error_log
@@ -86,9 +87,12 @@ def build_solution_list(cell_info_list, network_cell_info, request_json):
     opt_solution = optimize(network_cell_info, cell_info_list)
     sol = opt_solution[0]['pci']
     for k, v in sol.items():
-        response = {
-            'cellId': get_cell_id(network_cell_info, k),
-            'pci': get_pci_value(network_cell_info, v)
-        }
-        solution_list.append(response)
+
+        old_pci = get_pci_value(network_cell_info, k)
+        if old_pci != v:
+            response = {
+                'cellId': get_cell_id(network_cell_info, k),
+                'pci': v
+            }
+            solution_list.append(response)
     return solution_list
