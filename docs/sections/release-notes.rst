@@ -7,57 +7,62 @@ Release Notes
 =============
 
 
-Version: 1.1.1
+Version: 1.2.4
 --------------
 
-:Release Date: 2018-06-07
+:Release Date: 2018-11-30
 
 **New Features**
 
+The Casablanca release is the second release for ONAP Optimization Framework (OOF).
 
-The ONAP Optimization Framework (OOF) is new in Beijing. A summary of features includes: 
+A summary of features includes
 
-* Baseline HAS functionality
-    * support for VCPE use case
-    * support for HPA (Hardware Platform Awareness)
-* Integration with OOF OSDF, SO, Policy, AAI, and Multi-Cloud
+* Homing enhancements for improving service deployability
+    * Discovering and reusing shared resources when processing multiple homing requests in parallel
+    * Considering Latency Reduction (in addition to geographical distances) for homing optimization
+    * Enhanced capacity checks during VNF homing
+    * Asynchronous communication between HAS components
+* OOF Casablanca S3P Usability enhancement
+    * Adherence to ONAP API Common Versioning Strategy (CVS) Proposal
+    * Move all internal and external facing APIs to Swagger 2.0
+* OOF Casablanca S3P Performance enhancements
+    * Creating a plan for performance improvements based on the baseline measured metrics
+* OOF development platform hardening
+    * Deployment scripts
+    * Fix Build Docker image script for supporting multiple versions
+    * Fix OOM, HEAT deployment scripts (versioning)
+    * CSIT functional tests for each repo
+    * CI Jobs for different streams (Beijing, master etc)
+    * Clean up nexus binaries and maven versioning
+* Integrate OOF with Certificate and Secret Management Service (CSM)
+* Support SON (PCI) optimization using OSDF
+
 * Platform Maturity Level 1
-    * ~50%+ unit test coverage
+    * ~65.1+ unit test coverage
     
-The Beijing release for OOF delivered the following Epics. 
+The Casablanca release for OOF delivered the following Epics.
 
-    * [OPTFRA-2] - On-boarding and Stabilization of the OOF seed code
-
-    * [OPTFRA-6] - Integrate OOF with other ONAP components
-
-    * [OPTFRA-7] - Integration with R2 Use Cases [HPA, Change Management, Scaling]
-
-    * [OPTFRA-20] - OOF Adapters for Retrieving and Resolving Policies
-
-    * [OPTFRA-21] - OOF Packaging
-
-    * [OPTFRA-28] - OOF Adapters for Beijing Release (Policy, SDC, A&AI, Multi Cloud, etc.)
-
-    * [OPTFRA-29] - Policies and Specifications for Initial Applications [Change Management, HPA]
-
-    * [OPTFRA-32] - Platform Maturity Requirements for Beijing release
-
-    * [OPTFRA-33] - OOF Support for HPA
-
-    * [OPTFRA-105] - All Documentation Related User Stories and Tasks
+    * [OPTFRA-273] - Epic Name: OOF Casablanca S3P Manageability enhancement
+    * [OPTFRA-270] - Maintain current S3P levels
+    * [OPTFRA-271] - OOF Casablanca S3P Security enhancement
+    * [OPTFRA-267] - OOF - HPA Enhancements
+    * [OPTFRA-276] - Implementing a POC for 5G SON Optimization
 
 
 **Bug Fixes**
 
-None. Initial release R2 Beijing. No previous versions  
+* The full list of implemented user stories and epics is available on `CASABLANCA RELEASE <https://jira.onap.org/projects/OPTFRA/versions/10445>`_
 
 **Known Issues**
 
-None. 
+  * [OPTFRA-223] - 	On boarding and testing AAF certificates for OSDF.
+  * [OPTFRA-293] - 	Implement encryption for all OSDF internal and external communication
+  * [OPTFRA-329] - 	role based access control for OSDF-Policy interface
 
 **Security Notes**
 
-OPTFRA code has been formally scanned during build time using NexusIQ and no Critical vulnerability was found.
+OPTFRA osdf code has been formally scanned during build time using NexusIQ and no Critical vulnerability was found.
 
 Quick Links:
     - `OPTFRA project page <https://wiki.onap.org/display/DW/Optimization+Framework+Project>`_
@@ -66,11 +71,11 @@ Quick Links:
 
 **Upgrade Notes**
 
-None. Initial release R2 Beijing. No previous versions  
+None.
 
 **Deprecation Notes**
 
-None. Initial release R2 Beijing. No previous versions  
+None.
 
 **Other**
 
