@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_a236a7e5",
+        "filename": "docs/sections/release-notes.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 219
+      },
+      "writtenOn": "2018-11-30T00:24:11Z",
+      "side": 1,
+      "message": "Please same wording as for other project (Clamp for example) and use this link https://wiki.onap.org/pages/viewpage.action?pageId\u003d43385924",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 115
+      },
+      "revId": "0057f3177ee3c80f2a5c8e86970e54f8700e24f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_2252b713",
+        "filename": "docs/sections/release-notes.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 219
+      },
+      "writtenOn": "2018-11-30T00:24:11Z",
+      "side": 1,
+      "message": "Add this line (look at Clamp for example) -`Project Vulnerability Review Table for OPTF \u003chttps://wiki.onap.org/pages/viewpage.action?pageId\u003d43385924\u003e`",
+      "revId": "0057f3177ee3c80f2a5c8e86970e54f8700e24f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
