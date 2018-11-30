@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Gildas Lanilis <gildas.lanilis@huawei.com>
+Code-Review+1: Brian Freeman <bf1936@att.com>
+Code-Review+2: Dileep Ranganathan <dileep.ranganathan@intel.com>
+Submitted-by: Dileep Ranganathan <dileep.ranganathan@intel.com>
+Submitted-at: Fri, 30 Nov 2018 16:26:11 +0000
+Reviewed-on: https://gerrit.onap.org/r/74011
+Project: optf/osdf
+Branch: refs/heads/master
