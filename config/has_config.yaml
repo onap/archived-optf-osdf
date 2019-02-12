@@ -18,8 +18,8 @@ policy_config_mapping:
         model-version-id: modelVersionId
     candidates:
         # for (k1, v1), if k1 is in demand, set prop[k2] = _get_candidates(demand[k1])
-        exclusionCandidateInfo: excluded_candidates,
-        requiredCandidateInfo: required_candidates
+        excludedCandidates: excluded_candidates,
+        requiredCandidates: required_candidates
     extra_fields:
         # we have [k1, k2, k3, k4] type items and x is policy-content-properties
         # if x[k1] == k2: set prop[k3] = k4

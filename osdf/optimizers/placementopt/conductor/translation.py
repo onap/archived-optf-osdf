@@ -205,7 +205,7 @@ def get_candidates_demands(demand):
     for k, v in policy_config_mapping['candidates'].items():
         if k not in demand:
             continue
-        res[v] = [{'inventory_type': x['candidateType'], 'candidate_id': x['candidates']} for x in demand[k]]
+        res[v] = [{'inventory_type': x['identifierType'], 'candidate_id': x['identifiers']} for x in demand[k]]
     return res
 
 
