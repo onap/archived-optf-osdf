@@ -39,6 +39,7 @@ cp -r $SIMULATORS_DIR/policy $DOCKER_DIR/sim
 cp $TEST_DIR/policy-local-files/*.json $DOCKER_DIR/sim/policy/response-payloads/pdp-has-vcpe-good
 cp $SIMULATORS_DIR/oof_dependencies_simulators.py $DOCKER_DIR/sim/oof_dependencies_simulators.py
 cp $OSDF_DIR/requirements.txt $DOCKER_DIR
+cp -r $SIMULATORS_DIR/start_sim.sh $DOCKER_DIR/
 
 cd $DOCKER_DIR
 

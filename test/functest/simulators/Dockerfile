@@ -30,5 +30,6 @@ RUN ln -s /usr/bin/python3.5 /usr/bin/python
 ADD requirements.txt /requirements.txt
 RUN pip install -r requirements.txt
 ADD sim /sim
+ADD start_sim.sh /start_sim.sh
 
-CMD cd /sim && python oof_dependencies_simulators.py > simulator-logs 2>&1
+CMD ["/start_sim.sh"]
