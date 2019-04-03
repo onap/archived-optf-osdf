@@ -27,9 +27,15 @@ class PCISolution(OSDFModel):
     pci = IntType(required=True)
 
 
+class ANRSolution(OSDFModel):
+    cellId = StringType(required=True)
+    removeableNeighbors = ListType(StringType())
+
+
 class Solution(OSDFModel):
     networkId = StringType(required=True)
     pciSolutions = ListType(ListType(ModelType(PCISolution), min_size=1))
+    anrSolutions = ListType(ListType(ModelType(ANRSolution), min_size=1))
 
 
 class PCIOptimizationResponse(OSDFModel):

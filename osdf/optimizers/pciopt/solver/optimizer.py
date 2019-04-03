@@ -65,8 +65,7 @@ def add_to_neighbor_list(network_cell_info, cell, neighbor_list):
         host_id = cell['id']
         nbr_id = get_id(network_cell_info, nbr['cellId'])
         if nbr_id and host_id != nbr_id:
-            entry = sorted([host_id, nbr_id])
-            neighbor_list.add((entry[0], entry[1]))
+            neighbor_list.add((host_id, nbr_id))
 
 
 def get_second_level_neighbor(network_cell_info):
@@ -75,8 +74,7 @@ def get_second_level_neighbor(network_cell_info):
         comb_list = build_second_level_list(network_cell_info, cell)
         for comb in comb_list:
             if comb[0] and comb[1]:
-                s = sorted(comb)
-                second_neighbor_list.add((s[0], s[1]))
+                second_neighbor_list.add((comb[0], comb[1]))
     return sorted(second_neighbor_list)
 
 

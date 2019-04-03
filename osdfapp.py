@@ -20,37 +20,32 @@
 OSDF Manager Main Flask Application
 """
 
+import json
 import sys
+import traceback
+from optparse import OptionParser
 from threading import Thread  # for scaling up, may need celery with RabbitMQ or redis
 
-from flask import Flask, request, Response, g
-
-import osdf
 import pydevd
-import json
-import osdf.adapters.aaf.sms as sms
-import osdf.adapters.policy.interface
-import osdf.config.credentials
-import osdf.config.loader
-import osdf.operation.error_handling
-import osdf.operation.responses
-import traceback
-from schematics.exceptions import DataError
+from flask import Flask, request, Response, g
 from requests import RequestException
-from optparse import OptionParser
+from schematics.exceptions import DataError
+
+import osdf.adapters.aaf.sms as sms
+import osdf.operation.responses
 from osdf.adapters.policy.interface import get_policies
 from osdf.config.base import osdf_config
-from osdf.optimizers.placementopt.conductor.remote_opt_processor import process_placement_opt
-from osdf.webapp.appcontroller import auth_basic
-from osdf.operation.exceptions import BusinessException
-from osdf.operation.error_handling import request_exception_to_json_body, internal_error_message
 from osdf.logging.osdf_logging import MH, audit_log, error_log, debug_log
-from osdf.models.api.placementRequest import PlacementAPI
 from osdf.models.api.pciOptimizationRequest import PCIOptimizationAPI
+from osdf.models.api.placementRequest import PlacementAPI
+from osdf.operation.error_handling import request_exception_to_json_body, internal_error_message
+from osdf.operation.exceptions import BusinessException
 from osdf.operation.responses import osdf_response_for_request_accept as req_accept
-from osdf.optimizers.routeopt.simple_route_opt import RouteOpt
 from osdf.optimizers.pciopt.pci_opt_processor import process_pci_optimation
+from osdf.optimizers.placementopt.conductor.remote_opt_processor import process_placement_opt
+from osdf.optimizers.routeopt.simple_route_opt import RouteOpt
 from osdf.utils import api_data_utils
+from osdf.webapp.appcontroller import auth_basic
 
 ERROR_TEMPLATE = osdf.ERROR_TEMPLATE
 
@@ -148,7 +143,9 @@ def do_route_calc():
     audit_log.info("Calculate Route request received!")
     return RouteOpt().getRoute(request_json)
 
+
 @app.route("/api/oof/v1/pci", methods=["POST"])
+@app.route("/api/oof/pci/v1", methods=["POST"])
 @auth_basic.login_required
 def do_pci_optimization():
     request_json = request.get_json()
@@ -156,7 +153,7 @@ def do_pci_optimization():
     g.request_id = req_id
     audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
     PCIOptimizationAPI(request_json).validate()
-    #disable policy retrieval
+    # disable policy retrieval
     # policies = get_policies(request_json, "pciopt")
     audit_log.info(MH.new_worker_thread(req_id, "[for pciopt]"))
     t = Thread(target=process_pci_optimation, args=(request_json, osdf_config, None))
@@ -174,6 +171,7 @@ def internal_failure(error):
     response = Response(internal_error_message, content_type='application/json; charset=utf-8')
     response.status_code = 500
     return response
+
 
 def get_options(argv):
     program_version_string = '%%prog %s' % "v1.0"

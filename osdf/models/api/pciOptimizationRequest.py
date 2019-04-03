@@ -35,10 +35,16 @@ class RequestInfo(OSDFModel):
     timeout = IntType()
 
 
+class ANRInfo(OSDFModel):
+    cellId = StringType(required=True)
+    removeableNeighbors = ListType(StringType())
+
+
 class CellInfo(OSDFModel):
     """Information specific to CellInfo """
     networkId = StringType(required=True)
     cellIdList = ListType(StringType(required=True))
+    anrInputList = ListType(ModelType(ANRInfo), min_size=1)
     trigger = StringType()
 
 
