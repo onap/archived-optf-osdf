@@ -19,6 +19,9 @@
 import base64
 import itertools
 import json
+import yaml
+import os
+import uuid
 
 
 from requests import RequestException
@@ -186,3 +189,29 @@ def get_policies(request_json, service_type):
         policies = remote_api(request_json, osdf_config, service_type)
 
     return policies
+
+def upload_policy_models():
+    """Upload all the policy models reside in the folder"""
+    model_path = "../../models/policy/placement/tosca"
+    config = osdf_config.deployment
+    uid, passwd = config['policyPlatformUsername'], config['policyPlatformPassword']
+    pcuid, pcpasswd = config['policyClientUsername'], config['policyClientPassword']
+    headers = {"ClientAuth": base64.b64encode(bytes("{}:{}".format(pcuid, pcpasswd), "ascii"))}
+    headers.update({'Environment': config['policyPlatformEnv']})
+    headers.update(['X-ONAP-RequestID': uuid.uuid4()])
+    url = config['policyPlatformUrlForModelUploading']
+    rc = RestClient(userid=uid, passwd=passwd, headers=headers, url=url, log_func=debug_log.debug)
+
+    for file in os.listdir(model_path):
+        if not file.endswith(".yml"):
+            continue
+        with open(file) as f:
+            file_converted = json.dumps(yaml.load(f))
+            response = rc.request(json=file_converted, ok_codes=(200))
+        if not response:
+            success = False
+            audit_log.warn("Policy model %s uploading failed!" % file)
+    if not success:
+        return "Policy model uploading success!"
+    else:
+        return "Policy model uploading not success!"

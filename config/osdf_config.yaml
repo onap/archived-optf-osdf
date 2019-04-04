@@ -20,6 +20,8 @@ conductorMinorVersion: 0
 # Policy Platform -- requires ClientAuth, Authorization, and Environment
 policyPlatformUrl: http://policy.api.simpledemo.onap.org:8081/pdp/api/getConfig # Policy Dev platform URL
 policyPlatformEnv: TEST  # Environment for policy platform
+# URL for policy model uploading
+policyPlatformUrlForModelUploading: http://policy.api.simpledemo.onap.org:8081/policy/api/v1/policytypes
 
 # Config for DMaaP
 messageReaderHosts: NA

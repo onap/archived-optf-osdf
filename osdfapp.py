@@ -39,6 +39,7 @@ from schematics.exceptions import DataError
 from requests import RequestException
 from optparse import OptionParser
 from osdf.adapters.policy.interface import get_policies
+from osdf.adapters.policy.interface import upload_policy_models
 from osdf.config.base import osdf_config
 from osdf.optimizers.placementopt.conductor.remote_opt_processor import process_placement_opt
 from osdf.webapp.appcontroller import auth_basic
@@ -103,6 +104,9 @@ def handle_data_error(e):
 def do_osdf_health_check():
     """Simple health check"""
     audit_log.info("A health check request is processed!")
+    """Upload policy models"""
+    response = upload_policy_models()
+    audit_log.info(response)
     return "OK"
 
 
