@@ -157,10 +157,12 @@ def local_policies_location(req_json, osdf_config, service_type):
     if lp.get('global_disabled'):
         return None  # short-circuit to disable all local policies
     if lp.get('local_{}_policies_enabled'.format(service_type)):
+        debug_log.debug('Loading local policies for service type: {}'.format(service_type))
         if service_type == "scheduling":
             return lp.get('{}_policy_dir'.format(service_type)), lp.get('{}_policy_files'.format(service_type))
         else:
             service_name = req_json['serviceInfo']['serviceName']  # TODO: data_mapping.get_service_type(model_name)
+            debug_log.debug('Loading local policies for service name: {}'.format(service_name))
             return lp.get('{}_policy_dir_{}'.format(service_type, service_name.lower())), \
                    lp.get('{}_policy_files_{}'.format(service_type, service_name.lower()))
     return None
@@ -178,6 +180,8 @@ def get_policies(request_json, service_type):
     local_info = local_policies_location(request_json, osdf_config, service_type)
 
     if local_info:  # tuple containing location and list of files
+        if local_info[0] is None or local_info[1] is None:
+            raise ValueError("Error fetching local policy info")
         to_filter = None
         if osdf_config.core['policy_info'][service_type]['policy_fetch'] == "by_name":
             to_filter = request_json[service_type + "Info"]['policyId']

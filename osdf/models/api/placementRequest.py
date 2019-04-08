@@ -17,7 +17,7 @@
 #
 
 from .common import OSDFModel
-from schematics.types import BaseType, StringType, URLType, IntType
+from schematics.types import BaseType, StringType, URLType, IntType, BooleanType
 from schematics.types.compound import ModelType, ListType, DictType
 
 
@@ -71,6 +71,7 @@ class PlacementDemand(OSDFModel):
     resourceModuleName = StringType(required=True)
     serviceResourceId = StringType(required=True)
     tenantId = StringType()
+    unique = BooleanType() # to be implemented on the policy level
     resourceModelInfo = ModelType(ModelMetaData, required=True)
     existingCandidates = ListType(ModelType(Candidates))
     excludedCandidates = ListType(ModelType(Candidates))

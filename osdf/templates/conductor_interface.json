@@ -6,12 +6,10 @@
   "template": {
     "homing_template_version": "2017-10-10",
     "parameters": {
-	    "service_name": "{{ service_type }}",
-        "service_id": "{{ service_id }}",
-        "customer_lat": {{ latitude }},
-        "customer_long": {{ longitude }},
-        "REQUIRED_DISK": "{{ required_disk }}",
-        "REQUIRED_MEM": "{{ required_mem }}"
+      {% set comma=joiner(",") %}
+      {% for key, value in request_params.items() %} {{ comma() }}
+        "{{key}}": {{ json.dumps(value) }}
+      {% endfor %}
     },
     "locations": {
         "customer_loc": {

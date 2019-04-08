@@ -30,6 +30,11 @@ class TestReqValidation(unittest.TestCase):
         req_json = json.loads(open(req_file).read())
         self.assertEqual(PlacementAPI(req_json).validate(), None)
 
+    def test_req_vfmod_validation(self):
+        req_file = "./test/placement-tests/request_vfmod.json"
+        req_json = json.loads(open(req_file).read())
+        self.assertEqual(PlacementAPI(req_json).validate(), None)
+
     def test_req_failure(self):
         req_json = {}
         self.assertRaises(ModelValidationError, lambda: PlacementAPI(req_json).validate())
@@ -39,6 +44,11 @@ class TestResponseValidation(unittest.TestCase):
 
     def test_res_validation(self):
         req_file = "./test/placement-tests/response.json"
+        req_json = json.loads(open(req_file).read())
+        self.assertEqual(PlacementResponse(req_json).validate(), None)
+
+    def test_res_vfmod_validation(self):
+        req_file = "./test/placement-tests/response_vfmod.json"
         req_json = json.loads(open(req_file).read())
         self.assertEqual(PlacementResponse(req_json).validate(), None)
 

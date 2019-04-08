@@ -19,7 +19,7 @@
 import json
 import os
 import re
-
+from osdf.logging.osdf_logging import debug_log
 
 def get_local_policies(local_policy_folder, local_policy_list, policy_id_list=None):
     """
@@ -32,6 +32,7 @@ def get_local_policies(local_policy_folder, local_policy_list, policy_id_list=No
     :param policy_id_list: list of policies to get (if unspecified or None, get all)
     :return: get policies
     """
+    debug_log.debug("Policy folder: {}, local_list {}, policy id list {}".format(local_policy_folder, local_policy_list, policy_id_list))
     policies = []
     if policy_id_list:
         for policy_id in policy_id_list:
