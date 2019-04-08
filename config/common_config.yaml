@@ -32,6 +32,12 @@ osdf_temp:  # special configuration required for "workarounds" or testing
             - Placement_Optimization_1.json
             - QueryPolicy_vFW.json
             - vnfPolicy_vFW.json
+        placement_policy_dir_vfw_td: "./test/policy-local-files/"
+        placement_policy_files_vfw_td:
+            - vnfPolicy_vFW_TD.json
+            - vnfPolicy_vPGN_TD.json
+            - affinity_vFW_TD.json
+            - QueryPolicy_vFW_TD.json
 service_info:
     vCPE:
         vcpeHostName: requestParameters.vcpeHostName
@@ -63,7 +69,7 @@ policy_info:
         policy_scope:
             default_scope: OSDF_CASABLANCA
             vcpe_scope: OSDF_CASABLANCA
-            vfw_scope: OSDF_CASABLANCA
+            vfw_scope: OSDF_DUBLIN
             secondary_scopes:
                 -
                     - get_param: service_name
