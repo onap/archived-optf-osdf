@@ -31,10 +31,13 @@ sdcONAPInstanceID: NA
 
 # AAF Authentication config
 is_aaf_enabled: False
-aaf_cache_expiry_hrs: 3
+aaf_cache_expiry_mins: 5
 aaf_url: https://aaftest.simpledemo.onap.org:8095
 aaf_user_roles:
     - /api/oof/v1/placement:org.onap.osdf.access|*|read ALL
+    - /api/oof/placement/v1:org.onap.osdf.access|*|read ALL
+    - /api/oof/v1/pci:org.onap.osdf.access|*|read ALL
+    - /api/oof/pci/v1:org.onap.osdf.access|*|read ALL
 
 # Secret Management Service from AAF
 aaf_sms_url: https://aaf-sms.onap:10443
