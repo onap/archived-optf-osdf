@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2db9b126_dfe9283a",
+        "filename": "osdfapp.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-09T15:11:28Z",
+      "side": 1,
+      "message": "I think the policy models shouldn\u0027t be loaded every time when health check is called. The models are supposed to be uploaded only when a new model is added or updated in case of changes to any existing model. \nPolicies are also required to be recreated/updated with latest model version when there is any model change.\n\nAlso, the health check can be performed by other applications or clients/users. We should restrict them to update OSDF models unknowingly.\n\nI would suggest to add another endpoint to upload models and call whenever it is required (may be as a part of the OSDF deployment)",
+      "revId": "0e957e6ff4bae412ba909f9677d485d4abc0362b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
