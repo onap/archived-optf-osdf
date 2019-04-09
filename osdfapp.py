@@ -34,6 +34,7 @@ from schematics.exceptions import DataError
 import osdf.adapters.aaf.sms as sms
 import osdf.operation.responses
 from osdf.adapters.policy.interface import get_policies
+from osdf.adapters.policy.interface import upload_policy_models
 from osdf.config.base import osdf_config
 from osdf.logging.osdf_logging import MH, audit_log, error_log, debug_log
 from osdf.models.api.pciOptimizationRequest import PCIOptimizationAPI
@@ -98,6 +99,9 @@ def handle_data_error(e):
 def do_osdf_health_check():
     """Simple health check"""
     audit_log.info("A health check request is processed!")
+    """Upload policy models"""
+    response = upload_policy_models()
+    audit_log.info(response)
     return "OK"
 
 
