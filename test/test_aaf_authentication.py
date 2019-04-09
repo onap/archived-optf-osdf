@@ -16,6 +16,7 @@
 # -------------------------------------------------------------------------
 #
 import os
+
 from flask import Flask
 from mock import mock
 
@@ -33,7 +34,7 @@ class TestAafAuthentication():
 
         def mock_aaf_response(*args, **kwargs):
             return {"perm": [{"instance": "menu_ecd", "action": "*", "type": "org.onap.oof.controller.dev.menu"},
-                             {"instance": "*", "action": "*", "type": "org.onap.osdf.access"},
+                             {"instance": "*", "action": "read", "type": "org.onap.osdf.access"},
                              {"instance": "aaf", "action": "request", "type": "org.onap.osdf.certman"},
                              {"instance": "*", "action": "*", "type": "org.onap.osdf.dev.access"},
                              {"instance": ":*:*", "action": "*", "type": "org.onap.osdf.dev.k8"},
@@ -48,8 +49,8 @@ class TestAafAuthentication():
         auth.clear_cache()
 
         def mock_aaf_response(*args, **kwargs):
-            return {"perm": [{"instance": "menu_ecd", "action": "*", "type": "org.onap.oof.controller.dev.menu"},
-                             {"instance": "*", "action": "*", "type": "org.onap.osdf.access"},
+            return {"perm": [{"instance": "menu_ecd", "action": "*", "type": "org.onap.osdf.controller.dev.menu"},
+                             {"instance": "*", "action": "read", "type": "org.onap.osdf.access"},
                              {"instance": "aaf", "action": "request", "type": "org.onap.osdf.certman"},
                              {"instance": "*", "action": "*", "type": "org.onap.osdf.dev.access"},
                              {"instance": ":*:*", "action": "*", "type": "org.onap.osdf.dev.k8"},

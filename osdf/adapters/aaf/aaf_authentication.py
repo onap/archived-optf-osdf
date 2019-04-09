@@ -43,7 +43,6 @@ def authenticate(uid, passwd):
         return has_valid_role(perms)
     except Exception as exp:
         error_log.error("Error Authenticating the user {} : {}: ".format(uid, exp))
-        pass
     return False
 
 
@@ -57,27 +56,38 @@ else return false
 def has_valid_role(perms):
     aaf_user_roles = deploy_config['aaf_user_roles']
 
+    aaf_roles = get_role_list(perms)
+
     for roles in aaf_user_roles:
         path_perm = roles.split(':')
         uri = path_perm[0]
-        role = path_perm[1].split('|')[0]
-        if re.search(uri, request.path) and perms:
-            roles = perms.get('roles')
-            if roles:
-                perm_list = roles.get('perm')
-                for p in perm_list:
-                    if role == p['type']:
-                        return True
+        perm = path_perm[1].split('|')
+        p = (perm[0], perm[1], perm[2].split()[0])
+        if re.search(uri, request.path) and p in aaf_roles:
+            return True
     return False
 
-"""
-Make the remote aaf api call if user is not in the cache.
 
-Return the perms
 """
+Build a list of roles tuples from the AAF response.
+
+"""
+
+
+def get_role_list(perms):
+    role_list = []
+    if perms:
+        roles = perms.get('roles')
+        if roles:
+            perm = roles.get('perm', [])
+            for p in perm:
+                role_list.append((p['type'], p['instance'], p['action']))
+    return role_list
+
+
 def get_aaf_permissions(uid, passwd):
     key = base64.b64encode(bytes("{}_{}".format(uid, passwd), "ascii"))
-    time_delta = timedelta(hours=deploy_config.get('aaf_cache_expiry_hrs', 3))
+    time_delta = timedelta(minutes=deploy_config.get('aaf_cache_expiry_mins', 5))
 
     perms = perm_cache.get(key)
 
