@@ -21,6 +21,7 @@ OSDF Manager Main Flask Application
 """
 
 import json
+import ssl
 import sys
 import traceback
 from optparse import OptionParser
@@ -99,6 +100,12 @@ def handle_data_error(e):
 def do_osdf_health_check():
     """Simple health check"""
     audit_log.info("A health check request is processed!")
+    return "OK"
+
+
+@app.route("/api/oof/loadmodels/v1", methods=["GET"])
+def do_osdf_load_policies():
+    audit_log.info("Uploading policy models")
     """Upload policy models"""
     response = upload_policy_models()
     audit_log.info(response)
@@ -196,6 +203,13 @@ def get_options(argv):
     return opts
 
 
+def build_ssl_context():
+    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    ssl_context.set_ciphers('ECDHE-RSA-AES128-SHA256:EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH')
+    ssl_context.load_cert_chain(sys_conf['ssl_context'][0], sys_conf['ssl_context'][1])
+    return ssl_context
+
+
 if __name__ == "__main__":
 
     sys_conf = osdf_config['core']['osdf_system']
@@ -207,7 +221,7 @@ if __name__ == "__main__":
 
     ssl_opts = sys_conf.get('ssl_context')
     if ssl_opts:
-        common_app_opts.update({'ssl_context': tuple(ssl_opts)})
+        common_app_opts.update({'ssl_context': build_ssl_context()})
 
     opts = get_options(sys.argv)
     # Load secrets from SMS

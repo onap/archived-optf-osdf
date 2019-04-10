@@ -34,7 +34,7 @@ class TestAafAuthentication():
 
         def mock_aaf_response(*args, **kwargs):
             return {"perm": [{"instance": "menu_ecd", "action": "*", "type": "org.onap.oof.controller.dev.menu"},
-                             {"instance": "*", "action": "read", "type": "org.onap.osdf.access"},
+                             {"instance": "*", "action": "read", "type": "org.onap.oof.access"},
                              {"instance": "aaf", "action": "request", "type": "org.onap.osdf.certman"},
                              {"instance": "*", "action": "*", "type": "org.onap.osdf.dev.access"},
                              {"instance": ":*:*", "action": "*", "type": "org.onap.osdf.dev.k8"},
@@ -50,7 +50,7 @@ class TestAafAuthentication():
 
         def mock_aaf_response(*args, **kwargs):
             return {"perm": [{"instance": "menu_ecd", "action": "*", "type": "org.onap.osdf.controller.dev.menu"},
-                             {"instance": "*", "action": "read", "type": "org.onap.osdf.access"},
+                             {"instance": "*", "action": "read", "type": "org.onap.oof.access"},
                              {"instance": "aaf", "action": "request", "type": "org.onap.osdf.certman"},
                              {"instance": "*", "action": "*", "type": "org.onap.osdf.dev.access"},
                              {"instance": ":*:*", "action": "*", "type": "org.onap.osdf.dev.k8"},
@@ -78,7 +78,7 @@ class TestAafAuthentication():
 
         def mock_aaf_response(*args, **kwargs):
             return {"perm": [{"instance": "menu_ecd", "action": "*", "type": "org.onap.oof.controller.dev.menu"},
-                             {"instance": "*", "action": "*", "type": "org.onap.osdf.access"},
+                             {"instance": "*", "action": "*", "type": "org.onap.oof.access"},
                              {"instance": "aaf", "action": "request", "type": "org.onap.osdf.certman"},
                              {"instance": "*", "action": "*", "type": "org.onap.osdf.dev.access"},
                              {"instance": ":*:*", "action": "*", "type": "org.onap.osdf.dev.k8"},
