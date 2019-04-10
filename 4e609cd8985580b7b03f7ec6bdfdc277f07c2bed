@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73b07bed_0b0ad1af",
+        "filename": "osdfapp.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-10T19:42:30Z",
+      "side": 1,
+      "message": "Would you consider to name the url as\n/api/oof/policy/loadmodels/v1",
+      "revId": "4e609cd8985580b7b03f7ec6bdfdc277f07c2bed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
