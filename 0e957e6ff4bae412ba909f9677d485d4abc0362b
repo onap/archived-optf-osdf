@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3805d152_57c20ce7",
+        "filename": "osdf/adapters/policy/interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 2977
+      },
+      "writtenOn": "2019-04-11T00:07:10Z",
+      "side": 1,
+      "message": "Sure. I can add one more parameter for the path inside the osdf config.",
+      "parentUuid": "82f2fb65_ad20f280",
+      "revId": "0e957e6ff4bae412ba909f9677d485d4abc0362b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db9b126_dfe9283a",
         "filename": "osdfapp.py",
         "patchSetId": 3
