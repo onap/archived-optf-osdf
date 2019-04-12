@@ -1,0 +1,14 @@
+[
+  {
+    "cellId": "cell21",
+    "pciValue": 0
+  },
+  {
+    "cellId": "cell22",
+    "pciValue": 1
+  },
+  {
+    "cellId": "cell23",
+    "pciValue": 2
+  }
+]

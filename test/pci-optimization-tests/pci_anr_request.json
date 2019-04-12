@@ -7,14 +7,23 @@
     "requestType": "create",
     "numSolutions": 1,
     "optimizers": [
-      "pci"
+      "pci-anr"
     ],
     "timeout": 600
   },
   "cellInfo": {
-    "networkId": "1000",
+    "networkId": "2000",
     "cellIdList": [
-      "cell0"
+      "cell20"
     ]
-  }
+  },
+  "anrInputList": [
+    {
+      "cellId": "cell20",
+      "removeableNeighbors": [
+        "cell23"
+      ]
+    }
+  ],
+  "trigger": "NbrListChange"
 }

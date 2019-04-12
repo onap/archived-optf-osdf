@@ -67,7 +67,7 @@ def process_pci_optimation(request_json, osdf_config, flat_policies):
 
 
 def get_solutions(cell_info_list, network_cell_info, request_json):
-    status, solutions = build_solution_list(cell_info_list, network_cell_info, request_json)
+    status, pci_solutions, anr_solutions = build_solution_list(cell_info_list, network_cell_info, request_json)
     return {
         "transactionId": request_json['requestInfo']['transactionId'],
         "requestId": request_json["requestInfo"]["requestId"],
@@ -76,28 +76,45 @@ def get_solutions(cell_info_list, network_cell_info, request_json):
         "solutions": [
             {
                 'networkId': request_json['cellInfo']['networkId'],
-                'pciSolutions': solutions
+                'pciSolutions': pci_solutions,
+                'anrSolutions': anr_solutions
             }
         ]
     }
 
 
 def build_solution_list(cell_info_list, network_cell_info, request_json):
-    solution_list = []
     status = "success"
     req_id = request_json["requestInfo"]["requestId"]
     try:
-        opt_solution = optimize(network_cell_info, cell_info_list)
-        sol = opt_solution[0]['pci']
-        for k, v in sol.items():
-            old_pci = get_pci_value(network_cell_info, k)
-            if old_pci != v:
-                response = {
-                    'cellId': get_cell_id(network_cell_info, k),
-                    'pci': v
-                }
-                solution_list.append(response)
+        opt_solution = optimize(network_cell_info, cell_info_list, request_json)
+        pci_solutions = build_pci_solution(network_cell_info, opt_solution['pci'])
+        anr_solutions = build_anr_solution(network_cell_info, opt_solution.get('removables', {}))
     except RuntimeError:
         error_log.error("Failed finding solution for {} {}".format(req_id, traceback.format_exc()))
         status = "failed"
-    return status, solution_list
+    return status, pci_solutions, anr_solutions
+
+
+def build_pci_solution(network_cell_info, pci_solution):
+    pci_solutions = []
+    for k, v in pci_solution.items():
+        old_pci = get_pci_value(network_cell_info, k)
+        if old_pci != v:
+            response = {
+                'cellId': get_cell_id(network_cell_info, k),
+                'pci': v
+            }
+            pci_solutions.append(response)
+    return pci_solutions
+
+
+def build_anr_solution(network_cell_info, removables):
+    anr_solutions = []
+    for k, v in removables.items():
+        response = {
+            'cellId': get_cell_id(network_cell_info, k),
+            'removeableNeighbors': list(map(lambda x: get_cell_id(network_cell_info, x), v))
+        }
+        anr_solutions.append(response)
+    return anr_solutions
