@@ -192,19 +192,19 @@ def get_policies(request_json, service_type):
 
 def upload_policy_models():
     """Upload all the policy models reside in the folder"""
-    model_path = "../../models/policy/placement/tosca"
     requestId = uuid.uuid4()
     config = osdf_config.deployment
+    model_path = config['pathForModelUploading']
     uid, passwd = config['policyPlatformUsername'], config['policyPlatformPassword']
     pcuid, pcpasswd = config['policyClientUsername'], config['policyClientPassword']
     headers = {"ClientAuth": base64.b64encode(bytes("{}:{}".format(pcuid, pcpasswd), "ascii"))}
     headers.update({'Environment': config['policyPlatformEnv']})
     headers.update({'X-ONAP-RequestID': requestId})
-    url = config['policyPlatformUrlForModelUploading']
+    url = config['pathPolicyModelUpload']
     rc = RestClient(userid=uid, passwd=passwd, headers=headers, url=url, log_func=debug_log.debug)
 
     for file in os.listdir(model_path):
-        if not file.endswith(".yml"):
+        if not file.endswith(".yaml"):
             continue
         with open(file) as f:
             file_converted = json.dumps(yaml.load(f))
