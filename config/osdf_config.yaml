@@ -22,6 +22,7 @@ policyPlatformUrl: http://policy.api.simpledemo.onap.org:8081/pdp/api/getConfig 
 policyPlatformEnv: TEST  # Environment for policy platform
 # URL for policy model uploading
 policyPlatformUrlForModelUploading: http://policy.api.simpledemo.onap.org:8081/policy/api/v1/policytypes
+pathForModelUploading: ../../models/policy/placement/tosca_for_upload/
 
 # Config for DMaaP
 messageReaderHosts: NA
