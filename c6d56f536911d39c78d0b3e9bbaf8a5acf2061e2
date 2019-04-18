@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db4b2e3d_ae591892",
+        "filename": "config/osdf_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T17:30:07Z",
+      "side": 1,
+      "message": "Would you consider this change in variable naming convention?\npolicyPlatformUrlForModelUploading -\u003e policyPlatformUrlModelUpload",
+      "revId": "c6d56f536911d39c78d0b3e9bbaf8a5acf2061e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d79a40e_86d8dd06",
+        "filename": "config/osdf_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T17:30:07Z",
+      "side": 1,
+      "message": "Would you consider this change in variables naming convention?\npathForModelUploading-\u003e pathPolicyModelUpload\n../../models/policy/placement/tosca_for_upload/ -\u003e ../../models/policy/placement/tosca_upload/",
+      "revId": "c6d56f536911d39c78d0b3e9bbaf8a5acf2061e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2c8118d_6053381b",
+        "filename": "osdf/adapters/policy/interface.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T17:30:07Z",
+      "side": 1,
+      "message": "Changing from pathForModelUploading -\u003e pathPolicyModelUpload",
+      "revId": "c6d56f536911d39c78d0b3e9bbaf8a5acf2061e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "012a70d0_55416a05",
+        "filename": "osdf/models/policy/placement/tosca_for_upload/onap.policies.optimization.AffinityPolicy.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T17:30:07Z",
+      "side": 1,
+      "message": "Change the file root path as:\nosdf/models/policy/placement/tosca_for_upload -\u003e osdf/models/policy/placement/tosca_upload",
+      "revId": "c6d56f536911d39c78d0b3e9bbaf8a5acf2061e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "164970b9_6bf83bc1",
+        "filename": "osdf/models/policy/placement/tosca_for_upload/onap.policies.optimization.DistancePolicy.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T17:30:07Z",
+      "side": 1,
+      "message": "Change the file root path as: osdf/models/policy/placement/tosca_for_upload -\u003e osdf/models/policy/placement/tosca_upload",
+      "revId": "c6d56f536911d39c78d0b3e9bbaf8a5acf2061e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89a78d66_c0d8b679",
+        "filename": "osdf/models/policy/placement/tosca_for_upload/onap.policies.optimization.HpaPolicy.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T17:30:07Z",
+      "side": 1,
+      "message": "Change the file root path as: osdf/models/policy/placement/tosca_for_upload -\u003e osdf/models/policy/placement/tosca_upload",
+      "revId": "c6d56f536911d39c78d0b3e9bbaf8a5acf2061e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8386f14e_1efc96cc",
+        "filename": "osdf/models/policy/placement/tosca_for_upload/onap.policies.optimization.OptimizationPolicy.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T17:30:07Z",
+      "side": 1,
+      "message": "Change the file root path as: osdf/models/policy/placement/tosca_for_upload -\u003e osdf/models/policy/placement/tosca_upload",
+      "revId": "c6d56f536911d39c78d0b3e9bbaf8a5acf2061e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c04c97ad_c63e82a3",
+        "filename": "osdf/models/policy/placement/tosca_for_upload/onap.policies.optimization.PciPolicy.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T17:30:07Z",
+      "side": 1,
+      "message": "Change the file root path as: osdf/models/policy/placement/tosca_for_upload -\u003e osdf/models/policy/placement/tosca_upload",
+      "revId": "c6d56f536911d39c78d0b3e9bbaf8a5acf2061e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfbda975_c4f4122e",
+        "filename": "osdf/models/policy/placement/tosca_for_upload/onap.policies.optimization.QueryPolicy.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T17:30:07Z",
+      "side": 1,
+      "message": "Change the file root path as: osdf/models/policy/placement/tosca_for_upload -\u003e osdf/models/policy/placement/tosca_upload",
+      "revId": "c6d56f536911d39c78d0b3e9bbaf8a5acf2061e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75c25431_1178bfba",
+        "filename": "osdf/models/policy/placement/tosca_for_upload/onap.policies.optimization.SubscriberPolicy.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T17:30:07Z",
+      "side": 1,
+      "message": "Change the file root path as: osdf/models/policy/placement/tosca_for_upload -\u003e osdf/models/policy/placement/tosca_upload",
+      "revId": "c6d56f536911d39c78d0b3e9bbaf8a5acf2061e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "856637f9_e781086e",
+        "filename": "osdf/models/policy/placement/tosca_for_upload/onap.policies.optimization.Vim_fit.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T17:30:07Z",
+      "side": 1,
+      "message": "Change the file root path as: osdf/models/policy/placement/tosca_for_upload -\u003e osdf/models/policy/placement/tosca_upload",
+      "revId": "c6d56f536911d39c78d0b3e9bbaf8a5acf2061e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b48126a7_e3b74f9b",
+        "filename": "osdf/models/policy/placement/tosca_for_upload/onap.policies.optimization.VnfPolicy.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T17:30:07Z",
+      "side": 1,
+      "message": "Change the file root path as: osdf/models/policy/placement/tosca_for_upload -\u003e osdf/models/policy/placement/tosca_upload",
+      "revId": "c6d56f536911d39c78d0b3e9bbaf8a5acf2061e2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
