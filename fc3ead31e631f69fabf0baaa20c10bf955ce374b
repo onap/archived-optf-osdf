@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f16cd9ad_cae655eb",
+        "filename": "osdf/models/api/placementRequest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T18:07:46Z",
+      "side": 1,
+      "message": "Note: The field \"unique\" ideally should be defined under the vnf policy for vPGN at this xpath: content-\u003evnfProperties-\u003eunique.",
+      "revId": "fc3ead31e631f69fabf0baaa20c10bf955ce374b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a57ee146_d50d2b3b",
+        "filename": "osdf/optimizers/placementopt/conductor/translation.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T18:07:46Z",
+      "side": 1,
+      "message": "Note: This field \"unique\" should ideally be populated from the vnf policy not from the demand section in SO request.",
+      "revId": "fc3ead31e631f69fabf0baaa20c10bf955ce374b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0eca1e58_288bd8fc",
+        "filename": "test/placement-tests/request_vfmod.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T18:07:46Z",
+      "side": 1,
+      "message": "Note: This field \"unique\" ideally should be defined in the vnf policy not in the initial request from client.",
+      "revId": "fc3ead31e631f69fabf0baaa20c10bf955ce374b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d84c8391_bf1717f5",
+        "filename": "test/policy-local-files/vnfPolicy_vPGN_TD.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-18T18:07:46Z",
+      "side": 1,
+      "message": "The field \"unique\" can be added to this vnf policy for vPGN here: content-\u003evnfProperties-\u003eunique",
+      "revId": "fc3ead31e631f69fabf0baaa20c10bf955ce374b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
