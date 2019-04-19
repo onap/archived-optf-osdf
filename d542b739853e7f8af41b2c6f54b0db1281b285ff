@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2f2e21e9_ac60f777",
+        "filename": "config/osdf_config.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-19T14:32:28Z",
+      "side": 1,
+      "message": "The suggested change is not done yet. Can you please check and fix this. It should be policyPlatformUrlForModelUploading -\u003e policyPlatformUrlModelUpload",
+      "revId": "d542b739853e7f8af41b2c6f54b0db1281b285ff",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f55ed693_b3ad1e31",
         "filename": "osdf/adapters/policy/interface.py",
         "patchSetId": 2
