@@ -1,24 +1,27 @@
 policy_config_mapping:
     attributes:
-        hypervisor: hypervisor,
-        cloud_version: cloudVersion,
-        cloud_type: cloudType,
-        dataplane: dataPlane,
-        network_roles: networkRoles,
-        complex: complex,
-        state: state,
-        country: country,
-        geo_region: geoRegion,
-        exclusivity_groups: exclusivityGroups,
-        replication_role: replicationRole,
-        customer-id: customerId,
-        service-type: serviceResourceId,
-        equipment-role: equipmentRole,
-        model-invariant-id: modelInvariantId,
-        model-version-id: modelVersionId
+        hypervisor: hypervisor
+        cloudVersion: cloud_version
+        cloudType: cloud_type
+        dataPlane: dataplane
+        networkRoles: network_roles
+        complex: complex
+        state: state
+        country: country
+        geoRegion: geo_region
+        exclusivityGroups: exclusivity_groups
+        replicationRole: replication_role
+        customerId: customer_id
+        serviceResourceId: service-type
+        equipmentRole: equipment-role
+        modelInvariantId: model-invariant-id
+        modelVersionId: model-version-id
+        cloudRegionId: cloud-region-id
+        orchestrationStatus: orchestration-status
+        provStatus: prov-status
     candidates:
         # for (k1, v1), if k1 is in demand, set prop[k2] = _get_candidates(demand[k1])
-        excludedCandidates: excluded_candidates,
+        excludedCandidates: excluded_candidates
         requiredCandidates: required_candidates
     extra_fields:
         # we have [k1, k2, k3, k4] type items and x is policy-content-properties

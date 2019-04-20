@@ -26,12 +26,24 @@ class TestGetOptQueryData(unittest.TestCase):
         main_dir = ""
         parameter_data_file = main_dir + "test/placement-tests/request.json"
         policy_data_path = main_dir + "test/policy-local-files/"
-        
+
         query_policy_data_file = ["QueryPolicy_vCPE.json"]
         request_json = json.loads(open(parameter_data_file).read())
         policies = [json.loads(open(policy_data_path + file).read()) for file in query_policy_data_file]
         req_param_dict = get_opt_query_data(request_json, policies)
-        
+
+        self.assertTrue(req_param_dict is not None)
+
+    def test_get_opt_query_data_vfmod(self):
+        main_dir = ""
+        parameter_data_file = main_dir + "test/placement-tests/request_vfmod.json"
+        policy_data_path = main_dir + "test/policy-local-files/"
+
+        query_policy_data_file = ["QueryPolicy_vFW_TD.json"]
+        request_json = json.loads(open(parameter_data_file).read())
+        policies = [json.loads(open(policy_data_path + file).read()) for file in query_policy_data_file]
+        req_param_dict = get_opt_query_data(request_json, policies)
+
         self.assertTrue(req_param_dict is not None)
 
 

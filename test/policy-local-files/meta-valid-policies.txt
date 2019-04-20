@@ -10,3 +10,7 @@ hpa_policy_vGMuxInfra_1.json
 hpa_policy_vG_1.json
 vnfPolicy_vG.json
 vnfPolicy_vGMuxInfra.json
+QueryPolicy_vFW_TD.json
+vnfPolicy_vFW_TD.json
+vnfPolicy_vPGN_TD.json
+affinity_vFW_TD.json
