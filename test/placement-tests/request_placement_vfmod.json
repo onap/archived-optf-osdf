@@ -51,7 +51,7 @@
                 "service_type": "vFW-SINK-XX",
                 "excluded_candidates": [{
                     "inventory_type": "vfmodule",
-                    "candidate_id": ["e765d576-8755-4145-8536-0bb6d9b1dc9a"]
+                    "candidate_id": "e765d576-8755-4145-8536-0bb6d9b1dc9a"
                 }]
             }],
             "vPGN": [{
