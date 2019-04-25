@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae56081b_63188f72",
+        "filename": "osdf/optimizers/placementopt/conductor/translation.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-25T16:20:03Z",
+      "side": 1,
+      "message": "We may need to revisit this change in next weekly call.  I think HAS should have been supporting \"identifiers\" as a list of values, rather than expecting separate dict block for each of the values.",
+      "revId": "0a358ab8f3f546f11c36f913018edef63ff17ed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df96c8f5_713d7c4d",
+        "filename": "test/placement-tests/request_placement_vfmod.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-04-25T16:20:03Z",
+      "side": 1,
+      "message": "We may need to revisit this change in next weekly call.  I think HAS should have been supporting \"identifiers\" as a list of values, rather than expecting separate dict block for each of the values as a string.",
+      "revId": "0a358ab8f3f546f11c36f913018edef63ff17ed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
