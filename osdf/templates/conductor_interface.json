@@ -2,7 +2,7 @@
   "name": "{{ name }}",
   "files": {},
   "timeout": {{ timeout }},
-  "limit": {{ limit }},
+  "num_solution": {{ limit }},
   "template": {
     "homing_template_version": "2017-10-10",
     "parameters": {
