@@ -2,7 +2,7 @@
   "name": "{{ name }}",
   "files": "{{ files }}",
   "timeout": "{{ timeout }}",
-  "limit": "{{ limit }}",
+  "num_solution": "{{ limit }}",
   "template": {
     "CUST_ID": "{{ cust_id }}",
     "E2EVPNKEY": "{{ e2evpnkey }}",
