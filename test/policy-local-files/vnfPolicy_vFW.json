@@ -1,6 +1,6 @@
 {
     "service": "vnfPolicy",
-    "policyName": "OSDF_CASABLANCA.vnfPolicy_vFW",
+    "policyName": "OSDF_DUBLIN.vnfPolicy_vFW",
     "description": "vnfPolicy",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",

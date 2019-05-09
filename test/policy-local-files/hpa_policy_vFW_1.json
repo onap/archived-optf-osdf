@@ -1,6 +1,6 @@
 {
   "service": "hpaPolicy",
-  "policyName": "OSDF_CASABLANCA.hpa_policy_vFW_1",
+  "policyName": "OSDF_DUBLIN.hpa_policy_vFW_1",
   "description": "HPA policy for vFW",
   "templateVersion": "OpenSource.version.1",
   "version": "test1",

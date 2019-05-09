@@ -1,6 +1,6 @@
 {
     "service": "optimizationPolicy",
-    "policyName": "OSDF_CASABLANCA.Placement_Optimization_1",
+    "policyName": "OSDF_DUBLIN.Placement_Optimization_1",
     "description": "Placement Optimization Policy for vGMuxInfra",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",

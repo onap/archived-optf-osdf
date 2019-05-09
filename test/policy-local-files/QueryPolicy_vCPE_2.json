@@ -1,6 +1,6 @@
 {
   "service": "queryPolicy",
-  "policyName": "OSDF_CASABLANCA.queryPolicy_vCPE",
+  "policyName": "OSDF_DUBLIN.queryPolicy_vCPE",
   "description": "Query policy for vCPE",
   "templateVersion": "OpenSource.version.1",
   "version": "test1",

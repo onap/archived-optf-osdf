@@ -1,6 +1,6 @@
 {
     "service": "vim_fit",
-    "policyName": "OSDF_CASABLANCA.Capacity_vFW_1",
+    "policyName": "OSDF_DUBLIN.Capacity_vFW_1",
     "description": "Capacity policy for vFW",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",

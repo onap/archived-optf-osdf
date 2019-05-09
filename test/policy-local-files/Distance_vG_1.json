@@ -1,6 +1,6 @@
 {
   "service": "distancePolicy",
-  "policyName": "OSDF_CASABLANCA.Distance_vG_1",
+  "policyName": "OSDF_DUBLIN.Distance_vG_1",
   "description": "Distance Policy for vG",
   "templateVersion": "OpenSource.version.1",
   "version": "test1",
