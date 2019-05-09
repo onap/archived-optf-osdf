@@ -12,12 +12,14 @@
     "queryProperties": [
       {"attribute":"customerLatitude", "attribute_location": "customerLatitude", "value": 1.1},
       {"attribute":"customerLongitude", "attribute_location": "customerLongitude", "value": 2.2},
-      {"attribute":"chosen_region", "attribute_location": "chosenRegion"}
+      {"attribute":"chosen_region", "attribute_location": "chosenRegion"},
+      {"attribute":"chosen_customer_id", "attribute_location": "chosenCustomerId"}
     ],
     "policyScope": [
-            "TD",
-            "vFW-SINK",
-            "vPGN"
+      "td",
+      "us",
+      "vFW-SINK",
+      "vPGN"
     ],
     "policyType": "request_param_query",
     "serviceName": "vFW_TD",

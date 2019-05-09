@@ -10,7 +10,11 @@
     "guard": "False",
     "content": {
         "identity": "vnf_vFW_TD",
-        "policyScope": ["TD", "vFW-SINK"],
+        "policyScope": [
+            "td",
+            "us",
+            "vFW-SINK"
+        ],
         "policyType": "vnfPolicy",
         "resources": ["vFW-SINK"],
         "applicableResources": "any",
@@ -18,7 +22,9 @@
             "inventoryProvider": "aai",
             "serviceType": "",
             "inventoryType": "vfmodule",
-            "customerId": "Demonstration",
+            "customerId": {
+                "get_param": "chosen_customer_id"
+            },
             "equipmentRole": "",
             "attributes": {
                 "orchestrationStatus": ["active"],

@@ -33,7 +33,9 @@
         "demands": {
             "vFW-SINK": [{
                 "attributes": {
-                    "global-customer-id": "Demonstration",
+                    "global-customer-id": {
+                        "get_param": "chosen_customer_id"
+                    },
                     "cloud-region-id": {
                         "get_param": "chosen_region"
                     },
@@ -56,7 +58,9 @@
             }],
             "vPGN": [{
                 "attributes": {
-                    "global-customer-id": "Demonstration",
+                    "global-customer-id": {
+                        "get_param": "chosen_customer_id"
+                    },
                     "cloud-region-id": {
                         "get_param": "chosen_region"
                     },
