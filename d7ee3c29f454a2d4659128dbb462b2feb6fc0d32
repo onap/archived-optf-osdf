@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94c10598_6d3a1c58",
+        "filename": "config/common_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-05-09T20:19:57Z",
+      "side": 1,
+      "message": "With this change, you would have to update \"policyName\" in all the policies belonging to the service \"vcpe\" as well.\n\nhttps://gerrit.onap.org/r/gitweb?p\u003doptf/osdf.git;a\u003dtree;f\u003dtest/policy-local-files;hb\u003drefs/heads/master",
+      "revId": "d7ee3c29f454a2d4659128dbb462b2feb6fc0d32",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a465f68a_007ec09a",
+        "filename": "config/common_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2019-05-09T20:19:57Z",
+      "side": 1,
+      "message": "Please add new entry for the Traffic distribution service name as td_scope: OSDF_DUBLIN",
+      "revId": "d7ee3c29f454a2d4659128dbb462b2feb6fc0d32",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
