@@ -1,6 +1,6 @@
 {
     "service": "affinityPolicy",
-    "policyName": "OSDF_CASABLANCA.Affinity_vCPE_1",
+    "policyName": "OSDF_DUBLIN.Affinity_vCPE_1",
     "description": "Zone policy for vCPE",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",

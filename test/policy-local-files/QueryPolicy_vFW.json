@@ -1,6 +1,6 @@
 {
   "service": "queryPolicy",
-  "policyName": "OSDF_CASABLANCA.QueryPolicy_vFW",
+  "policyName": "OSDF_DUBLIN.QueryPolicy_vFW",
   "description": "Query policy for vFW",
   "templateVersion": "OpenSource.version.1",
   "version": "test1",

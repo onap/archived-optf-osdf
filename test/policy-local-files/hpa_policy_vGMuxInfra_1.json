@@ -1,6 +1,6 @@
 {
     "service": "hpaPolicy",
-    "policyName": "OSDF_CASABLANCA.hpa_policy_vGMuxInfra_1",
+    "policyName": "OSDF_DUBLIN.hpa_policy_vGMuxInfra_1",
     "description": "HPA policy for vGMuxInfra",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",

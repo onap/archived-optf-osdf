@@ -1,6 +1,6 @@
 {
     "service": "subscriberPolicy",
-    "policyName": "OSDF_CASABLANCA.SubscriberPolicy_v1",
+    "policyName": "OSDF_DUBLIN.SubscriberPolicy_v1",
     "description": "Subscriber Policy for vCPE",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",
