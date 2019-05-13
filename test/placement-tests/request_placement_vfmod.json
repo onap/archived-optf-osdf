@@ -82,7 +82,7 @@
         },
         "homing_template_version": "2017-10-10"
     },
-    "num_solution": 100,
+    "num_solution": "100",
     "files": {},
     "timeout": 1200
 }
