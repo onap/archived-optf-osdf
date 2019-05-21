@@ -11,7 +11,8 @@
     "content": {
         "identity": "affinity_vFW_TD",
         "policyScope": [
-            "TD",
+            "td",
+            "us",
             "vFW-SINK",
             "vPGN"
         ],

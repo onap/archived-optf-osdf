@@ -10,7 +10,11 @@
     "guard": "False",
     "content": {
         "identity": "vnf_vPGN_TD",
-        "policyScope": ["TD", "vPGN"],
+        "policyScope": [
+            "td",
+            "us",
+            "vPGN"
+        ],
         "policyType": "vnfPolicy",
         "resources": ["vPGN"],
         "applicableResources": "any",
@@ -18,7 +22,9 @@
             "inventoryProvider": "aai",
             "serviceType": "",
             "inventoryType": "vfmodule",
-            "customerId": "Demonstration",
+            "customerId": {
+                "get_param": "chosen_customer_id"
+            },
             "equipmentRole": "",
             "attributes": {
                 "orchestrationStatus": ["active"],
