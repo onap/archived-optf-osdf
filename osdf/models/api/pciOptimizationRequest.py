@@ -44,7 +44,7 @@ class CellInfo(OSDFModel):
     """Information specific to CellInfo """
     networkId = StringType(required=True)
     cellIdList = ListType(StringType(required=True))
-    anrInputList = ListType(ModelType(ANRInfo), min_size=1)
+    anrInputList = ListType(ModelType(ANRInfo))
     trigger = StringType()
 
 
