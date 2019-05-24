@@ -35,6 +35,6 @@ def get_pci_value(network_cell_info, id):
     cell_id = get_cell_id(network_cell_info, id)
     for i in network_cell_info['cell_list']:
         for j in i['nbr_list']:
-            if cell_id == j['cellId']:
+            if cell_id == j['targetCellId']:
                 return j['pciValue']
     return None

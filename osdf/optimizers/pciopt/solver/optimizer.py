@@ -103,7 +103,7 @@ def get_neighbor_list(network_cell_info):
 def add_to_neighbor_list(network_cell_info, cell, neighbor_list):
     for nbr in cell.get('nbr_list', []):
         host_id = cell['id']
-        nbr_id = get_id(network_cell_info, nbr['cellId'])
+        nbr_id = get_id(network_cell_info, nbr['targetCellId'])
         if nbr_id and host_id != nbr_id:
             neighbor_list.add((host_id, nbr_id))
 
@@ -121,7 +121,7 @@ def get_second_level_neighbor(network_cell_info):
 def build_second_level_list(network_cell_info, cell):
     second_nbr_list = []
     for nbr in cell.get('nbr_list', []):
-        second_nbr_list.append(get_id(network_cell_info, nbr['cellId']))
+        second_nbr_list.append(get_id(network_cell_info, nbr['targetCellId']))
     return [list(elem) for elem in list(itertools.combinations(second_nbr_list, 2))]
 
 

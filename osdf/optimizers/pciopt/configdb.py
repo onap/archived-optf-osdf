@@ -57,9 +57,13 @@ def request(req_object, osdf_config, flat_policies):
         cell_info = {'cell_id': cell_id, 'id': count}
         nbr_list_url = '{}/{}/{}/{}'.format(config['configDbUrl'], config['configDbGetNbrListUrl'], cell_id, ts)
         nbr_list_raw = rc.request(url=nbr_list_url, raw_response=True)
-        cell_info['nbr_list'] = nbr_list_raw.json()
+        cell_info['nbr_list'] = get_neighbor_list(nbr_list_raw.json())
         cell_list.append(cell_info)
         count += 1
 
     cell_list_response['cell_list'] = cell_list
     return cell_resp, cell_list_response
+
+
+def get_neighbor_list(nbr_list_response):
+    return nbr_list_response.get('nbrList', [])

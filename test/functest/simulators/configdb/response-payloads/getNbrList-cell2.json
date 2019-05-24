@@ -1,10 +1,15 @@
-[
-  {
-    "cellId": "cell0",
-    "pciValue": 0
-  },
-  {
-    "cellId": "cell1",
-    "pciValue": 1
-  }
-]
+{
+  "cellId": "cell2",
+  "nbrList": [
+    {
+      "targetCellId": "cell0",
+      "pciValue": 0,
+      "ho": true
+    },
+    {
+      "targetCellId": "cell1",
+      "pciValue": 1,
+      "ho": true
+    }
+  ]
+}
