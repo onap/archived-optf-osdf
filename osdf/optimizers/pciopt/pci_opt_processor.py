@@ -73,13 +73,11 @@ def get_solutions(cell_info_list, network_cell_info, request_json):
         "requestId": request_json["requestInfo"]["requestId"],
         "requestStatus": "completed",
         "statusMessage": status,
-        "solutions": [
-            {
-                'networkId': request_json['cellInfo']['networkId'],
-                'pciSolutions': pci_solutions,
-                'anrSolutions': anr_solutions
-            }
-        ]
+        "solutions": {
+            'networkId': request_json['cellInfo']['networkId'],
+            'pciSolutions': pci_solutions,
+            'anrSolutions': anr_solutions
+        }
     }
 
 
