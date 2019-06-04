@@ -6,6 +6,61 @@
 Release Notes
 =============
 
+Version: 4.0.0
+--------------
+
+:Release Date: 2019-06-06 (Dublin Release)
+
+**New Features**
+
+The Dublin release is the third release for ONAP Optimization Framework (OOF).
+
+A summary of features includes
+
+* Support SON (PCI/ANR) optimization using OSDF
+* Implement encryption for OSDF internal and external communication
+
+* Platform Maturity Level 1
+    * ~65.1+ unit test coverage
+
+The Dublin release for OOF delivered the following Epics.
+
+    * [OPTFRA-426]	Track the changes to CMSO to support change management schedule optimization
+    * [OPTFRA-424]	Extend OOF to support traffic distribution optimization
+    * [OPTFRA-422]	Move OOF projects' CSIT to run on OOM
+    * [OPTFRA-276]	Implementing a POC for 5G SON Optimization
+    * [OPTFRA-270]	This epic captures stories related to maintaining current S3P levels of the project as new functional requirements are supported
+
+
+**Bug Fixes**
+
+* The full list of implemented user stories and epics is available on `DUBLIN RELEASE <https://jira.onap.org/projects/OPTFRA/versions/10463>`_
+
+**Known Issues**
+
+
+
+**Security Notes**
+
+OPTFRA osdf code has been formally scanned during build time using NexusIQ and no Critical vulnerability was found.
+The OPTF open Critical security vulnerabilities and their risk assessment have been documented as part of the `project <https://wiki.onap.org/pages/viewpage.action?pageId=64005463>`_.
+
+Quick Links:
+    - `OPTFRA project page <https://wiki.onap.org/display/DW/Optimization+Framework+Project>`_
+    - `Passing Badge information for OPTFRA <https://bestpractices.coreinfrastructure.org/en/projects/1720>`_
+    - `Project Vulnerability Review Table for OPTF <https://wiki.onap.org/pages/viewpage.action?pageId=64005463>`_
+
+**Upgrade Notes**
+
+None.
+
+**Deprecation Notes**
+
+None.
+
+**Other**
+
+None
 
 Version: 3.0.1
 --------------
