@@ -42,6 +42,12 @@ The Dublin release for OOF delivered the following Epics.
 
 **Security Notes**
 
+*Fixed Security Issues*
+
+*Known Security Issues*
+
+*Known Vulnerabilities in Used Modules*
+
 OPTFRA osdf code has been formally scanned during build time using NexusIQ and no Critical vulnerability was found.
 The OPTF open Critical security vulnerabilities and their risk assessment have been documented as part of the `project <https://wiki.onap.org/pages/viewpage.action?pageId=64005463>`_.
 
@@ -113,7 +119,7 @@ A summary of features includes
 
 * Platform Maturity Level 1
     * ~65.1+ unit test coverage
-    
+
 The Casablanca release for OOF delivered the following Epics.
 
     * [OPTFRA-273] - Epic Name: OOF Casablanca S3P Manageability enhancement
