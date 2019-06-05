@@ -46,6 +46,8 @@ The Dublin release for OOF delivered the following Epics.
 
 *Known Security Issues*
 
+    * [`OJSI-122 <https://jira.onap.org/browse/OJSI-122>`_] In default deployment OPTFRA (oof-osdf) exposes HTTP port 30248 outside of cluster.
+
 *Known Vulnerabilities in Used Modules*
 
 OPTFRA osdf code has been formally scanned during build time using NexusIQ and no Critical vulnerability was found.
