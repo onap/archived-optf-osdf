@@ -27,7 +27,7 @@
     <groupId>org.onap.optf.osdf</groupId>
     <artifactId>optf-osdf</artifactId>
     <name>optf-osdf</name>
-    <version>1.3.2-SNAPSHOT</version>
+    <version>1.3.2</version>
     <description>Optimization Service Design Framework</description>
 
     <properties>
