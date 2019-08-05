@@ -2,5 +2,4 @@ distribution_type: 'maven'
 version: '1.3.3'
 project: 'optf-osdf'
 log_dir: 'optf-osdf-maven-stage-master/97/'
-maven_central_url: 'oss.sonatype.org'
 
