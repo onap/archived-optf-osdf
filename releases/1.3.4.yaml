@@ -1,0 +1,5 @@
+distribution_type: 'maven'
+version: '1.3.4'
+project: 'optf-osdf'
+log_dir: 'optf-osdf-maven-stage-master/106/'
+
