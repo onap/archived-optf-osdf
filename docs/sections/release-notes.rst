@@ -5,6 +5,40 @@
 =============
 Release Notes
 =============
+Version: 5.0.0
+--------------
+
+:Release Date: 2019-09 (El Alto Release)
+
+**New Features**
+
+The El Alto release is the fourth release for ONAP Optimization Framework (OOF).
+
+A summary of features includes
+
+**Bug Fixes**
+
+
+**Known Issues**
+
+
+
+**Security Notes**
+
+*Fixed Security Issues*
+
+*Known Security Issues*
+
+*Known Vulnerabilities in Used Modules*
+
+**Upgrade Notes**
+
+
+**Deprecation Notes**
+
+
+**Other**
+
 
 Version: 4.0.0
 --------------
