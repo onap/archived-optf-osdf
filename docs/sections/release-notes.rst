@@ -5,29 +5,66 @@
 =============
 Release Notes
 =============
-Version: 5.0.0
+
+Version: 5.0.1
 --------------
 
-:Release Date: 2019-09 (El Alto Release)
-
-**New Features**
+:Release Date: 2019-09-30 (El Alto Release)
 
 The El Alto release is the fourth release for ONAP Optimization Framework (OOF).
 
-A summary of features includes
+Artifacts released:
+
+optf-has:1.3.3
+optf-osdf:1.3.4
+optf-cmso:2.1.1
+
+**New Features**
+
+While no new features were added in the release, the following Stories were delivered as enhancements.
+
+    * [OPTFRA-415] Automation on policy model uploading
+    * [OPTFRA-427] CMSO - Schedule a workflow in SO and track status to completion
+
+* Platform Maturity Level 1
+    * ~65.1+ unit test coverage
+
 
 **Bug Fixes**
+
+The El Alto release for OOF fixed the following Bugs.
+
+    * [OPTFRA-579] Json error in homing solution
+    * [OPTFRA-521] oof-has-api exposes plain text HTTP endpoint using port 30275
+    * [OPTFRA-522] oof-osdf exposes plain text HTTP endpoint using port 30248
+    * [OPTFRA-577] Need for "ReadWriteMany" access on storage when deploying on Kubernetes?
+    * [OPTFRA-517] Clean up optf/cmso in integration/csit for Dublin
+    * [OPTFRA-486] Support "identifiers" field as a list of values
+    * [OPTFRA-403] OOF CMSO Service kubernetes resources allocation is not done
+    * [OPTFRA-526] OOF pods not running
+    * [OPTFRA-409] Template example : purpose to be explained
+    * [OPTFRA-593] OOF-CSMO healthcheck is failing in Master
 
 
 **Known Issues**
 
-
+    * [OPTFRA-576] optf-has-master-csit-has is testing Dublin image
+    * [OPTFRA-596] CMSO - Sonar and CSIT jobs failing
+    * [OPTFRA-608] Error in Homing with multiple policies
 
 **Security Notes**
 
 *Fixed Security Issues*
 
+    * [OJSI-122] In default deployment OPTFRA (oof-osdf) exposes HTTP port 30248 outside of cluster.
+    * [OPTFRA-521] oof-has-api exposes plain text HTTP endpoint using port 30275
+    * [OPTFRA-522] oof-osdf exposes plain text HTTP endpoint using port 30248
+    * [OPTFRA-455] CMSO - Mitigate License Threat tomcat-embed-core
+
 *Known Security Issues*
+
+    * [OPTFRA-481] Fix Vulnerability with spring-data-jpa package
+    * [OPTFRA-431] Fix Vulnerability with spring-security-web package
 
 *Known Vulnerabilities in Used Modules*
 
