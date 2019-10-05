@@ -27,6 +27,8 @@ A summary of features includes
 
 *Fixed Security Issues*
 
+    * [`OJSI-122 <https://jira.onap.org/browse/OJSI-122>`_] In default deployment OPTFRA (oof-osdf) exposes HTTP port 30248 outside of cluster.
+
 *Known Security Issues*
 
 *Known Vulnerabilities in Used Modules*
