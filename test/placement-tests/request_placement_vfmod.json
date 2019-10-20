@@ -32,7 +32,7 @@
         },
         "demands": {
             "vFW-SINK": [{
-                "attributes": {
+                "filtering_attributes": {
                     "global-customer-id": {
                         "get_param": "chosen_customer_id"
                     },
@@ -47,6 +47,9 @@
                     },
                     "prov-status": "ACTIVE"
                 },
+                "passthrough_attributes": {
+                    "td-role": "destination"
+                },
                 "inventory_provider": "aai",
                 "service_resource_id": "vFW-SINK-XX",
                 "inventory_type": "vfmodule",
@@ -57,7 +60,7 @@
                 }]
             }],
             "vPGN": [{
-                "attributes": {
+                "filtering_attributes": {
                     "global-customer-id": {
                         "get_param": "chosen_customer_id"
                     },
@@ -71,6 +74,9 @@
                         "get_param": "service_id"
                     },
                     "prov-status": "ACTIVE"
+                },
+                "passthrough_attributes": {
+                    "td-role": "anchor"
                 },
                 "inventory_provider": "aai",
                 "service_resource_id": "vPGN-XX",
