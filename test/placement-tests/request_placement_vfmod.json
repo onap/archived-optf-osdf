@@ -74,7 +74,7 @@
                 },
                 "inventory_provider": "aai",
                 "service_resource_id": "vPGN-XX",
-                "unique": "false",
+                "unique": "False",
                 "inventory_type": "vfmodule",
                 "service_type": "vPGN-XX"
             }]
