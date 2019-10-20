@@ -26,6 +26,7 @@
                 "get_param": "chosen_customer_id"
             },
             "equipmentRole": "",
+            "unique": "False",
             "attributes": {
                 "orchestrationStatus": ["active"],
                 "provStatus": "ACTIVE",
