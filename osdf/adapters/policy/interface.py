@@ -128,11 +128,8 @@ def remote_api(req_json, osdf_config, service_type="placement"):
     """
     config = osdf_config.deployment
     uid, passwd = config['policyPlatformUsername'], config['policyPlatformPassword']
-    pcuid, pcpasswd = config['policyClientUsername'], config['policyClientPassword']
-    headers = {"ClientAuth": base64.b64encode(bytes("{}:{}".format(pcuid, pcpasswd), "ascii"))}
-    headers.update({'Environment': config['policyPlatformEnv']})
     url = config['policyPlatformUrl']
-    rc = RestClient(userid=uid, passwd=passwd, headers=headers, url=url, log_func=debug_log.debug)
+    rc = RestClient(userid=uid, passwd=passwd, url=url, log_func=debug_log.debug)
 
     if osdf_config.core['policy_info'][service_type]['policy_fetch'] == "by_name":
         policies = get_by_name(rc, req_json[service_type + "Info"]['policyId'], wildcards=True)
