@@ -45,10 +45,6 @@ class TestOSDFLogging(unittest.TestCase):
         self.json_body = mock.MagicMock()
         self.F = formatter
 
-    def test_log_handlers_pre_onap(self):
-        res = L1.log_handlers_pre_onap()
-        assert type(res) == dict
-
     def test_format_exception(self):
         res = L1.format_exception(Exception("Some error"))
 
@@ -167,14 +163,6 @@ class TestOSDFLogging(unittest.TestCase):
     def test_warn_audit_error(self):
         """Log the message to error_log.warn and audit_log.warn"""
         L1.warn_audit_error("Some warning message")
-
-    def test_log_message_multi(msg):
-        X = L1.log_handlers_pre_onap()
-        wanted_methods = [
-            X["error"].error, X["error"].warn, X["audit"].info,
-            X["metrics"].info, X["debug"].debug, X["error"].fatal
-            ]
-        L1.log_message_multi("Some log message", *wanted_methods) 
 
 
 if __name__ == "__main__":
