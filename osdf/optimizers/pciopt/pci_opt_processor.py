@@ -26,6 +26,7 @@ from osdf.utils.interfaces import get_rest_client
 from .configdb import request as config_request
 from .solver.optimizer import pci_optimize as optimize
 from .solver.pci_utils import get_cell_id, get_pci_value
+from osdf.utils.mdc_utils import mdc_from_json
 
 """
 This application generates PCI Optimization API calls using the information received from PCI-Handler-MS, SDN-C
@@ -42,6 +43,7 @@ def process_pci_optimation(request_json, osdf_config, flat_policies):
     :return: response from PCI Opt
     """
     try:
+        mdc_from_json(request_json)
         rc = get_rest_client(request_json, service="pcih")
         req_id = request_json["requestInfo"]["requestId"]
         cell_info_list, network_cell_info = config_request(request_json, osdf_config, flat_policies)
@@ -55,9 +57,11 @@ def process_pci_optimation(request_json, osdf_config, flat_policies):
             body = build_json_error_body(err)
             metrics_log.info(MH.sending_response(req_id, "ERROR"))
             rc.request(json=body, noresponse=True)
-        except RequestException:
+        except RequestException as err:
+            MDC.put('requestID',req_id)
             error_log.error("Error sending asynchronous notification for {} {}".format(req_id, traceback.format_exc()))
-        return
+        raise err
+
 
     try:
         metrics_log.info(MH.calling_back_with_body(req_id, rc.url, pci_response))

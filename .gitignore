@@ -117,3 +117,4 @@ xunit*.xml
 simulator-logs
 test/functest/simulators/config
 test/functest/simulators/osdf
+/pylint.out
