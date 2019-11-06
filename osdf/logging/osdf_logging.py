@@ -16,33 +16,18 @@
 # -------------------------------------------------------------------------
 #
 
+import logging
+import os
 import traceback
-import uuid
+from logging import config
 
-from .onap_common_v1.CommonLogger import CommonLogger
+import yaml
+from onaplogging import monkey
+
 from osdf.utils.programming_utils import MetaSingleton
 
-
-def log_handlers_pre_onap(config_file="config/onap_logging_common_v1.config",
-                          service_name="OOF_OSDF"):
-    """
-    Convenience handlers for logging to different log files
-
-    :param config_file: configuration file (properties file) that specifies log location, rotation, etc.
-    :param service_name: name for this service
-    :return: dictionary of log objects: "error", "metrics", "audit", "debug"
-
-    We can use the returned values as follows:
-    X["error"].fatal("a FATAL message for the error log")
-    X["error"].error("an ERROR message for the error log")
-    X["error"].warn("a WARN message for the error log")
-    X["audit"].info("an INFO message for the audit log")
-    X["metrics"].info("an INFO message for the metrics log")
-    X["debug"].debug("a DEBUG message for the debug log")
-    """
-    main_params = dict(instanceUUID=uuid.uuid1(), serviceName=service_name, configFile=config_file)
-    return dict((x, CommonLogger(logKey=x, **main_params))
-                for x in ["error", "metrics", "audit", "debug"])
+BASE_DIR = os.path.dirname(__file__)
+LOGGING_FILE = os.path.join(BASE_DIR, '..', '..', 'config', 'log.yml')
 
 
 def format_exception(err, prefix=None):
@@ -56,6 +41,15 @@ def format_exception(err, prefix=None):
     return exception_desc if not prefix else prefix + ": " + exception_desc
 
 
+def create_log_dirs():
+    with open(LOGGING_FILE, 'r') as fid:
+        yaml_config = yaml.full_load(fid)
+    for key in yaml_config['handlers']:
+        a = yaml_config['handlers'][key]
+        if a.get('filename'):
+            os.makedirs(os.path.dirname(a['filename']), exist_ok=True)
+
+
 class OOF_OSDFLogMessageHelper(metaclass=MetaSingleton):
     """Provides loggers as a singleton (otherwise, we end up with duplicate messages).
     Provides error_log, metric_log, audit_log, and debug_log (in that order)
@@ -64,17 +58,7 @@ class OOF_OSDFLogMessageHelper(metaclass=MetaSingleton):
     log_handlers = None
     default_levels = ["error", "metrics", "audit", "debug"]
 
-    def _setup_handlers(self, log_version="pre_onap", config_file=None, service_name=None):
-        """return error_log, metrics_log, audit_log, debug_log"""
-        if self.log_handlers is None:
-            params = {}
-            params.update({"config_file": config_file} if config_file else {})
-            params.update({"service_name": service_name} if service_name else {})
-
-            if log_version == "pre_onap":
-                self.log_handlers = log_handlers_pre_onap(**params)
-
-    def get_handlers(self, levels=None, log_version="pre_onap", config_file=None, service_name=None):
+    def get_handlers(self, levels=None):
         """Return ONAP-compliant log handlers for different levels. Each "level" ends up in a different log file
         with a prefix of that level.
 
@@ -87,9 +71,11 @@ class OOF_OSDFLogMessageHelper(metaclass=MetaSingleton):
               if levels is None: we return handlers for self.default_levels
               if levels is ["error", "audit"], we return log handlers for that.
         """
-        self._setup_handlers(log_version="pre_onap", config_file=config_file, service_name=service_name)
+        create_log_dirs()
+        monkey.patch_all()
+        config.yamlConfig(filepath=LOGGING_FILE, watchDog=False)
         wanted_levels = self.default_levels if levels is None else levels
-        return [self.log_handlers.get(x) for x in wanted_levels]
+        return [logging.getLogger(x) for x in wanted_levels]
 
 
 class OOF_OSDFLogMessageFormatter(object):
@@ -228,6 +214,7 @@ class OOF_OSDFLogMessageFormatter(object):
 
 
 MH = OOF_OSDFLogMessageFormatter
+
 error_log, metrics_log, audit_log, debug_log = OOF_OSDFLogMessageHelper().get_handlers()
 
 

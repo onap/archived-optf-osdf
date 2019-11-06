@@ -12,4 +12,5 @@ schematics>=2.0.0
 docopt>=0.6.2
 pydevd==1.4.0
 onapsmsclient>=0.0.4
-pymzn==0.17.1
+pymzn
+onappylog>=1.0.9

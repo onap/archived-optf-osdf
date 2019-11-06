@@ -15,6 +15,7 @@
 #
 # -------------------------------------------------------------------------
 #
+from osdf.utils.mdc_utils import mdc_from_json
 
 
 def license_optim(request_json):
@@ -24,6 +25,7 @@ def license_optim(request_json):
     :param request_json: Request in a JSON format
     :return: A tuple of licensekey-group-uuid-list and entitlement-group-uuid-list
     """
+    mdc_from_json(request_json)
     req_id = request_json["requestInfo"]["requestId"]
 
     model_name = request_json.get('placementInfo', {}).get('serviceInfo', {}).get('modelInfo', {}).get('modelName')
