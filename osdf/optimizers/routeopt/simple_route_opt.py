@@ -19,6 +19,8 @@
 import requests
 from requests.auth import HTTPBasicAuth
 
+from osdf.utils.mdc_utils import mdc_from_json
+
 
 class RouteOpt:
 
@@ -54,6 +56,7 @@ class RouteOpt:
         :param logical_link:
         :return:
         """
+        mdc_from_json(request)
 
         src_access_node_id = request["srcPort"]["src-access-node-id"]
         dst_access_node_id = request["dstPort"]["dst-access-node-id"]
