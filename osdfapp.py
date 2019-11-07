@@ -23,14 +23,18 @@ OSDF Manager Main Flask Application
 import json
 import ssl
 import sys
+import time
 import traceback
 from optparse import OptionParser
 from threading import Thread  # for scaling up, may need celery with RabbitMQ or redis
 
 import pydevd
+import yaml
 from flask import Flask, request, Response, g
 from requests import RequestException
 from schematics.exceptions import DataError
+
+yaml.warnings({'YAMLLoadWarning': False})
 
 import osdf.adapters.aaf.sms as sms
 import osdf.operation.responses
@@ -47,6 +51,7 @@ from osdf.optimizers.pciopt.pci_opt_processor import process_pci_optimation
 from osdf.optimizers.placementopt.conductor.remote_opt_processor import process_placement_opt
 from osdf.optimizers.routeopt.simple_route_opt import RouteOpt
 from osdf.utils import api_data_utils
+from osdf.utils.mdc_utils import clear_mdc, mdc_from_json
 from osdf.webapp.appcontroller import auth_basic
 
 ERROR_TEMPLATE = osdf.ERROR_TEMPLATE
@@ -93,6 +98,20 @@ def handle_data_error(e):
     body_as_json = json.dumps(body_dictionary)
     response = Response(body_as_json, content_type='application/json; charset=utf-8')
     response.status_code = 400
+    return response
+
+
+@app.before_request
+def log_request():
+    g.request_start = time.clock()
+    request_json = request.get_json()
+    g.request_id = request_json['requestInfo']['requestId']
+    mdc_from_json(request_json)
+
+
+@app.after_request
+def log_response(response):
+    clear_mdc()
     return response
 
 

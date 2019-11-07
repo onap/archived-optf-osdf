@@ -31,7 +31,7 @@ def load_config_file(config_file: str, child_name="dockerConfiguration") -> dict
     with open(config_file, 'r') as fid:
         res = {}
         if config_file.endswith(".yaml"):
-            res = yaml.load(fid)
+            res = yaml.safe_load(fid)
         elif config_file.endswith(".json") or config_file.endswith("json"):
             res = json.load(fid)
     return res.get(child_name, res) if child_name else res

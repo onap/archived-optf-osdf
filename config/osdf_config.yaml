@@ -49,3 +49,6 @@ aaf_ca_certs: ssl_certs/aaf_root_ca.cer
 configDbUrl: http://config.db.url:8080
 configDbGetCellListUrl: 'SDNCConfigDBAPI/getCellList'
 configDbGetNbrListUrl: 'SDNCConfigDBAPI/getNbrList'
+
+pciHMSUsername: test
+pciHMSPassword: passwd

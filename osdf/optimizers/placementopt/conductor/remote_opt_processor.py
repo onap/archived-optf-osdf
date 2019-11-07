@@ -24,6 +24,7 @@ from osdf.logging.osdf_logging import metrics_log, MH, error_log
 from osdf.optimizers.placementopt.conductor import conductor
 from osdf.optimizers.licenseopt.simple_license_allocation import license_optim
 from osdf.utils.interfaces import get_rest_client
+from osdf.utils.mdc_utils import mdc_from_json
 
 
 def process_placement_opt(request_json, policies, osdf_config):
@@ -37,6 +38,7 @@ def process_placement_opt(request_json, policies, osdf_config):
     """
     
     try:
+        mdc_from_json(request_json)
         rc = get_rest_client(request_json, service="so")
         req_id = request_json["requestInfo"]["requestId"]
         transaction_id = request_json['requestInfo']['transactionId']
