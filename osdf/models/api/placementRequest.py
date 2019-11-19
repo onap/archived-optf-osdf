@@ -71,7 +71,6 @@ class PlacementDemand(OSDFModel):
     resourceModuleName = StringType(required=True)
     serviceResourceId = StringType(required=True)
     tenantId = StringType()
-    unique = BooleanType() # to be implemented on the policy level
     resourceModelInfo = ModelType(ModelMetaData, required=True)
     existingCandidates = ListType(ModelType(Candidates))
     excludedCandidates = ListType(ModelType(Candidates))

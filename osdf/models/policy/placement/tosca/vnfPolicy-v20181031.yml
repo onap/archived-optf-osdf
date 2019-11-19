@@ -66,3 +66,6 @@ data_types:
             customerId:
                 type: string
                 required: true
+            unique:
+                type: string
+                required: false

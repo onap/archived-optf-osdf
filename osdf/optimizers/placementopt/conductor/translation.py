@@ -229,7 +229,8 @@ def get_demand_properties(demand, policies):
                     service_type=demand['serviceResourceId'],
                     service_resource_id=demand['serviceResourceId'])
 
-        prop.update({'unique': demand['unique']} if demand.get('unique') else {})
+        prop.update({'unique': policy_property['unique']} if 'unique' in policy_property and
+                                                             policy_property['unique'] else {})
         prop['attributes'] = dict()
         prop['attributes'].update({'global-customer-id': policy_property['customerId']}
                                   if policy_property['customerId'] else {})
