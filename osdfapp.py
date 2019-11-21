@@ -43,11 +43,17 @@ from osdf.adapters.policy.interface import upload_policy_models
 from osdf.config.base import osdf_config
 from osdf.logging.osdf_logging import MH, audit_log, error_log, debug_log
 from osdf.models.api.pciOptimizationRequest import PCIOptimizationAPI
+from osdf.models.api.nsiSelectionRequest import NSISelectionAPI
+from osdf.models.api.nssiSelectionRequest import NSSISelectionAPI
+from osdf.models.api.nstSelectionRequest import NSTSelectionAPI
 from osdf.models.api.placementRequest import PlacementAPI
 from osdf.operation.error_handling import request_exception_to_json_body, internal_error_message
 from osdf.operation.exceptions import BusinessException
 from osdf.operation.responses import osdf_response_for_request_accept as req_accept
 from osdf.optimizers.pciopt.pci_opt_processor import process_pci_optimation
+from osdf.selectors.nsi.nsi_select_processor import process_nsi_selection
+from osdf.selectors.nssi.nssi_select_processor import process_nssi_selection
+from osdf.selectors.nst.nst_select_processor import process_nst_selection
 from osdf.optimizers.placementopt.conductor.remote_opt_processor import process_placement_opt
 from osdf.optimizers.routeopt.simple_route_opt import RouteOpt
 from osdf.utils import api_data_utils
@@ -173,6 +179,39 @@ def do_route_calc():
     audit_log.info("Calculate Route request received!")
     return RouteOpt().getRoute(request_json)
 
+
+@app.route("/api/oof/v1/selectnsi", methods=["POST"])
+@auth_basic.login_required
+def do_select_nsi():
+    request_json = request.get_json()
+    req_id = request_json['requestInfo']['requestId']
+    g.request_id = req_id
+    audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
+    NSISelectionAPI(request_json).validate()
+    audit_log.info(MH.accepted_valid_request(req_id, request))
+    return process_nsi_selection(request_json, osdf_config, None)
+
+@app.route("/api/oof/v1/selectnssi", methods=["POST"])
+@auth_basic.login_required
+def do_select_nssi():
+    request_json = request.get_json()
+    req_id = request_json['requestInfo']['requestId']
+    g.request_id = req_id
+    audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
+    NSSISelectionAPI(request_json).validate()
+    audit_log.info(MH.accepted_valid_request(req_id, request))
+    return process_nssi_selection(request_json, osdf_config, None)
+
+@app.route("/api/oof/v1/selectnst", methods=["POST"])
+@auth_basic.login_required
+def do_select_nst():
+    request_json = request.get_json()
+    req_id = request_json['requestInfo']['requestId']
+    g.request_id = req_id
+    audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
+    NSTSelectionAPI(request_json).validate()
+    audit_log.info(MH.accepted_valid_request(req_id, request))
+    return process_nst_selection(request_json, osdf_config, None)
 
 @app.route("/api/oof/v1/pci", methods=["POST"])
 @app.route("/api/oof/pci/v1", methods=["POST"])

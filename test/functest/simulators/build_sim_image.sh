@@ -32,8 +32,10 @@ cp $SIMULATORS_DIR/Dockerfile $DOCKER_DIR/.
 cp -r $OSDF_DIR/osdf $DOCKER_DIR/sim
 mkdir -p $DOCKER_DIR/sim/config/
 cp $SIMULATORS_DIR/simulated-config/*.yaml $DOCKER_DIR/sim/config/
+cp $SIMULATORS_DIR/simulated-config/*.yml $DOCKER_DIR/sim/config/
 cp $SIMULATORS_DIR/simulated-config/*.config $DOCKER_DIR/sim/config/
 cp -r $SIMULATORS_DIR/configdb $DOCKER_DIR/sim
+cp -r $SIMULATORS_DIR/nsconfigdb $DOCKER_DIR/sim
 cp -r $SIMULATORS_DIR/has-api $DOCKER_DIR/sim
 cp -r $SIMULATORS_DIR/policy $DOCKER_DIR/sim
 cp $TEST_DIR/policy-local-files/*.json $DOCKER_DIR/sim/policy/response-payloads/pdp-has-vcpe-good

@@ -46,9 +46,14 @@ secret_domain: osdf
 aaf_ca_certs: ssl_certs/aaf_root_ca.cer
 
 # config db api
-configDbUrl: http://config.db.url:8080
-configDbGetCellListUrl: 'SDNCConfigDBAPI/getCellList'
-configDbGetNbrListUrl: 'SDNCConfigDBAPI/getNbrList'
+configDbUrl: http://config.db.url:5000
+configDbGetCellListUrl: 'simulated/configdb/getCellList'
+configDbGetNbrListUrl: 'simulated/configdb/getNbrList'
 
 pciHMSUsername: test
 pciHMSPassword: passwd
+# nsconfig db api for selecting NST/NSI/NSSI
+nsconfigDbUrl: http://nsconfig.db.url:5000
+nsconfigDbNSTUrl: 'simulated/nsconfigdb/getNST'
+nsconfigDbNSIUrl: 'simulated/nsconfigdb/getNSI'
+nsconfigDbNSSIUrl: 'simulated/nsconfigdb/getNSSI'

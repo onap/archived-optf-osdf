@@ -96,10 +96,18 @@ def load_secrets():
     config['osdfCMSchedulerPassword'] = secret_dict['osdfCMScheduler']['Password']
     config['configDbUserName'] = secret_dict['configDb']['UserName']
     config['configDbPassword'] = secret_dict['configDb']['Password']
+    config['nsconfigDbUserName'] = secret_dict['nsconfigDb']['UserName']
+    config['nsconfigDbPassword'] = secret_dict['nsconfigDb']['Password']
     config['pciHMSUsername'] = secret_dict['pciHMS']['UserName']
     config['pciHMSPassword'] = secret_dict['pciHMS']['Password']
     config['osdfPCIOptUsername'] = secret_dict['osdfPCIOpt']['UserName']
     config['osdfPCIOptPassword'] = secret_dict['osdfPCIOpt']['Password']
+    config['osdfNSTSelectUsername'] = secret_dict['osdfNSTSelect']['UserName']
+    config['osdfNSTSelectPassword'] = secret_dict['osdfNSTSelect']['Password']
+    config['osdfNSISelectUsername'] = secret_dict['osdfNSISelect']['UserName']
+    config['osdfNSISelectPassword'] = secret_dict['osdfNSISelect']['Password']
+    config['osdfNSSISelectUsername'] = secret_dict['osdfNSSISelect']['UserName']
+    config['osdfNSSISelectPassword'] = secret_dict['osdfNSSISelect']['Password']
     cfg_base.http_basic_auth_credentials = creds.load_credentials(osdf_config)
     cfg_base.dmaap_creds = creds.dmaap_creds()
 

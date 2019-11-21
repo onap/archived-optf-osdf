@@ -64,6 +64,8 @@ def get_payload_for_simulated_component(component, mainpath):
     :return: Content if file exists, or else 503 error
     """
     file_name = "{}/response-payloads/{}".format(component, mainpath)
+    if not os.path.exists(file_name):
+        return {"Error": "File does not found {}".format(file_name)}, 404
     data = json_from_file(file_name)
     if not data:
         return {"Error": "Unable to read File {}".format(file_name)}, 503
@@ -108,6 +110,40 @@ def get_nbr_list(cell_id, ts):
     if not status:
         return jsonify(data)
     return jsonify(data), 503
+
+
+@app.route("/simulated/nsconfigdb/getNST/<latency_id>/<ts>", methods=["GET"])
+def get_nst_info(latency_id, ts):
+    data, status = get_payload_for_simulated_component('nsconfigdb',
+                                                       'NST-' + latency_id + '.json')
+    if status == 404:
+        return "", 200
+
+    if not status:
+        return jsonify(data)
+    return jsonify(data), status
+
+
+@app.route("/simulated/nsconfigdb/getNSI/<nst_uuid>/<ts>", methods=["GET"])
+def get_nsi_info(nst_uuid, ts):
+    data, status = get_payload_for_simulated_component('nsconfigdb', 'NSI-' + nst_uuid + '.json')
+    if status == 404:
+        return "", 200
+
+    if not status:
+        return jsonify(data)
+    return jsonify(data), status
+
+
+@app.route("/simulated/nsconfigdb/getNSSI/<nsst_uuid>/<ts>", methods=["GET"])
+def get_nssi_info(nsst_uuid, ts):
+    data, status = get_payload_for_simulated_component('nsconfigdb', 'NSSI-' + nsst_uuid + '.json')
+    if status == 404:
+        return "", 200
+
+    if not status:
+        return jsonify(data)
+    return jsonify(data), status
 
 
 if __name__ == "__main__":

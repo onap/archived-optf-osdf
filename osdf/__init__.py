@@ -24,7 +24,10 @@ from jinja2 import Template
 end_point_auth_mapping = {  # map a URL endpoint to auth group
     "cmscheduler": "CMScheduler",
     "placement": "Placement",
-    "pci": "PCIOpt"
+    "pci": "PCIOpt",
+    "selectnsi": "NSISelect",
+    "selectnssi": "NSSISelect",
+    "selectnst": "NSTSelect"
 }
 
 userid_suffix, passwd_suffix = "Username", "Password"
