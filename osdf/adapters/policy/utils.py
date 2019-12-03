@@ -33,12 +33,15 @@ def group_policies_gen(flat_policies, config):
     """
     filtered_policies = defaultdict(list)
     policy_name = []
-    policies = [x for x in flat_policies if x['content'].get('policyType')]  # drop ones without 'policy_type'
+    policies = [x for x in flat_policies if x[x.keys()[0]].get('type')]
+    #policies = [x for x in flat_policies if x['content'].get('policyType')]  # drop ones without 'policy_type'
     priority = config.get('policy_info', {}).get('prioritization_attributes', {})
     aggregated_policies = dict()
     for plc in policies:
-        attrs = [dot_notation(plc, dot_path) for key in priority.keys() for dot_path in priority[key]]
+        attrs = [dot_notation(plc[plc.keys()[0]], dot_path) for key in priority.keys() for dot_path in priority[key]]
+        #attrs = ["typeA", ["vG", "vGMux"], ["vcpe"]]
         attrs_list  = [x if isinstance(x, list) else [x] for x in attrs]
+        #attrs_list = [ ["typeA"], ["vG", "vGMux"], ["vcpe"]]
         attributes = [list_flatten(x) if isinstance(x, list) else x for x in attrs_list]
         for y in itertools.product(*attributes):
             aggregated_policies.setdefault(y, [])
@@ -49,8 +52,8 @@ def group_policies_gen(flat_policies, config):
         prioritized_policy = aggregated_policies[key][0]
         if prioritized_policy['policyName'] not in policy_name:
             # TODO: Check logic here... should policy appear only once across all groups?
-            filtered_policies[prioritized_policy['content']['policyType']].append(prioritized_policy)
-            policy_name.append(prioritized_policy['policyName'])
+            filtered_policies[prioritized_policy[prioritized_policy.keys()[0]]['type']].append(prioritized_policy)
+            policy_name.append(prioritized_policy.keys()[0])
 
     return filtered_policies
 
