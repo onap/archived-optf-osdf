@@ -1,4 +1,4 @@
-# -------------------------------------------------------------------------
+ -------------------------------------------------------------------------
 #   Copyright (c) 2015-2017 AT&T Intellectual Property
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,7 +37,7 @@ def get_opt_query_data(req_json, policies):
     if 'requestParameters' in req_json["placementInfo"]:
         req_params = req_json["placementInfo"]["requestParameters"]
         for policy in policies:
-            for queryProp in policy['content']['queryProperties']:
+            for queryProp in policy[list(policy.keys())[0]]['properties']['queryProperties']:
                 attr_val = queryProp['value'] if 'value' in queryProp and queryProp['value'] != "" \
                     else dot_notation(req_params, queryProp['attribute_location'])
                 if attr_val is not None:
@@ -53,7 +53,7 @@ def gen_optimization_policy(vnf_list, optimization_policy):
     """
     optimization_policy_list = []
     for policy in optimization_policy:
-        content = policy['content']
+        content = policy[list(policy.keys())[0]]['properties']
         parameter_list = []
         parameters = ["cloud_version", "hpa_score"]
 
@@ -79,13 +79,15 @@ def get_matching_vnfs(resources, vnf_list, match_type="intersection"):
     :param match_type: "intersection" or "all" or "any" (any => send all_vnfs if there is any intersection)
     :return: List of matching VNFs
     """
-    resources_lcase = [x.lower() for x in resources]
+    # Check if it is a default policy
+    default = True if resources == [] else False
+    resources_lcase = [x.lower() for x in resources] if not default else None
     if match_type == "all":  # don't bother with any comparisons
-        return resources if set(resources_lcase) <= set(vnf_list) else None
-    common_vnfs = set(vnf_list) & set(resources_lcase)
+        return resources, default if set(resources_lcase) <= set(vnf_list) else None
+    common_vnfs = set(vnf_list) if resources == [] else set(vnf_list) & set(resources_lcase)
     common_resources = [x for x in resources if x.lower() in common_vnfs]
     if match_type == "intersection":  # specifically requested intersection
-        return list(common_resources)
+        return list(common_resources), default
     return resources if common_vnfs else None  # "any" match => all resources to be returned
 
 
@@ -102,16 +104,40 @@ def gen_policy_instance(vnf_list, resource_policy, match_type="intersection", rt
     resource_policy_list = []
     related_policies = []
     for policy in resource_policy:
-        pc = policy['content']
-        demands = get_matching_vnfs(pc['resources'], vnf_list, match_type=match_type)
-        resource = {pc['identity']: {'type': pc['policyType'], 'demands': demands}}
+        pc = policy[list(policy.keys())[0]]
+        #pc = policy['content']
+        #demands = get_matching_vnfs(pc['resources'], vnf_list, match_type=match_type)
+        #resource = {pc['identity']: {'type': pc['policyType'], 'demands': demands}}
+        demands, default = get_matching_vnfs(pc['properties']['resources'], vnf_list, match_type=match_type)
+        resource = {pc['properties']['identity']: {'type': pc['type'], 'demands': demands}}
 
+        #What's rtype?
         if rtype:
             resource[pc['identity']]['properties'] = {'controller': pc[rtype]['controller'],
                                                       'request': json.loads(pc[rtype]['request'])}
         if demands and len(demands) != 0:
-            resource_policy_list.append(resource)
+            # The default policy shall not override the specific policy that already appended
+            if default:
+                for d in demands:
+                    resource_repeated = True \
+                        if {pc['properties']['identity']: {'type': pc['type'], 'demands': d}} \
+                           in resource_policy_list else False
+                    if resource_repeated:
+                        continue
+                    else:
+                        resource_policy_list.append(
+                            {pc['properties']['identity']: {'type': pc['type'], 'demands': d }})
+                        policy[list(policy.keys())[0]]['properties']['resources'] = d
+                        related_policies.append(policy)
+            # Need to override the default policies, here delete the outdated policy stored in the db
+            if resource in resource_policy_list:
+                for pc in related_policies:
+                    if pc[list(pc.keys()[0])]['properties']['resources'] == resource:
+                        related_policies.remove(pc)
+                resource_policy_list.remove(resource)
             related_policies.append(policy)
+            resource_policy_list.append(resource)
+
     return resource_policy_list, related_policies
 
 
@@ -143,7 +169,7 @@ def gen_distance_to_location_policy(vnf_list, distance_to_location_policy):
     """Get policies governing distance-to-location for VNFs in order to populate the Conductor API call"""
     cur_policies, related_policies = gen_policy_instance(vnf_list, distance_to_location_policy, rtype=None)
     for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
-        properties = p_main['content']['distanceProperties']
+        properties = p_main[list(p_main.keys())[0]]['properties']['distanceProperties']
         pcp_d = properties['distance']
         p_new[p_main['content']['identity']]['properties'] = {
             'distance': pcp_d['operator'] + " " + pcp_d['value'].lower() + " " + pcp_d['unit'].lower(),
@@ -156,7 +182,7 @@ def gen_attribute_policy(vnf_list, attribute_policy):
     """Get policies governing attributes of VNFs in order to populate the Conductor API call"""
     cur_policies, related_policies = gen_policy_instance(vnf_list, attribute_policy, rtype=None)
     for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
-        properties = p_main['content']['cloudAttributeProperty']
+        properties = p_main[list(p_main.keys())[0]]['properties']['cloudAttributeProperty']
         attribute_mapping = policy_config_mapping['filtering_attributes']  # wanted attributes and mapping
         p_new[p_main['content']['identity']]['properties'] = {
             'evaluate': dict((k, properties.get(attribute_mapping.get(k))) for k in attribute_mapping.keys())
@@ -168,7 +194,7 @@ def gen_zone_policy(vnf_list, zone_policy):
     """Get zone policies in order to populate the Conductor API call"""
     cur_policies, related_policies = gen_policy_instance(vnf_list, zone_policy, match_type="all", rtype=None)
     for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
-        pmz = p_main['content']['affinityProperty']
+        pmz = p_main[list(p_main.keys())[0]]['properties']['affinityProperty']
         p_new[p_main['content']['identity']]['properties'] = {'category': pmz['category'], 'qualifier': pmz['qualifier']}
     return cur_policies
 
@@ -177,7 +203,7 @@ def gen_capacity_policy(vnf_list, capacity_policy):
     """Get zone policies in order to populate the Conductor API call"""
     cur_policies, related_policies = gen_policy_instance(vnf_list, capacity_policy, rtype=None)
     for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
-        pmz = p_main['content']['capacityProperty']
+        pmz = p_main[list(p_main.keys())[0]]['properties']['capacityProperty']
         p_new[p_main['content']['identity']]['properties'] = \
             {"controller": pmz['controller'], 'request': json.loads(pmz['request'])}
     return cur_policies
@@ -187,7 +213,7 @@ def gen_hpa_policy(vnf_list, hpa_policy):
     """Get zone policies in order to populate the Conductor API call"""
     cur_policies, related_policies = gen_policy_instance(vnf_list, hpa_policy, rtype=None)
     for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
-        p_new[p_main['content']['identity']]['properties'] = {'evaluate': p_main['content']['flavorFeatures']}
+        p_new[p_main['content']['identity']]['properties'] = {'evaluate': p_main[list(p_main.keys())[0]]['properties']['flavorFeatures']}
     return cur_policies
 
 
@@ -213,10 +239,12 @@ def get_candidates_demands(demand):
 def get_policy_properties(demand, policies):
     """Get policy_properties for cases where there is a match with the demand"""
     for policy in policies:
-        policy_demands = set([x.lower() for x in policy['content'].get('resources', [])])
-        if demand['resourceModuleName'].lower() not in policy_demands:
+        policy_demands = set([x.lower() for x in policy[list(policy.keys())[0]]['properties'].get('resources', [])])
+        if policy_demands and demand['resourceModuleName'].lower() not in policy_demands:
             continue  # no match for this policy
-        for policy_property in policy['content']['vnfProperties']:
+        elif policy_demands == set(): # Append resource name for default policy
+            policy[list(policy.keys())[0]]['properties'].update(resources=demand.get('resourceModuleName'))
+        for policy_property in policy[list(policy.keys())[0]]['properties']['vnfProperties']:
             yield policy_property
 
 
