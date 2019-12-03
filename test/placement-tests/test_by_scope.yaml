@@ -2,23 +2,32 @@ references:
     service_name:
         source: request
         value: serviceInfo.serviceName
+    resource:
+        source: request
+        value: placementInfo.placementDemands.resourceModuleName
     subscriber_role:
-        source: SubscriberPolicy
-        value: content.properties.subscriberRole
+        source: onap.policies.optimization.SubscriberPolicy
+        value: properties.properties.subscriberRole
 
 policy_info:
     placement:
         policy_fetch: by_scope
         policy_scope:
-            default_scope: OSDF_R2
-            vcpe_scope: OSDF_R2
-            secondary_scopes:
-                -
+            -
+                scope:
+                    - OSDF_FRANKFURT
+                    - onap.policies.optimization.SubscriberPolicy
+                service:
                     - get_param: service_name
-                    - SubscriberPolicy
-                -
-                    - get_param: service_name
+            -
+                scope:
+                    - OSDF_FRANKFURT
                     - get_param: subscriber_role
+                service:
+                    - get_param: service_name
+    #            -
+    #                - get_param: service_name
+    #                - get_param: subscriber_role
     default:  # if no explicit service related information is needed
         policy_fetch: by_name
         policy_scope: none

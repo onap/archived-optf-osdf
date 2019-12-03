@@ -1,0 +1,47 @@
+{
+  "OSDF_FRANKFURT.queryPolicy_vFW_TD": {
+    "type": "onap.policies.optimization.QueryPolicy",
+    "version": "1.0.0",
+    "type_version": "1.0.0",
+    "metadata": {
+      "policy-id": "OSDF_FRANKFURT.queryPolicy_vFW_TD",
+      "policy-version": 1
+    },
+    "properties": {
+      "scope": [
+        "OSDF_FRANKFURT"
+      ],
+      "services": [
+        "vFW_TD"
+      ],
+      "resources": [
+        "vFW-SINK",
+        "vPGN"
+      ],
+      "geography": [
+        "US"
+      ],
+      "identity": "vFW_TD_Query_Policy",
+      "queryProperties": [
+        {
+          "attribute": "chosen_region",
+          "attribute_location": "chosenRegion"
+        },
+        {
+          "attribute": "chosen_customer_id",
+          "attribute_location": "chosenCustomerId"
+        },
+        {
+          "attribute": "customerLatitude",
+          "attribute_location": "customerLatitude",
+          "value": 1.1
+        },
+        {
+          "attribute": "customerLongitude",
+          "attribute_location": "customerLongitude",
+          "value": 2.2
+        }
+      ]
+    }
+  }
+}

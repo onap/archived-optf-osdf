@@ -28,7 +28,7 @@ class TestConductorTranslation(unittest.TestCase):
         self.main_dir = ""
         self.conductor_api_template = self.main_dir + "osdf/templates/conductor_interface.json"
         self.local_config_file = self.main_dir + "config/common_config.yaml"
-        policy_data_path = self.main_dir + "test/policy-local-files"
+        policy_data_path = self.main_dir + "test/policy-local-files/new_policies"
 
         valid_policies_list_file = policy_data_path + '/' + 'meta-valid-policies.txt'
         valid_policies_files = local_policies.get_policy_names_from_file(valid_policies_list_file)
@@ -44,13 +44,15 @@ class TestConductorTranslation(unittest.TestCase):
 
     def test_gen_demands(self):
         # need to run this only on vnf policies
-        vnf_policies = [x for x in self.policies if x["content"]["policyType"] == "vnfPolicy"]
+        vnf_policies = [x for x in self.policies if x[list(x.keys())[0]]["type"]
+                        == "onap.policies.optimization.VnfPolicy"]
         res = tr.gen_demands(self.request_json, vnf_policies)
         assert res is not None
 
     def test_gen_vfmod_demands(self):
         # need to run this only on vnf policies
-        vnf_policies = [x for x in self.policies if x["content"]["policyType"] == "vnfPolicy"]
+        vnf_policies = [x for x in self.policies if x[list(x.keys())[0]]["type"]
+                        == "onap.policies.optimization.VnfPolicy"]
         res = tr.gen_demands(self.request_vfmod_json, vnf_policies)
         assert res is not None
 
