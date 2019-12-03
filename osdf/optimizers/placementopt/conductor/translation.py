@@ -79,13 +79,15 @@ def get_matching_vnfs(resources, vnf_list, match_type="intersection"):
     :param match_type: "intersection" or "all" or "any" (any => send all_vnfs if there is any intersection)
     :return: List of matching VNFs
     """
-    resources_lcase = [x.lower() for x in resources]
+    # Check if it is a default policy
+    default = True if resources == [] else False
+    resources_lcase = [x.lower() for x in resources] if not default else None
     if match_type == "all":  # don't bother with any comparisons
-        return resources if set(resources_lcase) <= set(vnf_list) else None
-    common_vnfs = set(vnf_list) & set(resources_lcase)
+        return resources, default if set(resources_lcase) <= set(vnf_list) else None
+    common_vnfs = set(vnf_list) if resources == [] else set(vnf_list) & set(resources_lcase)
     common_resources = [x for x in resources if x.lower() in common_vnfs]
     if match_type == "intersection":  # specifically requested intersection
-        return list(common_resources)
+        return list(common_resources), default
     return resources if common_vnfs else None  # "any" match => all resources to be returned
 
 
@@ -102,16 +104,35 @@ def gen_policy_instance(vnf_list, resource_policy, match_type="intersection", rt
     resource_policy_list = []
     related_policies = []
     for policy in resource_policy:
-        pc = policy['content']
-        demands = get_matching_vnfs(pc['resources'], vnf_list, match_type=match_type)
-        resource = {pc['identity']: {'type': pc['policyType'], 'demands': demands}}
+        pc = policy[policy.keys()[0]]
+        #pc = policy['content']
+        #demands = get_matching_vnfs(pc['resources'], vnf_list, match_type=match_type)
+        #resource = {pc['identity']: {'type': pc['policyType'], 'demands': demands}}
+        demands, default = get_matching_vnfs(pc['properties']['resources'], vnf_list, match_type=match_type)
+        resource = {pc['properties']['identity']: {'type': pc['type'], 'demands': demands}}
 
+        #What's rtype?
         if rtype:
             resource[pc['identity']]['properties'] = {'controller': pc[rtype]['controller'],
                                                       'request': json.loads(pc[rtype]['request'])}
         if demands and len(demands) != 0:
-            resource_policy_list.append(resource)
+            # The default policy shall not override the specific policy that already appended
+            if default:
+                for d in demands:
+                    resource_repeated = True \
+                        if {pc['properties']['identity']: {'type': pc['type'], 'demands': d}} \
+                           in resource_policy_list else False
+                    if resource_repeated:
+                        continue
+                    else:
+                        resource_policy_list.append(
+                            {pc['properties']['identity']: {'type': pc['type'], 'demands': d }})
+                        policy[policy.keys()[0]]['properties']['resources'] = d
+                        related_policies.append(policy)
+            # Need to override the default policies
             related_policies.append(policy)
+            resource_policy_list.append(resource) if resource not in resource_policy_list else ''
+
     return resource_policy_list, related_policies
 
 
