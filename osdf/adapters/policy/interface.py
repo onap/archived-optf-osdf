@@ -58,25 +58,32 @@ def get_by_scope(rest_client, req, config_local, type_service):
     """
     scope_policies = []
     references = config_local.get('references', {})
-    pscope = config_local.get('policy_info', {}).get(type_service, {}).get('policy_scope', {})
-    service_name = dot_notation(req, references.get('service_name', {}).get('value', None))
-    primary_scope = pscope['{}_scope'.format(service_name.lower() if pscope.get(service_name + "_scope", None)
-                                             else "default")]
-    for sec_scope in pscope.get('secondary_scopes', []):
-        policies, scope_fields = [], []
-        for field in sec_scope:
-            scope_fields.extend([get_scope_fields(field, references, req, list_flatten(scope_policies))
-                                if 'get_param' in field else field])
-        scope_fields = set(list_flatten(scope_fields))
-        scope_fields = set([x.lower() for x in scope_fields])
-        for scope in scope_fields:
-            policies.extend(policy_api_call(rest_client, primary_scope, scope))
-        scope_policies.append([policy for policy in policies
-                              if scope_fields <= set(json.loads(policy['config'])['content']['policyScope'])])
+    pscope = config_local.get('policy_info', {}).get(type_service, {}).get('policy_scope', [])
+    scope_fields = {}
+    policies = {}
+    for scopes in pscope:
+        for key in scopes.keys():
+            for field in scopes[key]:
+                scope_fields[key] = set(list_flatten([get_scope_fields(field, references, req, policies)
+                                                      if 'get_param' in field else field]))
+        if scope_fields.get('resources') and len(scope_fields['resources']) > 1:
+            for s in scope_fields['resources']:
+                scope_fields['resources'] = [s]
+                policies.update(policy_api_call(rest_client, scope_fields).get('policies', {}))
+        else:
+            policies.update(policy_api_call(rest_client, scope_fields).get('policies', {}))
+        for policyName in policies.keys():
+            keys = scope_fields.keys() & policies[policyName]['properties'].keys()
+            policy = {}
+            policy[policyName] = policies[policyName]
+            scope_policies.append(policy for k in keys
+                                  if set(policies.get(policyName, {}).get('properties',{}).get(k)) >= set(scope_fields[k])
+                                  and policy not in scope_policies)
+
     return scope_policies
 
 
-def get_scope_fields(field, references, req, policy_info):
+def get_scope_fields(field, references, req, policies):
     """ Retrieve the values for scope fields from a request and policies as per the configuration
     and references defined in a configuration file. If the value of a scope field missing in a request or
     policies, throw an exception since correct policies cannot be retrieved.
@@ -95,9 +102,9 @@ def get_scope_fields(field, references, req, policy_info):
         raise BusinessException("Field {} is missing a value in a request".format(ref_value.split('.')[-1]))
     else:
         scope_fields = []
-        for policy in policy_info:
-            policy_content = json.loads(policy.get('config', "{}"))
-            if policy_content.get('content', {}).get('policyType', "invalid_policy") == ref_source:
+        for policyName in policies.keys():
+            policy_content = policies.get(policyName)
+            if policy_content.get('type', "invalid_policy") == ref_source:
                 scope_fields.append(dot_notation(policy_content, ref_value))
         scope_values = list_flatten(scope_fields)
         if len(scope_values) > 0:
@@ -105,19 +112,18 @@ def get_scope_fields(field, references, req, policy_info):
         raise BusinessException("Field {} is missing a value in all policies of type {}".format(
             ref_value.split('.')[-1], ref_source))
 
-
-def policy_api_call(rest_client, primary_scope, scope_field):
-    """ Makes a getConfig API call to the policy system to retrieve policies matching a scope.
-    :param rest_client: rest client object to make a call
-    :param primary_scope: the primary scope of policies, which is a folder in the policy system
-    where policies are stored.
-    :param scope_field: the secondary scope of policies, which is a collection of domain values.
-    :return: a list of policies matching both primary and secondary scopes.
+def policy_api_call(rest_client, scope_fields):
     """
-    api_call_body = {"policyName": "{}.*".format(primary_scope),
-                     "configAttributes": {"policyScope": "{}".format(scope_field)}}
+    :param rest_client: rest client to make a call
+    :param scope_fields: a collection of scopes to be used for filtering
+    :return: a list of policies matching all filters
+    """
+    api_call_body = {"ONAPName": "OOF",
+                     "ONAPComponent": "OOF_Component",
+                     "ONAPInstance": "OOF_Component_Instance",
+                     "action": "optimize",
+                     "resources": "{}".format(scope_fields)}
     return rest_client.request(json=api_call_body)
-
 
 def remote_api(req_json, osdf_config, service_type="placement"):
     """Make a request to policy and return response -- it accounts for multiple requests that be needed
@@ -140,10 +146,10 @@ def remote_api(req_json, osdf_config, service_type="placement"):
 
     formatted_policies = []
     for x in itertools.chain(*policies):
-        if x['config'] is None:
-            raise BusinessException("Config not found for policy with name %s" % x['policyName'])
+        if x[list(x.keys())[0]].get('properties') is None:
+            raise BusinessException("Properties not found for policy with name %s" % x[list(x.keys()[0])])
         else:
-            formatted_policies.append(json.loads(x['config']))
+            formatted_policies.append(x)
     return formatted_policies
 
 
