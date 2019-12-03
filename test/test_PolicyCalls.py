@@ -33,7 +33,7 @@ class TestPolicyCalls(unittest.TestCase):
     def setUp(self):
         main_dir = ""
         parameter_data_file = main_dir + "test/placement-tests/request.json"
-        policy_data_path = main_dir + "test/policy-local-files/"
+        policy_data_path = main_dir + "test/policy-local-files/new_policies/"
         local_config_file = main_dir + "config/common_config.yaml"
 
         valid_policies_list_file = policy_data_path + '/' + 'meta-valid-policies.txt'
@@ -63,7 +63,7 @@ class TestPolicyCalls(unittest.TestCase):
                                                       "test/placement-tests/policy_response2.json")
         with patch('osdf.adapters.policy.interface.policy_api_call', return_value=policy_response):
             policy_list = interface.remote_api(req_json, osdf_config, service_type="placement")
-            policy_type = [policy['content']['policyType'] for policy in policy_list]
+            policy_type = [policy[list(policy.keys())[0]]['type'] for policy in policy_list]
             #self.assertEqual(set(policy_type), {'hpaPolicy', 'SubscriberPolicy'})
 
     def failure_policy_call(self, req_json_file, resp_json_file):
@@ -99,7 +99,8 @@ class TestPolicyCalls(unittest.TestCase):
         req_json = "./test/placement-tests/request.json"
         req_json = json.loads(open(req_json).read())
         # need to run this only on vnf policies
-        vnf_policies = [x for x in self.policies if x["content"]["policyType"] == "vnfPolicy"]
+        vnf_policies = [x for x in self.policies if x[list(x.keys())[0]]["type"] ==
+                        "onap.policies.optimization.VnfPolicy"]
         gen_demands = translation.gen_demands(req_json, vnf_policies)
         for action in req_json['placementInfo']['placementDemands']:
             actions_list.append(action['resourceModuleName'])
