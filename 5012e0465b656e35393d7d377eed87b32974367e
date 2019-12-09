@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1616bd58_a88fb992",
+        "filename": "config/common_config.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 2977
+      },
+      "writtenOn": "2019-12-09T08:31:04Z",
+      "side": 1,
+      "message": "Do they make sense to your guys?",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "5012e0465b656e35393d7d377eed87b32974367e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8075a792_2a0f7fe7",
+        "filename": "osdf/optimizers/placementopt/conductor/translation.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 2977
+      },
+      "writtenOn": "2019-12-09T08:31:04Z",
+      "side": 1,
+      "message": "@Shankar, Avteet and Vikas, what\u0027s the rtype here?",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 17
+      },
+      "revId": "5012e0465b656e35393d7d377eed87b32974367e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
