@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e46ddce0_fa24107e",
+        "filename": "config/common_config.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2019-12-10T18:57:57Z",
+      "side": 1,
+      "message": "Are these meant to be defaults ?",
+      "parentUuid": "1616bd58_a88fb992",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "5012e0465b656e35393d7d377eed87b32974367e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8075a792_2a0f7fe7",
         "filename": "osdf/optimizers/placementopt/conductor/translation.py",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-09T08:31:04Z",
       "side": 1,
       "message": "@Shankar, Avteet and Vikas, what\u0027s the rtype here?",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 17
+      },
+      "revId": "5012e0465b656e35393d7d377eed87b32974367e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb936e6_3128fdbb",
+        "filename": "osdf/optimizers/placementopt/conductor/translation.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2019-12-10T18:57:57Z",
+      "side": 1,
+      "message": "I think it stands for the resource type, which in this context is referring to whether it is a cloud resource or an existing instance resource.",
+      "parentUuid": "8075a792_2a0f7fe7",
       "range": {
         "startLine": 115,
         "startChar": 8,
