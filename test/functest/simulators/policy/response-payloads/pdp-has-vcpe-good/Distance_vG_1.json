@@ -1,6 +1,6 @@
 {
-  "service": "distance_to_location",
-  "policyName": "OSDF_R2.Distance_vG_1",
+  "service": "distancePolicy",
+  "policyName": "OSDF_DUBLIN.Distance_vG_1",
   "description": "Distance Policy for vG",
   "templateVersion": "OpenSource.version.1",
   "version": "test1",
@@ -10,13 +10,13 @@
   "guard": "False",
   "content": {
     "distanceProperties": {
-      "locationInfo": "customer_location",
+      "locationInfo": "customer_loc",
       "distance": { "value": "1500", "operator": "<", "unit": "km" }
     },
     "identity": "distance-vG",
     "resources": ["vG"],
     "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG"],
-    "policyType": "distancePolicy",
+    "policyType": "distance_to_location",
     "applicableResources": "any"
   }
 }

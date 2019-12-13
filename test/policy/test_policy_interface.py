@@ -15,16 +15,16 @@
 #
 # -------------------------------------------------------------------------
 #
-import mock
 import os
 import unittest
 
-from osdf.adapters.local_data import local_policies
+import mock
+
 import osdf.config.loader as config_loader
+from osdf.adapters.local_data import local_policies
+from osdf.adapters.policy import interface as pol
 from osdf.utils.interfaces import json_from_file
 from osdf.utils.programming_utils import DotDict
-from osdf.optimizers.placementopt.conductor import translation as tr
-from osdf.adapters.policy import interface as pol
 
 
 class TestPolicyInterface(unittest.TestCase):

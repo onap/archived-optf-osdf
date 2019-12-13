@@ -191,6 +191,7 @@ class OOF_OSDFLogMessageFormatter(object):
 
     @staticmethod
     def received_http_response(resp):
+        """ """
         return "Received response [code: {}, headers: {}, data: {}]".format(
             resp.status_code, resp.headers, resp.__dict__)
 

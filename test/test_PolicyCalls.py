@@ -24,7 +24,7 @@ from osdf.adapters.policy import interface
 from osdf.utils.interfaces import RestClient, json_from_file
 import yaml
 from mock import patch
-from osdf.optimizers.placementopt.conductor import translation
+from apps.placement.optimizers.conductor import translation
 from osdf.operation.exceptions import BusinessException
 
 

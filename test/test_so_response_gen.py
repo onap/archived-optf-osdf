@@ -16,10 +16,9 @@
 # -------------------------------------------------------------------------
 #
 import unittest
-import json
-import yaml
+
+from apps.placement.optimizers.conductor.conductor import conductor_response_processor
 from osdf.utils.interfaces import json_from_file
-from osdf.optimizers.placementopt.conductor.conductor import conductor_response_processor
 from osdf.utils.interfaces import RestClient
 
 

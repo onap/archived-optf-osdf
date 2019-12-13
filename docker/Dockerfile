@@ -30,35 +30,40 @@ ENV https_proxy $HTTPS_PROXY
 ENV OSDF_PORT "8699"
 EXPOSE ${OSDF_PORT}
 
-ENV MZN 2.1.6
-ENV MZN_BASENAME MiniZincIDE-${MZN}-bundle-linux-x86_64
+ENV MZN 2.3.2
+ENV MZN_BASENAME MiniZincIDE-${MZN}-bundle-linux
 ENV MZN_GH_BASE https://github.com/MiniZinc/MiniZincIDE
-ENV MZN_DL_URL ${MZN_GH_BASE}/releases/download/${MZN}/${MZN_BASENAME}.tgz
+ENV MZN_DL_URL ${MZN_GH_BASE}/releases/download/${MZN}/${MZN_BASENAME}-x86_64.tgz
 
 RUN apt-get update -y \
     && apt-get install -y vim unzip wget libmpfr-dev \
     && apt-get install -y git libqt5printsupport5 build-essential \
     && apt-get install -y python3 python3-setuptools python3-dev \
     && easy_install3 pip \
-    && pip install --upgrade virtualenv pip wheel 
+    && pip install --upgrade virtualenv pip wheel setuptools
 
 RUN ln -s /usr/bin/python3.5 /usr/bin/python
 
 # Minizinc
-RUN wget -q $MZN_DL_URL -O mz.tgz \
-    && tar xzf mz.tgz \
+RUN wget -q $MZN_DL_URL -O /tmp/mz.tgz \
+    && tar xzf /tmp/mz.tgz \
     && mv $MZN_BASENAME /mz-dist \
-    && rm mz.tgz \
-    && echo PATH=/mz-dist:$PATH >> ~/.bashrc
+    && rm /tmp/mz.tgz \
+    && echo PATH=/mz-dist/bin:$PATH >> ~/.bashrc \
+    && echo 'export LD_LIBRARY_PATH=/mz-dist/lib:LD_LIBRARY_PATH' >> ~/.bashrc
 
 ENV SHELL /bin/bash
 ENV PATH /mz-dist:$PATH
 
 # OSDF
 WORKDIR /opt/osdf
-RUN wget -O /opt/osdf.zip "https://nexus.onap.org/service/local/artifact/maven/redirect?r=${REPO}&g=org.onap.optf.osdf&a=optf-osdf&e=zip&v=${MVN_ARTIFACT_VERSION}" && \
-    unzip -q -o -B /opt/osdf.zip -d /opt/ && \
-    rm -f /opt/osdf.zip
+#RUN wget -O /opt/osdf.zip "https://nexus.onap.org/service/local/artifact/maven/redirect?r=releases&g=org.onap.optf.osdf&a=optf-osdf&e=zip&v=1.3.4" && \
+#    unzip -q -o -B /opt/osdf.zip -d /opt/ && \
+#    rm -f /opt/osdf.zip
+
+COPY onap-osdf-tm/optf-osdf-${MVN_ARTIFACT_VERSION}.zip /tmp/optf-osdf.zip
+COPY onap-osdf-tm/apps /opt/osdf/apps
+RUN unzip -q -o -B /tmp/optf-osdf.zip -d /opt/ && rm -f /tmp/optf-osdf.zip
 RUN mkdir -p /var/log/onap/optf/osdf/
 RUN pip install --no-cache-dir -r requirements.txt
 

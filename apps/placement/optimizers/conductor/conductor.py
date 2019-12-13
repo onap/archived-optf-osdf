@@ -26,8 +26,8 @@ import time
 from jinja2 import Template
 from requests import RequestException
 
+from apps.placement.optimizers.conductor.api_builder import conductor_api_builder
 from osdf.logging.osdf_logging import debug_log
-from osdf.optimizers.placementopt.conductor.api_builder import conductor_api_builder
 from osdf.utils.interfaces import RestClient
 from osdf.operation.exceptions import BusinessException
 

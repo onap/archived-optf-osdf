@@ -15,14 +15,15 @@
 #
 # -------------------------------------------------------------------------
 #
-import mock
 import unittest
 
+import mock
 from flask import Response
 from mock import patch
-from osdf.adapters.local_data import local_policies
-from osdf.optimizers.pciopt.pci_opt_processor import process_pci_optimation
+
 import osdf.config.loader as config_loader
+from apps.pci.optimizers.pci_opt_processor import process_pci_optimation
+from osdf.adapters.local_data import local_policies
 from osdf.utils.interfaces import json_from_file
 from osdf.utils.programming_utils import DotDict
 
@@ -31,19 +32,19 @@ class TestProcessPlacementOpt(unittest.TestCase):
 
     def setUp(self):
         mock_req_accept_message = Response("Accepted Request", content_type='application/json; charset=utf-8')
-        self.patcher_req = patch('osdf.optimizers.pciopt.configdb.request',
+        self.patcher_req = patch('apps.pci.optimizers.configdb.request',
                                  return_value={"solutionInfo": {"placementInfo": "dummy"}})
         self.patcher_req_accept = patch('osdf.operation.responses.osdf_response_for_request_accept',
                                         return_value=mock_req_accept_message)
         self.patcher_callback = patch(
-            'osdf.optimizers.pciopt.pci_opt_processor.process_pci_optimation',
+            'apps.pci.optimizers.pci_opt_processor.process_pci_optimation',
             return_value=mock_req_accept_message)
 
         mock_mzn_response = [{'pci': {0: 0, 1: 1, 2: 2, 3: 3, 4: 0}, 'used_ignorables': [0]}]
 
         self.patcher_minizinc_callback = patch(
-            'osdf.optimizers.pciopt.solver.optimizer.solve',
-            return_value=mock_mzn_response )
+            'apps.pci.optimizers.solver.optimizer.solve',
+            return_value=mock_mzn_response)
         self.patcher_RestClient = patch(
             'osdf.utils.interfaces.RestClient', return_value=mock.MagicMock())
         self.Mock_req = self.patcher_req.start()
@@ -71,9 +72,8 @@ class TestProcessPlacementOpt(unittest.TestCase):
         request_json = json_from_file(parameter_data_file)
         policies = [json_from_file(policy_data_path + '/' + name) for name in valid_policies_files]
 
-        templ_string = process_pci_optimation(request_json, self.osdf_config,policies)
+        templ_string = process_pci_optimation(request_json, self.osdf_config, policies)
 
 
 if __name__ == "__main__":
     unittest.main()
-

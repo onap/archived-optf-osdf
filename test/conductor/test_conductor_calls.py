@@ -17,7 +17,7 @@
 #
 import unittest
 
-from osdf.optimizers.placementopt.conductor import conductor
+from apps.placement.optimizers.conductor import conductor
 import osdf.config.loader as config_loader
 from osdf.utils.interfaces import json_from_file
 from osdf.utils.programming_utils import DotDict

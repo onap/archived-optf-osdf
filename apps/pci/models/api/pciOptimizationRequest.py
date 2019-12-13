@@ -19,7 +19,7 @@
 from schematics.types import BaseType, StringType, URLType, IntType
 from schematics.types.compound import ModelType, ListType, DictType
 
-from .common import OSDFModel
+from osdf.models.api.common import OSDFModel
 
 
 class RequestInfo(OSDFModel):
