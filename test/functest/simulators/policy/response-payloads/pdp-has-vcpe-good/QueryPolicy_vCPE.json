@@ -1,7 +1,7 @@
 {
-  "service": "optimizationQueryPolicy",
-  "policyName": "OSDF_R2.QueryPolicy_vCPE",
-  "description": "Optimization query policy for vCPE",
+  "service": "queryPolicy",
+  "policyName": "OSDF_DUBLIN.QueryPolicy_vCPE",
+  "description": "Query policy for vCPE",
   "templateVersion": "OpenSource.version.1",
   "version": "test1",
   "priority": "3",
@@ -14,7 +14,7 @@
       {"attribute":"customerLongitude", "attribute_location": "customerLongitude"}
     ],
     "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
-    "policyType": "optimizationQueryPolicy",
+    "policyType": "request_param_query",
     "serviceName": "vCPE",
     "identity": "vCPE_Query_Policy"
   }

@@ -1,6 +1,6 @@
 {
     "service": "hpaPolicy",
-    "policyName": "OSDF_R2.hpa_policy_vG_1",
+    "policyName": "OSDF_DUBLIN.hpa_policy_vG_1",
     "description": "HPA policy for vG",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",
@@ -9,10 +9,10 @@
     "riskLevel": "2",
     "guard": "False",
     "content": {
-      "resources": "vG",
-      "identity": "hpaPolicy_vG",
+      "resources": ["vG"],
+      "identity": "hpa-vG",
       "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG"],
-      "policyType": "hpaPolicy",
+      "policyType": "hpa",
       "flavorFeatures": [
         {
           "id": "vg_1",

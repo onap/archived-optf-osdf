@@ -42,11 +42,17 @@ def default_server_info():
         MDC.put('serverIPAddress', server_ip_address)
 
 
-def mdc_from_json(request_json):
+def default_mdc():
     MDC.put('instanceUUID', uuid.uuid1())
     MDC.put('serviceName', 'OOF_OSDF')
     MDC.put('threadID', threading.currentThread().getName())
     default_server_info()
+    MDC.put('requestID', 'N/A')
+    MDC.put('partnerName', 'N/A')
+
+
+def mdc_from_json(request_json):
+    default_mdc()
     MDC.put('requestID', request_json['requestInfo']['requestId'])
     MDC.put('partnerName', request_json['requestInfo']['sourceId'])
 

@@ -19,8 +19,8 @@ import unittest
 import json
 import yaml
 
+from apps.placement.optimizers.conductor.api_builder import conductor_api_builder
 from osdf.adapters.local_data import local_policies
-from osdf.optimizers.placementopt.conductor.api_builder import conductor_api_builder
 from osdf.utils.interfaces import json_from_file
 
 
@@ -28,7 +28,7 @@ class TestConductorApiBuilder(unittest.TestCase):
 
     def setUp(self):
         self.main_dir = ""
-        self.conductor_api_template = self.main_dir + "osdf/templates/conductor_interface.json"
+        self.conductor_api_template = self.main_dir + "apps/placement/templates/conductor_interface.json"
         self.local_config_file = self.main_dir + "config/common_config.yaml"
         policy_data_path = self.main_dir + "test/policy-local-files"                 # "test/policy-local-files"
 

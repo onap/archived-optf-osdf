@@ -19,7 +19,7 @@
 from schematics.types import StringType, IntType
 from schematics.types.compound import ModelType, ListType
 
-from .common import OSDFModel
+from osdf.models.api.common import OSDFModel
 
 
 class PCISolution(OSDFModel):

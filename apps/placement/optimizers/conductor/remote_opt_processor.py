@@ -21,8 +21,8 @@ from requests import RequestException
 import traceback
 from osdf.operation.error_handling import build_json_error_body
 from osdf.logging.osdf_logging import metrics_log, MH, error_log
-from osdf.optimizers.placementopt.conductor import conductor
-from osdf.optimizers.licenseopt.simple_license_allocation import license_optim
+from apps.placement.optimizers.conductor import conductor
+from apps.license.optimizers.simple_license_allocation import license_optim
 from osdf.utils.interfaces import get_rest_client
 from osdf.utils.mdc_utils import mdc_from_json
 

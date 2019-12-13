@@ -20,8 +20,9 @@ import unittest
 
 from flask import Response
 from mock import patch
+
+from apps.placement.optimizers.conductor.remote_opt_processor import process_placement_opt
 from osdf.adapters.local_data import local_policies
-from osdf.optimizers.placementopt.conductor.remote_opt_processor import process_placement_opt
 from osdf.utils.interfaces import json_from_file, yaml_from_file
 
 
@@ -29,12 +30,12 @@ class TestProcessPlacementOpt(unittest.TestCase):
 
     def setUp(self):
         mock_req_accept_message = Response("Accepted Request", content_type='application/json; charset=utf-8')
-        self.patcher_req = patch('osdf.optimizers.placementopt.conductor.conductor.request',
+        self.patcher_req = patch('apps.placement.optimizers.conductor.conductor.request',
                                  return_value={"solutionInfo": {"placementInfo": "dummy"}})
         self.patcher_req_accept = patch('osdf.operation.responses.osdf_response_for_request_accept',
                                         return_value=mock_req_accept_message)
         self.patcher_callback = patch(
-            'osdf.optimizers.placementopt.conductor.remote_opt_processor.process_placement_opt',
+            'apps.placement.optimizers.conductor.remote_opt_processor.process_placement_opt',
             return_value=mock_req_accept_message)
         self.patcher_RestClient = patch(
             'osdf.utils.interfaces.RestClient', return_value=mock.MagicMock())

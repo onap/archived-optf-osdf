@@ -27,6 +27,6 @@ class CoreConfig(metaclass=MetaSingleton):
 
     def get_core_config(self, config_file=None):
         if self.core_config is None:
-            self.core_config = yaml.load(open(config_file))
+            self.core_config = yaml.safe_load(open(config_file))
         return self.core_config
 

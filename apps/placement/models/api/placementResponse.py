@@ -16,7 +16,7 @@
 # -------------------------------------------------------------------------
 #
 
-from .common import OSDFModel
+from osdf.models.api.common import OSDFModel
 from schematics.types import BaseType, StringType
 from schematics.types.compound import ModelType, ListType, DictType
 

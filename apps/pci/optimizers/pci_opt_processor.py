@@ -18,6 +18,7 @@
 
 import traceback
 
+from onaplogging.mdcContext import MDC
 from requests import RequestException
 
 from osdf.logging.osdf_logging import metrics_log, MH, error_log

@@ -39,6 +39,11 @@
         <sonar.pluginname>python</sonar.pluginname>
         <sonar.inclusions>**/**.py,osdfapp.py</sonar.inclusions>
         <sonar.exclusions>test/**.py</sonar.exclusions>
+        <maven.build.timestamp.format>yyyyMMdd'T'HHmmss'Z'</maven.build.timestamp.format>
+        <osdf.build.timestamp>${maven.build.timestamp}</osdf.build.timestamp>
+        <osdf.project.version>${project.version}</osdf.project.version>
+        <osdf.docker.repository>nexus3.onap.org:10003</osdf.docker.repository>
+		<image.namespace>${osdf.docker.repository}/onap/optf-osdf</image.namespace>
     </properties>
 
     <build>
@@ -79,6 +84,80 @@
                     <retryFailedDeploymentCount>2</retryFailedDeploymentCount>
                 </configuration>
             </plugin>
+            <plugin>
+				<groupId>org.codehaus.groovy.maven</groupId>
+				<artifactId>gmaven-plugin</artifactId>
+				<version>1.0</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<source>${project.basedir}/script/TagVersion.groovy</source>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+            <plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.26.0</version>
+				<configuration>
+					<verbose>true</verbose>
+					<apiVersion>1.23</apiVersion>
+					<images>
+						<image>
+							<name>${image.namespace}</name>
+							<alias>optf-osdf</alias>
+							<build>
+								<cleanup>true</cleanup>
+								<tags>
+									<tag>latest</tag>
+									<tag>${project.docker.latesttagtimestamp.version}</tag>
+									<tag>${project.docker.latesttag.version}</tag>
+								</tags>
+
+								<dockerFile>${project.basedir}/docker/Dockerfile</dockerFile>
+								<assembly>
+									<descriptor>${project.basedir}/docker/assembly/osdf-files.xml</descriptor>
+									<name>onap-osdf-tm</name>
+								</assembly>
+								<args>
+                                    <MVN_ARTIFACT_VERSION>${project.version}</MVN_ARTIFACT_VERSION>
+                                    <REPO>${project.repo}</REPO>
+
+									<!-- plugin cannot handle empty (no proxy) arguments
+									<http_proxy_arg>${docker.http_proxy}</http_proxy_arg>
+									<https_proxy_arg>${docker.https_proxy}</https_proxy_arg>
+									-->
+								</args>
+							</build>
+						</image>
+					</images>
+				</configuration>
+				<executions>
+					<execution>
+						<id>generate-images</id>
+						<phase>install</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>push-images</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>build</goal>
+							<goal>push</goal>
+						</goals>
+						<configuration>
+							<image>${image.namespace}:%l</image>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
     </build>
 </project>

@@ -1,6 +1,6 @@
 {
     "service": "vnfPolicy",
-    "policyName": "OSDF_R2.vnfPolicy_vGMuxInfra",
+    "policyName": "OSDF_DUBLIN.vnfPolicy_vGMuxInfra",
     "description": "vnfPolicy",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",

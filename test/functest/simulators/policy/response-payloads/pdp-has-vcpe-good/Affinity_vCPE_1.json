@@ -1,7 +1,7 @@
 {
-    "service": "zone",
-    "policyName": "OSDF_R2.Affinity_vCPE_1",
-    "description": "Optimization query policy for vCPE",
+    "service": "affinityPolicy",
+    "policyName": "OSDF_DUBLIN.Affinity_vCPE_1",
+    "description": "Zone policy for vCPE",
     "templateVersion": "OpenSource.version.1",
     "version": "test1",
     "priority": "3",

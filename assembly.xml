@@ -30,6 +30,7 @@
                 <include>*.md</include>
             </includes>
             <excludes>
+                <exclude>**/__pycache__/**</exclude>
                 <exclude>**/*.pyc</exclude>
                 <exclude>config/preload_secrets.yaml</exclude>
             </excludes>

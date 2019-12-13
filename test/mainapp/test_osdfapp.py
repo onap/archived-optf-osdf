@@ -15,9 +15,10 @@
 #
 # -------------------------------------------------------------------------
 #
-import osdfapp
+
 import unittest
 
+from osdf.apps import baseapp
 from osdf.operation.exceptions import BusinessException
 from requests import Request, RequestException
 from schematics.exceptions import DataError
@@ -28,7 +29,7 @@ from unittest.mock import patch
 class TestOSDFApp(TestCase):
 
     def setUp(self):
-        self.patcher_g = patch('osdfapp.g', return_value={'request_id':'DUMMY-REQ'})
+        self.patcher_g = patch('osdf.apps.baseapp.g', return_value={'request_id':'DUMMY-REQ'})
         self.Mock_g = self.patcher_g.start()
         # self.patcher2 = patch('package.module.Class2')
         # self.MockClass2 = self.patcher2.start()
@@ -47,26 +48,26 @@ class TestOSDFApp(TestCase):
  
     def test_handle_business_exception(self):
         e = BusinessException("Business Exception Description")
-        resp = osdfapp.handle_business_exception(e)
+        resp = baseapp.handle_business_exception(e)
         assert resp.status_code == 400
 
     def test_handle_request_exception(self):
         e = self.dummy_request_exception()
-        resp = osdfapp.handle_request_exception(e)
+        resp = baseapp.handle_request_exception(e)
         assert resp.status_code == 400
 
     def test_handle_data_error(self):
         e = DataError({"A1": "A1 Data Error"})
-        resp = osdfapp.handle_data_error(e)
+        resp = baseapp.handle_data_error(e)
         assert resp.status_code == 400
 
     def test_internal_failure(self):
         e = Exception("An Internal Error")
-        resp = osdfapp.internal_failure(e)
+        resp = baseapp.internal_failure(e)
         assert resp.status_code == 500
 
     def test_get_options_default(self):
-        opts = osdfapp.get_options(["PROG"])  # ensure nothing breaks
+        opts = baseapp.get_options(["PROG"])  # ensure nothing breaks
 
 
 if __name__ == "__main__":

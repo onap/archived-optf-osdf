@@ -23,7 +23,7 @@ import re
 from osdf.utils.data_conversion import text_to_symbol
 from osdf.utils.programming_utils import dot_notation
 
-policy_config_mapping = yaml.load(open('config/has_config.yaml')).get('policy_config_mapping')
+policy_config_mapping = yaml.safe_load(open('config/has_config.yaml')).get('policy_config_mapping')
 
 
 def get_opt_query_data(req_json, policies):

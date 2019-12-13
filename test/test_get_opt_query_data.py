@@ -17,7 +17,7 @@
 #
 import unittest
 import json
-from osdf.optimizers.placementopt.conductor.translation import get_opt_query_data
+from apps.placement.optimizers.conductor.translation import get_opt_query_data
 
 
 class TestGetOptQueryData(unittest.TestCase):

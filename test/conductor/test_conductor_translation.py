@@ -15,14 +15,11 @@
 #
 # -------------------------------------------------------------------------
 #
-import mock
 import unittest
 
-from flask import Response
-from mock import patch
 from osdf.adapters.local_data import local_policies
-from osdf.optimizers.placementopt.conductor import translation as tr
-from osdf.utils.interfaces import json_from_file, yaml_from_file
+from apps.placement.optimizers.conductor import translation as tr
+from osdf.utils.interfaces import json_from_file
 
 
 class TestConductorTranslation(unittest.TestCase):
