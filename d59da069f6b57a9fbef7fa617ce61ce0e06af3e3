@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea47ed15_0df7ca2e",
+        "filename": "docs/sections/swaggerdoc/oof-osdf-has-api.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-01-20T20:06:25Z",
+      "side": 1,
+      "message": "Can you change the url to\n/api/oof/selection/nst/v1",
+      "revId": "d59da069f6b57a9fbef7fa617ce61ce0e06af3e3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "872c7474_934f8dab",
+        "filename": "docs/sections/swaggerdoc/oof-osdf-has-api.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-01-20T20:06:25Z",
+      "side": 1,
+      "message": "/api/oof/selection/nsi/v1",
+      "revId": "d59da069f6b57a9fbef7fa617ce61ce0e06af3e3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ced0080_920ccf98",
+        "filename": "docs/sections/swaggerdoc/oof-osdf-has-api.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-01-20T20:06:25Z",
+      "side": 1,
+      "message": "/api/oof/selection/nssi/v1",
+      "range": {
+        "startLine": 217,
+        "startChar": 5,
+        "endLine": 217,
+        "endChar": 31
+      },
+      "revId": "d59da069f6b57a9fbef7fa617ce61ce0e06af3e3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
