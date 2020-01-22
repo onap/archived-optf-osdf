@@ -20,7 +20,7 @@
 
 # This script is in osdf/test/functest/scripts/
 
-SCRIPTDIR=$(dirname $(readlink -f $0))
+SCRIPTDIR=$(dirname $(greadlink -f $0))
 FUNC_TEST_DIR=$(dirname $SCRIPTDIR)
 TEST_DIR=$(dirname $FUNC_TEST_DIR)
 OSDF_DIR=$(dirname $TEST_DIR)

@@ -1,5 +1,5 @@
 policy_config_mapping:
-    attributes:
+    filtering_attributes:
         hypervisor: hypervisor
         cloudVersion: cloud_version
         cloudType: cloud_type
@@ -19,6 +19,7 @@ policy_config_mapping:
         cloudRegionId: cloud-region-id
         orchestrationStatus: orchestration-status
         provStatus: prov-status
+    passthrough_attributes: {}
     candidates:
         # for (k1, v1), if k1 is in demand, set prop[k2] = _get_candidates(demand[k1])
         excludedCandidates: excluded_candidates
