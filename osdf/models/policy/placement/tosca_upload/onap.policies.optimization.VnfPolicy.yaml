@@ -73,4 +73,18 @@ data_types:
             unique:
                 type: string
                 required: false
+            attributes:
+                type: list
+                required: false
+                entry_schema:
+                    type:policy.data.vnfProperties_filteringAttributes
+            passthroughAttributes:
+                type: list
+                required: false
+                entry_schema:
+                    type:policy.data.vnfProperties_passthroughAttributes
+    policy.data.vnfProperties_filteringAttributes:
+        derived_from: tosca.nodes.Root
+    policy.data.vnfProperties_passthroughAttributes:
+        derived_from: tosca.nodes.Root
 

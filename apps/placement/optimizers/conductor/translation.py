@@ -17,10 +17,10 @@
 #
 import copy
 import json
-import yaml
 import re
 
-from osdf.utils.data_conversion import text_to_symbol
+import yaml
+
 from osdf.utils.programming_utils import dot_notation
 
 policy_config_mapping = yaml.safe_load(open('config/has_config.yaml')).get('policy_config_mapping')
@@ -157,7 +157,7 @@ def gen_attribute_policy(vnf_list, attribute_policy):
     cur_policies, related_policies = gen_policy_instance(vnf_list, attribute_policy, rtype=None)
     for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
         properties = p_main['content']['cloudAttributeProperty']
-        attribute_mapping = policy_config_mapping['attributes']  # wanted attributes and mapping
+        attribute_mapping = policy_config_mapping['filtering_attributes']  # wanted attributes and mapping
         p_new[p_main['content']['identity']]['properties'] = {
             'evaluate': dict((k, properties.get(attribute_mapping.get(k))) for k in attribute_mapping.keys())
         }
@@ -231,42 +231,47 @@ def get_demand_properties(demand, policies):
 
         prop.update({'unique': policy_property['unique']} if 'unique' in policy_property and
                                                              policy_property['unique'] else {})
-        prop['attributes'] = dict()
-        prop['attributes'].update({'global-customer-id': policy_property['customerId']}
+        prop['filtering_attributes'] = dict()
+        prop['filtering_attributes'].update({'global-customer-id': policy_property['customerId']}
                                   if policy_property['customerId'] else {})
-        prop['attributes'].update({'model-invariant-id': demand['resourceModelInfo']['modelInvariantId']}
+        prop['filtering_attributes'].update({'model-invariant-id': demand['resourceModelInfo']['modelInvariantId']}
                                   if demand['resourceModelInfo']['modelInvariantId'] else {})
-        prop['attributes'].update({'model-version-id': demand['resourceModelInfo']['modelVersionId']}
+        prop['filtering_attributes'].update({'model-version-id': demand['resourceModelInfo']['modelVersionId']}
                                   if demand['resourceModelInfo']['modelVersionId'] else {})
-        prop['attributes'].update({'equipment-role': policy_property['equipmentRole']}
+        prop['filtering_attributes'].update({'equipment-role': policy_property['equipmentRole']}
                                   if policy_property['equipmentRole'] else {})
 
         if policy_property.get('attributes'):
             for attr_key, attr_val in policy_property['attributes'].items():
-                update_converted_attribute(attr_key, attr_val, prop)
+                update_converted_attribute(attr_key, attr_val, prop, 'filtering_attributes')
+        if policy_property.get('passthroughAttributes'):
+            prop['passthrough_attributes'] = dict()
+            for attr_key, attr_val in policy_property['passthroughAttributes'].items():
+                update_converted_attribute(attr_key, attr_val, prop, 'passthrough_attributes')
 
         prop.update(get_candidates_demands(demand))
         demand_properties.append(prop)
     return demand_properties
 
 
-def update_converted_attribute(attr_key, attr_val, properties):
+def update_converted_attribute(attr_key, attr_val, properties, attribute_type):
     """
     Updates dictonary of attributes with one specified in the arguments.
     Automatically translates key namr from camelCase to hyphens
+    :param attribute_type: attribute section name
     :param attr_key: key of the attribute
     :param attr_val: value of the attribute
     :param properties: dictionary with attributes to update
     :return:
     """
     if attr_val:
-        remapping = policy_config_mapping['attributes']
+        remapping = policy_config_mapping[attribute_type]
         if remapping.get(attr_key):
             key_value = remapping.get(attr_key)
         else:
             key_value = re.sub('(.)([A-Z][a-z]+)', r'\1-\2', attr_key)
             key_value = re.sub('([a-z0-9])([A-Z])', r'\1-\2', key_value).lower()
-        properties['attributes'].update({key_value: attr_val})
+        properties[attribute_type].update({key_value: attr_val})
 
 
 def gen_demands(req_json, vnf_policies):
