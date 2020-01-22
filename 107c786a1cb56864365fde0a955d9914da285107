@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03dfb41d_04648b1b",
+        "filename": "docs/sections/swaggerdoc/oof-osdf-has-api.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-01-22T03:46:29Z",
+      "side": 1,
+      "message": "Can you change the request url to /api/oof/route/v1",
+      "revId": "107c786a1cb56864365fde0a955d9914da285107",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
