@@ -47,7 +47,7 @@ class TestConductorApiBuilder(unittest.TestCase):
         main_dir = self.main_dir
         request_json = self.request_json
         policies = self.policies
-        local_config = yaml.load(open(self.local_config_file))
+        local_config = yaml.safe_load(open(self.local_config_file))
         templ_string = conductor_api_builder(request_json, policies, local_config, self.conductor_api_template)
         templ_json = json.loads(templ_string)
         self.assertEqual(templ_json["name"], "yyy-yyy-yyyy")
@@ -55,7 +55,7 @@ class TestConductorApiBuilder(unittest.TestCase):
     def test_conductor_api_call_builder_vfmod(self):
         request_json = self.request_vfmod_json
         policies = self.policies
-        local_config = yaml.load(open(self.local_config_file))
+        local_config = yaml.safe_load(open(self.local_config_file))
         templ_string = conductor_api_builder(request_json, policies, local_config, self.conductor_api_template)
         templ_json = json.loads(templ_string)
         self.assertEqual(templ_json, self.request_placement_vfmod_json)
