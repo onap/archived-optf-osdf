@@ -259,9 +259,216 @@
           }
         }
       }
+    },
+    "/api/oof/route/v1": {
+      "post": {
+        "tags": [
+          "Route Select"
+        ],
+        "summary": "Find the optimistic route between OTN domains",
+        "description": "",
+        "operationId": "getRoute",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Source and Destination nodes across which optmistic route have to be obtained.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RouteRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/routeResponseBody"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "RouteRequest": {
+      "type": "object",
+      "properties": {
+        "requestInfo": {
+          "$ref": "#/definitions/requestInfo"
+        },
+        "routeInfo": {
+          "$ref": "#/definitions/routeInfo"
+        }
+      }
+    },
+    "requestInfo": {
+      "type": "object",
+      "properties": {
+        "transactionId": {
+          "type": "string",
+          "description": "A unique ID to track an ONAP transaction."
+        },
+        "requestId": {
+          "type": "string",
+          "description": "A unique ID to track multiple requests associated with a transaction."
+        },
+        "callbackUrl": {
+          "type": "string",
+          "description": "The end point of a callback service where recommendations are posted."
+        },
+        "callbackHeader": {
+          "type": "string",
+          "description": "The header information a client expecting in a async callback."
+        },
+        "sourceId": {
+          "type": "string",
+          "description": "The unique ID of a client making an optimization call."
+        },
+        "requestType": {
+          "type": "string",
+          "format": "string",
+          "description": "The type of request being placed.",
+          "enum": [
+            "create",
+            "update",
+            "delete"
+          ]
+        },
+        "numSolutions": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Expected number of solutions. numSolution can also be specified using an optimization query policies, where the default configured value is 1. The value from a request gets higher precedence over the value defined in a policy."
+        },
+        "optimizers": {
+          "description": "A list of optimization services that can be used to resolve the route",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "timeout": {
+          "type": "integer",
+          "format": "int32",
+          "description": "A tolerance window (in secs) for expecting solutions. Default is 600 secs."
+        }
+      }
+    },
+    "routeInfo": {
+      "type": "object",
+      "properties": {
+        "routeRequest": {
+          "$ref": "#/definitions/routeRequest"
+        }
+      }
+    },
+    "routeRequest": {
+      "type": "object",
+      "properties": {
+        "srcPort": {
+          "$ref": "#/definitions/routePortInfo"
+        },
+        "destPort": {
+          "$ref": "#/definitions/routePortInfo"
+        }
+      }
+    },
+    "routePortInfo": {
+      "type": "object",
+      "properties": {
+        "accessTopologyId": {
+          "type": "string",
+          "description": "A unique ID of the Access Topology."
+        },
+        "accessClientId": {
+          "type": "string",
+          "format": "string",
+          "description": "A unique ID of the client which provides the access."
+        },
+        "accessProviderId": {
+          "type": "string",
+          "format": "string",
+          "description": "A unique ID of the access provider"
+        },
+        "accessNodeId": {
+          "type": "string",
+          "format": "string",
+          "description": "A unique ID of the node to/from which the route has to be established."
+        },
+        "accessLtpId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "A unique ID of the Termination Point to/from which the route has to be established."
+        }
+      }
+    },
+    "routeResponseBody": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "description": "A unique Id for an ONAP transaction."
+        },
+        "transactionId": {
+          "type": "string",
+          "description": "A unique ID to track multiple requests associated with a transaction."
+        },
+        "statusMessage": {
+          "type": "string",
+          "description": "Reasoning if a requestStatus is failure."
+        },
+        "requestStatus": {
+          "type": "string",
+          "description": "The status of a request."
+        },
+        "solutions": {
+          "$ref": "#/definitions/RouteSolutionInfo"
+        }
+      }
+    },
+    "RouteSolutionInfo": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "start time of the operation in  RFC 3339 notation for example, 2017-07-21T17:32:28Z."
+        },
+        "finishTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "end time of the operation in  RFC 3339 notation for example, 2017-07-21T17:32:28Z."
+        },
+        "links": {
+          "description": "A list of vpn info that can be used to establish the route between source and destination port/node.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/link"
+          }
+        }
+      }
+    },
+    "link": {
+      "type": "object",
+      "properties": {
+        "linkId": {
+          "type": "string",
+          "description": "Id or name identifies a link uniquely."
+        }
+      }
+    },
     "PlacementRequest": {
       "type": "object",
       "required": [
