@@ -45,6 +45,8 @@ class CellInfo(OSDFModel):
     networkId = StringType(required=True)
     cellIdList = ListType(StringType(required=True))
     anrInputList = ListType(ModelType(ANRInfo))
+    fixedPCICells = ListType(StringType())
+    priorityTreatmentCells = ListType(StringType())
     trigger = StringType()
 
 

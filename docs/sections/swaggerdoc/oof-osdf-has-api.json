@@ -26,6 +26,9 @@
   "paths": {
     "/v2/placement": {
       "post": {
+        "tags": [
+          "Placement Optimization"
+        ],
         "summary": "create/update a placement",
         "operationId": "createPlacement",
         "description": "create/update a placement",
@@ -75,6 +78,9 @@
     },
     "/api/oof/v1/pci": {
       "post": {
+        "tags": [
+          "PCI/ANR Optimization"
+        ],
         "summary": "Initiate PCI/ANR Optimization",
         "operationId": "initiatePCIOptRequest",
         "description": "Initiate PCI/ANR Optimization",
@@ -124,6 +130,9 @@
     },
     "/api/oof/selection/nst/v1": {
       "post": {
+        "tags": [
+          "NST Selection"
+        ],
         "summary": "NST selection",
         "operationId": "selectNstRequest",
         "description": "Request for NST selection",
@@ -170,6 +179,9 @@
     },
     "/api/oof/selection/nsi/v1": {
       "post": {
+        "tags": [
+          "NSI Selection"
+        ],
         "summary": "NSI selection",
         "operationId": "selectNsiRequest",
         "description": "Request for NSI selection",
@@ -216,6 +228,9 @@
     },
     "/api/oof/selection/nssi/v1": {
       "post": {
+        "tags": [
+          "NSSI Selection"
+        ],
         "summary": "NSSI selection",
         "operationId": "selectNssiRequest",
         "description": "Request for NSSI selection",
@@ -1117,6 +1132,28 @@
             "$ref": "#/definitions/ANRInfo"
           },
           "description": "A list of ANR Input."
+        },
+        "fixedPCICells": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of blacklisted cells whose PCI values should not be changed",
+          "example": [
+            "cell0007",
+            "cell0009"
+          ]
+        },
+        "priorityTreatmentCells": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of cells which should be given special treatment during optimization",
+          "example": [
+            "cell0010",
+            "cell0003"
+          ]
         },
         "trigger": {
           "type": "string",
