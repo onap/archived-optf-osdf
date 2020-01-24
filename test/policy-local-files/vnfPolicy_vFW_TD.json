@@ -35,6 +35,9 @@
                 "service_instance_id": {
                     "get_param": "service_id"
                 }
+            },
+            "passthroughAttributes": {
+                "td-role": "destination"
             }
         }]
     }

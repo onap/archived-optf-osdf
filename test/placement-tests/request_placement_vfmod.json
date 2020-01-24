@@ -1,92 +1,113 @@
 {
-    "name": "de4f04e3-0a65-470b-9d07-8ea6c2fb3e10",
-    "template": {
-        "constraints": {
-            "affinity_vFW_TD": {
-                "demands": ["vFW-SINK", "vPGN"],
-                "properties": {
-                    "category": "region",
-                    "qualifier": "same"
-                },
-                "type": "zone"
-            }
-        },
-        "parameters": {
-            "service_name": "vFW_TD",
-            "chosen_region": "RegionOne",
-            "service_id": "3e8d118c-10ca-4b4b-b3db-089b5e9e6a1c",
-            "customer_long": 2.2,
-            "REQUIRED_MEM": "",
-            "customer_lat": 1.1,
-            "REQUIRED_DISK": ""
-        },
-        "locations": {
-            "customer_loc": {
-                "longitude": {
-                    "get_param": "customer_long"
-                },
-                "latitude": {
-                    "get_param": "customer_lat"
-                }
-            }
-        },
-        "demands": {
-            "vFW-SINK": [{
-                "attributes": {
-                    "global-customer-id": {
-                        "get_param": "chosen_customer_id"
-                    },
-                    "cloud-region-id": {
-                        "get_param": "chosen_region"
-                    },
-                    "model-version-id": "763731df-84fd-494b-b824-01fc59a5ff2d",
-                    "orchestration-status": ["active"],
-                    "model-invariant-id": "e7227847-dea6-4374-abca-4561b070fe7d",
-                    "service_instance_id": {
-                        "get_param": "service_id"
-                    },
-                    "prov-status": "ACTIVE"
-                },
-                "inventory_provider": "aai",
-                "service_resource_id": "vFW-SINK-XX",
-                "inventory_type": "vfmodule",
-                "service_type": "vFW-SINK-XX",
-                "excluded_candidates": [{
-                    "inventory_type": "vfmodule",
-                    "candidate_id": ["e765d576-8755-4145-8536-0bb6d9b1dc9a"]
-                }]
-            }],
-            "vPGN": [{
-                "attributes": {
-                    "global-customer-id": {
-                        "get_param": "chosen_customer_id"
-                    },
-                    "cloud-region-id": {
-                        "get_param": "chosen_region"
-                    },
-                    "model-version-id": "e02a7e5c-9d27-4360-ab7c-73bb83b07e3b",
-                    "orchestration-status": ["active"],
-                    "model-invariant-id": "762472ef-5284-4daa-ab32-3e7bee2ec355",
-                    "service_instance_id": {
-                        "get_param": "service_id"
-                    },
-                    "prov-status": "ACTIVE"
-                },
-                "inventory_provider": "aai",
-                "service_resource_id": "vPGN-XX",
-                "unique": "False",
-                "inventory_type": "vfmodule",
-                "service_type": "vPGN-XX"
-            }]
-        },
-        "optimization": {
-            "minimize": {
-                "sum": []
-            }
-        },
-        "homing_template_version": "2017-10-10"
+  "name": "de4f04e3-0a65-470b-9d07-8ea6c2fb3e10",
+  "files": {},
+  "timeout": 1200,
+  "num_solution": "100",
+  "template": {
+    "homing_template_version": "2017-10-10",
+    "parameters": {
+      "REQUIRED_MEM": "",
+      "REQUIRED_DISK": "",
+      "customer_lat": 1.1,
+      "customer_long": 2.2,
+      "service_name": "vFW_TD",
+      "service_id": "3e8d118c-10ca-4b4b-b3db-089b5e9e6a1c",
+      "chosen_region": "RegionOne"
     },
-    "num_solution": "100",
-    "files": {},
-    "timeout": 1200
+    "locations": {
+      "customer_loc": {
+        "latitude": {
+          "get_param": "customer_lat"
+        },
+        "longitude": {
+          "get_param": "customer_long"
+        }
+      }
+    },
+    "demands": {
+      "vFW-SINK": [
+        {
+          "inventory_provider": "aai",
+          "inventory_type": "vfmodule",
+          "service_type": "vFW-SINK-XX",
+          "service_resource_id": "vFW-SINK-XX",
+          "filtering_attributes": {
+            "global-customer-id": {
+              "get_param": "chosen_customer_id"
+            },
+            "model-invariant-id": "e7227847-dea6-4374-abca-4561b070fe7d",
+            "model-version-id": "763731df-84fd-494b-b824-01fc59a5ff2d",
+            "orchestration-status": [
+              "active"
+            ],
+            "prov-status": "ACTIVE",
+            "cloud-region-id": {
+              "get_param": "chosen_region"
+            },
+            "service_instance_id": {
+              "get_param": "service_id"
+            }
+          },
+          "passthrough_attributes": {
+            "td-role": "destination"
+          },
+          "excluded_candidates": [
+            {
+              "inventory_type": "vfmodule",
+              "candidate_id": [
+                "e765d576-8755-4145-8536-0bb6d9b1dc9a"
+              ]
+            }
+          ]
+        }
+      ],
+      "vPGN": [
+        {
+          "inventory_provider": "aai",
+          "inventory_type": "vfmodule",
+          "service_type": "vPGN-XX",
+          "service_resource_id": "vPGN-XX",
+          "unique": "False",
+          "filtering_attributes": {
+            "global-customer-id": {
+              "get_param": "chosen_customer_id"
+            },
+            "model-invariant-id": "762472ef-5284-4daa-ab32-3e7bee2ec355",
+            "model-version-id": "e02a7e5c-9d27-4360-ab7c-73bb83b07e3b",
+            "orchestration-status": [
+              "active"
+            ],
+            "prov-status": "ACTIVE",
+            "cloud-region-id": {
+              "get_param": "chosen_region"
+            },
+            "service_instance_id": {
+              "get_param": "service_id"
+            }
+          },
+          "passthrough_attributes": {
+            "td-role": "anchor"
+          }
+        }
+      ]
+    },
+    "constraints": {
+      "affinity_vFW_TD": {
+        "type": "zone",
+        "demands": [
+          "vFW-SINK",
+          "vPGN"
+        ],
+        "properties": {
+          "category": "region",
+          "qualifier": "same"
+        }
+      }
+    },
+    "optimization": {
+      "minimize": {
+        "sum": []
+      }
+    }
+  }
 }
