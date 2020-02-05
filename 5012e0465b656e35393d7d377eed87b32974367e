@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "387d0ec3_013445f3",
+        "filename": "config/common_config.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 2977
+      },
+      "writtenOn": "2020-02-05T02:01:50Z",
+      "side": 1,
+      "message": "Yes. For now, i put them as defaults.",
+      "parentUuid": "e46ddce0_fa24107e",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "5012e0465b656e35393d7d377eed87b32974367e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8075a792_2a0f7fe7",
         "filename": "osdf/optimizers/placementopt/conductor/translation.py",
         "patchSetId": 4
