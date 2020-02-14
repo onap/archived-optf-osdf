@@ -35,12 +35,14 @@ error_body = {
 
 unauthorized_message = json.dumps(error_body)
 
+
 @auth_basic.get_password
 def get_pw(username):
     end_point = request.url.split('/')[-1]
     auth_group = osdf.end_point_auth_mapping.get(end_point)
     return cfg_base.http_basic_auth_credentials[auth_group].get(
         username) if auth_group else None
+
 
 @auth_basic.error_handler
 def auth_error():
@@ -58,4 +60,3 @@ def verify_pw(username, password):
     else:
         pw = get_pw(username)
         return pw == password
-    return False

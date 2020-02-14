@@ -36,7 +36,7 @@ def default_server_info():
         MDC.put('server', server)
     if MDC.get('serverIPAddress') is None:
         try:
-            server_ip_address = socket.gethostbyname(self._fields['server'])
+            server_ip_address = socket.gethostbyname(MDC.get('server'))
         except Exception:
             server_ip_address = ""
         MDC.put('serverIPAddress', server_ip_address)
