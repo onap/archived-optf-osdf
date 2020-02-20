@@ -2,7 +2,7 @@
 [run]
 branch = True
 cover_pylib = False
-include = osdf/**/*.py
+include = osdf/**/*.py, apps/**/*.py
 
 [report]
 # Regexes for lines to exclude from consideration
