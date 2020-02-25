@@ -52,3 +52,6 @@ configDbGetNbrListUrl: 'SDNCConfigDBAPI/getNbrList'
 
 pciHMSUsername: test
 pciHMSPassword: passwd
+
+#key
+appkey: os35@rrtky400fdntc#001t5

@@ -14,3 +14,4 @@ onapsmsclient>=0.0.4
 pymzn>=0.18.3
 onappylog>=1.0.9
 pathtools>=0.1.2
+pycryptodome>=3.9.6
