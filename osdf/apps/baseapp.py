@@ -27,18 +27,17 @@ import time
 import traceback
 from optparse import OptionParser
 
-import pydevd
-from flask import Flask, request, Response, g
-from requests import RequestException
-from schematics.exceptions import DataError
-
 import osdf.adapters.aaf.sms as sms
 import osdf.operation.responses
+import pydevd
+from flask import Flask, request, Response, g
 from osdf.config.base import osdf_config
 from osdf.logging.osdf_logging import error_log, debug_log
 from osdf.operation.error_handling import request_exception_to_json_body, internal_error_message
 from osdf.operation.exceptions import BusinessException
 from osdf.utils.mdc_utils import clear_mdc, mdc_from_json, default_mdc
+from requests import RequestException
+from schematics.exceptions import DataError
 
 ERROR_TEMPLATE = osdf.ERROR_TEMPLATE
 
@@ -90,15 +89,17 @@ def handle_data_error(e):
 @app.before_request
 def log_request():
     g.request_start = time.clock()
-    if request.get_json():
-
-        request_json = request.get_json()
-        g.request_id = request_json['requestInfo']['requestId']
-        mdc_from_json(request_json)
+    if request.data:
+        if request.get_json():
+            request_json = request.get_json()
+            g.request_id = request_json['requestInfo']['requestId']
+            mdc_from_json(request_json)
+        else:
+            g.request_id = "N/A"
+            default_mdc()
     else:
         g.request_id = "N/A"
         default_mdc()
-
 
 
 @app.after_request

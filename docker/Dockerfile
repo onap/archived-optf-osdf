@@ -30,7 +30,7 @@ ENV https_proxy $HTTPS_PROXY
 ENV OSDF_PORT "8699"
 EXPOSE ${OSDF_PORT}
 
-ENV MZN 2.3.2
+ENV MZN 2.4.2
 ENV MZN_BASENAME MiniZincIDE-${MZN}-bundle-linux
 ENV MZN_GH_BASE https://github.com/MiniZinc/MiniZincIDE
 ENV MZN_DL_URL ${MZN_GH_BASE}/releases/download/${MZN}/${MZN_BASENAME}-x86_64.tgz
@@ -49,8 +49,7 @@ RUN wget -q $MZN_DL_URL -O /tmp/mz.tgz \
     && tar xzf /tmp/mz.tgz \
     && mv $MZN_BASENAME /mz-dist \
     && rm /tmp/mz.tgz \
-    && echo PATH=/mz-dist/bin:$PATH >> ~/.bashrc \
-    && echo 'export LD_LIBRARY_PATH=/mz-dist/lib:LD_LIBRARY_PATH' >> ~/.bashrc
+    && echo PATH=/mz-dist/bin:$PATH >> ~/.bashrc
 
 ENV SHELL /bin/bash
 ENV PATH /mz-dist:$PATH

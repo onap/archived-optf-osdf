@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.onap.oparent</groupId>
         <artifactId>oparent-python</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.0</version>
     </parent>
 
     <groupId>org.onap.optf.osdf</groupId>
@@ -38,7 +38,7 @@
         <sonar.language>py</sonar.language>
         <sonar.pluginname>python</sonar.pluginname>
         <sonar.inclusions>**/**.py,osdfapp.py</sonar.inclusions>
-        <sonar.exclusions>test/**.py</sonar.exclusions>
+        <sonar.exclusions>test/**.py,docs/**.py</sonar.exclusions>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss'Z'</maven.build.timestamp.format>
         <osdf.build.timestamp>${maven.build.timestamp}</osdf.build.timestamp>
         <osdf.project.version>${project.version}</osdf.project.version>
