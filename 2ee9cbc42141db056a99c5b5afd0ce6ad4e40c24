@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24e57dcf_6d58151e",
+        "filename": "osdf/adapters/aaf/sms.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-02-26T15:43:38Z",
+      "side": 1,
+      "message": "can you change it to 2020?",
+      "revId": "2ee9cbc42141db056a99c5b5afd0ce6ad4e40c24",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a70a80a8_8ff063ed",
+        "filename": "osdf/utils/cipherUtils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-02-26T15:43:38Z",
+      "side": 1,
+      "message": "2020",
+      "revId": "2ee9cbc42141db056a99c5b5afd0ce6ad4e40c24",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39884a69_63f0bda3",
+        "filename": "setup.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-02-26T15:43:38Z",
+      "side": 1,
+      "message": "2020?",
+      "revId": "2ee9cbc42141db056a99c5b5afd0ce6ad4e40c24",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
