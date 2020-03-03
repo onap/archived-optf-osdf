@@ -1,5 +1,6 @@
 # -------------------------------------------------------------------------
 #   Copyright (c) 2015-2017 AT&T Intellectual Property
+#   Copyright (C) 2020 Wipro Limited.
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -32,7 +33,7 @@ from osdf.utils.interfaces import RestClient
 from osdf.operation.exceptions import BusinessException
 
 
-def request(req_object, osdf_config, flat_policies):
+def request(req_object, osdf_config, flat_policies, type):
     """
     Process a placement request from a Client (build Conductor API call, make the call, return result)
     :param req_object: Request parameters from the client
@@ -61,7 +62,7 @@ def request(req_object, osdf_config, flat_policies):
     ping_wait_time = config.get('conductorPingWaitTime', 60)
 
     rc = RestClient(userid=uid, passwd=passwd, method="GET", log_func=debug_log.debug, headers=headers)
-    conductor_req_json_str = conductor_api_builder(req_object, flat_policies, local_config)
+    conductor_req_json_str = conductor_api_builder(req_object, flat_policies, local_config, type)
     conductor_req_json = json.loads(conductor_req_json_str)
 
     debug_log.debug("Sending first Conductor request for request_id {}".format(req_id))

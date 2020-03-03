@@ -1,5 +1,6 @@
 # -------------------------------------------------------------------------
 #   Copyright (c) 2015-2017 AT&T Intellectual Property
+#   Copyright (C) 2020 Wipro Limited.
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -38,6 +39,8 @@ from osdf.logging.osdf_logging import MH, audit_log
 from osdf.operation.responses import osdf_response_for_request_accept as req_accept
 from osdf.utils import api_data_utils
 from osdf.webapp.appcontroller import auth_basic
+from apps.slice.models.api.nsiSelectionRequest import NSISelectionAPI
+from apps.slice.optimizers.conductor.slice_req_processor import process_nsi_selection
 
 
 @app.route("/api/oof/v1/healthcheck", methods=["GET"])
@@ -60,6 +63,21 @@ def do_osdf_load_policies():
 @auth_basic.login_required
 def do_placement_opt():
     return placement_rest_api()
+
+
+@app.route("/api/oof/selection/nsi/v1", methods=["POST"])
+def do_nsi_selection():
+    request_json = request.get_json()
+    req_id = request_json['requestInfo']['requestId']
+    g.request_id = req_id
+    audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
+    api_version_info = api_data_utils.retrieve_version_info(request, req_id)
+    NSISelectionAPI(request_json).validate()
+    policies = get_policies(request_json, "slice")
+    audit_log.info("policies fetched !!!!!!!!!")
+    audit_log.info(policies)
+    audit_log.info(MH.new_worker_thread(req_id, "[for placement]"))
+    return process_nsi_selection(request_json, policies, osdf_config)
 
 
 @app.route("/api/oof/placement/v1", methods=["POST"])

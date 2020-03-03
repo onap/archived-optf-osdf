@@ -1,5 +1,6 @@
 # -------------------------------------------------------------------------
 #   Copyright (c) 2015-2017 AT&T Intellectual Property
+#   Copyright (C) 2020 Wipro Limited.
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -51,7 +52,7 @@ def process_placement_opt(request_json, policies, osdf_config):
         # Conductor only handles placement, only call Conductor if placementDemands exist
         if request_json.get('placementInfo', {}).get('placementDemands'):
             metrics_log.info(MH.requesting("placement/conductor", req_id))
-            placement_response = conductor.request(request_json, osdf_config, policies)
+            placement_response = conductor.request(request_json, osdf_config, policies, 'placement')
             if license_info:  # Attach license solution if it exists
                 placement_response['solutionInfo']['licenseInfo'] = license_info
         else:  # License selection only scenario

@@ -1,5 +1,6 @@
 # -------------------------------------------------------------------------
 #   Copyright (c) 2018 AT&T Intellectual Property
+#   Copyright (C) 2020 Wipro Limited.
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -41,12 +42,12 @@ class TestConductorCalls(unittest.TestCase):
     def test_request(self):
         req_json = json_from_file("./test/placement-tests/request.json")
         policies = pol.get_local_policies("test/policy-local-files/", self.lp)
-        conductor.request(req_json, self.osdf_config, policies)
+        conductor.request(req_json, self.osdf_config, policies, 'placement')
 
     def test_request_vfmod(self):
         req_json = json_from_file("./test/placement-tests/request_vfmod.json")
         policies = pol.get_local_policies("test/policy-local-files/", self.lp)
-        conductor.request(req_json, self.osdf_config, policies)
+        conductor.request(req_json, self.osdf_config, policies, 'placement')
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 # -------------------------------------------------------------------------
 #   Copyright (c) 2017-2018 AT&T Intellectual Property
+#   Copyright (C) 2020 Wipro Limited.
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -48,7 +49,7 @@ class TestConductorApiBuilder(unittest.TestCase):
         request_json = self.request_json
         policies = self.policies
         local_config = yaml.safe_load(open(self.local_config_file))
-        templ_string = conductor_api_builder(request_json, policies, local_config, self.conductor_api_template)
+        templ_string = conductor_api_builder(request_json, policies, local_config, 'placement', self.conductor_api_template)
         templ_json = json.loads(templ_string)
         self.assertEqual(templ_json["name"], "yyy-yyy-yyyy")
 
@@ -56,8 +57,11 @@ class TestConductorApiBuilder(unittest.TestCase):
         request_json = self.request_vfmod_json
         policies = self.policies
         local_config = yaml.safe_load(open(self.local_config_file))
-        templ_string = conductor_api_builder(request_json, policies, local_config, self.conductor_api_template)
+        templ_string = conductor_api_builder(request_json, policies, local_config, 'placement', self.conductor_api_template)
         templ_json = json.loads(templ_string)
+        f = open("/home/krishna/test_place.txt", "w+")
+        f.write(templ_string)
+        f.close()
         self.assertEqual(templ_json, self.request_placement_vfmod_json)
 
 

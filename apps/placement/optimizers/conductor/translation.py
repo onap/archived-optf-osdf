@@ -1,5 +1,6 @@
 # -------------------------------------------------------------------------
 #   Copyright (c) 2015-2017 AT&T Intellectual Property
+#   Copyright (C) 2020 Wipro Limited.
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -220,26 +221,27 @@ def get_policy_properties(demand, policies):
             yield policy_property
 
 
-def get_demand_properties(demand, policies):
+def get_demand_properties(demand, policies, type):
     """Get list demand properties objects (named tuples) from policy"""
     demand_properties = []
     for policy_property in get_policy_properties(demand, policies):
         prop = dict(inventory_provider=policy_property['inventoryProvider'],
                     inventory_type=policy_property['inventoryType'],
                     service_type=demand['serviceResourceId'],
-                    service_resource_id=demand['serviceResourceId'])
+                    service_resource_id = demand['serviceResourceId'])
 
         prop.update({'unique': policy_property['unique']} if 'unique' in policy_property and
                                                              policy_property['unique'] else {})
         prop['filtering_attributes'] = dict()
         prop['filtering_attributes'].update({'global-customer-id': policy_property['customerId']}
                                   if policy_property['customerId'] else {})
-        prop['filtering_attributes'].update({'model-invariant-id': demand['resourceModelInfo']['modelInvariantId']}
-                                  if demand['resourceModelInfo']['modelInvariantId'] else {})
-        prop['filtering_attributes'].update({'model-version-id': demand['resourceModelInfo']['modelVersionId']}
-                                  if demand['resourceModelInfo']['modelVersionId'] else {})
         prop['filtering_attributes'].update({'equipment-role': policy_property['equipmentRole']}
-                                  if policy_property['equipmentRole'] else {})
+                                 if policy_property['equipmentRole'] else {})
+        if type == "placement":
+            prop['filtering_attributes'].update({'model-invariant-id': demand['resourceModelInfo']['modelInvariantId']}
+                                    if demand['resourceModelInfo']['modelInvariantId'] else {})
+            prop['filtering_attributes'].update({'model-version-id': demand['resourceModelInfo']['modelVersionId']}
+                                                if demand['resourceModelInfo']['modelVersionId'] else {})
 
         if policy_property.get('attributes'):
             for attr_key, attr_val in policy_property['attributes'].items():
@@ -282,7 +284,25 @@ def gen_demands(req_json, vnf_policies):
     """
     demand_dictionary = {}
     for demand in req_json['placementInfo']['placementDemands']:
-        prop = get_demand_properties(demand, vnf_policies)
+        prop = get_demand_properties(demand, vnf_policies, 'placement')
         if len(prop) > 0:
             demand_dictionary.update({demand['resourceModuleName']: prop})
     return demand_dictionary
+
+
+def get_demand_properties_from_policy(demand_list,vnf_policies):
+    demand_dictionary = {}
+    for demand in demand_list:
+        prop = get_demand_properties(demand, vnf_policies)
+        if len(prop) > 0:
+            demand_dictionary.update({demand: prop})
+    return demand_dictionary
+
+
+def derive_demands_for_slice(subscriber_policy):
+    """Derive demands (NSST's) from subscriber policy
+    :param subscriber_policy: Policy associated with NSST's (NST<-->NSST's mapping)
+    :return: list of demands (NSST's)
+    """
+    demand_list = subscriber_policy['content']['properties']['subscriberName']
+    return demand_list
