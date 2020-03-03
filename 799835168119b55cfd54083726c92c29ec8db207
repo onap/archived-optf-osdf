@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5221f13b_ebd8cb03",
+        "filename": "INFO.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4677
+      },
+      "writtenOn": "2020-03-03T09:02:33Z",
+      "side": 1,
+      "message": "Could you make this one into 1 row please",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 1
+      },
+      "revId": "799835168119b55cfd54083726c92c29ec8db207",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
