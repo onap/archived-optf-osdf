@@ -1,0 +1,19 @@
+{
+  "requestInfo": {
+    "transactionId": "xxx-xxx-xxxx",
+    "requestID": "yyy-yyy-yyyy",
+    "sourceId": "cmopt",
+    "timeout": 600
+  },
+  "optimInfo": {
+    "modelId": "test",
+    "solverArgs": {
+      "solver": "geocode"
+    },
+    "optData": {
+      "json": {
+        "nc": 3
+      }
+    }
+  }
+}

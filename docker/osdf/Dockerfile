@@ -59,11 +59,18 @@ WORKDIR /opt/osdf
 #RUN wget -O /opt/osdf.zip "https://nexus.onap.org/service/local/artifact/maven/redirect?r=releases&g=org.onap.optf.osdf&a=optf-osdf&e=zip&v=1.3.4" && \
 #    unzip -q -o -B /opt/osdf.zip -d /opt/ && \
 #    rm -f /opt/osdf.zip
+RUN groupadd onap \
+    && useradd -m -g onap onap
 
 COPY onap-osdf-tm/optf-osdf-${MVN_ARTIFACT_VERSION}.zip /tmp/optf-osdf.zip
 COPY onap-osdf-tm/apps /opt/osdf/apps
 RUN unzip -q -o -B /tmp/optf-osdf.zip -d /opt/ && rm -f /tmp/optf-osdf.zip
-RUN mkdir -p /var/log/onap/optf/osdf/
+RUN mkdir -p /var/log/onap/optf/osdf/ \
+    && chown -R onap:onap /var/log/onap \
+    && chown -R onap:onap /opt/osdf
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD [ "/opt/osdf/osdfapp.sh" ]
+USER onap
+
+CMD [ "/opt/osdf/osdfapp.sh", "-x", "osdfapp.py" ]

@@ -35,7 +35,7 @@ from osdf.config.base import osdf_config
 from osdf.logging.osdf_logging import error_log, debug_log
 from osdf.operation.error_handling import request_exception_to_json_body, internal_error_message
 from osdf.operation.exceptions import BusinessException
-from osdf.utils.mdc_utils import clear_mdc, mdc_from_json, default_mdc
+from osdf.utils.mdc_utils import clear_mdc, mdc_from_json, default_mdc, get_request_id
 from requests import RequestException
 from schematics.exceptions import DataError
 
@@ -88,11 +88,11 @@ def handle_data_error(e):
 
 @app.before_request
 def log_request():
-    g.request_start = time.clock()
+    g.request_start = time.process_time()
     if request.data:
         if request.get_json():
             request_json = request.get_json()
-            g.request_id = request_json['requestInfo']['requestId']
+            g.request_id = get_request_id(request_json)
             mdc_from_json(request_json)
         else:
             g.request_id = "N/A"
