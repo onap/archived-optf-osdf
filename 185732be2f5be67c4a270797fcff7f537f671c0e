@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "489b1871_d26718a9",
+        "filename": "apps/placement/optimizers/conductor/api_builder.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-04T06:42:37Z",
+      "side": 1,
+      "message": "Attribute policy is not being used for any of the existing use cases for OSDF.\nWe may submit this policy changes separately. I would work on it.",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a45cb5_8a48e227",
+        "filename": "apps/placement/optimizers/conductor/api_builder.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-04T06:42:37Z",
+      "side": 1,
+      "message": "inventory group policy is not being used for any of the existing use cases for OSDF.\nWe may submit this policy changes separately. I would work on it.",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81edd75b_1c491cb6",
+        "filename": "apps/placement/optimizers/conductor/api_builder.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-04T06:42:37Z",
+      "side": 1,
+      "message": "Instance fit policy is not being used for any of the existing use cases for OSDF.\nWe may submit this policy changes separately. I would work on it.",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6ebba1_63493cee",
+        "filename": "apps/placement/optimizers/conductor/api_builder.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-04T06:42:37Z",
+      "side": 1,
+      "message": "Resource region policy is not being used for any of the existing use cases for OSDF.\nWe may submit this policy changes separately. I would work on it.",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8304e189_f2692cc9",
+        "filename": "apps/placement/optimizers/conductor/translation.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-04T06:42:37Z",
+      "side": 1,
+      "message": "This logic needs be re-evaluated for the new policies as the payload to HAS will get changed.",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3964d2a4_212bf00f",
+        "filename": "osdf/adapters/policy/utils.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-04T06:42:37Z",
+      "side": 1,
+      "message": "Can you please detail the reason why is this commented?",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ca0040_fc63d8ab",
+        "filename": "test/placement-tests/request_placement_vfmod.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-04T06:42:37Z",
+      "side": 1,
+      "message": "would HAS support this new value?",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13544302_61ff8fd6",
+        "filename": "test/policy-local-files/new_policies/affinity_vFW_TD.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-04T06:42:37Z",
+      "side": 1,
+      "message": "This policy doesn\u0027t belong to new format. Please take it out from new_policies folder",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
