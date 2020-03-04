@@ -100,6 +100,8 @@ def load_secrets():
     config['pciHMSPassword'] = decrypt_pass(secret_dict['pciHMS']['Password'])
     config['osdfPCIOptUsername'] = secret_dict['osdfPCIOpt']['UserName']
     config['osdfPCIOptPassword'] = decrypt_pass(secret_dict['osdfPCIOpt']['Password'])
+    config['osdfOptEngineUsername'] = secret_dict['osdfOptEngine']['UserName']
+    config['osdfOptEnginePassword'] = decrypt_pass(secret_dict['osdfOptEngine']['Password'])
     cfg_base.http_basic_auth_credentials = creds.load_credentials(osdf_config)
     cfg_base.dmaap_creds = creds.dmaap_creds()
 
