@@ -53,8 +53,15 @@ def default_mdc():
 
 def mdc_from_json(request_json):
     default_mdc()
-    MDC.put('requestID', request_json['requestInfo']['requestId'])
+    MDC.put('requestID', get_request_id(request_json))
     MDC.put('partnerName', request_json['requestInfo']['sourceId'])
+
+
+def get_request_id(request_json):
+    request_id = request_json['requestInfo'].get('requestId')
+    if not request_id:
+        request_id = request_json['requestInfo'].get('requestID')
+    return request_id
 
 
 def clear_mdc():

@@ -1,0 +1,24 @@
+{
+  "requestInfo": {
+    "transactionId": "xxx-xxx-xxxx",
+    "requestID": "yyy-yyy-yyyy",
+    "sourceId": "cmopt",
+    "timeout": 600
+  },
+  "optimInfo": {
+    "solver": "mzn",
+    "solverArgs": {
+      "solver": "cbc"
+    },
+    "modelContent": "% Baking cakes for the school fete (with data file)\r\n\r\nint: flour;  %no. grams of flour available\r\nint: banana; %no. of bananas available\r\nint: sugar;  %no. grams of sugar available\r\nint: butter; %no. grams of butter available\r\nint: cocoa;  %no. grams of cocoa available\r\n\r\nconstraint assert(flour >= 0,\"Invalid datafile: \" ++\r\n                  \"Amount of flour should be non-negative\");\r\nconstraint assert(banana >= 0,\"Invalid datafile: \" ++\r\n                  \"Amount of banana should be non-negative\");\r\nconstraint assert(sugar >= 0,\"Invalid datafile: \" ++\r\n                  \"Amount of sugar should be non-negative\");\r\nconstraint assert(butter >= 0,\"Invalid datafile: \" ++\r\n                  \"Amount of butter should be non-negative\");\r\nconstraint assert(cocoa >= 0,\"Invalid datafile: \" ++\r\n                  \"Amount of cocoa should be non-negative\");\r\n\r\nvar 0..100: b; % no. of banana cakes\r\nvar 0..100: c; % no. of chocolate cakes\r\n\r\n% flour\r\nconstraint 250*b + 200*c <= flour;\r\n% bananas\r\nconstraint 2*b  <= banana;\r\n% sugar\r\nconstraint 75*b + 150*c <= sugar;\r\n% butter\r\nconstraint 100*b + 150*c <= butter;\r\n% cocoa\r\nconstraint 75*c <= cocoa;\r\n\r\n% maximize our profit\r\nsolve maximize 400*b + 450*c;\r\n\r\noutput [\"no. of banana cakes = \\(b)\\n\",\r\n        \"no. of chocolate cakes = \\(c)\\n\"];",
+    "optData": {
+      "json": {
+        "flour": 4000,
+        "banana": 6,
+        "sugar": 2000,
+        "butter": 500,
+        "cocoa": 500
+      }
+    }
+  }
+}

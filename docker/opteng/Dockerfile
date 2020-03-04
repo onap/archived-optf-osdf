@@ -1,6 +1,6 @@
 #
 # -------------------------------------------------------------------------
-#   Copyright (c) 2018 AT&T Intellectual Property
+#   Copyright (c) 2020 AT&T Intellectual Property
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 # -------------------------------------------------------------------------
 #
 
-FROM ubuntu:16.04
+FROM python:3.7-alpine
 
 ARG MVN_ARTIFACT_VERSION
 ARG REPO
@@ -35,24 +35,23 @@ ENV MZN_BASENAME MiniZincIDE-${MZN}-bundle-linux
 ENV MZN_GH_BASE https://github.com/MiniZinc/MiniZincIDE
 ENV MZN_DL_URL ${MZN_GH_BASE}/releases/download/${MZN}/${MZN_BASENAME}-x86_64.tgz
 
-RUN apt-get update -y \
-    && apt-get install -y vim unzip wget libmpfr-dev \
-    && apt-get install -y git libqt5printsupport5 build-essential \
-    && apt-get install -y python3 python3-setuptools python3-dev \
-    && easy_install3 pip \
-    && pip install --upgrade virtualenv pip wheel setuptools
-
-RUN ln -s /usr/bin/python3.5 /usr/bin/python
+RUN apk update  && apk upgrade \
+    && apk --no-cache --update add --virtual build-deps openssl wget  \
+    && apk --no-cache --update add less ca-certificates bash libxslt-dev unzip \
+                                freetype freetype-dev libstdc++ build-base libc6-compat \
+    && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
 
 # Minizinc
-RUN wget -q $MZN_DL_URL -O /tmp/mz.tgz \
-    && tar xzf /tmp/mz.tgz \
+RUN wget -q $MZN_DL_URL -O mz.tgz \
+    && tar xzf mz.tgz \
     && mv $MZN_BASENAME /mz-dist \
-    && rm /tmp/mz.tgz \
+    && rm mz.tgz \
     && echo PATH=/mz-dist/bin:$PATH >> ~/.bashrc
 
 ENV SHELL /bin/bash
 ENV PATH /mz-dist:$PATH
+
+RUN addgroup -S onap && adduser -S -G onap onap
 
 # OSDF
 WORKDIR /opt/osdf
@@ -61,9 +60,15 @@ WORKDIR /opt/osdf
 #    rm -f /opt/osdf.zip
 
 COPY onap-osdf-tm/optf-osdf-${MVN_ARTIFACT_VERSION}.zip /tmp/optf-osdf.zip
-COPY onap-osdf-tm/apps /opt/osdf/apps
+COPY onap-osdf-tm/runtime /opt/osdf/runtime
+COPY onap-osdf-tm/requirements-opteng.txt .
 RUN unzip -q -o -B /tmp/optf-osdf.zip -d /opt/ && rm -f /tmp/optf-osdf.zip
-RUN mkdir -p /var/log/onap/optf/osdf/
-RUN pip install --no-cache-dir -r requirements.txt
+RUN mkdir -p /var/log/onap/optf/osdf/ \
+    && chown onap:onap /var/log/onap -R \
+    && chown onap:onap /opt/osdf -R
 
-CMD [ "/opt/osdf/osdfapp.sh" ]
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-opteng.txt
+
+USER onap
+
+CMD [ "/opt/osdf/osdfapp.sh", "-x", "solverapp.py", "-c", "opteng_config.yaml" ]
