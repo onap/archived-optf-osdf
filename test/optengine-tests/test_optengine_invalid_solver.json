@@ -1,0 +1,15 @@
+{
+  "requestInfo": {
+    "transactionId": "xxx-xxx-xxxx",
+    "requestID": "yyy-yyy-yyyy",
+    "sourceId": "cmopt",
+    "timeout": 600
+  },
+  "optimInfo": {
+    "solver": "apy",
+    "modelContent": "import sys\r\n\r\nif __name__ == \"__main__\":\r\n    print(sys.argv[1],sys.argv[2])\r\n\r\n    with open(sys.argv[2], \"wt\") as f:\r\n        f.write('{\"hello\":\"world\",\"another\":\"string\"}')\r\n\r\n",
+    "optData": {
+      "text": "flour = 8000; \r\nbanana = 11; \r\nsugar = 3000; \r\nbutter = 1500; \r\ncocoa = 800; "
+    }
+  }
+}
