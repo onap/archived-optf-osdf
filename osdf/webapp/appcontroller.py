@@ -24,6 +24,7 @@ import osdf
 import osdf.config.base as cfg_base
 from osdf.config.base import osdf_config
 from osdf.adapters.aaf import aaf_authentication as aaf_auth
+from osdf.logging.osdf_logging import debug_log
 
 auth_basic = HTTPBasicAuth()
 
@@ -38,10 +39,12 @@ unauthorized_message = json.dumps(error_body)
 
 @auth_basic.get_password
 def get_pw(username):
-    end_point = request.url.split('/')[-1]
-    auth_group = osdf.end_point_auth_mapping.get(end_point)
-    return cfg_base.http_basic_auth_credentials[auth_group].get(
-        username) if auth_group else None
+    for k in osdf.end_point_auth_mapping:
+        if k in request.url:
+            auth_group = osdf.end_point_auth_mapping.get(k)
+    debug_log.debug(username)
+    debug_log.debug(cfg_base.http_basic_auth_credentials[auth_group])
+    return cfg_base.http_basic_auth_credentials[auth_group].get(username) if auth_group else None
 
 
 @auth_basic.error_handler

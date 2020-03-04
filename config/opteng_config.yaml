@@ -1,0 +1,25 @@
+# Policy Platform -- requires Authorization
+policyPlatformUrl: https://policy-xacml-pdp:6969/policy/pdpx/decision/v1 # Policy Dev platform URL
+
+# AAF Authentication config
+is_aaf_enabled: False
+aaf_cache_expiry_mins: 5
+aaf_url: https://aaftest.simpledemo.onap.org:8095
+aaf_user_roles:
+  - '/optmodel:org.onap.oof.access|*|read ALL'
+  - '/optengine:org.onap.oof.access|*|read ALL'
+
+# Secret Management Service from AAF
+aaf_sms_url: http://localhost:10443
+aaf_sms_timeout: 30
+secret_domain: osdf
+aaf_ca_certs: ssl_certs/aaf_root_ca.cer
+
+osdfDatabaseHost: localhost
+osdfDatabaseSchema: osdf
+osdfDatabaseUsername: osdf
+osdfDatabasePassword: osdf
+osdfDatabasePort: 3306
+
+#key
+appkey: os35@rrtky400fdntc#001t5
