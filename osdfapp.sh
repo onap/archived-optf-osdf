@@ -18,15 +18,45 @@
 # -------------------------------------------------------------------------
 #
 
+usage() {
+	echo "Usage:"
+	echo "    $0 -h Display this help message."
+	echo "    $0 -c configfile_path(optional) -x app.py file"
+	exit 0
+}
+
 cd $(dirname $0)
 
 # bash ../etc/make-certs.sh  # create the https certificates if they are not present
 
+while getopts ":hc:x:" opt; do
+  case ${opt} in
+    h )
+      usage
+      ;;
+    c )
+      # process option configuration
+      export OSDF_CONFIG_FILE=$OPTARG
+      ;;
+    x )
+      # process executable file
+      export EXEC_FILE=$OPTARG
+      ;;
+    ? )
+      usage
+      ;;
+    : )
+      echo "Invalid Option: -$OPTARG requires an argument" 1>&2
+      exit 1
+     ;;
+  esac
+done
+shift $(( OPTIND - 1 ))
+
+set -e
+
 LOGS=logs
 mkdir -p $LOGS
-
-export OSDF_CONFIG_FILE=${1:-/opt/app/config/osdf_config.yaml}  # this file may be passed by invoker
-[ ! -e "$OSDF_CONFIG_FILE" ] && unset OSDF_CONFIG_FILE
 
 if [ -e /opt/app/ssl_cert/aaf_root_ca.cer ]; then
     #assuming that this would be an ubuntu vm.
@@ -41,4 +71,11 @@ else
     export REQUESTS_CA_BUNDLE=/opt/app/ssl_cert/aaf_root_ca.cer
 fi
 
-python osdfapp.py 2>$LOGS/err.log 1>$LOGS/out.log < /dev/null  # running the app 
+if [ ! -z "$EXEC_FILE" ]
+then
+	# flask run
+	echo "Running $EXEC_FILE"
+	python $EXEC_FILE # running the app
+else
+    usage
+fi

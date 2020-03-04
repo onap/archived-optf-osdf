@@ -1,0 +1,13 @@
+{
+  "requestInfo": {
+    "transactinId": "xxx-xxx-xxxx",
+    "requestID": "yyy-yyy-yyyy",
+    "sourceId": "cmopt"
+  },
+  "modelInfo": {
+    "modelId": "model2",
+    "solver": "mzn",
+    "description": "graph coloring problem for australia",
+    "modelContent": "int: nc;\r\nvar 1 .. nc: wa;   var 1 .. nc: nt;  var 1 .. nc: sa;   var 1 .. nc: q;\r\nvar 1 .. nc: nsw;  var 1 .. nc: v;   var 1 .. nc: t;\r\nconstraint wa != nt;\r\nconstraint wa != sa;\r\nconstraint nt != sa;\r\nconstraint nt != q;\r\nconstraint sa != q;\r\nconstraint sa != nsw;\r\nconstraint sa != v;\r\nconstraint q != nsw;\r\nconstraint nsw != v;\r\nsolve satisfy;\r\noutput [\r\n    \"wa=\\(wa)\\t nt=\\(nt)\\t sa=\\(sa)\\n\",\r\n    \"q=\\(q)\\t nsw=\\(nsw)\\t v=\\(v)\\n\",\r\n    \"t=\", show(t), \"\\n\"\r\n];"
+  }
+}

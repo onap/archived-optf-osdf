@@ -1,0 +1,76 @@
+#
+# -------------------------------------------------------------------------
+#   Copyright (c) 2018 AT&T Intellectual Property
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+# -------------------------------------------------------------------------
+#
+
+FROM ubuntu:16.04
+
+ARG MVN_ARTIFACT_VERSION
+ARG REPO
+ARG HTTP_PROXY=${HTTP_PROXY}
+ARG HTTPS_PROXY=${HTTPS_PROXY}
+
+ENV http_proxy $HTTP_PROXY
+ENV https_proxy $HTTPS_PROXY
+
+ENV OSDF_PORT "8699"
+EXPOSE ${OSDF_PORT}
+
+ENV MZN 2.4.2
+ENV MZN_BASENAME MiniZincIDE-${MZN}-bundle-linux
+ENV MZN_GH_BASE https://github.com/MiniZinc/MiniZincIDE
+ENV MZN_DL_URL ${MZN_GH_BASE}/releases/download/${MZN}/${MZN_BASENAME}-x86_64.tgz
+
+RUN apt-get update -y \
+    && apt-get install -y vim unzip wget libmpfr-dev \
+    && apt-get install -y git libqt5printsupport5 build-essential \
+    && apt-get install -y python3 python3-setuptools python3-dev \
+    && easy_install3 pip \
+    && pip install --upgrade virtualenv pip wheel setuptools
+
+RUN ln -s /usr/bin/python3.5 /usr/bin/python
+
+# Minizinc
+RUN wget -q $MZN_DL_URL -O /tmp/mz.tgz \
+    && tar xzf /tmp/mz.tgz \
+    && mv $MZN_BASENAME /mz-dist \
+    && rm /tmp/mz.tgz \
+    && echo PATH=/mz-dist/bin:$PATH >> ~/.bashrc
+
+ENV SHELL /bin/bash
+ENV PATH /mz-dist:$PATH
+
+# OSDF
+WORKDIR /opt/osdf
+#RUN wget -O /opt/osdf.zip "https://nexus.onap.org/service/local/artifact/maven/redirect?r=releases&g=org.onap.optf.osdf&a=optf-osdf&e=zip&v=1.3.4" && \
+#    unzip -q -o -B /opt/osdf.zip -d /opt/ && \
+#    rm -f /opt/osdf.zip
+RUN groupadd onap \
+    && useradd -m -g onap onap
+
+COPY onap-osdf-tm/optf-osdf-${MVN_ARTIFACT_VERSION}.zip /tmp/optf-osdf.zip
+COPY onap-osdf-tm/apps /opt/osdf/apps
+RUN unzip -q -o -B /tmp/optf-osdf.zip -d /opt/ && rm -f /tmp/optf-osdf.zip
+RUN mkdir -p /var/log/onap/optf/osdf/ \
+    && chown -R onap:onap /var/log/onap \
+    && chown -R onap:onap /opt/osdf
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+USER onap
+
+CMD [ "/opt/osdf/osdfapp.sh", "-x", "osdfapp.py" ]
