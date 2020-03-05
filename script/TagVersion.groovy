@@ -37,7 +37,7 @@ if ( project.properties['osdf.project.version'].endsWith("-SNAPSHOT") ) {
     project.properties['project.docker.latesttagtimestamp.version']=versionTag + "-SNAPSHOT-"+timestamp;
     project.properties['project.repo'] = 'snapshots'
 } else { 
-    project.properties['project.docker.latesttag.version']=baseTag + "-STAGING-latest";
+    project.properties['project.docker.latesttag.version']=versionTag + "-STAGING-latest";
     project.properties['project.docker.latesttagtimestamp.version']=versionTag + "-STAGING-"+timestamp;
     project.properties['project.repo'] = 'releases'
 } 
