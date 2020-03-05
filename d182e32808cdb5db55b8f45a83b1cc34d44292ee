@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "085ce6c0_a3c87bd3",
+        "filename": "osdf/models/route/route_opt.mzn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-03-05T14:48:04Z",
+      "side": 1,
+      "message": "Is it possible to move it under apps/optimizers/route?  This way when we make the osdf library, it wont have route opt related files.",
+      "revId": "d182e32808cdb5db55b8f45a83b1cc34d44292ee",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
