@@ -21,6 +21,11 @@ OSDF Manager Main Flask Application
 """
 
 import json
+import ssl
+import sys
+import time
+import traceback
+from optparse import OptionParser
 from threading import Thread  # for scaling up, may need celery with RabbitMQ or redis
 
 from flask import request, g
@@ -89,14 +94,15 @@ def placement_rest_api():
                       version_info=api_version_info, request_status="accepted", status_message="")
 
 
-@app.route("/api/oof/v1/route", methods=["POST"])
+@app.route("/api/oof/route/v1", methods=["POST"])
 def do_route_calc():
     """
     Perform the basic route calculations and returnn the vpn-bindings
     """
     request_json = request.get_json()
     audit_log.info("Calculate Route request received!")
-    return RouteOpt().getRoute(request_json)
+    response = RouteOpt().getRoute(request_json)
+    return response
 
 
 @app.route("/api/oof/v1/pci", methods=["POST"])
@@ -104,7 +110,13 @@ def do_route_calc():
 @auth_basic.login_required
 def do_pci_optimization():
     request_json = request.get_json()
+    audit_log.info('request json obtained==>')
+    audit_log.info(request_json)
+
     req_id = request_json['requestInfo']['requestId']
+    audit_log.info('requestID obtained==>')
+    audit_log.info(req_id)
+    
     g.request_id = req_id
     audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
     PCIOptimizationAPI(request_json).validate()
@@ -114,6 +126,7 @@ def do_pci_optimization():
     t = Thread(target=process_pci_optimation, args=(request_json, osdf_config, None))
     t.start()
     audit_log.info(MH.accepted_valid_request(req_id, request))
+    audit_log.info('reached upto return')
     return req_accept(request_id=req_id,
                       transaction_id=request_json['requestInfo']['transactionId'],
                       request_status="accepted", status_message="")
