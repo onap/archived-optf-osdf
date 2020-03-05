@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------
-#   Copyright (c) 2018 Huawei Intellectual Property
+#   Copyright (c) 2020 Huawei Intellectual Property
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -20,7 +20,12 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 from osdf.utils.mdc_utils import mdc_from_json
+from osdf.logging.osdf_logging import MH, audit_log, error_log, debug_log
+import pymzn
+from sklearn import preprocessing
 
+import os
+BASE_DIR = os.path.dirname(__file__)
 
 class RouteOpt:
 
@@ -31,6 +36,8 @@ class RouteOpt:
     # DNS server and standard port of AAI.. 
     # TODO: read the port from the configuration and add to DNS
     aai_host = "https://aai.api.simpledemo.onap.org:8443"
+    audit_log.info("base directory")
+    audit_log.info(BASE_DIR)
     aai_headers = {
         "X-TransactionId": "9999",
         "X-FromAppId": "OOF",
@@ -50,89 +57,184 @@ class RouteOpt:
                 return True
         return False
 
+    def getLinksName(self, routes,initial_start_edge,initial_end_edge, mappingTable):
+        routes=list(routes)
+        arr=routes[0]['x']
+        listOfLinks=[]
+        for i in range(0, len(routes[0]['x'])):
+            if arr[i] == 1 :
+                # listOfLinks.append(self.fetchLogicalLinks(initial_start_edge[i], initial_end_edge[i], mappingTable))
+                listOfLinks.append(mappingTable[initial_start_edge[i] + ":" + initial_end_edge[i]])
+
+        return listOfLinks
+
+    # def search(self, ip1, ip2, dic):
+    #     if ip1 == "" or ip2 == "":
+    #         return ""
+    #     else:
+    #         string = ip1 + ":" + ip2
+    #         return dic[string]
+    #
+    # def fetchLogicalLinks(self, initial_start_edge, initial_end_edge, mappingTable):
+    #     link_name=self.search(initial_start_edge, initial_end_edge, mappingTable)
+    #     return link_name
+
+
+    # def fetchLogicalLinks(self, initial_start_edge, initial_end_edge, mappingTable):
+    #     return mappingTable[initial_start_edge + ":" + initial_end_edge]
+
+    def solve(self, mzn_model, dzn_data):
+        return pymzn.minizinc(mzn=mzn_model, data=dzn_data)
+
+    def getLinks(self, mzn_model, dzn_data, initial_start_edge,initial_end_edge, mappingTable):
+        routes = self.solve(mzn_model, dzn_data)
+        audit_log.info("mocked minizinc solution====>")
+        audit_log.info(routes)
+
+        converted_links=self.getLinksName(routes, initial_start_edge,initial_end_edge, mappingTable)
+        audit_log.info("converted links===>")
+        audit_log.info(converted_links)
+        return converted_links
+
+    def addition(self, data):
+        relationship = data["relationship-list"]["relationship"]
+        res = ""
+        for index, eachItem in enumerate(relationship):
+            if index == len(relationship) - 1:
+                res += eachItem["accessNodeId"]
+            else:
+                res += eachItem["accessNodeId"] + ":"
+
+        return data["link-name"], res
+
+    def createMapTable(self, logical_links):
+        result = map(self.addition, logical_links)
+
+        parseTemplate = {}
+
+        for eachItem in result:
+            parseTemplate[eachItem[1]] = eachItem[0]
+        audit_log.info("mapping table")
+        audit_log.info(parseTemplate)
+        return parseTemplate
+
+    def build_dzn_data(self, src_access_node_id, dst_access_node_id):
+        Edge_Start = []
+        Edge_End = []
+        logical_links = self.get_logical_links()
+        audit_log.info("mocked response of AAI received (logical links) successful===>")
+        audit_log.info(logical_links)
+        # prepare map table
+        mappingTable = self.createMapTable(logical_links)
+        # take the logical link where both the p-interface in same onap
+        if logical_links is not None:
+            for logical_link in logical_links:
+                if not self.isCrossONAPLink(logical_link):
+                    # link is in local ONAP
+                    relationship = logical_link["relationship-list"]["relationship"]
+
+                    relationshipStartNode = relationship[0]
+                    relationshipStartNodeID = relationshipStartNode["related-link"].split("/")[-1]
+                    start_accessNodeId = relationshipStartNodeID.split("-")[-3]
+                    Edge_Start.append(start_accessNodeId)
+
+                    relationshipEndtNode = relationship[1]
+                    relationshipEndNodeID = relationshipEndtNode["related-link"].split("/")[-1]
+                    end_accessNodeId = relationshipEndNodeID.split("-")[-3]
+                    Edge_End.append(end_accessNodeId)
+
+        audit_log.info("edge start and end array of i/p address are===>")
+        audit_log.info(Edge_Start)
+        audit_log.info(Edge_End)
+        # labeling ip to number for mapping
+        le = preprocessing.LabelEncoder()
+        le.fit(Edge_Start + Edge_End)
+        # print(le.classes_)
+        dzn_start_edge = le.transform(Edge_Start)
+
+        final_dzn_start_arr = []
+        for i in range(0, len(dzn_start_edge)):
+            final_dzn_start_arr.append(dzn_start_edge[i])
+
+        final_dzn_end_arr = []
+        dzn_end_edge = le.transform(Edge_End)
+        for j in range(0, len(dzn_end_edge)):
+            final_dzn_end_arr.append(dzn_end_edge[j])
+
+        audit_log.info("start and end array that passed in dzn_data===>")
+        audit_log.info(final_dzn_start_arr)
+        audit_log.info(final_dzn_end_arr)
+
+        link_cost  = []
+        for k in range(0, len(final_dzn_start_arr)):
+            link_cost.append(1)
+
+        audit_log.info("src_access_node_id")
+        audit_log.info(src_access_node_id)
+        source= le.transform([src_access_node_id])
+        audit_log.info("vallue of source===>")
+        audit_log.info(source)
+        if source in final_dzn_start_arr :
+            start = source[0]
+            audit_log.info("source node")
+            audit_log.info(start)
+
+        audit_log.info("dst_access_node_id")
+        audit_log.info(dst_access_node_id)
+        destination= le.transform([dst_access_node_id])
+        if destination in final_dzn_end_arr :
+            end = destination[0]
+            audit_log.info("destination node")
+            audit_log.info(end)
+        # data to be prepared in the below format:
+        dzn_data = {
+            'N': self.total_node(final_dzn_start_arr + final_dzn_end_arr),
+            'M': len(final_dzn_start_arr),
+            'Edge_Start': final_dzn_start_arr,
+            'Edge_End': final_dzn_end_arr,
+            'L': link_cost,
+            'Start': start,
+            'End': end,
+        }
+        # can not do reverse mapping outside of this scope, so doing here
+        audit_log.info("reverse mapping after prepared dzn_data")
+        initial_start_edge=le.inverse_transform(final_dzn_start_arr)
+        initial_end_edge=le.inverse_transform(final_dzn_end_arr)
+        audit_log.info(initial_start_edge)
+        audit_log.info(initial_end_edge)
+        return dzn_data, initial_start_edge,initial_end_edge, mappingTable
+
+    def total_node(self, node):
+        nodeSet = set()
+        for i in range(0, len(node)):
+            nodeSet.add(node[i])
+        total_node = len(nodeSet)
+        return total_node
+
     def getRoute(self, request):
         """
-        This method checks 
+        This method checks
         :param logical_link:
         :return:
         """
-        mdc_from_json(request)
+        routeInfo = request["routeInfo"]["routeRequests"]
+        routeRequest = routeInfo[0]
+        src_access_node_id = routeRequest["srcPort"]["accessNodeId"]
+        dst_access_node_id = routeRequest["dstPort"]["accessNodeId"]
 
-        src_access_node_id = request["srcPort"]["src-access-node-id"]
-        dst_access_node_id = request["dstPort"]["dst-access-node-id"]
-        
+        dzn_data, initial_start_edge, initial_end_edge, mappingTable = self.build_dzn_data(src_access_node_id, dst_access_node_id )
+        #mzn_model = "/home/root1/Videos/projects/osdf/test/functest/simulators/osdf/optimizers/routeopt/route_opt.mzn"
+        mzn_model = os.path.join(BASE_DIR, 'route_opt.mzn')
 
-        ingress_p_interface = None
-        egress_p_interface = None
+        routeSolutions = self.getLinks(mzn_model, dzn_data, initial_start_edge,initial_end_edge, mappingTable)
 
-        # for the case of request_json for same domain, return the same node with destination update
-        if src_access_node_id == dst_access_node_id:
-            data = '{'\
-                '"vpns":['\
-                    '{'\
-                        '"access-topology-id": "' + request["srcPort"]["src-access-topology-id"] + '",'\
-                        '"access-client-id": "' + request["srcPort"]["src-access-client-id"] + '",'\
-                        '"access-provider-id": "' + request["srcPort"]["src-access-provider-id"]+ '",'\
-                        '"access-node-id": "' + request["srcPort"]["src-access-node-id"]+ '",'\
-                        '"src-access-ltp-id": "' + request["srcPort"]["src-access-ltp-id"]+ '",'\
-                        '"dst-access-ltp-id": "' + request["dstPort"]["dst-access-ltp-id"]  +'"'\
-                    '}'\
-                ']'\
-            '}'
-            return data
-        else:
-            logical_links = self.get_logical_links()
-
-            # take the logical link where both the p-interface in same onap
-            if logical_links != None:
-                for logical_link in logical_links.get("logical-link"):
-                    if not self.isCrossONAPLink(logical_link):
-                        # link is in local ONAP
-                        for relationship in logical_link["relationship-list"]["relationship"]:
-                            if relationship["related-to"] == "p-interface":
-                                if src_access_node_id in relationship["related-link"]:
-                                    i_interface = relationship["related-link"].split("/")[-1]
-                                    ingress_p_interface = i_interface.split("-")[-1]
-                                if dst_access_node_id in relationship["related-link"]:
-                                    e_interface = relationship["related-link"].split("/")[-1]
-                                    egress_p_interface = e_interface.split("-")[-1]
-                        data = '{'\
-                                '"vpns":['\
-                                        '{'\
-                                        '"access-topology-id": "' + request["srcPort"]["src-access-topology-id"] + '",'\
-                                        '"access-client-id": "' + request["srcPort"]["src-access-client-id"] + '",'\
-                                        '"access-provider-id": "' + request["srcPort"]["src-access-provider-id"]+ '",'\
-                                        '"access-node-id": "' + request["srcPort"]["src-access-node-id"]+ '",'\
-                                        '"src-access-ltp-id": "' + request["srcPort"]["src-access-ltp-id"]+ '",'\
-                                        '"dst-access-ltp-id": "' + ingress_p_interface +'"'\
-                                '},'\
-                                '{' \
-                                        '"access-topology-id": "' + request["dstPort"]["dst-access-topology-id"] + '",' \
-                                        '"access-topology-id": "' + request["dstPort"]["dst-access-topology-id"]+ '",' \
-                                        '"access-provider-id": "' + request["dstPort"]["dst-access-provider-id"]+ '",' \
-                                        '"access-node-id": "' + request["dstPort"]["dst-access-node-id"]+ '",' \
-                                        '"src-access-ltp-id": "' + egress_p_interface + '",' \
-                                        '"dst-access-ltp-id": "' + request["dstPort"]["dst-access-ltp-id"] + '"' \
-                                '}'\
-                            ']'\
-                        '}'
-                        return data
-
-
-    def get_pinterface(self, url):
-        """
-        This method returns details for p interface
-        :return: details of p interface
-        """
-        aai_req_url = self.aai_host + url
-        response = requests.get(aai_req_url,
-                                headers=self.aai_headers,
-                                auth=HTTPBasicAuth("AAI", "AAI"),
-                                verify=False)
-
-        if response.status_code == 200:
-            return response.json()
-
+        return {
+            "requestId": request["requestInfo"]["requestId"],
+            "transactionId": request["requestInfo"]["transactionId"],
+            "statusMessage": " ",
+            "requestStatus": "accepted",
+            "solutions": routeSolutions
+        }
 
     def get_logical_links(self):
         """
@@ -142,12 +244,6 @@ class RouteOpt:
         """
         logical_link_url = "/aai/v13/network/logical-links?operational-status=up"
         aai_req_url = self.aai_host + logical_link_url
-
-        response = requests.get(aai_req_url,
-                     headers=self.aai_headers,
-                     auth=HTTPBasicAuth("AAI", "AAI"),
-                     verify=False)
-
-        logical_links =  None
+        response = requests.get(aai_req_url,headers=self.aai_headers,auth=HTTPBasicAuth("AAI", "AAI"),verify=False)
         if response.status_code == 200:
             return response.json()
