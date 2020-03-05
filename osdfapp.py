@@ -26,7 +26,9 @@ from threading import Thread  # for scaling up, may need celery with RabbitMQ or
 from flask import request, g
 
 from osdf.apps.baseapp import app, run_app
+from apps.nst.models.api.nstSelectionRequest import NSTSelectionAPI
 from apps.pci.models.api.pciOptimizationRequest import PCIOptimizationAPI
+from apps.nst.optimizers.nst_select_processor import process_nst_selection
 from apps.pci.optimizers.pci_opt_processor import process_pci_optimation
 from apps.placement.models.api.placementRequest import PlacementAPI
 from apps.placement.optimizers.conductor.remote_opt_processor import process_placement_opt
@@ -98,6 +100,13 @@ def do_route_calc():
     audit_log.info("Calculate Route request received!")
     return RouteOpt().getRoute(request_json)
 
+@app.route("/api/oof/v1/selection/nst", methods=["POST"])
+def do_nst_selection():
+    request_json = request.get_json()
+    req_id = request_json['requestInfo']['requestId']
+    NSTSelectionAPI(request_json).validate()
+    response = process_nst_selection(request_json, osdf_config)
+    return response
 
 @app.route("/api/oof/v1/pci", methods=["POST"])
 @app.route("/api/oof/pci/v1", methods=["POST"])
