@@ -1,0 +1,17 @@
+{
+  "requestInfo": {
+    "transactionId": "xxx-xxx-xxxx",
+    "requestId": "yyy-yyy-yyyy",
+    "callbackUrl": "https://wiki.onap.org:5000/callbackUrl",
+    "callbackHeader" :{ },
+    "sourceId": "SO",
+    "timeout": 600
+  },
+  "serviceProfile": {
+    "resourceName" :"NST",
+    "resourceId" :"NST_ID",
+    "serviceProfileParameters": {
+      "latency":5
+    }
+  }
+}
