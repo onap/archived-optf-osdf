@@ -25,7 +25,7 @@ class TestGetOptQueryData(unittest.TestCase):
     def test_get_opt_query_data(self):
         main_dir = ""
         parameter_data_file = main_dir + "test/placement-tests/request.json"
-        policy_data_path = main_dir + "test/policy-local-files/"
+        policy_data_path = main_dir + "test/policy-local-files/new_policies/"
 
         query_policy_data_file = ["QueryPolicy_vCPE.json"]
         request_json = json.loads(open(parameter_data_file).read())
@@ -37,7 +37,7 @@ class TestGetOptQueryData(unittest.TestCase):
     def test_get_opt_query_data_vfmod(self):
         main_dir = ""
         parameter_data_file = main_dir + "test/placement-tests/request_vfmod.json"
-        policy_data_path = main_dir + "test/policy-local-files/"
+        policy_data_path = main_dir + "test/policy-local-files/new_policies/"
 
         query_policy_data_file = ["QueryPolicy_vFW_TD.json"]
         request_json = json.loads(open(parameter_data_file).read())

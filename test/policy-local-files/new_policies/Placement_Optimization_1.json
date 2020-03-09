@@ -1,0 +1,67 @@
+{
+  "OSDF_FRANKFURT.Placement_optimization_1": {
+    "type": "onap.policies.optimization.OptimizationPolicy",
+    "version": "1.0.0",
+    "type_version": "1.0.0",
+    "metadata": {
+      "policy-id": "OSDF_FRANKFURT.Placement_optimization_1",
+      "policy-version": 1
+    },
+    "properties": {
+      "scope": [
+        "OSDF_FRANKFURT"
+      ],
+      "services": [
+        "vCPE"
+      ],
+      "resources": [
+        "vG",
+        "vGMuxInfra"
+      ],
+      "geography": [
+        "US",
+        "INTERNATIONAL"
+      ],
+      "identity": "optimization",
+      "objective": "minimize",
+      "objectiveParameter": {
+            "parameterAttributes": [
+                {
+                    "resources": ["vGMuxInfra"],
+                    "customerLocationInfo": "customer_loc",
+                    "parameter": "distance",
+                    "weight": "1",
+                    "operator": "product"
+                },
+                {
+                    "resources": ["vG"],
+                    "customerLocationInfo": "customer_loc",
+                    "parameter": "distance",
+                    "weight": "1",
+                    "operator": "product"
+                },
+                {
+                    "resources": ["vG"],
+                    "parameter": "hpa_score",
+                    "weight": "200",
+                    "operator": "product"
+                },
+                {
+                    "resources": ["vFW"],
+                    "customerLocationInfo": "customer_loc",
+                    "parameter": "distance",
+                    "weight": "100",
+                    "operator": "product"
+                },
+                {
+                    "resources": ["vFW"],
+                    "parameter": "hpa_score",
+                    "weight": "200",
+                    "operator": "product"
+                }
+            ],
+            "operator": "sum"
+        }
+    }
+  }
+}
