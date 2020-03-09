@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e505a6af_8ec8027d",
+        "filename": "apps/placement/optimizers/conductor/api_builder.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-09T13:27:39Z",
+      "side": 1,
+      "message": "Slicing changes would be added on top of these code updates, so we can take care of them after merging this.",
+      "parentUuid": "3ae27917_50aefa5a",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1a45cb5_8a48e227",
         "filename": "apps/placement/optimizers/conductor/api_builder.py",
         "patchSetId": 10
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "So could i delete this part?",
       "parentUuid": "a1a45cb5_8a48e227",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1516c2_82ebbae4",
+        "filename": "apps/placement/optimizers/conductor/api_builder.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-09T13:27:39Z",
+      "side": 1,
+      "message": "No, we may keep it and update the code logic when the policy structure is updated with latest policy api requirement.",
+      "parentUuid": "f4054fc3_fea7b77c",
       "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "27e14263_b0012586",
+        "filename": "apps/placement/optimizers/conductor/api_builder.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-09T13:27:39Z",
+      "side": 1,
+      "message": "No, we may keep it and update the code logic when the policy structure is updated with latest policy api requirement.",
+      "parentUuid": "38374184_3823ba30",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc6ebba1_63493cee",
         "filename": "apps/placement/optimizers/conductor/api_builder.py",
         "patchSetId": 10
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "So shall delete this part also?",
       "parentUuid": "bc6ebba1_63493cee",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9327eefb_5abd12b7",
+        "filename": "apps/placement/optimizers/conductor/api_builder.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-09T13:27:39Z",
+      "side": 1,
+      "message": "No, we may keep it and update the code logic when the policy structure is updated with latest policy api requirement.",
+      "parentUuid": "fd5f52da_549a6532",
       "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -177,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "7cd49847_7b486e2c",
+        "filename": "apps/placement/optimizers/conductor/translation.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-09T13:27:39Z",
+      "side": 1,
+      "message": "As discussed, we will map new values for HAS.",
+      "parentUuid": "c43c5918_7a071bcc",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3964d2a4_212bf00f",
         "filename": "osdf/adapters/policy/utils.py",
         "patchSetId": 10
@@ -212,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "70d1db7c_97730a64",
+        "filename": "osdf/adapters/policy/utils.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-09T13:27:39Z",
+      "side": 1,
+      "message": "Okay, lets comment this as this field is no more supported by policy API.",
+      "parentUuid": "d7e29310_e688def3",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0ca0040_fc63d8ab",
         "filename": "test/placement-tests/request_placement_vfmod.json",
         "patchSetId": 10
@@ -241,6 +349,24 @@
       "side": 1,
       "message": "Oh...Looks like not. HAS is still using the old policy types as keys to do the filtering.",
       "parentUuid": "c0ca0040_fc63d8ab",
+      "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693c6b9f_85f09caf",
+        "filename": "test/placement-tests/request_placement_vfmod.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-09T13:27:39Z",
+      "side": 1,
+      "message": "yes, you got it right. We would need to pass the same value to HAS to avoid any code changes in HAS side.",
+      "parentUuid": "77474e9f_c0c6b7f2",
       "revId": "185732be2f5be67c4a270797fcff7f537f671c0e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
