@@ -1,5 +1,6 @@
 # -------------------------------------------------------------------------
 #   Copyright (c) 2015-2017 AT&T Intellectual Property
+#   Copyright (C) 2020 Wipro Limited.
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -16,15 +17,93 @@
 # -------------------------------------------------------------------------
 #
 
+import json
+from jinja2 import Template
 from requests import RequestException
 
 import traceback
 from osdf.operation.error_handling import build_json_error_body
-from osdf.logging.osdf_logging import metrics_log, MH, error_log
-from apps.placement.optimizers.conductor import conductor
+from osdf.logging.osdf_logging import metrics_log, MH, error_log, debug_log
+from osdf.adapters.conductor import conductor
 from apps.license.optimizers.simple_license_allocation import license_optim
 from osdf.utils.interfaces import get_rest_client
 from osdf.utils.mdc_utils import mdc_from_json
+
+
+def conductor_response_processor(conductor_response, req_id, transaction_id):
+    """Build a response object to be sent to client's callback URL from Conductor's response
+    This includes Conductor's placement optimization response, and required ASDC license artifacts
+
+    :param conductor_response: JSON response from Conductor
+    :param raw_response: Raw HTTP response corresponding to above
+    :param req_id: Id of a request
+    :return: JSON object that can be sent to the client's callback URL
+    """
+    composite_solutions = []
+    name_map = {"physical-location-id": "cloudClli", "host_id": "vnfHostName",
+                "cloud_version": "cloudVersion", "cloud_owner": "cloudOwner",
+                "cloud": "cloudRegionId", "service": "serviceInstanceId", "is_rehome": "isRehome",
+                "location_id": "locationId", "location_type": "locationType", "directives": "oof_directives"}
+    for reco in conductor_response['plans'][0]['recommendations']:
+        for resource in reco.keys():
+            c = reco[resource]['candidate']
+            solution = {
+                'resourceModuleName': resource,
+                'serviceResourceId': reco[resource].get('service_resource_id', ""),
+                'solution': {"identifierType": name_map.get(c['inventory_type'], c['inventory_type']),
+                             'identifiers': [c['candidate_id']],
+                             'cloudOwner': c.get('cloud_owner', "")},
+                'assignmentInfo': []
+            }
+            for key, value in c.items():
+                if key in ["location_id", "location_type", "is_rehome", "host_id"]:
+                    try:
+                        solution['assignmentInfo'].append({"key": name_map.get(key, key), "value": value})
+                    except KeyError:
+                        debug_log.debug("The key[{}] is not mapped and will not be returned in assignment info".format(key))
+
+            for key, value in reco[resource]['attributes'].items():
+                try:
+                    solution['assignmentInfo'].append({"key": name_map.get(key, key), "value": value})
+                except KeyError:
+                    debug_log.debug("The key[{}] is not mapped and will not be returned in assignment info".format(key))
+            composite_solutions.append(solution)
+
+    request_status = "completed" if conductor_response['plans'][0]['status'] == "done" \
+        else conductor_response['plans'][0]['status']
+    status_message = conductor_response.get('plans')[0].get('message', "")
+
+    solution_info = {}
+    if composite_solutions:
+        solution_info.setdefault('placementSolutions', [])
+        solution_info['placementSolutions'].append(composite_solutions)
+
+    resp = {
+        "transactionId": transaction_id,
+        "requestId": req_id,
+        "requestStatus": request_status,
+        "statusMessage": status_message,
+        "solutions": solution_info
+    }
+    return resp
+
+
+def conductor_no_solution_processor(conductor_response, request_id, transaction_id,
+                                    template_placement_response="templates/plc_opt_response.jsont"):
+    """Build a response object to be sent to client's callback URL from Conductor's response
+    This is for case where no solution is found
+
+    :param conductor_response: JSON response from Conductor
+    :param raw_response: Raw HTTP response corresponding to above
+    :param request_id: request Id associated with the client request (same as conductor response's "name")
+    :param template_placement_response: the template for generating response to client (plc_opt_response.jsont)
+    :return: JSON object that can be sent to the client's callback URL
+    """
+    status_message = conductor_response["plans"][0].get("message")
+    templ = Template(open(template_placement_response).read())
+    return json.loads(templ.render(composite_solutions=[], requestId=request_id, license_solutions=[],
+                                   transactionId=transaction_id,
+                                   requestStatus="completed", statusMessage=status_message, json=json))
 
 
 def process_placement_opt(request_json, policies, osdf_config):
@@ -51,7 +130,16 @@ def process_placement_opt(request_json, policies, osdf_config):
         # Conductor only handles placement, only call Conductor if placementDemands exist
         if request_json.get('placementInfo', {}).get('placementDemands'):
             metrics_log.info(MH.requesting("placement/conductor", req_id))
-            placement_response = conductor.request(request_json, osdf_config, policies)
+            req_info = request_json['requestInfo']
+            demands = request_json['placementInfo']['placementDemands']
+            request_parameters = request_json['placementInfo']['requestParameters']
+            service_info = request_json['serviceInfo']
+            resp = conductor.request(req_info, demands, request_parameters, service_info,
+                                               osdf_config, policies)
+            if resp["plans"][0].get("recommendations"):
+                placement_response = conductor_response_processor(resp, req_id, transaction_id)
+            else:  # "solved" but no solutions found
+                placement_response = conductor_no_solution_processor(resp, req_id, transaction_id)
             if license_info:  # Attach license solution if it exists
                 placement_response['solutionInfo']['licenseInfo'] = license_info
         else:  # License selection only scenario
