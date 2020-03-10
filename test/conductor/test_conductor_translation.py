@@ -1,5 +1,6 @@
 # -------------------------------------------------------------------------
 #   Copyright (c) 2017-2018 AT&T Intellectual Property
+#   Copyright (C) 2020 Wipro Limited.
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -18,7 +19,7 @@
 import unittest
 
 from osdf.adapters.local_data import local_policies
-from apps.placement.optimizers.conductor import translation as tr
+from osdf.adapters.conductor import translation as tr
 from osdf.utils.interfaces import json_from_file
 
 
@@ -46,14 +47,15 @@ class TestConductorTranslation(unittest.TestCase):
         # need to run this only on vnf policies
         vnf_policies = [x for x in self.policies if x[list(x.keys())[0]]["type"]
                         == "onap.policies.optimization.VnfPolicy"]
-        res = tr.gen_demands(self.request_json, vnf_policies)
+        res = tr.gen_demands(self.request_json['placementInfo']['placementDemands'], vnf_policies)
+
         assert res is not None
 
     def test_gen_vfmod_demands(self):
         # need to run this only on vnf policies
         vnf_policies = [x for x in self.policies if x[list(x.keys())[0]]["type"]
                         == "onap.policies.optimization.VnfPolicy"]
-        res = tr.gen_demands(self.request_vfmod_json, vnf_policies)
+        res = tr.gen_demands(self.request_vfmod_json['placementInfo']['placementDemands'], vnf_policies)
         assert res is not None
 
 
