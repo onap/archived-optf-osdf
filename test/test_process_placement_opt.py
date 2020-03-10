@@ -30,8 +30,10 @@ class TestProcessPlacementOpt(unittest.TestCase):
 
     def setUp(self):
         mock_req_accept_message = Response("Accepted Request", content_type='application/json; charset=utf-8')
-        self.patcher_req = patch('apps.placement.optimizers.conductor.conductor.request',
-                                 return_value={"solutionInfo": {"placementInfo": "dummy"}})
+        conductor_response_file = 'test/placement-tests/conductor_response.json'
+        conductor_response = json_from_file(conductor_response_file)
+        self.patcher_req = patch('osdf.adapters.conductor.conductor.request',
+                                 return_value=conductor_response)
         self.patcher_req_accept = patch('osdf.operation.responses.osdf_response_for_request_accept',
                                         return_value=mock_req_accept_message)
         self.patcher_callback = patch(
