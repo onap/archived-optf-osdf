@@ -1,0 +1,39 @@
+{
+  "name": "{{ name }}",
+  "files": {},
+  "timeout": {{ timeout }},
+  "num_solution": "{{ limit }}",
+  "template": {
+    "homing_template_version": "2017-10-10",
+    "parameters": {
+      {% set comma=joiner(",") %}
+      {% for key, value in request_params.items() %} {{ comma() }}
+        "{{key}}": {{ json.dumps(value) }}
+      {% endfor %}
+    },
+    "locations": {
+        "customer_loc": {
+            "latitude": { "get_param": "customer_lat" },
+            "longitude": { "get_param": "customer_long" }
+        }
+    },
+    "demands": {{ json.dumps(demand_list) }},
+    {% set comma_main = joiner(",") %}
+    "constraints": {
+      {% set comma=joiner(",") %}
+      {% for elem in policy_groups %} {{ comma() }}
+        {% for key, value in elem.items() %}
+          "{{key}}": {{ json.dumps(value) }}
+        {% endfor %}
+      {% endfor %}
+    },
+    "optimization": {
+      {% set comma=joiner(",") %}
+      {% for elem in optimization_policies %} {{ comma() }}
+        {% for key, value in elem.items() %}
+          "{{key}}": {{ json.dumps(value) }}
+        {% endfor %}
+      {% endfor %}
+    }
+  }
+}

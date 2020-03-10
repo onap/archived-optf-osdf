@@ -24,7 +24,7 @@ from osdf.adapters.policy import interface
 from osdf.utils.interfaces import RestClient, json_from_file
 import yaml
 from mock import patch
-from apps.placement.optimizers.conductor import translation
+from osdf.adapters.conductor import translation
 from osdf.operation.exceptions import BusinessException
 
 
@@ -101,13 +101,14 @@ class TestPolicyCalls(unittest.TestCase):
         # need to run this only on vnf policies
         vnf_policies = [x for x in self.policies if x[list(x.keys())[0]]["type"] ==
                         "onap.policies.optimization.VnfPolicy"]
-        gen_demands = translation.gen_demands(req_json, vnf_policies)
+        gen_demands = translation.gen_demands(req_json['placementInfo']['placementDemands'], vnf_policies)
+
         for action in req_json['placementInfo']['placementDemands']:
             actions_list.append(action['resourceModuleName'])
         for key2,value in gen_demands.items():
             gen_demands_list.append(key2)
         self.assertListEqual(gen_demands_list, actions_list, 'generated demands are not equal to the passed input'
-                                                        '[placementDemand][resourceModuleName] list')
+                             '[placementDemand][resourceModuleName] list')
 
     def test_local_policy_location(self):
         req_json = json_from_file("./test/placement-tests/request.json")

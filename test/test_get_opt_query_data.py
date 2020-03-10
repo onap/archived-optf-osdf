@@ -17,7 +17,7 @@
 #
 import unittest
 import json
-from apps.placement.optimizers.conductor.translation import get_opt_query_data
+from osdf.adapters.conductor.translation import get_opt_query_data
 
 
 class TestGetOptQueryData(unittest.TestCase):
@@ -30,7 +30,7 @@ class TestGetOptQueryData(unittest.TestCase):
         query_policy_data_file = ["QueryPolicy_vCPE.json"]
         request_json = json.loads(open(parameter_data_file).read())
         policies = [json.loads(open(policy_data_path + file).read()) for file in query_policy_data_file]
-        req_param_dict = get_opt_query_data(request_json, policies)
+        req_param_dict = get_opt_query_data(request_json['placementInfo']['requestParameters'], policies)
 
         self.assertTrue(req_param_dict is not None)
 
@@ -42,7 +42,7 @@ class TestGetOptQueryData(unittest.TestCase):
         query_policy_data_file = ["QueryPolicy_vFW_TD.json"]
         request_json = json.loads(open(parameter_data_file).read())
         policies = [json.loads(open(policy_data_path + file).read()) for file in query_policy_data_file]
-        req_param_dict = get_opt_query_data(request_json, policies)
+        req_param_dict = get_opt_query_data(request_json['placementInfo']['requestParameters'], policies)
 
         self.assertTrue(req_param_dict is not None)
 

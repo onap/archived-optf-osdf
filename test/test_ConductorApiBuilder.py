@@ -19,7 +19,7 @@ import unittest
 import json
 import yaml
 
-from apps.placement.optimizers.conductor.api_builder import conductor_api_builder
+from osdf.adapters.conductor.api_builder import conductor_api_builder
 from osdf.adapters.local_data import local_policies
 from osdf.utils.interfaces import json_from_file
 
@@ -48,7 +48,12 @@ class TestConductorApiBuilder(unittest.TestCase):
         request_json = self.request_json
         policies = self.policies
         local_config = yaml.safe_load(open(self.local_config_file))
-        templ_string = conductor_api_builder(request_json, policies, local_config, self.conductor_api_template)
+        req_info = request_json['requestInfo']
+        demands = request_json['placementInfo']['placementDemands']
+        request_parameters = request_json['placementInfo']['requestParameters']
+        service_info = request_json['serviceInfo']
+        templ_string = conductor_api_builder(req_info, demands, request_parameters, service_info, policies,
+                                             local_config, self.conductor_api_template)
         templ_json = json.loads(templ_string)
         self.assertEqual(templ_json["name"], "yyy-yyy-yyyy")
 
@@ -56,7 +61,12 @@ class TestConductorApiBuilder(unittest.TestCase):
         request_json = self.request_vfmod_json
         policies = self.policies
         local_config = yaml.safe_load(open(self.local_config_file))
-        templ_string = conductor_api_builder(request_json, policies, local_config, self.conductor_api_template)
+        req_info = request_json['requestInfo']
+        demands = request_json['placementInfo']['placementDemands']
+        request_parameters = request_json['placementInfo']['requestParameters']
+        service_info = request_json['serviceInfo']
+        templ_string = conductor_api_builder(req_info, demands, request_parameters, service_info, policies,
+                                             local_config, self.conductor_api_template)
         templ_json = json.loads(templ_string)
         self.assertEqual(templ_json, self.request_placement_vfmod_json)
 
