@@ -26,24 +26,22 @@ from osdf.utils.programming_utils import dot_notation
 policy_config_mapping = yaml.safe_load(open('config/has_config.yaml')).get('policy_config_mapping')
 
 
-def get_opt_query_data(req_json, policies):
+def get_opt_query_data(request_parameters, policies):
     """
-    Fetch service and order specific details from the requestParameters field of a request.
-    :param req_json: a request file
-    :param policies: A set of policies
-    :return: A dictionary with service and order-specific attributes.
-    """
+        Fetch service and order specific details from the requestParameters field of a request.
+        :param request_parameters: A list of request parameters
+        :param policies: A set of policies
+        :return: A dictionary with service and order-specific attributes.
+        """
     req_param_dict = {}
-    if 'requestParameters' in req_json["placementInfo"]:
-        req_params = req_json["placementInfo"]["requestParameters"]
+    if request_parameters:
         for policy in policies:
             for queryProp in policy[list(policy.keys())[0]]['properties']['queryProperties']:
                 attr_val = queryProp['value'] if 'value' in queryProp and queryProp['value'] != "" \
-                    else dot_notation(req_params, queryProp['attribute_location'])
+                    else dot_notation(request_parameters, queryProp['attribute_location'])
                 if attr_val is not None:
                     req_param_dict.update({queryProp['attribute']: attr_val})
     return req_param_dict
-
 
 def gen_optimization_policy(vnf_list, optimization_policy):
     """Generate optimization policy details to pass to Conductor
@@ -250,22 +248,27 @@ def get_demand_properties(demand, policies):
     """Get list demand properties objects (named tuples) from policy"""
     demand_properties = []
     for policy_property in get_policy_properties(demand, policies):
-        prop = dict(inventory_provider=policy_property['inventoryProvider'],
-                    inventory_type=policy_property['inventoryType'],
-                    service_type=demand['serviceResourceId'],
-                    service_resource_id=demand['serviceResourceId'])
+
+        if 'serviceResourceId' in demand:
+            prop = dict(inventory_provider=policy_property['inventoryProvider'],
+                        inventory_type=policy_property['inventoryType'],
+                        service_type=demand['serviceResourceId'],
+                        service_resource_id=demand['serviceResourceId'])
+        else:
+            prop = dict(inventory_provider=policy_property['inventoryProvider'],
+                        inventory_type=policy_property['inventoryType'])
 
         prop.update({'unique': policy_property['unique']} if 'unique' in policy_property and
                                                              policy_property['unique'] else {})
         prop['filtering_attributes'] = dict()
         prop['filtering_attributes'].update({'global-customer-id': policy_property['customerId']}
-                                  if policy_property['customerId'] else {})
+                                            if policy_property['customerId'] else {})
         prop['filtering_attributes'].update({'model-invariant-id': demand['resourceModelInfo']['modelInvariantId']}
-                                  if demand['resourceModelInfo']['modelInvariantId'] else {})
+                                            if demand['resourceModelInfo']['modelInvariantId'] else {})
         prop['filtering_attributes'].update({'model-version-id': demand['resourceModelInfo']['modelVersionId']}
-                                  if demand['resourceModelInfo']['modelVersionId'] else {})
+                                            if demand['resourceModelInfo']['modelVersionId'] else {})
         prop['filtering_attributes'].update({'equipment-role': policy_property['equipmentRole']}
-                                  if policy_property['equipmentRole'] else {})
+                                            if policy_property['equipmentRole'] else {})
 
         if policy_property.get('attributes'):
             for attr_key, attr_val in policy_property['attributes'].items():
@@ -300,14 +303,14 @@ def update_converted_attribute(attr_key, attr_val, properties, attribute_type):
         properties[attribute_type].update({key_value: attr_val})
 
 
-def gen_demands(req_json, vnf_policies):
+def gen_demands(demands, vnf_policies):
     """Generate list of demands based on request and VNF policies
-    :param req_json: Request object from the client (e.g. MSO)
+    :param demands: A List of demands
     :param vnf_policies: Policies associated with demand resources (e.g. from grouped_policies['vnfPolicy'])
     :return: list of demand parameters to populate the Conductor API call
     """
     demand_dictionary = {}
-    for demand in req_json['placementInfo']['placementDemands']:
+    for demand in demands:
         prop = get_demand_properties(demand, vnf_policies)
         if len(prop) > 0:
             demand_dictionary.update({demand['resourceModuleName']: prop})

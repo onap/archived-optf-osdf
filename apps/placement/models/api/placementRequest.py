@@ -16,6 +16,7 @@
 # -------------------------------------------------------------------------
 #
 
+from osdf.adapters.conductor.demand import ModelMetaData, Candidates
 from osdf.models.api.common import OSDFModel
 from schematics.types import BaseType, StringType, URLType, IntType, BooleanType
 from schematics.types.compound import ModelType, ListType, DictType
@@ -32,23 +33,6 @@ class RequestInfo(OSDFModel):
     numSolutions = IntType()
     optimizers = ListType(StringType(required=True))
     timeout = IntType()
-
-
-class Candidates(OSDFModel):
-    """Preferred candidate for a resource (sent as part of a request from client)"""
-    identifierType = StringType(required=True)
-    identifiers = ListType(StringType(required=True))
-    cloudOwner = StringType()
-
-
-class ModelMetaData(OSDFModel):
-    """Model information for a specific resource"""
-    modelInvariantId = StringType(required=True)
-    modelVersionId = StringType(required=True)
-    modelName = StringType()
-    modelType = StringType()
-    modelVersion = StringType()
-    modelCustomizationName = StringType()
 
 
 class LicenseModel(OSDFModel):

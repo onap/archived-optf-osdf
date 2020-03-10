@@ -17,7 +17,7 @@
 #
 import unittest
 
-from apps.placement.optimizers.conductor import conductor
+from osdf.adapters.conductor import conductor
 import osdf.config.loader as config_loader
 from osdf.utils.interfaces import json_from_file
 from osdf.utils.programming_utils import DotDict
@@ -41,12 +41,20 @@ class TestConductorCalls(unittest.TestCase):
     def test_request(self):
         req_json = json_from_file("./test/placement-tests/request.json")
         policies = pol.get_local_policies("test/policy-local-files/new_policies/", self.lp)
-        conductor.request(req_json, self.osdf_config, policies)
+        req_info = req_json['requestInfo']
+        demands = req_json['placementInfo']['placementDemands']
+        request_parameters = req_json['placementInfo']['requestParameters']
+        service_info = req_json['serviceInfo']
+        conductor.request(req_info, demands, request_parameters, service_info, self.osdf_config, policies)
 
     def test_request_vfmod(self):
         req_json = json_from_file("./test/placement-tests/request_vfmod.json")
         policies = pol.get_local_policies("test/policy-local-files/new_policies/", self.lp)
-        conductor.request(req_json, self.osdf_config, policies)
+        req_info = req_json['requestInfo']
+        demands = req_json['placementInfo']['placementDemands']
+        request_parameters = req_json['placementInfo']['requestParameters']
+        service_info = req_json['serviceInfo']
+        conductor.request(req_info, demands, request_parameters, service_info, self.osdf_config, policies)
 
 
 if __name__ == "__main__":

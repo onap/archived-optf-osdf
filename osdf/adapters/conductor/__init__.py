@@ -15,24 +15,3 @@
 #
 # -------------------------------------------------------------------------
 #
-import unittest
-
-from apps.placement.optimizers.conductor.remote_opt_processor import conductor_response_processor
-from osdf.utils.interfaces import json_from_file
-from osdf.utils.interfaces import RestClient
-
-
-class TestSoResponseGen(unittest.TestCase):
-    def setUp(self):
-        main_dir = ""
-        conductor_response_file = main_dir + "test/placement-tests/conductor_response.json"
-        self.conductor_res = json_from_file(conductor_response_file)
-        self.rc = RestClient()
-
-    def test_so_response_gen(self):
-        res = conductor_response_processor(self.conductor_res, self.rc, "test")
-        self.assertEqual(len(res['solutions']['placementSolutions'][0]), 2)
-
-
-if __name__ == "__main__":
-    unittest.main()
