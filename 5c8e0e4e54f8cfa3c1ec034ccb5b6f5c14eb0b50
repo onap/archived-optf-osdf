@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd65c1fe_841a87ce",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-03-11T15:56:24Z",
+      "side": 1,
+      "message": "Consider renaming this method to build_solution.  Sonar will generate a minor code violation..",
+      "revId": "5c8e0e4e54f8cfa3c1ec034ccb5b6f5c14eb0b50",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfc523e6_738ebf6b",
+        "filename": "osdfapp.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-03-11T15:56:24Z",
+      "side": 1,
+      "message": "response is a dict object, I think we need to set it to the flask.Response object to return..  check the req_accept method for an example",
+      "revId": "5c8e0e4e54f8cfa3c1ec034ccb5b6f5c14eb0b50",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
