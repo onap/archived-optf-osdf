@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3cfaf979_121409d8",
+        "filename": "apps/placement/optimizers/conductor/remote_opt_processor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-03-13T07:23:41Z",
+      "side": 1,
+      "message": "This method is generating placement response to SO based on the conductor. This is a specific logic to placement app",
+      "parentUuid": "e715524e_9d8cf70d",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a46f1d06_0adb9f3e",
         "filename": "apps/placement/optimizers/conductor/remote_opt_processor.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2020-03-13T06:05:28Z",
       "side": 1,
       "message": "Would you explain why this method is moved here from conductor.py ? The code logic for both request and response to/from conductor have been kept there.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378cf6e1_164b9061",
+        "filename": "apps/placement/optimizers/conductor/remote_opt_processor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-03-13T07:23:41Z",
+      "side": 1,
+      "message": "Please refer to the response for the previous method",
+      "parentUuid": "a46f1d06_0adb9f3e",
       "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "193cecba_4497b61a",
+        "filename": "apps/placement/optimizers/conductor/remote_opt_processor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-03-13T07:23:41Z",
+      "side": 1,
+      "message": "Again, the request_json is the placement request. If we send the entire placement request_json to the conductor. The logic of extracting the additional parameters will be specific to placement",
+      "parentUuid": "65c42cea_55151ce3",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0de9d911_0be5c9d2",
         "filename": "apps/placement/optimizers/conductor/remote_opt_processor.py",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2020-03-13T06:05:28Z",
       "side": 1,
       "message": "this logic for response should be handled in the conductor.request method only.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52eed0e1_5d9691e7",
+        "filename": "apps/placement/optimizers/conductor/remote_opt_processor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-03-13T07:23:41Z",
+      "side": 1,
+      "message": "The condition was previously used to call response_processor and no_response_processor. Since, those methods are moved here, I moved the condition over here",
+      "parentUuid": "0de9d911_0be5c9d2",
       "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -172,6 +244,24 @@
     },
     {
       "key": {
+        "uuid": "0f4476e3_a2503dcc",
+        "filename": "osdf/adapters/conductor/demand.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-03-13T07:23:41Z",
+      "side": 1,
+      "message": "I defined a common schema for demand object that is being passed to the conductor. If we are not validating the demands, we can remove this moule.",
+      "parentUuid": "4bad1f1b_51824685",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e037ac3_c8f9db4b",
         "filename": "osdf/adapters/conductor/translation.py",
         "patchSetId": 3
@@ -183,6 +273,24 @@
       "writtenOn": "2020-03-13T06:05:28Z",
       "side": 1,
       "message": "We may set service_resource_id as blank if not there? I think HAS may handle that.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda95861_8c48b203",
+        "filename": "osdf/adapters/conductor/translation.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-03-13T07:23:41Z",
+      "side": 1,
+      "message": "Yes, but if the demand doesn\u0027t have the serviceResourceId, it was throwing keyError.",
+      "parentUuid": "7e037ac3_c8f9db4b",
       "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
