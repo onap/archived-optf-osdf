@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e37b93a_8c071f04",
+        "filename": "apps/placement/models/api/placementRequest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-13T06:05:28Z",
+      "side": 0,
+      "message": "This composite field is required by License optimization as well and shouldn\u0027t be removed from here.",
+      "revId": "bfb0a45de2eaade4064c40d294fd56e89672d199",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e715524e_9d8cf70d",
+        "filename": "apps/placement/optimizers/conductor/remote_opt_processor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-13T06:05:28Z",
+      "side": 1,
+      "message": "Would you explain why this method is moved here from conductor.py ? The code logic for both request and response to/from conductor have been kept there.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46f1d06_0adb9f3e",
+        "filename": "apps/placement/optimizers/conductor/remote_opt_processor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-13T06:05:28Z",
+      "side": 1,
+      "message": "Would you explain why this method is moved here from conductor.py ? The code logic for both request and response to/from conductor have been kept there.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c42cea_55151ce3",
+        "filename": "apps/placement/optimizers/conductor/remote_opt_processor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-13T06:05:28Z",
+      "side": 1,
+      "message": "Would you pls explain the benefit of passing additional parameters to this method call? These parameters can be extracted from request_json in the called method later.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de9d911_0be5c9d2",
+        "filename": "apps/placement/optimizers/conductor/remote_opt_processor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-13T06:05:28Z",
+      "side": 1,
+      "message": "this logic for response should be handled in the conductor.request method only.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15aa6a68_08cf9914",
+        "filename": "osdf/adapters/conductor/api_builder.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-13T06:05:28Z",
+      "side": 1,
+      "message": "Would you pls explain the benefit of additional parameters in signature? These parameters can be extracted from request_json in inside the method.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73686898_eeda1af5",
+        "filename": "osdf/adapters/conductor/api_builder.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-13T06:05:28Z",
+      "side": 1,
+      "message": "The request should be validated as soon as its received and before acknowledging to client.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05171750_fce85ab3",
+        "filename": "osdf/adapters/conductor/api_builder.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-13T06:05:28Z",
+      "side": 1,
+      "message": "Would you pls explain the benefit of additional parameters in signature? These parameters can be extracted from request_json in inside the method.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8223359_7a64d535",
+        "filename": "osdf/adapters/conductor/conductor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-13T06:05:28Z",
+      "side": 1,
+      "message": "The number of parameters in method signature can be limited here.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f865bc16_e65f3b86",
+        "filename": "osdf/adapters/conductor/conductor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-13T06:05:28Z",
+      "side": 1,
+      "message": "The number of parameters in method signature can be limited here.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bad1f1b_51824685",
+        "filename": "osdf/adapters/conductor/demand.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-13T06:05:28Z",
+      "side": 1,
+      "message": "Would you pls explain the benefit of taking the fields defined here in this file out the placementRequest model?",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e037ac3_c8f9db4b",
+        "filename": "osdf/adapters/conductor/translation.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-13T06:05:28Z",
+      "side": 1,
+      "message": "We may set service_resource_id as blank if not there? I think HAS may handle that.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
