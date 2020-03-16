@@ -1,0 +1,21 @@
+{
+	"NST": [{
+			"NST1 ": {
+				"name": "NST_1",
+				"id": "NST_1_id",
+				"latency": 5,
+				"uplink": 5,
+				"downlink": 8
+			}
+		},
+		{
+			"NST2 ": {
+				"name": "NST_2",
+				"id": "NST_2_id",
+				"latency": 3,
+				"uplink": 7,
+				"downlink": 1
+			}
+		}
+	]
+}
