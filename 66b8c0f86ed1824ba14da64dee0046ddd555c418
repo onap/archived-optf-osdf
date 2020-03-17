@@ -142,6 +142,23 @@
     },
     {
       "key": {
+        "uuid": "2ace6873_f9089e31",
+        "filename": "osdf/adapters/conductor/api_builder.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-17T14:45:24Z",
+      "side": 1,
+      "message": "Please add another copyright statement keeping the existing ones.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ba3bc6e_c484dd96",
         "filename": "osdf/adapters/conductor/api_builder.py",
         "patchSetId": 3
@@ -204,6 +221,23 @@
       "writtenOn": "2020-03-13T06:05:28Z",
       "side": 1,
       "message": "Would you pls explain the benefit of additional parameters in signature? These parameters can be extracted from request_json in inside the method.",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edcb1696_dbe94fb8",
+        "filename": "osdf/adapters/conductor/conductor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-17T14:45:24Z",
+      "side": 1,
+      "message": "Please add another copyright statement keeping the existing ones.",
       "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
