@@ -142,6 +142,23 @@
     },
     {
       "key": {
+        "uuid": "5ba3bc6e_c484dd96",
+        "filename": "osdf/adapters/conductor/api_builder.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-03-17T14:37:54Z",
+      "side": 1,
+      "message": "Use get method to set a default value",
+      "revId": "66b8c0f86ed1824ba14da64dee0046ddd555c418",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15aa6a68_08cf9914",
         "filename": "osdf/adapters/conductor/api_builder.py",
         "patchSetId": 3
