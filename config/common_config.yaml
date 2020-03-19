@@ -11,9 +11,10 @@ osdf_temp:  # special configuration required for "workarounds" or testing
     local_policies:
         global_disabled: True
         local_placement_policies_enabled: True
-        placement_policy_dir_vcpe: "./test/policy-local-files/"
+        placement_policy_dir_vcpe: "./test/policy-local-files/new_policies/"
         placement_policy_files_vcpe: # workaroud for policy platform glitches (or "work-arounds" for other components)
             - Affinity_vCPE_1.json
+            - Attribute_vNS_1.json
             #- Capacity_vGMuxInfra.json
             #- Capacity_vG_1.json
             - Distance_vG_1.json
@@ -24,7 +25,7 @@ osdf_temp:  # special configuration required for "workarounds" or testing
             - QueryPolicy_vCPE.json
             - vnfPolicy_vG.json
             - vnfPolicy_vGMuxInfra.json
-        placement_policy_dir_vfw: "./test/policy-local-files/"
+        placement_policy_dir_vfw: "./test/policy-local-files/new_policies/"
         placement_policy_files_vfw: # workaroud for policy platform glitches (or "work-arounds" for other components)
             #- Capacity_vFW_1.json
             - Distance_vFW_1.json
@@ -32,7 +33,7 @@ osdf_temp:  # special configuration required for "workarounds" or testing
             - Placement_Optimization_1.json
             - QueryPolicy_vFW.json
             - vnfPolicy_vFW.json
-        placement_policy_dir_vfw_td: "./test/policy-local-files/"
+        placement_policy_dir_vfw_td: "./test/policy-local-files/new_policies/"
         placement_policy_files_vfw_td:
             - vnfPolicy_vFW_TD.json
             - vnfPolicy_vPGN_TD.json

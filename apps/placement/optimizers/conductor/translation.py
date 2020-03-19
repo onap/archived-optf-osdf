@@ -106,7 +106,7 @@ def gen_policy_instance(vnf_list, resource_policy, match_type="intersection", rt
     for policy in resource_policy:
         pc = policy[list(policy.keys())[0]]
         default, demands = get_matching_vnfs(pc['properties']['resources'], vnf_list, match_type=match_type)
-        resource = {pc['properties']['identity']: {'type': pc['type'], 'demands': demands}}
+        resource = {pc['properties']['identity']: {'type': map_constraint_type(pc['type']), 'demands': demands}}
 
         if rtype:
             resource[pc['properties']['identity']]['properties'] = {'controller': pc[rtype]['controller'],
@@ -116,13 +116,13 @@ def gen_policy_instance(vnf_list, resource_policy, match_type="intersection", rt
             if default:
                 for d in demands:
                     resource_repeated = True \
-                        if {pc['properties']['identity']: {'type': pc['type'], 'demands': d}} \
+                        if {pc['properties']['identity']: {'type': map_constraint_type(pc['type']), 'demands': d}} \
                            in resource_policy_list else False
                     if resource_repeated:
                         continue
                     else:
                         resource_policy_list.append(
-                            {pc['properties']['identity']: {'type': pc['type'], 'demands': d }})
+                            {pc['properties']['identity']: {'type': map_constraint_type(pc['type']), 'demands': d }})
                         policy[list(policy.keys())[0]]['properties']['resources'] = d
                         related_policies.append(policy)
             # Need to override the default policies, here delete the outdated policy stored in the db
@@ -178,10 +178,12 @@ def gen_attribute_policy(vnf_list, attribute_policy):
     """Get policies governing attributes of VNFs in order to populate the Conductor API call"""
     cur_policies, related_policies = gen_policy_instance(vnf_list, attribute_policy, rtype=None)
     for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
-        properties = p_main[list(p_main.keys())[0]]['properties']['cloudAttributeProperty']
+        properties = p_main[list(p_main.keys())[0]]['properties']['attributeProperties']
         attribute_mapping = policy_config_mapping['filtering_attributes']  # wanted attributes and mapping
         p_new[p_main[list(p_main.keys())[0]]['properties']['identity']]['properties'] = {
-            'evaluate': dict((k, properties.get(attribute_mapping.get(k))) for k in attribute_mapping.keys())
+            'evaluate': dict((attribute_mapping[k], properties.get(k) 
+                              if k != "cloudRegion" else gen_cloud_region(properties)) 
+                              for k in attribute_mapping.keys()) 
         }
     return cur_policies  # cur_policies gets updated in place...
 
@@ -312,3 +314,34 @@ def gen_demands(req_json, vnf_policies):
         if len(prop) > 0:
             demand_dictionary.update({demand['resourceModuleName']: prop})
     return demand_dictionary
+
+
+def map_constraint_type(policy_type):
+    if "onap.policies.optimization.AttributePolicy" == policy_type:
+        return "attribute"
+    if "onap.policies.optimization.DistancePolicy" == policy_type:
+        return "distance_to_location"
+    if "onap.policies.optimization.InventoryGroupPolicy" == policy_type:
+        return "inventory_group"
+    if "onap.policies.optimization.ResourceInstancePolicy" == policy_type:
+        return "instance_fit"
+    if "onap.policies.optimization.ResourceRegionPolicy" == policy_type:
+        return "region_fit"
+    if "onap.policies.optimization.AffinityPolicy" == policy_type:
+        return "zone"
+    if "onap.policies.optimization.InstanceReservationPolicy" == policy_type:
+        return "instance_reservation"
+    if "onap.policies.optimization.Vim_fit" == policy_type:
+        return "vim_fit"
+    if "onap.policies.optimization.HpaPolicy" == policy_type:
+        return "hpa"
+    
+    return policy_type
+
+
+def gen_cloud_region(property):
+    prop = {"cloud_region_attributes": dict()}
+    if 'cloudRegion' in property:
+        for k,v in property['cloudRegion'].items():
+            update_converted_attribute(k, v, prop, 'cloud_region_attributes')
+    return prop["cloud_region_attributes"]

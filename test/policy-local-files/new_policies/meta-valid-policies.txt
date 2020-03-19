@@ -14,3 +14,4 @@ QueryPolicy_vFW_TD.json
 vnfPolicy_vFW_TD.json
 vnfPolicy_vPGN_TD.json
 Affinity_vFW_TD.json
+Attribute_vNS_1.json
