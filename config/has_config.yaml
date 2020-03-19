@@ -19,6 +19,10 @@ policy_config_mapping:
         cloudRegionId: cloud-region-id
         orchestrationStatus: orchestration-status
         provStatus: prov-status
+        cloudRegion: cloud-region
+    cloud_region_attributes: 
+        serviceRequests: service-requests
+        cloudRequests: cloud-requests
     passthrough_attributes: {}
     candidates:
         # for (k1, v1), if k1 is in demand, set prop[k2] = _get_candidates(demand[k1])

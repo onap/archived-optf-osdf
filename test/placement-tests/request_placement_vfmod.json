@@ -93,7 +93,7 @@
     },
     "constraints": {
       "affinity_vFW_TD": {
-        "type": "onap.policies.optimization.AffinityPolicy",
+        "type": "zone",
         "demands": [
           "vFW-SINK",
           "vPGN"
