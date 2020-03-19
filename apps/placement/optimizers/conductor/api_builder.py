@@ -63,32 +63,28 @@ def conductor_api_builder(request_json, flat_policies: list, local_config,
     demand_vnf_name_list = []
     for placementDemand in request_json['placementInfo']['placementDemands']:
         demand_vnf_name_list.append(placementDemand['resourceModuleName'].lower())
-    demand_list = tr.gen_demands(request_json, gp['onap.policies.optimization.VnfPolicy'])
-    # What's the attribute policy? Need an example
-    attribute_policy_list = tr.gen_attribute_policy(demand_vnf_name_list, gp['attribute'])
+    demand_list = tr.gen_demands(
+        request_json, gp['onap.policies.optimization.VnfPolicy'])
+    attribute_policy_list = tr.gen_attribute_policy(
+        demand_vnf_name_list, gp['onap.policies.optimization.AttributePolicy'])
     distance_to_location_policy_list = tr.gen_distance_to_location_policy(
         demand_vnf_name_list, gp['onap.policies.optimization.DistancePolicy'])
-    # What's the inventory group policy? A policy to choose the inventory group from existing list?
-    inventory_policy_list = tr.gen_inventory_group_policy(demand_vnf_name_list, gp['inventory_group'])
-    # What's the instance fit policy, a policy to choose the instance from existing list?
+    inventory_policy_list = tr.gen_inventory_group_policy(
+        demand_vnf_name_list, gp['onap.policies.optimization.InventoryGroupPolicy'])
     resource_instance_policy_list = tr.gen_resource_instance_policy(
-        demand_vnf_name_list, gp['instance_fit'])
-    # Need an example for the resource_region_policy
-    resource_region_policy_list = tr.gen_resource_region_policy(demand_vnf_name_list, gp['region_fit'])
-    zone_policy_list = tr.gen_zone_policy(demand_vnf_name_list, gp['onap.policies.optimization.AffinityPolicy'])
-    optimization_policy_list = tr.gen_optimization_policy(demand_vnf_name_list,
-                                                          gp['onap.policies.optimization.OptimizationPolicy'])
-    # Need an example for the instance reservation policy
-    reservation_policy_list = tr.gen_reservation_policy(demand_vnf_name_list, gp['instance_reservation'])
-    capacity_policy_list = tr.gen_capacity_policy(demand_vnf_name_list, gp['onap.policies.optimization.Vim_fit'])
-    hpa_policy_list = tr.gen_hpa_policy(demand_vnf_name_list, gp['onap.policies.optimization.HpaPolicy'])
-    #distance_to_location_policy_list = tr.gen_distance_to_location_policy(
-    #    demand_vnf_name_list, gp['distance_to_location'])
-    # demand_list = tr.gen_demands(request_json, gp['vnfPolicy'])
-    #zone_policy_list = tr.gen_zone_policy(demand_vnf_name_list, gp['zone'])
-    #optimization_policy_list = tr.gen_optimization_policy(demand_vnf_name_list, gp['placement_optimization'])
-    #capacity_policy_list = tr.gen_capacity_policy(demand_vnf_name_list, gp['vim_fit'])
-    #hpa_policy_list = tr.gen_hpa_policy(demand_vnf_name_list, gp['hpa'])
+        demand_vnf_name_list, gp['onap.policies.optimization.ResourceInstancePolicy'])
+    resource_region_policy_list = tr.gen_resource_region_policy(
+        demand_vnf_name_list, gp['onap.policies.optimization.ResourceRegionPolicy'])
+    zone_policy_list = tr.gen_zone_policy(
+        demand_vnf_name_list, gp['onap.policies.optimization.AffinityPolicy'])
+    optimization_policy_list = tr.gen_optimization_policy(
+        demand_vnf_name_list, gp['onap.policies.optimization.OptimizationPolicy'])
+    reservation_policy_list = tr.gen_reservation_policy(
+        demand_vnf_name_list, gp['onap.policies.optimization.InstanceReservationPolicy'])
+    capacity_policy_list = tr.gen_capacity_policy(
+        demand_vnf_name_list, gp['onap.policies.optimization.Vim_fit'])
+    hpa_policy_list = tr.gen_hpa_policy(
+        demand_vnf_name_list, gp['onap.policies.optimization.HpaPolicy'])
     req_params_dict = _build_parameters(gp, request_json)
     conductor_policies = [attribute_policy_list, distance_to_location_policy_list, inventory_policy_list,
                           resource_instance_policy_list, resource_region_policy_list, zone_policy_list,
