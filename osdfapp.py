@@ -21,11 +21,7 @@ OSDF Manager Main Flask Application
 """
 
 import json
-import ssl
-import sys
-import time
-import traceback
-from optparse import OptionParser
+
 from threading import Thread  # for scaling up, may need celery with RabbitMQ or redis
 
 from flask import request, g

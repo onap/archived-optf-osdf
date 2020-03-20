@@ -36,11 +36,11 @@ ENV MZN_GH_BASE https://github.com/MiniZinc/MiniZincIDE
 ENV MZN_DL_URL ${MZN_GH_BASE}/releases/download/${MZN}/${MZN_BASENAME}-x86_64.tgz
 
 RUN apt-get update -y \
-    && apt-get install -y vim unzip wget libmpfr-dev \
-    && apt-get install -y git libqt5printsupport5 build-essential \
-    && apt-get install -y python3 python3-setuptools python3-dev \
+    && apt-get install -y --no-install-recommends vim unzip wget libmpfr-dev ca-certificates\
+    && apt-get install -y --no-install-recommends git libqt5printsupport5 build-essential \
+    && apt-get install -y --no-install-recommends python3 python3-setuptools python3-dev \
     && easy_install3 pip \
-    && pip install --upgrade virtualenv pip wheel setuptools
+    && pip install --no-cache-dir --upgrade virtualenv pip wheel setuptools && rm -rf /var/lib/apt/lists/*
 
 RUN ln -s /usr/bin/python3.5 /usr/bin/python
 
@@ -52,7 +52,7 @@ RUN wget -q $MZN_DL_URL -O /tmp/mz.tgz \
     && echo PATH=/mz-dist/bin:$PATH >> ~/.bashrc
 
 ENV SHELL /bin/bash
-ENV PATH /mz-dist:$PATH
+ENV PATH /mz-dist/bin:$PATH
 
 # OSDF
 WORKDIR /opt/osdf

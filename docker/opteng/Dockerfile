@@ -38,8 +38,11 @@ ENV MZN_DL_URL ${MZN_GH_BASE}/releases/download/${MZN}/${MZN_BASENAME}-x86_64.tg
 RUN apk update  && apk upgrade \
     && apk --no-cache --update add --virtual build-deps openssl wget  \
     && apk --no-cache --update add less ca-certificates bash libxslt-dev unzip \
-                                freetype freetype-dev libstdc++ build-base libc6-compat \
-    && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
+                                freetype freetype-dev libstdc++ build-base libc6-compat lapack-dev openblas-dev \
+    && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2 \
+    && pip install --no-cache-dir --upgrade pip wheel setuptools
+
+RUN pip install --no-cache-dir Cython numpy==1.17.3 scipy==1.3.1
 
 # Minizinc
 RUN wget -q $MZN_DL_URL -O mz.tgz \
@@ -49,7 +52,7 @@ RUN wget -q $MZN_DL_URL -O mz.tgz \
     && echo PATH=/mz-dist/bin:$PATH >> ~/.bashrc
 
 ENV SHELL /bin/bash
-ENV PATH /mz-dist:$PATH
+ENV PATH /mz-dist/bin:$PATH
 
 RUN addgroup -S onap && adduser -S -G onap onap
 
@@ -67,7 +70,8 @@ RUN mkdir -p /var/log/onap/optf/osdf/ \
     && chown onap:onap /var/log/onap -R \
     && chown onap:onap /opt/osdf -R
 
-RUN pip install --no-cache-dir -r requirements.txt -r requirements-opteng.txt
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-opteng.txt\
+    && apk del build-deps && rm -rf /var/cache/apk/*
 
 USER onap
 
