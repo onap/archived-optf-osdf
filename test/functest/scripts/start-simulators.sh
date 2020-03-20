@@ -20,7 +20,12 @@
 
 # This script is in osdf/test/functest/scripts/
 
-SCRIPTDIR=$(dirname $(readlink -f $0))
+if [[ `uname` == "Darwin" ]]
+then
+  SCRIPTDIR=$(dirname $(greadlink -f $0))
+else
+  SCRIPTDIR=$(dirname $(readlink -f $0))
+fi
 FUNC_TEST_DIR=$(dirname $SCRIPTDIR)
 TEST_DIR=$(dirname $FUNC_TEST_DIR)
 OSDF_DIR=$(dirname $TEST_DIR)
