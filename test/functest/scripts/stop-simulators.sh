@@ -23,7 +23,12 @@
 # We don't need all the directory names here and the "cd", but it may be needed later on
 # Also, it will be a guard against some bad config where the directory doesn't exist
 
-SCRIPTDIR=$(dirname $(readlink -f $0))
+if [[ `uname` == "Darwin" ]]
+then
+  SCRIPTDIR=$(dirname $(greadlink -f $0))
+else
+  SCRIPTDIR=$(dirname $(readlink -f $0))
+fi
 FUNC_TEST_DIR=$(dirname $SCRIPTDIR)
 TEST_DIR=$(dirname $FUNC_TEST_DIR)
 OSDF_DIR=$(dirname $TEST_DIR)
