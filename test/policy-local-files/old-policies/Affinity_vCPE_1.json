@@ -1,0 +1,21 @@
+{
+    "service": "affinityPolicy",
+    "policyName": "OSDF_DUBLIN.Affinity_vCPE_1",
+    "description": "Zone policy for vCPE",
+    "templateVersion": "OpenSource.version.1",
+    "version": "test1",
+    "priority": "3",
+    "riskType": "test",
+    "riskLevel": "2",
+    "guard": "False",
+    "content": {
+        "identity": "affinity_vCPE",
+        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
+        "affinityProperty": {
+            "qualifier": "same",
+            "category": "complex"
+        },
+        "policyType": "zone",
+        "resources": ["vGMuxInfra", "vG"]
+    }
+}

@@ -40,12 +40,12 @@ class TestConductorCalls(unittest.TestCase):
 
     def test_request(self):
         req_json = json_from_file("./test/placement-tests/request.json")
-        policies = pol.get_local_policies("test/policy-local-files/new_policies/", self.lp)
+        policies = pol.get_local_policies("test/policy-local-files/", self.lp)
         conductor.request(req_json, self.osdf_config, policies)
 
     def test_request_vfmod(self):
         req_json = json_from_file("./test/placement-tests/request_vfmod.json")
-        policies = pol.get_local_policies("test/policy-local-files/new_policies/", self.lp)
+        policies = pol.get_local_policies("test/policy-local-files/", self.lp)
         conductor.request(req_json, self.osdf_config, policies)
 
 

@@ -33,7 +33,7 @@ class TestPolicyCalls(unittest.TestCase):
     def setUp(self):
         main_dir = ""
         parameter_data_file = main_dir + "test/placement-tests/request.json"
-        policy_data_path = main_dir + "test/policy-local-files/new_policies/"
+        policy_data_path = main_dir + "test/policy-local-files/"
         local_config_file = main_dir + "config/common_config.yaml"
 
         valid_policies_list_file = policy_data_path + '/' + 'meta-valid-policies.txt'

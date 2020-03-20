@@ -1,0 +1,22 @@
+{
+    "service": "vim_fit",
+    "policyName": "OSDF_DUBLIN.Capacity_vG_1",
+    "description": "Capacity policy for vG",
+    "templateVersion": "OpenSource.version.1",
+    "version": "test1",
+    "priority": "5",
+    "riskType": "test",
+    "riskLevel": "2",
+    "guard": "False",
+    "content": {
+        "identity": "capacity_vG",
+        "policyScope": ["VCPE", "US", "INTERNATIONAL", "ip", "vG"],
+	    "resources": ["vG"],
+        "capacityProperty": {
+            "controller": "multicloud",
+            "request": "{\"vCPU\": 10, \"Memory\": {\"quantity\": {\"get_param\": \"REQUIRED_MEM\"}, \"unit\": \"GB\"}, \"Storage\": {\"quantity\": {\"get_param\": \"REQUIRED_DISK\"}, \"unit\": \"GB\"}}"
+        },
+        "policyType": "vim_fit",
+        "applicableResources": "any"
+    }
+}

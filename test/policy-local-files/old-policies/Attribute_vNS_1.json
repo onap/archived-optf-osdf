@@ -1,0 +1,49 @@
+{
+  "service": "attributePolicy",
+  "policyName": "OSDF_FRANKFURT.AttributePolicy_vNS_1",
+  "description": "Attribute Policy for Network Slicing (NS)",
+  "templateVersion": "OpenSource.version.1",
+  "version": "OpenSource.version.1",
+  "priority": "1",
+  "riskType": "test",
+  "riskLevel": "3",
+  "guard": "False",
+  "content": {
+    "identity": "attribute-vNS",
+    "policyScope": [
+      "vNS",
+      "us",
+      "international",
+      "ip"
+    ],
+    "policyType": "attribute",
+    "resources": [
+      "vNS",
+      ""
+    ],
+    "attributeProperties": {
+      "cloudRegion": {
+        "serviceRequests": [
+          "",
+          ""
+        ],
+        "cloudRequests": [
+          "",
+          ""
+        ]
+      },
+      "networkRoles": {
+        "all": [
+          "",
+          ""
+        ]
+      },
+      "complex": {
+        "any": [
+          "",
+          ""
+        ]
+      }
+    }
+  }
+}

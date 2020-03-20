@@ -1,0 +1,28 @@
+{
+    "service": "vnfPolicy",
+    "policyName": "OSDF_DUBLIN.vnfPolicy_vGMuxInfra",
+    "description": "vnfPolicy",
+    "templateVersion": "OpenSource.version.1",
+    "version": "test1",
+    "priority": "6",
+    "riskType": "test",
+    "riskLevel": "3",
+    "guard": "False",
+    "content": {
+        "identity": "vnf_vGMuxInfra",
+        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
+        "policyType": "vnfPolicy",
+        "resources": ["vGMuxInfra"],
+        "applicableResources": "any",
+	    "vnfProperties": [
+            {
+                "inventoryProvider": "aai",
+                "serviceType": "vGMuxInfra-xx",
+                "inventoryType": "service",
+                "customerId": "SDN-ETHERNET-INTERNET",
+                "orchestrationStatus": "",
+                "equipmentRole": ""
+            }
+        ]
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "service": "vnfPolicy",
+    "policyName": "OSDF_DUBLIN.vnfPolicy_vG",
+    "description": "vnfPolicy",
+    "templateVersion": "OpenSource.version.1",
+    "version": "test1",
+    "priority": "6",
+    "riskType": "test",
+    "riskLevel": "3",
+    "guard": "False",
+    "content": {
+        "identity": "vnf_vG",
+        "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG"],
+        "policyType": "vnfPolicy",
+        "resources": ["vG"],
+        "applicableResources": "any",
+	    "vnfProperties": [
+            {
+                "inventoryProvider": "aai",
+                "serviceType": "",
+                "inventoryType": "cloud",
+                "customerId": "",
+                "orchestrationStatus": "",
+                "equipmentRole": ""
+
+            }
+        ]
+    }
+}

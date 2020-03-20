@@ -1,0 +1,22 @@
+{
+    "service": "subscriberPolicy",
+    "policyName": "OSDF_DUBLIN.SubscriberPolicy_v1",
+    "description": "Subscriber Policy for vCPE",
+    "templateVersion": "OpenSource.version.1",
+    "version": "test1",
+    "priority": "1",
+    "riskType": "test",
+    "riskLevel": "3",
+    "guard": "False",
+    "content": {
+        "identity": "subscriber_vCPE",
+        "policyScope": ["vCPE", "subscriber_x", "subscriber_y", "subscriberPolicy"],
+        "properties": {
+                "subscriberName": ["subscriber_x", "subscriber_y"],
+                "subscriberRole": ["PVT Homing"],
+                "provStatus": ["CAPPED"]
+        },
+        "policyType": "subscriberPolicy",
+        "serviceName": "vCPE"
+    }
+}

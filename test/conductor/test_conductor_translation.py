@@ -28,7 +28,7 @@ class TestConductorTranslation(unittest.TestCase):
         self.main_dir = ""
         self.conductor_api_template = self.main_dir + "osdf/templates/conductor_interface.json"
         self.local_config_file = self.main_dir + "config/common_config.yaml"
-        policy_data_path = self.main_dir + "test/policy-local-files/new_policies"
+        policy_data_path = self.main_dir + "test/policy-local-files"
 
         valid_policies_list_file = policy_data_path + '/' + 'meta-valid-policies.txt'
         valid_policies_files = local_policies.get_policy_names_from_file(valid_policies_list_file)

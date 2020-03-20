@@ -1,0 +1,24 @@
+{
+  "service": "queryPolicy",
+  "policyName": "OSDF_DUBLIN.queryPolicy_vCPE",
+  "description": "Query policy for vCPE",
+  "templateVersion": "OpenSource.version.1",
+  "version": "test1",
+  "priority": "3",
+  "riskType": "test",
+  "riskLevel": "2",
+  "guard": "False",
+  "content": {
+    "queryProperties": [
+      {"attribute":"locationId", "attribute_location": "customerLocation", "value": ""},
+      {"attribute":"id", "attribute_location": "vpnInfo.vpnId", "value": ""},
+      {"attribute":"upstreamBW", "attribute_location": "vpnInfo.upstreamBW", "value": ""},
+      {"attribute":"customerLatitude", "attribute_location": "customerLatitude", "value": 1.1},
+      {"attribute":"customerLongitude", "attribute_location": "customerLongitude", "value": 2.2}
+    ],
+    "serviceName": "vCPE",
+    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
+    "policyType": "request_param_query",
+    "identity": "vCPE_Query_Policy"
+  }
+}
