@@ -27,17 +27,18 @@ import time
 import traceback
 from optparse import OptionParser
 
-import osdf.adapters.aaf.sms as sms
-import osdf.operation.responses
 import pydevd
 from flask import Flask, request, Response, g
+from requests import RequestException
+from schematics.exceptions import DataError
+
+import osdf.adapters.aaf.sms as sms
+import osdf.operation.responses
 from osdf.config.base import osdf_config
 from osdf.logging.osdf_logging import error_log, debug_log
 from osdf.operation.error_handling import request_exception_to_json_body, internal_error_message
 from osdf.operation.exceptions import BusinessException
 from osdf.utils.mdc_utils import clear_mdc, mdc_from_json, default_mdc, get_request_id
-from requests import RequestException
-from schematics.exceptions import DataError
 
 ERROR_TEMPLATE = osdf.ERROR_TEMPLATE
 
