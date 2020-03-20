@@ -20,9 +20,8 @@
 Simulators for dependencies of OSDF (e.g. HAS-API, Policy, SO-callback, etc.)
 """
 import glob
-import json
-import os
-from flask import Flask, jsonify, request
+
+from flask import Flask, jsonify
 
 from osdf.utils.interfaces import json_from_file
 
@@ -81,16 +80,16 @@ def get_policies(sub_component):
     files = glob.glob("{}/*.json".format(main_dir))
     list_json = []
     for x in files:
-        list_json.append({
-            "policyConfigMessage": "Config Retrieved! ",
-            "policyConfigStatus": "CONFIG_RETRIEVED",
-            "type": "JSON",
-            "config": json.dumps(json_from_file(x)),
-            "policyName": os.path.basename(x),
-            "policyType": "MicroService",
-            "policyVersion": "1"
-        })
-    return jsonify(list_json)
+        list_json.append(json_from_file(x))
+    return jsonify({'policies': list_json})
+
+
+@app.route("/simulated/policy/pdpx/decision/v1", methods=["POST"])
+def get_pdx_policies():
+    """
+    get the pdpx policy
+    """
+    return jsonify(json_from_file("policy/response-payloads/policy_response.json"))
 
 
 @app.route("/simulated/configdb/getCellList/<network_id>/<ts>", methods=["GET"])
