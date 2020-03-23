@@ -11,6 +11,7 @@ osdf_temp:  # special configuration required for "workarounds" or testing
     local_policies:
         global_disabled: True
         local_placement_policies_enabled: True
+        local_slice_selection_policies_enabled: True
         placement_policy_dir_vcpe: "./test/policy-local-files/"
         placement_policy_files_vcpe: # workaroud for policy platform glitches (or "work-arounds" for other components)
             - Affinity_vCPE_1.json
@@ -39,6 +40,14 @@ osdf_temp:  # special configuration required for "workarounds" or testing
             - vnfPolicy_vPGN_TD.json
             - affinity_vFW_TD.json
             - QueryPolicy_vFW_TD.json
+
+        slice_selection_policy_dir_urllc_1: "./test/policy-local-files/"
+        slice_selection_policy_files_urllc_1:
+            - vnfPolicy_URLLC_Core_1.json
+            - thresholdPolicy_URLLC_Core_1_reliability.json
+            - thresholdPolicy_URLLC_Core_1_latency.json
+            - subscriber_policy_URLLC_1.json
+
 service_info:
     vCPE:
         vcpeHostName: requestParameters.vcpeHostName
@@ -67,6 +76,15 @@ policy_info:
             - properties.objectiveParameter.parameterAttributes.resources
         service_name:
             - properties.services
+
+    slice_selection:
+        policy_fetch: by_scope
+        policy_scope:
+            -
+                scope:
+                  - OSDF_FRANKFURT
+                service:
+                    - get_param: service_name
 
     placement:
         policy_fetch: by_scope

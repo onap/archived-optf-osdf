@@ -46,7 +46,7 @@ class TestConductorCalls(unittest.TestCase):
         demands = req_json['placementInfo']['placementDemands']
         request_parameters = req_json['placementInfo']['requestParameters']
         service_info = req_json['serviceInfo']
-        conductor.request(req_info, demands, request_parameters, service_info, self.osdf_config, policies)
+        conductor.request(req_info, demands, request_parameters, service_info, True, self.osdf_config, policies)
 
     def test_request_vfmod(self):
         req_json = json_from_file("./test/placement-tests/request_vfmod.json")
@@ -55,7 +55,7 @@ class TestConductorCalls(unittest.TestCase):
         demands = req_json['placementInfo']['placementDemands']
         request_parameters = req_json['placementInfo']['requestParameters']
         service_info = req_json['serviceInfo']
-        conductor.request(req_info, demands, request_parameters, service_info, self.osdf_config, policies)
+        conductor.request(req_info, demands, request_parameters, service_info, True, self.osdf_config, policies)
 
 
 if __name__ == "__main__":

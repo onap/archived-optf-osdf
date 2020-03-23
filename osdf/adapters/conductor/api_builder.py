@@ -33,7 +33,8 @@ def _build_parameters(group_policies, service_info, request_parameters):
         :param request_parameters: request parameters
         :return:
         """
-    initial_params = tr.get_opt_query_data(request_parameters, group_policies['onap.policies.optimization.QueryPolicy'])
+    initial_params = tr.get_opt_query_data(request_parameters,
+                                           group_policies['onap.policies.optimization.QueryPolicy'])
     params = dict()
     params.update({"REQUIRED_MEM": initial_params.pop("requiredMemory", "")})
     params.update({"REQUIRED_DISK": initial_params.pop("requiredDisk", "")})
@@ -49,16 +50,19 @@ def _build_parameters(group_policies, service_info, request_parameters):
     return params
 
 
-def conductor_api_builder(req_info, demands, request_parameters, service_info, flat_policies: list, local_config,
+def conductor_api_builder(req_info, demands, request_parameters, service_info,
+                          location_enabled, flat_policies: list, local_config,
                           template="osdf/adapters/conductor/templates/conductor_interface.json"):
     """Build an OSDF southbound API call for HAS-Conductor/Placement optimization
         :param req_info: parameter data received from a client
         :param demands: list of demands
         :param request_parameters: request parameters
         :param service_info: service info object
+        :param location_enabled: boolean to check location to be sent in the request
         :param flat_policies: policy data received from the policy platform (flat policies)
         :param template: template to generate southbound API call to conductor
-        :param local_config: local configuration file with pointers for the service specific information
+        :param local_config: local configuration file with pointers for
+               the service specific information
         :return: json to be sent to Conductor/placement optimization
         """
 
@@ -88,10 +92,14 @@ def conductor_api_builder(req_info, demands, request_parameters, service_info, f
         demand_name_list, gp['onap.policies.optimization.Vim_fit'])
     hpa_policy_list = tr.gen_hpa_policy(
         demand_name_list, gp['onap.policies.optimization.HpaPolicy'])
+    threshold_policy_list = tr.gen_threshold_policy(demand_name_list,
+                                                    gp['onap.policies.optimization.'
+                                                       'ThresholdPolicy'])
     req_params_dict = _build_parameters(gp, service_info, request_parameters)
-    conductor_policies = [attribute_policy_list, distance_to_location_policy_list, inventory_policy_list,
-                          resource_instance_policy_list, resource_region_policy_list, zone_policy_list,
-                          reservation_policy_list, capacity_policy_list, hpa_policy_list]
+    conductor_policies = [attribute_policy_list, distance_to_location_policy_list,
+                          inventory_policy_list, resource_instance_policy_list,
+                          resource_region_policy_list, zone_policy_list, reservation_policy_list,
+                          capacity_policy_list, hpa_policy_list, threshold_policy_list]
     filtered_policies = [x for x in conductor_policies if len(x) > 0]
     policy_groups = list_flatten(filtered_policies)
     request_type = req_info.get('requestType', None)
@@ -104,6 +112,7 @@ def conductor_api_builder(req_info, demands, request_parameters, service_info, f
         timeout=req_info['timeout'],
         limit=req_info['numSolutions'],
         request_params=req_params_dict,
+        location_enabled=location_enabled,
         json=json)
     json_payload = json.dumps(json.loads(rendered_req))  # need this because template's JSON is ugly!
     return json_payload

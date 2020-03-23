@@ -34,6 +34,8 @@ from apps.pci.optimizers.pci_opt_processor import process_pci_optimation
 from apps.placement.models.api.placementRequest import PlacementAPI
 from apps.placement.optimizers.conductor.remote_opt_processor import process_placement_opt
 from apps.route.optimizers.simple_route_opt import RouteOpt
+from apps.slice_selection.models.api.nsi_selection_request import NSISelectionAPI
+from apps.slice_selection.optimizers.conductor.remote_opt_processor import process_nsi_selection_opt
 from osdf.adapters.policy.interface import get_policies
 from osdf.adapters.policy.interface import upload_policy_models
 from osdf.config.base import osdf_config
@@ -135,6 +137,16 @@ def do_pci_optimization():
     return req_accept(request_id=req_id,
                       transaction_id=request_json['requestInfo']['transactionId'],
                       request_status="accepted", status_message="")
+
+
+@app.route("/api/oof/selection/nsi/v1", methods=["POST"])
+def do_nsi_selection():
+    request_json = request.get_json()
+    req_id = request_json['requestInfo']['requestId']
+    g.request_id = req_id
+    audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
+    NSISelectionAPI(request_json).validate()
+    return process_nsi_selection_opt(request_json, osdf_config)
 
 
 if __name__ == "__main__":

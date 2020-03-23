@@ -26,6 +26,19 @@ from osdf.utils.programming_utils import dot_notation
 
 policy_config_mapping = yaml.safe_load(open('config/has_config.yaml')).get('policy_config_mapping')
 
+CONSTRAINT_TYPE_MAP = {"onap.policies.optimization.AttributePolicy": "attribute",
+                       "onap.policies.optimization.DistancePolicy": "distance_to_location",
+                       "onap.policies.optimization.InventoryGroupPolicy": "inventory_group",
+                       "onap.policies.optimization.ResourceInstancePolicy": "instance_fit",
+                       "onap.policies.optimization.ResourceRegionPolicy": "region_fit",
+                       "onap.policies.optimization.AffinityPolicy": "zone",
+                       "onap.policies.optimization.InstanceReservationPolicy":
+                           "instance_reservation",
+                       "onap.policies.optimization.Vim_fit": "vim_fit",
+                       "onap.policies.optimization.HpaPolicy": "hpa",
+                       "onap.policies.optimization.ThresholdPolicy": "threshold"
+                       }
+
 
 def get_opt_query_data(request_parameters, policies):
     """
@@ -43,6 +56,7 @@ def get_opt_query_data(request_parameters, policies):
                 if attr_val is not None:
                     req_param_dict.update({queryProp['attribute']: attr_val})
     return req_param_dict
+
 
 def gen_optimization_policy(vnf_list, optimization_policy):
     """Generate optimization policy details to pass to Conductor
@@ -105,7 +119,7 @@ def gen_policy_instance(vnf_list, resource_policy, match_type="intersection", rt
     for policy in resource_policy:
         pc = policy[list(policy.keys())[0]]
         default, demands = get_matching_vnfs(pc['properties']['resources'], vnf_list, match_type=match_type)
-        resource = {pc['properties']['identity']: {'type': map_constraint_type(pc['type']), 'demands': demands}}
+        resource = {pc['properties']['identity']: {'type': CONSTRAINT_TYPE_MAP.get(pc['type']), 'demands': demands}}
 
         if rtype:
             resource[pc['properties']['identity']]['properties'] = {'controller': pc[rtype]['controller'],
@@ -115,13 +129,13 @@ def gen_policy_instance(vnf_list, resource_policy, match_type="intersection", rt
             if default:
                 for d in demands:
                     resource_repeated = True \
-                        if {pc['properties']['identity']: {'type': map_constraint_type(pc['type']), 'demands': d}} \
+                        if {pc['properties']['identity']: {'type': CONSTRAINT_TYPE_MAP.get(pc['type']), 'demands': d}} \
                            in resource_policy_list else False
                     if resource_repeated:
                         continue
                     else:
                         resource_policy_list.append(
-                            {pc['properties']['identity']: {'type': map_constraint_type(pc['type']), 'demands': d }})
+                            {pc['properties']['identity']: {'type': CONSTRAINT_TYPE_MAP.get(pc['type']), 'demands': d }})
                         policy[list(policy.keys())[0]]['properties']['resources'] = d
                         related_policies.append(policy)
             # Need to override the default policies, here delete the outdated policy stored in the db
@@ -216,6 +230,14 @@ def gen_hpa_policy(vnf_list, hpa_policy):
     return cur_policies
 
 
+def gen_threshold_policy(vnf_list, threshold_policy):
+    cur_policies, related_policies = gen_policy_instance(vnf_list, threshold_policy, rtype=None)
+    for p_new, p_main in zip(cur_policies, related_policies):
+        pmz = p_main[list(p_main.keys())[0]]['properties']['thresholdProperty']
+        p_new[p_main[list(p_main.keys())[0]]['properties']['identity']]['properties'] = pmz
+    return cur_policies
+
+
 def get_augmented_policy_attributes(policy_property, demand):
     """Get policy attributes and augment them using policy_config_mapping and demand information"""
     attributes = copy.copy(policy_property['attributes'])
@@ -260,13 +282,13 @@ def get_demand_properties(demand, policies):
                                                              policy_property['unique'] else {})
         prop['filtering_attributes'] = dict()
         prop['filtering_attributes'].update({'global-customer-id': policy_property['customerId']}
-                                            if policy_property['customerId'] else {})
+                                            if 'customerId' in policy_property and policy_property['customerId'] else {})
         prop['filtering_attributes'].update({'model-invariant-id': demand['resourceModelInfo']['modelInvariantId']}
                                             if demand['resourceModelInfo']['modelInvariantId'] else {})
         prop['filtering_attributes'].update({'model-version-id': demand['resourceModelInfo']['modelVersionId']}
                                             if demand['resourceModelInfo']['modelVersionId'] else {})
         prop['filtering_attributes'].update({'equipment-role': policy_property['equipmentRole']}
-                                            if policy_property['equipmentRole'] else {})
+                                            if 'equipmentRole' in policy_property and policy_property['equipmentRole'] else {})
 
         if policy_property.get('attributes'):
             for attr_key, attr_val in policy_property['attributes'].items():
@@ -304,7 +326,8 @@ def update_converted_attribute(attr_key, attr_val, properties, attribute_type):
 def gen_demands(demands, vnf_policies):
     """Generate list of demands based on request and VNF policies
     :param demands: A List of demands
-    :param vnf_policies: Policies associated with demand resources (e.g. from grouped_policies['vnfPolicy'])
+    :param vnf_policies: Policies associated with demand resources
+           (e.g. from grouped_policies['vnfPolicy'])
     :return: list of demand parameters to populate the Conductor API call
     """
     demand_dictionary = {}
@@ -313,29 +336,6 @@ def gen_demands(demands, vnf_policies):
         if len(prop) > 0:
             demand_dictionary.update({demand['resourceModuleName']: prop})
     return demand_dictionary
-
-
-def map_constraint_type(policy_type):
-    if "onap.policies.optimization.AttributePolicy" == policy_type:
-        return "attribute"
-    if "onap.policies.optimization.DistancePolicy" == policy_type:
-        return "distance_to_location"
-    if "onap.policies.optimization.InventoryGroupPolicy" == policy_type:
-        return "inventory_group"
-    if "onap.policies.optimization.ResourceInstancePolicy" == policy_type:
-        return "instance_fit"
-    if "onap.policies.optimization.ResourceRegionPolicy" == policy_type:
-        return "region_fit"
-    if "onap.policies.optimization.AffinityPolicy" == policy_type:
-        return "zone"
-    if "onap.policies.optimization.InstanceReservationPolicy" == policy_type:
-        return "instance_reservation"
-    if "onap.policies.optimization.Vim_fit" == policy_type:
-        return "vim_fit"
-    if "onap.policies.optimization.HpaPolicy" == policy_type:
-        return "hpa"
-    
-    return policy_type
 
 
 def gen_cloud_region(property):
