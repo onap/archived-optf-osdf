@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5499b903_eeea3a8e",
+        "filename": "osdf/adapters/conductor/api_builder.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-03-23T08:06:44Z",
+      "side": 1,
+      "message": "Boolean field to check if location has to be sent in the conductor request",
+      "range": {
+        "startLine": 54,
+        "startChar": 26,
+        "endLine": 54,
+        "endChar": 42
+      },
+      "revId": "fcb37e97e37137d3111924e993e75fdb83c2a0a0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bc6f915_4aea96ce",
+        "filename": "osdf/adapters/conductor/templates/conductor_interface.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-03-23T08:06:44Z",
+      "side": 1,
+      "message": "Added this condition, because slice selection doesn\u0027t require this. But placement might be using it",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "fcb37e97e37137d3111924e993e75fdb83c2a0a0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
