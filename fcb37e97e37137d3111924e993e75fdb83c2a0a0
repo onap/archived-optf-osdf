@@ -45,6 +45,29 @@
       "revId": "fcb37e97e37137d3111924e993e75fdb83c2a0a0",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c355cd25_07286ea1",
+        "filename": "osdf/adapters/conductor/translation.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-03-23T08:14:59Z",
+      "side": 1,
+      "message": "I took the liberty to replace the method with a map. It will reduce the time complexity.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "fcb37e97e37137d3111924e993e75fdb83c2a0a0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
