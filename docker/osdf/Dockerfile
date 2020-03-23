@@ -69,7 +69,7 @@ RUN mkdir -p /var/log/onap/optf/osdf/ \
     && chown -R onap:onap /var/log/onap \
     && chown -R onap:onap /opt/osdf
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-osdf.txt
 
 USER onap
 

@@ -40,8 +40,7 @@ RUN apk update  && apk upgrade \
     && apk --no-cache --update add less ca-certificates bash libxslt-dev unzip \
                                 freetype freetype-dev libstdc++ build-base libc6-compat lapack-dev openblas-dev \
     && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2 \
-    && pip install --no-cache-dir --upgrade pip wheel setuptools \
-    && pip install --no-cache-dir Cython numpy==1.17.3 scipy==1.3.1
+    && pip install --no-cache-dir --upgrade pip wheel setuptools
 
 # Minizinc
 RUN wget -q $MZN_DL_URL -O mz.tgz \
