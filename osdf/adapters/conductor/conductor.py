@@ -28,7 +28,8 @@ from osdf.utils.interfaces import RestClient
 from osdf.operation.exceptions import BusinessException
 
 
-def request(req_info, demands, request_parameters, service_info, osdf_config, flat_policies):
+def request(req_info, demands, request_parameters, service_info, location_enabled,
+            osdf_config, flat_policies):
     config = osdf_config.deployment
     local_config = osdf_config.core
     uid, passwd = config['conductorUsername'], config['conductorPassword']
@@ -43,13 +44,16 @@ def request(req_info, demands, request_parameters, service_info, osdf_config, fl
         if cond_minor_version is not None:
             x_minor_version = str(cond_minor_version)
             headers.update({'X-MinorVersion': x_minor_version})
-            debug_log.debug("Versions set in HTTP header to conductor: X-MinorVersion: {} ".format(x_minor_version))
+            debug_log.debug("Versions set in HTTP header to "
+                            "conductor: X-MinorVersion: {} ".format(x_minor_version))
 
     max_retries = config.get('conductorMaxRetries', 30)
     ping_wait_time = config.get('conductorPingWaitTime', 60)
 
-    rc = RestClient(userid=uid, passwd=passwd, method="GET", log_func=debug_log.debug, headers=headers)
-    conductor_req_json_str = conductor_api_builder(req_info, demands, request_parameters, service_info, flat_policies,
+    rc = RestClient(userid=uid, passwd=passwd, method="GET", log_func=debug_log.debug,
+                    headers=headers)
+    conductor_req_json_str = conductor_api_builder(req_info, demands, request_parameters,
+                                                   service_info, location_enabled, flat_policies,
                                                    local_config)
     conductor_req_json = json.loads(conductor_req_json_str)
 
@@ -77,14 +81,16 @@ def request(req_info, demands, request_parameters, service_info, osdf_config, fl
                                     "this transaction is timing out".format(max_timeout))
         time.sleep(ping_wait_time)
         ctr += 1
-        debug_log.debug("Attempt number {} url {}; prior status={}".format(ctr, new_url, resp['plans'][0]['status']))
+        debug_log.debug("Attempt number {} url {}; prior status={}"
+                        .format(ctr, new_url, resp['plans'][0]['status']))
         total_time += ping_wait_time
 
         try:
             raw_resp = rc.request(new_url, raw_response=True)
             resp = raw_resp.json()
         except RequestException as e:
-            debug_log.debug("Conductor attempt {} for request_id {} has failed because {}".format(ctr, req_id, str(e)))
+            debug_log.debug("Conductor attempt {} for request_id {} has failed because {}"
+                            .format(ctr, req_id, str(e)))
 
 
 def initial_request_to_conductor(rc, conductor_url, conductor_req_json):
@@ -92,17 +98,21 @@ def initial_request_to_conductor(rc, conductor_url, conductor_req_json):
     :param rc: REST client object for calling conductor
     :param conductor_url: conductor's base URL to submit a placement request
     :param conductor_req_json: request json object to send to Conductor
-    :return: URL to check for follow up (similar to redirects); we keep checking these till we get a result/error
+    :return: URL to check for follow up (similar to redirects);
+             we keep checking these till we get a result/error
     """
     debug_log.debug("Payload to Conductor: {}".format(json.dumps(conductor_req_json)))
-    raw_resp = rc.request(url=conductor_url, raw_response=True, method="POST", json=conductor_req_json)
+    raw_resp = rc.request(url=conductor_url, raw_response=True, method="POST",
+                          json=conductor_req_json)
     resp = raw_resp.json()
     if resp["status"] != "template":
         raise RequestException(response=raw_resp, request=raw_resp.request)
     time.sleep(10)  # 10 seconds wait time to avoid being too quick!
     plan_url = resp["links"][0][0]["href"]
-    debug_log.debug("Attempting to read the plan from the conductor provided url {}".format(plan_url))
-    raw_resp = rc.request(raw_response=True, url=plan_url)  # TODO: check why a list of lists for links
+    debug_log.debug("Attempting to read the plan from "
+                    "the conductor provided url {}".format(plan_url))
+    raw_resp = rc.request(raw_response=True,
+                          url=plan_url)  # TODO: check why a list of lists for links
     resp = raw_resp.json()
 
     if resp["plans"][0]["status"] in ["error"]:

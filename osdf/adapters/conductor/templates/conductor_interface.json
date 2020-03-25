@@ -11,12 +11,14 @@
         "{{key}}": {{ json.dumps(value) }}
       {% endfor %}
     },
+    {% if location_enabled %}
     "locations": {
         "customer_loc": {
             "latitude": { "get_param": "customer_lat" },
             "longitude": { "get_param": "customer_long" }
         }
     },
+    {% endif %}
     "demands": {{ json.dumps(demand_list) }},
     {% set comma_main = joiner(",") %}
     "constraints": {

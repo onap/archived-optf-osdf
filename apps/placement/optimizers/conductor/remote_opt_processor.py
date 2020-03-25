@@ -134,8 +134,8 @@ def process_placement_opt(request_json, policies, osdf_config):
             demands = request_json['placementInfo']['placementDemands']
             request_parameters = request_json['placementInfo']['requestParameters']
             service_info = request_json['serviceInfo']
-            resp = conductor.request(req_info, demands, request_parameters, service_info,
-                                               osdf_config, policies)
+            resp = conductor.request(req_info, demands, request_parameters, service_info, True,
+                                     osdf_config, policies)
             if resp["plans"][0].get("recommendations"):
                 placement_response = conductor_response_processor(resp, req_id, transaction_id)
             else:  # "solved" but no solutions found
