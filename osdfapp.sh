@@ -58,18 +58,14 @@ set -e
 LOGS=logs
 mkdir -p $LOGS
 
-if [ -e /opt/app/ssl_cert/aaf_root_ca.cer ]; then
-    #assuming that this would be an ubuntu vm.
-    cp /opt/app/ssl_cert/aaf_root_ca.cer /usr/local/share/ca-certificates/aafcacert.crt
-    chmod 444 /usr/local/share/ca-certificates/aafcacert.crt
-    update-ca-certificates
-fi
+#if [ -e /opt/app/ssl_cert/aaf_root_ca.cer ]; then
+#    #assuming that this would be an ubuntu vm.
+#    cp /opt/app/ssl_cert/aaf_root_ca.cer /usr/local/share/ca-certificates/aafcacert.crt
+#    chmod 444 /usr/local/share/ca-certificates/aafcacert.crt
+#    update-ca-certificates
+#fi
 
-if [ -e /etc/ssl/certs/aafcacert.pem ]; then
-    export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-else
-    export REQUESTS_CA_BUNDLE=/opt/app/ssl_cert/aaf_root_ca.cer
-fi
+export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 
 if [ ! -z "$EXEC_FILE" ]
 then

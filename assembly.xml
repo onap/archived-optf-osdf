@@ -28,6 +28,7 @@
                 <include>*.txt</include>
                 <include>*.ini</include>
                 <include>*.md</include>
+                <include>ssl_certs/**</include>
             </includes>
             <excludes>
                 <exclude>**/__pycache__/**</exclude>
