@@ -1,0 +1,34 @@
+{
+  "requestInfo": {
+    "transactionId": "xxx-xxx-xxxx",
+    "requestId": "yyy-yyy-yyyy",
+    "callbackUrl": "https://wiki.onap.org:5000/callbackUrl",
+    "sourceId": "",
+    "requestType": "create",
+    "numSolutions": 1,
+    "optimizers": [
+      "route"
+    ],
+    "timeout": 600
+  },
+  "routeInfo": {
+    "routeRequests": [
+      {
+        "srcPort": {
+          "accessTopologyId": "Topo113",
+          "accessClientId": "clientU12",
+          "accessProviderId": "VDF1234",
+          "accessNodeId": "22.22.22.22",
+          "accessLtpId": "1345"
+        },
+        "dstPort": {
+          "accessTopologyId": "Topo3421",
+          "accessClientId": "clientD123",
+          "accessProviderId": "VDF3214",
+          "accessNodeId": "10.10.10.10",
+          "accessLtpId": "3452"
+        }
+      }
+    ]
+  }
+}

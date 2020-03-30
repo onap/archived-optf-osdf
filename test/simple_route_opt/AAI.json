@@ -1,0 +1,164 @@
+{
+  "logical-link": [
+    {
+      "link-name": "link-id-1",
+      "in-maint": true,
+      "link-type": "example-link-type-val-16287",
+      "resource-version": "1585009311719",
+      "operational-status": "UP",
+      "relationship-list": {
+        "relationship": [
+          {
+            "related-to": "p-interface",
+            "relationship-label": "tosca.relationships.network.LinksTo",
+            "related-link": "/aai/v16/network/pnfs/pnf/20.20.20.20/p-interfaces/p-interface/p-interface-3",
+            "relationship-data": [
+              {
+                "relationship-key": "pnf.pnf-name",
+                "relationship-value": "20.20.20.20"
+              },
+              {
+                "relationship-key": "p-interface.interface-name",
+                "relationship-value": "p-interface-3"
+              }
+            ],
+            "related-to-property": [
+              {
+                "property-key": "p-interface.prov-status"
+              }
+            ]
+          },
+          {
+            "related-to": "p-interface",
+            "relationship-label": "tosca.relationships.network.LinksTo",
+            "related-link": "/aai/v16/network/pnfs/pnf/10.10.10.10/p-interfaces/p-interface/p-interface-2",
+            "relationship-data": [
+              {
+                "relationship-key": "pnf.pnf-name",
+                "relationship-value": "10.10.10.10"
+              },
+              {
+                "relationship-key": "p-interface.interface-name",
+                "relationship-value": "p-interface-2"
+              }
+            ],
+            "related-to-property": [
+              {
+                "property-key": "p-interface.prov-status"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "link-name": "link-id-2",
+      "in-maint": true,
+      "link-type": "example-link-type-val-16287",
+      "resource-version": "1584943281792",
+      "operational-status": "UP",
+      "relationship-list": {
+        "relationship": [
+          {
+            "related-to": "p-interface",
+            "relationship-label": "tosca.relationships.network.LinksTo",
+            "related-link": "/aai/v16/network/pnfs/pnf/22.22.22.22/p-interfaces/p-interface/p-interface-7",
+            "relationship-data": [
+              {
+                "relationship-key": "pnf.pnf-name",
+                "relationship-value": "22.22.22.22"
+              },
+              {
+                "relationship-key": "p-interface.interface-name",
+                "relationship-value": "p-interface-7"
+              }
+            ],
+            "related-to-property": [
+              {
+                "property-key": "p-interface.prov-status"
+              }
+            ]
+          },
+          {
+            "related-to": "p-interface",
+            "relationship-label": "tosca.relationships.network.LinksTo",
+            "related-link": "/aai/v16/network/pnfs/pnf/11.11.11.11/p-interfaces/p-interface/p-interface-6",
+            "relationship-data": [
+              {
+                "relationship-key": "pnf.pnf-name",
+                "relationship-value": "11.11.11.11"
+              },
+              {
+                "relationship-key": "p-interface.interface-name",
+                "relationship-value": "p-interface-6"
+              }
+            ],
+            "related-to-property": [
+              {
+                "property-key": "p-interface.prov-status"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "link-name": "link-id-3",
+      "in-maint": true,
+      "link-type": "example-link-type-val-16287",
+      "resource-version": "1584943345290",
+      "operational-status": "UP",
+      "relationship-list": {
+        "relationship": [
+          {
+            "related-to": "p-interface",
+            "relationship-label": "tosca.relationships.network.LinksTo",
+            "related-link": "/aai/v16/network/pnfs/pnf/11.11.11.11/p-interfaces/p-interface/p-interface-5",
+            "relationship-data": [
+              {
+                "relationship-key": "pnf.pnf-name",
+                "relationship-value": "11.11.11.11"
+              },
+              {
+                "relationship-key": "p-interface.interface-name",
+                "relationship-value": "p-interface-5"
+              }
+            ],
+            "related-to-property": [
+              {
+                "property-key": "p-interface.prov-status"
+              }
+            ]
+          },
+          {
+            "related-to": "p-interface",
+            "relationship-label": "tosca.relationships.network.LinksTo",
+            "related-link": "/aai/v16/network/pnfs/pnf/20.20.20.20/p-interfaces/p-interface/p-interface-4",
+            "relationship-data": [
+              {
+                "relationship-key": "pnf.pnf-name",
+                "relationship-value": "20.20.20.20"
+              },
+              {
+                "relationship-key": "p-interface.interface-name",
+                "relationship-value": "p-interface-4"
+              }
+            ],
+            "related-to-property": [
+              {
+                "property-key": "p-interface.prov-status"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "link-name": "rahul",
+      "in-maint": true,
+      "link-type": "example-link-type-val-rahul",
+      "resource-version": "1585023629505",
+      "operational-status": "UP"
+    }
+  ]
+}
