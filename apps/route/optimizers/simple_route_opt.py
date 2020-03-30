@@ -35,9 +35,10 @@ class RouteOpt:
     """
     # DNS server and standard port of AAI.. 
     # TODO: read the port from the configuration and add to DNS
-    aai_host = "https://aai.api.simpledemo.onap.org:8443"
+    # aai_host = "https://aai.api.simpledemo.onap.org:8443"
     audit_log.info("base directory")
     audit_log.info(BASE_DIR)
+    aai_host = "http://127.0.0.1:8443"
     aai_headers = {
         "X-TransactionId": "9999",
         "X-FromAppId": "OOF",
@@ -97,18 +98,26 @@ class RouteOpt:
         return converted_links
 
     def addition(self, data):
-        relationship = data["relationship-list"]["relationship"]
         res = ""
-        for index, eachItem in enumerate(relationship):
-            if index == len(relationship) - 1:
-                res += eachItem["accessNodeId"]
-            else:
-                res += eachItem["accessNodeId"] + ":"
+        if 'relationship-list' in data.keys():
+            relationship = data["relationship-list"]["relationship"]
+            for index, eachItem in enumerate(relationship):
+                temp = eachItem["relationship-data"][0]
+                if index == len(relationship) - 1:
+                    res += temp['relationship-value']
+                else:
+                    res += temp['relationship-value'] + ":"
 
-        return data["link-name"], res
+            return data["link-name"], res
+        else:
+            return data["link-name"], res
 
     def createMapTable(self, logical_links):
+        audit_log.info('logical_links')
+        audit_log.info(logical_links)
         result = map(self.addition, logical_links)
+        audit_log.info('result')
+        audit_log.info(result)
 
         parseTemplate = {}
 
@@ -122,26 +131,45 @@ class RouteOpt:
         Edge_Start = []
         Edge_End = []
         logical_links = self.get_logical_links()
+        logical_links = logical_links['logical-link']
         audit_log.info("mocked response of AAI received (logical links) successful===>")
         audit_log.info(logical_links)
         # prepare map table
         mappingTable = self.createMapTable(logical_links)
+        audit_log.info("mapping table created successfully====>")
+        audit_log.info(mappingTable)
         # take the logical link where both the p-interface in same onap
         if logical_links is not None:
+            audit_log.info('logical links not empty=====>')
             for logical_link in logical_links:
-                if not self.isCrossONAPLink(logical_link):
-                    # link is in local ONAP
-                    relationship = logical_link["relationship-list"]["relationship"]
+                audit_log.info('logical_link')
+                audit_log.info(logical_link)
 
-                    relationshipStartNode = relationship[0]
-                    relationshipStartNodeID = relationshipStartNode["related-link"].split("/")[-1]
-                    start_accessNodeId = relationshipStartNodeID.split("-")[-3]
-                    Edge_Start.append(start_accessNodeId)
+                if 'relationship-list' in logical_link.keys():
+                    if not self.isCrossONAPLink(logical_link):
+                        # link is in local ONAP
+                        audit_log.info('link is inside onap===>')
+                        relationship = logical_link["relationship-list"]["relationship"]
 
-                    relationshipEndtNode = relationship[1]
-                    relationshipEndNodeID = relationshipEndtNode["related-link"].split("/")[-1]
-                    end_accessNodeId = relationshipEndNodeID.split("-")[-3]
-                    Edge_End.append(end_accessNodeId)
+                        relationshipStartNode = relationship[0]
+                        audit_log.info('relationshipStartNode')
+                        audit_log.info(relationshipStartNode)
+                        relationshipStartNodeID = relationshipStartNode["related-link"].split("/")[-4]
+                        audit_log.info('relationshipStartNodeID')
+                        audit_log.info(relationshipStartNodeID)
+                        # start_accessNodeId = relationshipStartNodeID.split("-")[-3]
+                        # audit_log.info('start_accessNodeId')
+                        # audit_log.info(start_accessNodeId)
+                        Edge_Start.append(relationshipStartNodeID)
+
+                        relationshipEndtNode = relationship[1]
+                        relationshipEndNodeID = relationshipEndtNode["related-link"].split("/")[-4]
+                       # end_accessNodeId = relationshipEndNodeID.split("-")[-3]
+                        audit_log.info('relationshipEndNodeID')
+                        audit_log.info(relationshipEndNodeID)
+                        Edge_End.append(relationshipEndNodeID)
+                else:
+                    continue
 
         audit_log.info("edge start and end array of i/p address are===>")
         audit_log.info(Edge_Start)
@@ -242,8 +270,11 @@ class RouteOpt:
         from /aai/v14/network/logical-links?operation-status="Up"
         :return: logical-links[]
         """
-        logical_link_url = "/aai/v13/network/logical-links?operational-status=up"
-        aai_req_url = self.aai_host + logical_link_url
+       # logical_link_url = "/aai/v13/network/logical-links?operational-status=up"
+        #aai_req_url = self.aai_host + logical_link_url
+
+        aai_req_url = "https://119.8.40.186:30233/aai/v16/network/logical-links?operational-status=UP"
+
         response = requests.get(aai_req_url,headers=self.aai_headers,auth=HTTPBasicAuth("AAI", "AAI"),verify=False)
         if response.status_code == 200:
             return response.json()
