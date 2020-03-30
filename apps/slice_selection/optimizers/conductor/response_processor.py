@@ -64,6 +64,29 @@ def conductor_response_processor(overall_recommendations, nst_info_map, request_
     return get_nsi_selection_response(request_info, solutions)
 
 
+def conductor_response_processor_for_nst(overall_recommendations, nst_info_map, request_info):
+    """Process conductor response to form the response for the API request
+        :param overall_recommendations: recommendations from conductor
+        :param nst_info_map: NST info from the request
+        :param request_info: request info
+        :return: response json as a dictionary
+    """
+    nst_solutions = dict()
+
+    for nst_name, recommendations in overall_recommendations.items():
+        for recommendation in recommendations:
+            nst_solutions["invariantUUID"] = nst_info_map.get("nst_name").get("invariantUUID")
+            nst_solutions["UUID"] = nst_info_map.get("nst_name").get("UUID")
+            nst_solutions["NSTName"] = recommendation.get('NST').get('NST_name')
+            nst_solutions["matchLevel"] = 1
+
+
+    solutions = dict()
+    solutions['NSTsolution'] = nst_solutions
+    return get_nsi_selection_response(request_info, solutions)
+
+
+
 def conductor_error_response_processor(request_info, error_message):
     """Form response message from the error message
         :param request_info: request info

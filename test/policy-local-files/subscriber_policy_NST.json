@@ -1,0 +1,34 @@
+{
+  "OSDF_FRANKFURT.SubscriberPolicy_NST": {
+    "type": "onap.policies.optimization.SubscriberPolicy",
+    "version": "1.0.0",
+    "type_version": "1.0.0",
+    "metadata": {
+      "policy-id": "OSDF_FRANKFURT.SubscriberPolicy_NST",
+      "policy-version": 1
+    },
+    "properties": {
+      "scope": [
+        "OSDF_FRANKFURT",
+        "NST"
+      ],
+      "services": [
+        "NST"
+      ],
+      "identity": "subscriber_NST",
+      "properties": {
+        "subscriberName": [
+          "NST"
+        ],
+        "subscriberRole": [
+          {
+            "NST": {
+              "modelInvariantId": "21d57d4b-52ad-4d3c-a798-248b5bb9124a",
+              "modelVersionId": "bfba363e-e39c-4bd9-a9d5-1371c28f4d22"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -51,6 +51,10 @@ def group_policies_gen(flat_policies, config):
             # TODO: Check logic here... should policy appear only once across all groups?
             filtered_policies[prioritized_policy[list(prioritized_policy.keys())[0]]['type']].append(prioritized_policy)
             policy_name.append(list(prioritized_policy.keys())[0])
+            if len(aggregated_policies[key]) > 1:
+                prioritized_policy_another = aggregated_policies[key][1]
+                filtered_policies[prioritized_policy_another[list(prioritized_policy_another.keys())[0]]['type']].append(prioritized_policy_another)
+                policy_name.append(list(prioritized_policy_another.keys())[0])
 
     return filtered_policies
 
