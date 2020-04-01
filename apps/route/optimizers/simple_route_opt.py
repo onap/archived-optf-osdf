@@ -1,24 +1,5 @@
-# -------------------------------------------------------------------------
-#   Copyright (c) 2020 Huawei Intellectual Property
-#
-#   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
-#
-#       http://www.apache.org/licenses/LICENSE-2.0
-#
-#   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
-#
-# -------------------------------------------------------------------------
-#
-
 import requests
 from requests.auth import HTTPBasicAuth
-
 from osdf.utils.mdc_utils import mdc_from_json
 from osdf.logging.osdf_logging import MH, audit_log, error_log, debug_log
 import pymzn
@@ -27,13 +8,13 @@ from sklearn import preprocessing
 import os
 BASE_DIR = os.path.dirname(__file__)
 
-class RouteOpt:
 
+class RouteOpt:
     """
-    This values will need to deleted.. 
-    only added for the debug purpose 
+    This values will need to deleted..
+    only added for the debug purpose
     """
-    # DNS server and standard port of AAI.. 
+    # DNS server and standard port of AAI..
     # TODO: read the port from the configuration and add to DNS
     # aai_host = "https://aai.api.simpledemo.onap.org:8443"
     audit_log.info("base directory")
@@ -177,7 +158,6 @@ class RouteOpt:
         # labeling ip to number for mapping
         le = preprocessing.LabelEncoder()
         le.fit(Edge_Start + Edge_End)
-        # print(le.classes_)
         dzn_start_edge = le.transform(Edge_Start)
 
         final_dzn_start_arr = []
@@ -271,8 +251,9 @@ class RouteOpt:
         :return: logical-links[]
         """
        # logical_link_url = "/aai/v13/network/logical-links?operational-status=up"
-        #aai_req_url = self.aai_host + logical_link_url
+       # aai_req_url = self.aai_host + logical_link_url
 
+        #aai_req_url = "https://119.8.40.186:30233/aai/v16/network/logical-links"
         aai_req_url = "https://119.8.40.186:30233/aai/v16/network/logical-links?operational-status=UP"
 
         response = requests.get(aai_req_url,headers=self.aai_headers,auth=HTTPBasicAuth("AAI", "AAI"),verify=False)
