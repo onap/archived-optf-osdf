@@ -5,7 +5,8 @@
 				"id": "NST_1_id",
 				"latency": 5,
 				"uplink": 5,
-				"downlink": 8
+				"downlink": 8,
+				"reliability": 99
 			}
 		},
 		{
@@ -14,7 +15,8 @@
 				"id": "NST_2_id",
 				"latency": 3,
 				"uplink": 7,
-				"downlink": 1
+				"downlink": 1,
+				"reliability": 95
 			}
 		}
 	]
