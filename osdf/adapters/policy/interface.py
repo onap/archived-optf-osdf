@@ -64,8 +64,8 @@ def get_by_scope(rest_client, req, config_local, type_service):
     for scopes in pscope:
         for key in scopes.keys():
             for field in scopes[key]:
-                scope_fields[key] = set(list_flatten([get_scope_fields(field, references, req, policies)
-                                                      if 'get_param' in field else field]))
+                scope_fields[key] = list_flatten([get_scope_fields(field, references, req, policies)
+                                                      if 'get_param' in field else field])
         if scope_fields.get('resources') and len(scope_fields['resources']) > 1:
             for s in scope_fields['resources']:
                 scope_fields['resources'] = [s]
@@ -122,7 +122,7 @@ def policy_api_call(rest_client, scope_fields):
                      "ONAPComponent": "OOF_Component",
                      "ONAPInstance": "OOF_Component_Instance",
                      "action": "optimize",
-                     "resources": "{}".format(scope_fields)}
+                     "resources": scope_fields}
     return rest_client.request(json=api_call_body)
 
 def remote_api(req_json, osdf_config, service_type="placement"):
@@ -133,9 +133,10 @@ def remote_api(req_json, osdf_config, service_type="placement"):
     :return: all related policies and provStatus retrieved from Subscriber policy
     """
     config = osdf_config.deployment
+    headers = {"Content-type: application/json"}
     uid, passwd = config['policyPlatformUsername'], config['policyPlatformPassword']
     url = config['policyPlatformUrl']
-    rc = RestClient(userid=uid, passwd=passwd, url=url, log_func=debug_log.debug)
+    rc = RestClient(userid=uid, passwd=passwd, headers=headers, url=url, log_func=debug_log.debug)
 
     if osdf_config.core['policy_info'][service_type]['policy_fetch'] == "by_name":
         policies = get_by_name(rc, req_json[service_type + "Info"]['policyId'], wildcards=True)

@@ -18,7 +18,7 @@ conductorMaxRetries: 30  # if we don't get something in 30 minutes, give up
 conductorMinorVersion: 0
 
 # Policy Platform -- requires Authorization
-policyPlatformUrl: https://policy-xacml-pdp:6969/policy/pdpx/decision/v1 # Policy Dev platform URL
+policyPlatformUrl: https://policy-xacml-pdp:6969/policy/pdpx/v1/decision # Policy Dev platform URL
 # URL for policy model uploading
 policyPlatformUrlModelUpload: https://policy.api.simpledemo.onap.org:8081/policy/api/v1/policytypes
 pathPolicyModelUpload: ../../models/policy/placement/tosca_upload/
