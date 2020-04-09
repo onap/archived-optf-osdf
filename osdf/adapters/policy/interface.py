@@ -122,7 +122,7 @@ def policy_api_call(rest_client, scope_fields):
                      "ONAPComponent": "OOF_Component",
                      "ONAPInstance": "OOF_Component_Instance",
                      "action": "optimize",
-                     "resources": scope_fields}
+                     "resource": scope_fields}
     return rest_client.request(json=api_call_body)
 
 def remote_api(req_json, osdf_config, service_type="placement"):
@@ -133,7 +133,7 @@ def remote_api(req_json, osdf_config, service_type="placement"):
     :return: all related policies and provStatus retrieved from Subscriber policy
     """
     config = osdf_config.deployment
-    headers = {"Content-type: application/json"}
+    headers = {"Content-type": "application/json"}
     uid, passwd = config['policyPlatformUsername'], config['policyPlatformPassword']
     url = config['policyPlatformUrl']
     rc = RestClient(userid=uid, passwd=passwd, headers=headers, url=url, log_func=debug_log.debug)

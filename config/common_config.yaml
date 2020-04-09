@@ -83,7 +83,7 @@ policy_info:
             -
                 scope:
                   - OSDF_FRANKFURT
-                service:
+                services:
                     - get_param: service_name
 
     placement:
@@ -94,7 +94,7 @@ policy_info:
                     - OSDF_FRANKFURT
                 geography:
                     - US
-                service:
+                services:
                     - get_param: service_name
                 resources:
                     - get_param: resource
