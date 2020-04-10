@@ -1,6 +1,6 @@
 {
   "OSDF_FRANKFURT.SubscriberPolicy_URLLC_1": {
-    "type": "onap.policies.optimization.SubscriberPolicy",
+    "type": "onap.policies.optimization.service.SubscriberPolicy",
     "version": "1.0.0",
     "type_version": "1.0.0",
     "metadata": {
@@ -19,16 +19,8 @@
       "properties": {
         "subscriberName": [
           "URLLC_Core_1"
-        ],
-        "subscriberRole": [
-          {
-            "URLLC_Core_1": {
-              "modelInvariantId": "21d57d4b-52ad-4d3c-a798-248b5bb9124a",
-              "modelVersionId": "bfba363e-e39c-4bd9-a9d5-1371c28f4d22"
-            }
-          }
         ]
-      }
     }
   }
+}
 }

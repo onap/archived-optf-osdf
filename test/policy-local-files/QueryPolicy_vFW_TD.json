@@ -1,6 +1,6 @@
 {
   "OSDF_FRANKFURT.queryPolicy_vFW_TD": {
-    "type": "onap.policies.optimization.QueryPolicy",
+    "type": "onap.policies.optimization.service.QueryPolicy",
     "version": "1.0.0",
     "type_version": "1.0.0",
     "metadata": {

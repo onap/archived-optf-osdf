@@ -1,6 +1,6 @@
 {
   "OSDF_FRANKFURT.Capacity_vGMuxInfra": {
-    "type": "onap.policies.optimization.Vim_fit",
+    "type": "onap.policies.optimization.resource.Vim_fit",
     "version": "1.0.0",
     "type_version": "1.0.0",
     "metadata": {

@@ -21,22 +21,22 @@ import json
 import re
 
 import yaml
-
 from osdf.utils.programming_utils import dot_notation
 
 policy_config_mapping = yaml.safe_load(open('config/has_config.yaml')).get('policy_config_mapping')
 
-CONSTRAINT_TYPE_MAP = {"onap.policies.optimization.AttributePolicy": "attribute",
-                       "onap.policies.optimization.DistancePolicy": "distance_to_location",
-                       "onap.policies.optimization.InventoryGroupPolicy": "inventory_group",
-                       "onap.policies.optimization.ResourceInstancePolicy": "instance_fit",
-                       "onap.policies.optimization.ResourceRegionPolicy": "region_fit",
-                       "onap.policies.optimization.AffinityPolicy": "zone",
-                       "onap.policies.optimization.InstanceReservationPolicy":
+CONSTRAINT_TYPE_MAP = {"onap.policies.optimization.resource.AttributePolicy": "attribute",
+                       "onap.policies.optimization.resource.DistancePolicy": "distance_to_location",
+                       "onap.policies.optimization.resource.InventoryGroupPolicy": "inventory_group",
+                       "onap.policies.optimization.resource.ResourceInstancePolicy": "instance_fit",
+                       "onap.policies.optimization.resource.ResourceRegionPolicy": "region_fit",
+                       "onap.policies.optimization.resource.AffinityPolicy": "zone",
+                       "onap.policies.optimization.resource.InstanceReservationPolicy":
                            "instance_reservation",
-                       "onap.policies.optimization.Vim_fit": "vim_fit",
-                       "onap.policies.optimization.HpaPolicy": "hpa",
-                       "onap.policies.optimization.ThresholdPolicy": "threshold"
+                       "onap.policies.optimization.resource.Vim_fit": "vim_fit",
+                       "onap.policies.optimization.resource.HpaPolicy": "hpa",
+                       "onap.policies.optimization.resource.ThresholdPolicy": "threshold",
+                       "onap.policies.optimization.resource.AggregationPolicy": "aggregation"
                        }
 
 
@@ -233,8 +233,16 @@ def gen_hpa_policy(vnf_list, hpa_policy):
 def gen_threshold_policy(vnf_list, threshold_policy):
     cur_policies, related_policies = gen_policy_instance(vnf_list, threshold_policy, rtype=None)
     for p_new, p_main in zip(cur_policies, related_policies):
-        pmz = p_main[list(p_main.keys())[0]]['properties']['thresholdProperty']
-        p_new[p_main[list(p_main.keys())[0]]['properties']['identity']]['properties'] = pmz
+        pmz = p_main[list(p_main.keys())[0]]['properties']['thresholdProperties']
+        p_new[p_main[list(p_main.keys())[0]]['properties']['identity']]['properties'] = {'evaluate': pmz}
+    return cur_policies
+
+
+def gen_aggregation_policy(vnf_list, cross_policy):
+    cur_policies, related_policies = gen_policy_instance(vnf_list, cross_policy, rtype=None)
+    for p_new, p_main in zip(cur_policies, related_policies):
+        pmz = p_main[list(p_main.keys())[0]]['properties']['aggregationProperties']
+        p_new[p_main[list(p_main.keys())[0]]['properties']['identity']]['properties'] = {'evaluate': pmz}
     return cur_policies
 
 
@@ -281,15 +289,6 @@ def get_demand_properties(demand, policies):
         prop.update({'unique': policy_property['unique']} if 'unique' in policy_property and
                                                              policy_property['unique'] else {})
         prop['filtering_attributes'] = dict()
-        prop['filtering_attributes'].update({'global-customer-id': policy_property['customerId']}
-                                            if 'customerId' in policy_property and policy_property['customerId'] else {})
-        prop['filtering_attributes'].update({'model-invariant-id': demand['resourceModelInfo']['modelInvariantId']}
-                                            if demand['resourceModelInfo']['modelInvariantId'] else {})
-        prop['filtering_attributes'].update({'model-version-id': demand['resourceModelInfo']['modelVersionId']}
-                                            if demand['resourceModelInfo']['modelVersionId'] else {})
-        prop['filtering_attributes'].update({'equipment-role': policy_property['equipmentRole']}
-                                            if 'equipmentRole' in policy_property and policy_property['equipmentRole'] else {})
-
         if policy_property.get('attributes'):
             for attr_key, attr_val in policy_property['attributes'].items():
                 update_converted_attribute(attr_key, attr_val, prop, 'filtering_attributes')
@@ -297,6 +296,15 @@ def get_demand_properties(demand, policies):
             prop['passthrough_attributes'] = dict()
             for attr_key, attr_val in policy_property['passthroughAttributes'].items():
                 update_converted_attribute(attr_key, attr_val, prop, 'passthrough_attributes')
+
+        prop['filtering_attributes'].update({'global-customer-id': policy_property['customerId']}
+                                            if 'customerId' in policy_property and policy_property['customerId'] else {})
+        prop['filtering_attributes'].update({'model-invariant-id': demand['resourceModelInfo']['modelInvariantId']}
+                                            if 'modelInvariantId' in demand['resourceModelInfo'] and demand['resourceModelInfo']['modelInvariantId'] else {})
+        prop['filtering_attributes'].update({'model-version-id': demand['resourceModelInfo']['modelVersionId']}
+                                            if 'modelVersionId' in demand['resourceModelInfo'] and demand['resourceModelInfo']['modelVersionId'] else {})
+        prop['filtering_attributes'].update({'equipment-role': policy_property['equipmentRole']}
+                                            if 'equipmentRole' in policy_property and policy_property['equipmentRole'] else {})
 
         prop.update(get_candidates_demands(demand))
         demand_properties.append(prop)

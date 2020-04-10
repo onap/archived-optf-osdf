@@ -1,0 +1,37 @@
+{
+   "OSDF_FRANKFURT.Aggregation_URLLC_1":{
+      "type":"onap.policies.optimization.resource.AggregationPolicy",
+      "version":"1.0.0",
+      "type_version":"1.0.0",
+      "metadata":{
+         "policy-id":"OSDF_FRANKFURT.Aggregation_URLLC_1",
+         "policy-version":1
+      },
+      "properties":{
+         "scope":[
+            "OSDF_FRANKFURT",
+            "URLLC_1"
+         ],
+         "geography": [],
+         "resources":[
+            "URLLC_Core_1"
+         ],
+         "services":[
+            "URLLC_1"
+         ],
+         "identity":"Aggregation_URLLC_1",
+         "applicableResources":"any",
+         "aggregationProperties":[
+            {
+               "attribute":"latency",
+               "function":"sum",
+               "operator":"lte",
+               "threshold":{
+                "get_param": "latency"
+               },
+               "unit":"ms"
+            }
+         ]
+      }
+   }
+}

@@ -34,7 +34,7 @@ def _build_parameters(group_policies, service_info, request_parameters):
         :return:
         """
     initial_params = tr.get_opt_query_data(request_parameters,
-                                           group_policies['onap.policies.optimization.QueryPolicy'])
+                                           group_policies['onap.policies.optimization.service.QueryPolicy'])
     params = dict()
     params.update({"REQUIRED_MEM": initial_params.pop("requiredMemory", "")})
     params.update({"REQUIRED_DISK": initial_params.pop("requiredDisk", "")})
@@ -46,7 +46,6 @@ def _build_parameters(group_policies, service_info, request_parameters):
     for key, val in initial_params.items():
         if val and val != "":
             params.update({key: val})
-
     return params
 
 
@@ -71,35 +70,38 @@ def conductor_api_builder(req_info, demands, request_parameters, service_info,
     demand_name_list = []
     for demand in demands:
         demand_name_list.append(demand['resourceModuleName'].lower())
-    demand_list = tr.gen_demands(demands, gp['onap.policies.optimization.VnfPolicy'])
+    demand_list = tr.gen_demands(demands, gp['onap.policies.optimization.resource.VnfPolicy'])
     attribute_policy_list = tr.gen_attribute_policy(
-        demand_name_list, gp['onap.policies.optimization.AttributePolicy'])
+        demand_name_list, gp['onap.policies.optimization.resource.AttributePolicy'])
     distance_to_location_policy_list = tr.gen_distance_to_location_policy(
-        demand_name_list, gp['onap.policies.optimization.DistancePolicy'])
+        demand_name_list, gp['onap.policies.optimization.resource.DistancePolicy'])
     inventory_policy_list = tr.gen_inventory_group_policy(
-        demand_name_list, gp['onap.policies.optimization.InventoryGroupPolicy'])
+        demand_name_list, gp['onap.policies.optimization.resource.InventoryGroupPolicy'])
     resource_instance_policy_list = tr.gen_resource_instance_policy(
-        demand_name_list, gp['onap.policies.optimization.ResourceInstancePolicy'])
+        demand_name_list, gp['onap.policies.optimization.resource.ResourceInstancePolicy'])
     resource_region_policy_list = tr.gen_resource_region_policy(
-        demand_name_list, gp['onap.policies.optimization.ResourceRegionPolicy'])
+        demand_name_list, gp['onap.policies.optimization.resource.ResourceRegionPolicy'])
     zone_policy_list = tr.gen_zone_policy(
-        demand_name_list, gp['onap.policies.optimization.AffinityPolicy'])
+        demand_name_list, gp['onap.policies.optimization.resource.AffinityPolicy'])
     optimization_policy_list = tr.gen_optimization_policy(
-        demand_name_list, gp['onap.policies.optimization.OptimizationPolicy'])
+        demand_name_list, gp['onap.policies.optimization.resource.OptimizationPolicy'])
     reservation_policy_list = tr.gen_reservation_policy(
-        demand_name_list, gp['onap.policies.optimization.InstanceReservationPolicy'])
+        demand_name_list, gp['onap.policies.optimization.resource.InstanceReservationPolicy'])
     capacity_policy_list = tr.gen_capacity_policy(
-        demand_name_list, gp['onap.policies.optimization.Vim_fit'])
+        demand_name_list, gp['onap.policies.optimization.resource.Vim_fit'])
     hpa_policy_list = tr.gen_hpa_policy(
-        demand_name_list, gp['onap.policies.optimization.HpaPolicy'])
+        demand_name_list, gp['onap.policies.optimization.resource.HpaPolicy'])
     threshold_policy_list = tr.gen_threshold_policy(demand_name_list,
-                                                    gp['onap.policies.optimization.'
+                                                    gp['onap.policies.optimization.resource.'
                                                        'ThresholdPolicy'])
+    aggregation_policy_list = tr.gen_aggregation_policy(demand_name_list,
+                                                      gp['onap.policies.optimization.resource.'
+                                                         'AggregationPolicy'])
     req_params_dict = _build_parameters(gp, service_info, request_parameters)
     conductor_policies = [attribute_policy_list, distance_to_location_policy_list,
                           inventory_policy_list, resource_instance_policy_list,
                           resource_region_policy_list, zone_policy_list, reservation_policy_list,
-                          capacity_policy_list, hpa_policy_list, threshold_policy_list]
+                          capacity_policy_list, hpa_policy_list, threshold_policy_list, aggregation_policy_list]
     filtered_policies = [x for x in conductor_policies if len(x) > 0]
     policy_groups = list_flatten(filtered_policies)
     request_type = req_info.get('requestType', None)

@@ -1,6 +1,6 @@
 {
   "OSDF_FRANKFURT.Placement_optimization_1": {
-    "type": "onap.policies.optimization.OptimizationPolicy",
+    "type": "onap.policies.optimization.resource.OptimizationPolicy",
     "version": "1.0.0",
     "type_version": "1.0.0",
     "metadata": {
