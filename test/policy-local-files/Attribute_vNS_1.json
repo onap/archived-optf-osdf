@@ -1,6 +1,6 @@
 {
   "OSDF_FRANKFURT.Attribute_vNS_1": {
-    "type": "onap.policies.optimization.AttributePolicy",
+    "type": "onap.policies.optimization.resource.AttributePolicy",
     "version": "1.0.0",
     "type_version": "1.0.0",
     "metadata": {

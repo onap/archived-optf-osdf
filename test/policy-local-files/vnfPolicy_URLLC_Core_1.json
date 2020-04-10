@@ -1,6 +1,6 @@
 {
   "OSDF_FRANKFURT.vnfPolicy_URLLC_Core_1": {
-    "type": "onap.policies.optimization.VnfPolicy",
+    "type": "onap.policies.optimization.resource.VnfPolicy",
     "version": "1.0.0",
     "type_version": "1.0.0",
     "metadata": {
@@ -28,7 +28,9 @@
           "region": "RegionOne",
           "attributes": {
             "orchestrationStatus": "active",
-            "service-role": "nssi"
+            "service-role": "nssi",
+	    "modelInvariantId":"bfbg3636-e39c-iidd-0987-27c28f4oo3",
+	    "modelVersionId":"bfbg3636-e39c-iidd-0987-27c28f4d33"
           }
         }
       ]

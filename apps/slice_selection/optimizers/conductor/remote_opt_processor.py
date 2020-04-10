@@ -59,7 +59,7 @@ def process_nsi_selection_opt(request_json, osdf_config):
 
             demands = get_slice_demands(nst_name, policies, osdf_config.core)
 
-            request_parameters = {}
+            request_parameters = request_json.get('serviceProfile',{})
             service_info = {}
             req_info['numSolutions'] = 'all'
             resp = conductor.request(req_info, demands, request_parameters, service_info, False,
@@ -90,15 +90,14 @@ def get_slice_demands(model_name, policies, config):
     :return: list of demands for the request
     """
     group_policies = group_policies_gen(policies, config)
-    subscriber_policy_list = group_policies["onap.policies.optimization.SubscriberPolicy"]
+    subscriber_policy_list = group_policies["onap.policies.optimization.service.SubscriberPolicy"]
     slice_demands = list()
     for subscriber_policy in subscriber_policy_list:
         policy_properties = subscriber_policy[list(subscriber_policy.keys())[0]]['properties']
         if model_name in policy_properties["services"]:
-            subnet_attributes = policy_properties["properties"]["subscriberRole"][0]
             for subnet in policy_properties["properties"]["subscriberName"]:
                 slice_demand = dict()
                 slice_demand["resourceModuleName"] = subnet
-                slice_demand['resourceModelInfo'] = subnet_attributes[subnet]
+                slice_demand['resourceModelInfo'] = {}
                 slice_demands.append(slice_demand)
     return slice_demands

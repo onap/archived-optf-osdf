@@ -101,7 +101,7 @@ class TestPolicyCalls(unittest.TestCase):
         req_json = json.loads(open(req_json).read())
         # need to run this only on vnf policies
         vnf_policies = [x for x in self.policies if x[list(x.keys())[0]]["type"] ==
-                        "onap.policies.optimization.VnfPolicy"]
+                        "onap.policies.optimization.resource.VnfPolicy"]
         gen_demands = translation.gen_demands(req_json['placementInfo']['placementDemands'], vnf_policies)
 
         for action in req_json['placementInfo']['placementDemands']:

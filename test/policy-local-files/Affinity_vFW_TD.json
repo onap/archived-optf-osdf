@@ -1,6 +1,6 @@
 {
   "OSDF_FRANKFURT.Affinity_vFW_TD": {
-    "type": "onap.policies.optimization.AffinityPolicy",
+    "type": "onap.policies.optimization.resource.AffinityPolicy",
     "version": "1.0.0",
     "type_version": "1.0.0",
     "metadata": {
