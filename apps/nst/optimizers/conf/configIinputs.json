@@ -3,10 +3,19 @@
 			"NST1 ": {
 				"name": "NST_1",
 				"id": "NST_1_id",
-				"latency": 5,
+				"latency": 20,
 				"uplink": 5,
 				"downlink": 8,
-				"reliability": 99
+				"reliability": 95,
+				"areaTrafficCapDL": 100,
+				"areaTrafficCapUL": 100,
+				"maxNumberofUEs": 300,
+				"areas": " area1|area2",
+				"expDataRateDL": 10,
+				"expDataRateUL": 30,
+				"uEMobilityLevel": "stationary",
+				"resourceSharingLevel": "shared"
+
 			}
 		},
 		{
@@ -16,7 +25,14 @@
 				"latency": 3,
 				"uplink": 7,
 				"downlink": 1,
-				"reliability": 95
+				"areaTrafficCapDL": 100,
+				"areaTrafficCapUL": 100,
+				"maxNumberofUEs": 300,
+				"areas": " area1|area2",
+				"expDataRateDL": 10,
+				"expDataRateUL": 30,
+				"uEMobilityLevel": "stationary",
+				"resourceSharingLevel": "shared"
 			}
 		}
 	]

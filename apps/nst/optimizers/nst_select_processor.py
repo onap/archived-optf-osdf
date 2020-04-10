@@ -42,8 +42,8 @@ def getNSTSolution(request_json):
                 matchall = False
                 for constraint_name in serviceProfileParameters:
                     value = serviceProfileParameters[constraint_name]
-                    constraint_value= nstList[constraint_name]
-                    if constraint_value != value:
+                    constraint_value = nstList.get(constraint_name)
+                    if (not constraint_value) or (constraint_value != value):
                         matchall = False
                         break
                     else:
