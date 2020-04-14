@@ -21,6 +21,7 @@
 '''Secret Management Service Integration'''
 
 from onapsmsclient import Client
+
 import osdf.config.base as cfg_base
 import osdf.config.credentials as creds
 import osdf.config.loader as config_loader
@@ -71,37 +72,38 @@ def retrieve_secrets():
     debug_log.debug("Secret Dictionary Retrieval Success")
     return secret_dict
 
+
 def load_secrets():
     config = osdf_config.deployment
     secret_dict = retrieve_secrets()
     config['soUsername'] = secret_dict['so']['UserName']
-    config['soPassword'] = decrypt_pass(secret_dict['so']['Password'])
+    config['soPassword'] = secret_dict['so']['Password']
     config['conductorUsername'] = secret_dict['conductor']['UserName']
-    config['conductorPassword'] = decrypt_pass(secret_dict['conductor']['Password'])
+    config['conductorPassword'] = secret_dict['conductor']['Password']
     config['policyPlatformUsername'] = secret_dict['policyPlatform']['UserName']
-    config['policyPlatformPassword'] = decrypt_pass(secret_dict['policyPlatform']['Password'])
+    config['policyPlatformPassword'] = secret_dict['policyPlatform']['Password']
     config['policyClientUsername'] = secret_dict['policyPlatform']['UserName']
-    config['policyClientPassword'] = decrypt_pass(secret_dict['policyPlatform']['Password'])
+    config['policyClientPassword'] = secret_dict['policyPlatform']['Password']
     config['messageReaderAafUserId'] = secret_dict['dmaap']['UserName']
-    config['messageReaderAafPassword'] = decrypt_pass(secret_dict['dmaap']['Password'])
+    config['messageReaderAafPassword'] = secret_dict['dmaap']['Password']
     config['sdcUsername'] = secret_dict['sdc']['UserName']
-    config['sdcPassword'] = decrypt_pass(secret_dict['sdc']['Password'])
+    config['sdcPassword'] = secret_dict['sdc']['Password']
     config['osdfPlacementUsername'] = secret_dict['osdfPlacement']['UserName']
-    config['osdfPlacementPassword'] = decrypt_pass(secret_dict['osdfPlacement']['Password'])
+    config['osdfPlacementPassword'] = secret_dict['osdfPlacement']['Password']
     config['osdfPlacementSOUsername'] = secret_dict['osdfPlacementSO']['UserName']
-    config['osdfPlacementSOPassword'] = decrypt_pass(secret_dict['osdfPlacementSO']['Password'])
+    config['osdfPlacementSOPassword'] = secret_dict['osdfPlacementSO']['Password']
     config['osdfPlacementVFCUsername'] = secret_dict['osdfPlacementVFC']['UserName']
-    config['osdfPlacementVFCPassword'] = decrypt_pass(secret_dict['osdfPlacementVFC']['Password'])
+    config['osdfPlacementVFCPassword'] = secret_dict['osdfPlacementVFC']['Password']
     config['osdfCMSchedulerUsername'] = secret_dict['osdfCMScheduler']['UserName']
-    config['osdfCMSchedulerPassword'] = decrypt_pass(secret_dict['osdfCMScheduler']['Password'])
+    config['osdfCMSchedulerPassword'] = secret_dict['osdfCMScheduler']['Password']
     config['configDbUserName'] = secret_dict['configDb']['UserName']
-    config['configDbPassword'] = decrypt_pass(secret_dict['configDb']['Password'])
+    config['configDbPassword'] = secret_dict['configDb']['Password']
     config['pciHMSUsername'] = secret_dict['pciHMS']['UserName']
-    config['pciHMSPassword'] = decrypt_pass(secret_dict['pciHMS']['Password'])
+    config['pciHMSPassword'] = secret_dict['pciHMS']['Password']
     config['osdfPCIOptUsername'] = secret_dict['osdfPCIOpt']['UserName']
-    config['osdfPCIOptPassword'] = decrypt_pass(secret_dict['osdfPCIOpt']['Password'])
+    config['osdfPCIOptPassword'] = secret_dict['osdfPCIOpt']['Password']
     config['osdfOptEngineUsername'] = secret_dict['osdfOptEngine']['UserName']
-    config['osdfOptEnginePassword'] = decrypt_pass(secret_dict['osdfOptEngine']['Password'])
+    config['osdfOptEnginePassword'] = secret_dict['osdfOptEngine']['Password']
     cfg_base.http_basic_auth_credentials = creds.load_credentials(osdf_config)
     cfg_base.dmaap_creds = creds.dmaap_creds()
 
