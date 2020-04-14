@@ -21,6 +21,7 @@
 '''Secret Management Service Integration'''
 
 from onapsmsclient import Client
+
 import osdf.config.base as cfg_base
 import osdf.config.credentials as creds
 import osdf.config.loader as config_loader
@@ -71,6 +72,7 @@ def retrieve_secrets():
     debug_log.debug("Secret Dictionary Retrieval Success")
     return secret_dict
 
+
 def load_secrets():
     config = osdf_config.deployment
     secret_dict = retrieve_secrets()
@@ -107,6 +109,9 @@ def load_secrets():
 
 
 def decrypt_pass(passwd):
+    config = osdf_config.deployment
+    if not config.get('appkey'):
+        return passwd
     if passwd == '' or passwd == 'NA':
         return passwd
     else:
