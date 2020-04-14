@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63b4788d_cf612b9a",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-04-14T15:51:47Z",
+      "side": 1,
+      "message": "would it be possible to rename it to get_nst_solution.  \nThis will generate a PEP8 violaton",
+      "revId": "1ddbe42dc6ef8379520c898aaf982991a5b7ef7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
