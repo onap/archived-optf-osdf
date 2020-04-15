@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "764e4441_c8f5d2d8",
+        "filename": "apps/route/optimizers/simple_route_opt.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2020-04-15T13:38:45Z",
+      "side": 1,
+      "message": "Please add copyright.",
+      "revId": "39191a0c964f2c8fa1faed143155295b9a943480",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f2e274_8442bcf6",
+        "filename": "apps/route/optimizers/simple_route_opt.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2020-04-15T13:38:45Z",
+      "side": 1,
+      "message": "May not work if aai is not on localhost.",
+      "revId": "39191a0c964f2c8fa1faed143155295b9a943480",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e85c53a_7b4f7b1c",
+        "filename": "apps/route/optimizers/simple_route_opt.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2020-04-15T13:38:45Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a relative URL ?",
+      "revId": "39191a0c964f2c8fa1faed143155295b9a943480",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
