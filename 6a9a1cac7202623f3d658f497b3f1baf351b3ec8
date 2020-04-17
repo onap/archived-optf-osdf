@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5a051ad_9397471b",
+        "filename": "osdf/adapters/conductor/api_builder.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-04-17T02:38:45Z",
+      "side": 1,
+      "message": "is this being used in this file?",
+      "revId": "6a9a1cac7202623f3d658f497b3f1baf351b3ec8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02dff6d_0c9cf840",
+        "filename": "osdf/adapters/conductor/translation.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3455
+      },
+      "writtenOn": "2020-04-17T02:38:45Z",
+      "side": 1,
+      "message": "is this being used in the file?",
+      "revId": "6a9a1cac7202623f3d658f497b3f1baf351b3ec8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
