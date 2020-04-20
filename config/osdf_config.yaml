@@ -50,6 +50,10 @@ configDbUrl: http://config.db.url:8080
 configDbGetCellListUrl: 'SDNCConfigDBAPI/getCellList'
 configDbGetNbrListUrl: 'SDNCConfigDBAPI/getNbrList'
 
+#aai api
+aaiUrl: "https://aai.url:30233"
+aaiGetLinksUrl: "/aai/v16/network/logical-links"
+
 pciHMSUsername: test
 pciHMSPassword: passwd
 

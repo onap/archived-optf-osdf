@@ -101,7 +101,7 @@ def do_route_calc():
     """
     request_json = request.get_json()
     audit_log.info("Calculate Route request received!")
-    response = RouteOpt().getRoute(request_json)
+    response = RouteOpt().get_route(request_json, osdf_config)
     return response
 
 @app.route("/api/oof/v1/selection/nst", methods=["POST"])
