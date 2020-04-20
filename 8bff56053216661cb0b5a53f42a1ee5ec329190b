@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae43ffde_9e7efec2",
+        "filename": "apps/route/optimizers/simple_route_opt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-04-20T20:57:37Z",
+      "side": 1,
+      "message": "try renaming the methods to is_cross_onap_link().",
+      "revId": "8bff56053216661cb0b5a53f42a1ee5ec329190b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c64abf2_9f7a52fd",
+        "filename": "apps/route/optimizers/simple_route_opt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-04-20T20:57:37Z",
+      "side": 1,
+      "message": "Please remove this commented code if not needed.",
+      "revId": "8bff56053216661cb0b5a53f42a1ee5ec329190b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fca37c7_57f5165e",
+        "filename": "apps/route/optimizers/simple_route_opt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-04-20T20:57:37Z",
+      "side": 1,
+      "message": "rename it to get_route",
+      "revId": "8bff56053216661cb0b5a53f42a1ee5ec329190b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
