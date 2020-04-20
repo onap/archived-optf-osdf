@@ -17,6 +17,7 @@
 #
 
 import requests
+import json
 from requests.auth import HTTPBasicAuth
 
 from osdf.utils.mdc_utils import mdc_from_json
@@ -35,15 +36,11 @@ class RouteOpt:
     """
     # DNS server and standard port of AAI.. 
     # TODO: read the port from the configuration and add to DNS
-    aai_host = "https://aai.api.simpledemo.onap.org:8443"
-    audit_log.info("base directory")
-    audit_log.info(BASE_DIR)
     aai_headers = {
         "X-TransactionId": "9999",
         "X-FromAppId": "OOF",
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Real-Time": "true"
     }
 
     def isCrossONAPLink(self, logical_link):
@@ -59,12 +56,20 @@ class RouteOpt:
 
     def getLinksName(self, routes,initial_start_edge,initial_end_edge, mappingTable):
         routes=list(routes)
-        arr=routes[0]['x']
+        try:
+            arr=routes[0]['x']
+        except Exception as err:
+            audit_log.info("No satisfiable solutions found")
+            raise err
         listOfLinks=[]
         for i in range(0, len(routes[0]['x'])):
+            individual_link = {}
             if arr[i] == 1 :
                 # listOfLinks.append(self.fetchLogicalLinks(initial_start_edge[i], initial_end_edge[i], mappingTable))
-                listOfLinks.append(mappingTable[initial_start_edge[i] + ":" + initial_end_edge[i]])
+                individual_link["link"] = mappingTable[initial_start_edge[i] + ":" + initial_end_edge[i]]
+                individual_link["start_node"] = initial_start_edge[i]
+                individual_link["end_node"] = initial_end_edge[i]
+                listOfLinks.append(individual_link)
 
         return listOfLinks
 
@@ -97,15 +102,19 @@ class RouteOpt:
         return converted_links
 
     def addition(self, data):
-        relationship = data["relationship-list"]["relationship"]
         res = ""
-        for index, eachItem in enumerate(relationship):
-            if index == len(relationship) - 1:
-                res += eachItem["accessNodeId"]
-            else:
-                res += eachItem["accessNodeId"] + ":"
+        if 'relationship-list' in data.keys():
+            relationship = data["relationship-list"]["relationship"]
+            for index, eachItem in enumerate(relationship):
+                temp = eachItem["relationship-data"][0]
+                if index == len(relationship) - 1:
+                    res += temp['relationship-value']
+                else:
+                    res += temp['relationship-value'] + ":"
 
-        return data["link-name"], res
+            return data["link-name"], res
+        else:
+            return data["link-name"], res
 
     def createMapTable(self, logical_links):
         result = map(self.addition, logical_links)
@@ -118,30 +127,47 @@ class RouteOpt:
         audit_log.info(parseTemplate)
         return parseTemplate
 
-    def build_dzn_data(self, src_access_node_id, dst_access_node_id):
+    def build_dzn_data(self, src_access_node_id, dst_access_node_id, osdf_config):
         Edge_Start = []
         Edge_End = []
-        logical_links = self.get_logical_links()
+        logical_links = self.get_logical_links(osdf_config)
+
+
+        logical_links = logical_links['logical-link']
         audit_log.info("mocked response of AAI received (logical links) successful===>")
         audit_log.info(logical_links)
         # prepare map table
         mappingTable = self.createMapTable(logical_links)
+        audit_log.info("mapping table created successfully====>")
+        audit_log.info(mappingTable)
         # take the logical link where both the p-interface in same onap
         if logical_links is not None:
+            audit_log.info('logical links not empty=====>')
             for logical_link in logical_links:
-                if not self.isCrossONAPLink(logical_link):
-                    # link is in local ONAP
-                    relationship = logical_link["relationship-list"]["relationship"]
+                audit_log.info('logical_link')
+                audit_log.info(logical_link)
 
-                    relationshipStartNode = relationship[0]
-                    relationshipStartNodeID = relationshipStartNode["related-link"].split("/")[-1]
-                    start_accessNodeId = relationshipStartNodeID.split("-")[-3]
-                    Edge_Start.append(start_accessNodeId)
+                if 'relationship-list' in logical_link.keys():
+                    if not self.isCrossONAPLink(logical_link):
+                        # link is in local ONAP
+                        audit_log.info('link is inside onap===>')
+                        relationship = logical_link["relationship-list"]["relationship"]
 
-                    relationshipEndtNode = relationship[1]
-                    relationshipEndNodeID = relationshipEndtNode["related-link"].split("/")[-1]
-                    end_accessNodeId = relationshipEndNodeID.split("-")[-3]
-                    Edge_End.append(end_accessNodeId)
+                        relationshipStartNode = relationship[0]
+                        audit_log.info('relationshipStartNode')
+                        audit_log.info(relationshipStartNode)
+                        relationshipStartNodeID = relationshipStartNode["related-link"].split("/")[-4]
+                        audit_log.info('relationshipStartNodeID')
+                        audit_log.info(relationshipStartNodeID)
+                        Edge_Start.append(relationshipStartNodeID)
+
+                        relationshipEndtNode = relationship[1]
+                        relationshipEndNodeID = relationshipEndtNode["related-link"].split("/")[-4]
+                        audit_log.info('relationshipEndNodeID')
+                        audit_log.info(relationshipEndNodeID)
+                        Edge_End.append(relationshipEndNodeID)
+                else:
+                    continue
 
         audit_log.info("edge start and end array of i/p address are===>")
         audit_log.info(Edge_Start)
@@ -149,7 +175,6 @@ class RouteOpt:
         # labeling ip to number for mapping
         le = preprocessing.LabelEncoder()
         le.fit(Edge_Start + Edge_End)
-        # print(le.classes_)
         dzn_start_edge = le.transform(Edge_Start)
 
         final_dzn_start_arr = []
@@ -211,39 +236,46 @@ class RouteOpt:
         total_node = len(nodeSet)
         return total_node
 
-    def getRoute(self, request):
+    def getRoute(self, request, osdf_config):
         """
         This method checks
         :param logical_link:
         :return:
         """
-        routeInfo = request["routeInfo"]["routeRequests"]
-        routeRequest = routeInfo[0]
-        src_access_node_id = routeRequest["srcPort"]["accessNodeId"]
-        dst_access_node_id = routeRequest["dstPort"]["accessNodeId"]
+        try:
+            routeInfo = request["routeInfo"]["routeRequests"]
+            routeRequest = routeInfo[0]
+            src_access_node_id = routeRequest["srcPort"]["accessNodeId"]
+            dst_access_node_id = routeRequest["dstPort"]["accessNodeId"]
 
-        dzn_data, initial_start_edge, initial_end_edge, mappingTable = self.build_dzn_data(src_access_node_id, dst_access_node_id )
-        #mzn_model = "/home/root1/Videos/projects/osdf/test/functest/simulators/osdf/optimizers/routeopt/route_opt.mzn"
-        mzn_model = os.path.join(BASE_DIR, 'route_opt.mzn')
+            dzn_data, initial_start_edge, initial_end_edge, mappingTable = self.build_dzn_data(src_access_node_id, dst_access_node_id, osdf_config)
+            #mzn_model = "/home/root1/Videos/projects/osdf/test/functest/simulators/osdf/optimizers/routeopt/route_opt.mzn"
+            mzn_model = os.path.join(BASE_DIR, 'route_opt.mzn')
 
-        routeSolutions = self.getLinks(mzn_model, dzn_data, initial_start_edge,initial_end_edge, mappingTable)
+            routeSolutions = self.getLinks(mzn_model, dzn_data, initial_start_edge,initial_end_edge, mappingTable)
 
-        return {
+            return {
             "requestId": request["requestInfo"]["requestId"],
             "transactionId": request["requestInfo"]["transactionId"],
             "statusMessage": " ",
             "requestStatus": "accepted",
             "solutions": routeSolutions
-        }
+            }
+        except Exception as err:
+            audit_log.info(err)
+            raise err
 
-    def get_logical_links(self):
+    def get_logical_links(self, osdf_config):
         """
         This method returns list of all cross ONAP links
         from /aai/v14/network/logical-links?operation-status="Up"
         :return: logical-links[]
         """
-        logical_link_url = "/aai/v13/network/logical-links?operational-status=up"
-        aai_req_url = self.aai_host + logical_link_url
+
+        config = osdf_config.deployment
+        aai_url = config["aaiUrl"]
+        aai_req_url = aai_url + config["aaiGetLinksUrl"]
+
         response = requests.get(aai_req_url,headers=self.aai_headers,auth=HTTPBasicAuth("AAI", "AAI"),verify=False)
         if response.status_code == 200:
             return response.json()

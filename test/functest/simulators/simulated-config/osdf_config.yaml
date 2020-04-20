@@ -71,3 +71,6 @@ configDbGetNbrListUrl: 'getNbrList'
 pciHMSUsername: ""   # pcihandler username for call back.
 pciHMSPassword: ""   # pcihandler password for call back.
 
+aaiUrl: "https://api.url:30233"
+aaiGetLinksUrl: "/aai/v16/network/logical-links"
+
