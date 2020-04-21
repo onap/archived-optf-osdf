@@ -43,7 +43,7 @@ class RouteOpt:
         "Content-Type": "application/json",
     }
 
-    def isCrossONAPLink(self, logical_link):
+    def is_cross_onap_link(self, logical_link):
         """
         This method checks if cross link is cross onap
         :param logical_link:
@@ -54,7 +54,7 @@ class RouteOpt:
                 return True
         return False
 
-    def getLinksName(self, routes,initial_start_edge,initial_end_edge, mappingTable):
+    def get_links_name(self, routes,initial_start_edge,initial_end_edge, mappingTable):
         routes=list(routes)
         try:
             arr=routes[0]['x']
@@ -73,30 +73,15 @@ class RouteOpt:
 
         return listOfLinks
 
-    # def search(self, ip1, ip2, dic):
-    #     if ip1 == "" or ip2 == "":
-    #         return ""
-    #     else:
-    #         string = ip1 + ":" + ip2
-    #         return dic[string]
-    #
-    # def fetchLogicalLinks(self, initial_start_edge, initial_end_edge, mappingTable):
-    #     link_name=self.search(initial_start_edge, initial_end_edge, mappingTable)
-    #     return link_name
-
-
-    # def fetchLogicalLinks(self, initial_start_edge, initial_end_edge, mappingTable):
-    #     return mappingTable[initial_start_edge + ":" + initial_end_edge]
-
     def solve(self, mzn_model, dzn_data):
         return pymzn.minizinc(mzn=mzn_model, data=dzn_data)
 
-    def getLinks(self, mzn_model, dzn_data, initial_start_edge,initial_end_edge, mappingTable):
+    def get_links(self, mzn_model, dzn_data, initial_start_edge,initial_end_edge, mappingTable):
         routes = self.solve(mzn_model, dzn_data)
         audit_log.info("mocked minizinc solution====>")
         audit_log.info(routes)
 
-        converted_links=self.getLinksName(routes, initial_start_edge,initial_end_edge, mappingTable)
+        converted_links=self.get_links_name(routes, initial_start_edge,initial_end_edge, mappingTable)
         audit_log.info("converted links===>")
         audit_log.info(converted_links)
         return converted_links
@@ -116,7 +101,7 @@ class RouteOpt:
         else:
             return data["link-name"], res
 
-    def createMapTable(self, logical_links):
+    def create_map_table(self, logical_links):
         result = map(self.addition, logical_links)
 
         parseTemplate = {}
@@ -137,7 +122,7 @@ class RouteOpt:
         audit_log.info("mocked response of AAI received (logical links) successful===>")
         audit_log.info(logical_links)
         # prepare map table
-        mappingTable = self.createMapTable(logical_links)
+        mappingTable = self.create_map_table(logical_links)
         audit_log.info("mapping table created successfully====>")
         audit_log.info(mappingTable)
         # take the logical link where both the p-interface in same onap
@@ -148,7 +133,7 @@ class RouteOpt:
                 audit_log.info(logical_link)
 
                 if 'relationship-list' in logical_link.keys():
-                    if not self.isCrossONAPLink(logical_link):
+                    if not self.is_cross_onap_link(logical_link):
                         # link is in local ONAP
                         audit_log.info('link is inside onap===>')
                         relationship = logical_link["relationship-list"]["relationship"]
@@ -236,7 +221,7 @@ class RouteOpt:
         total_node = len(nodeSet)
         return total_node
 
-    def getRoute(self, request, osdf_config):
+    def get_route(self, request, osdf_config):
         """
         This method checks
         :param logical_link:
@@ -252,7 +237,7 @@ class RouteOpt:
             #mzn_model = "/home/root1/Videos/projects/osdf/test/functest/simulators/osdf/optimizers/routeopt/route_opt.mzn"
             mzn_model = os.path.join(BASE_DIR, 'route_opt.mzn')
 
-            routeSolutions = self.getLinks(mzn_model, dzn_data, initial_start_edge,initial_end_edge, mappingTable)
+            routeSolutions = self.get_links(mzn_model, dzn_data, initial_start_edge,initial_end_edge, mappingTable)
 
             return {
             "requestId": request["requestInfo"]["requestId"],
