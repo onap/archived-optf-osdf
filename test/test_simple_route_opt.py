@@ -47,7 +47,7 @@ class TestSimpleRouteOptimization(unittest.TestCase):
             "transactionId": "xxx-xxx-xxxx"
         }
         routopt = RouteOpt()
-        actual_response = routopt.getRoute(request_json,self.osdf_config)
+        actual_response = routopt.get_route(request_json,self.osdf_config)
         self.assertEqual(mock_response, actual_response)
 
 
