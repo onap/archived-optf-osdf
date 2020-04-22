@@ -1,4 +1,4 @@
 subscriber_policy_URLLC_1.json
-thresholdPolicy_URLLC_Core_1_latency.json
-thresholdPolicy_URLLC_Core_1_reliability.json
+thresholdPolicy_URLLC_Core_1.json
 vnfPolicy_URLLC_Core_1.json
+aggregationPolicy_URLLC_1.json

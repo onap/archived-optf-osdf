@@ -1,6 +1,6 @@
 {
   "OSDF_FRANKFURT.hpa_policy_vG_1": {
-    "type": "onap.policies.optimization.HpaPolicy",
+    "type": "onap.policies.optimization.resource.HpaPolicy",
     "version": "1.0.0",
     "type_version": "1.0.0",
     "metadata": {

@@ -1,6 +1,6 @@
 {
   "OSDF_FRANKFURT.Distance_vGMuxInfra": {
-    "type": "onap.policies.optimization.DistancePolicy",
+    "type": "onap.policies.optimization.resource.DistancePolicy",
     "version": "1.0.0",
     "type_version": "1.0.0",
     "metadata": {

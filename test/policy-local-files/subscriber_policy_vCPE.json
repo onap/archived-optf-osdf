@@ -1,6 +1,6 @@
 {
   "OSDF_FRANKFURT.SubscriberPolicy_v1": {
-    "type": "onap.policies.optimization.SubscriberPolicy",
+    "type": "onap.policies.optimization.service.SubscriberPolicy",
     "version": "1.0.0",
     "type_version": "1.0.0",
     "metadata": {
