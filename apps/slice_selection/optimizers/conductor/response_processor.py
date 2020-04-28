@@ -43,12 +43,17 @@ def conductor_response_processor(overall_recommendations, nst_info_map, request_
 
     for nst_name, recommendations in overall_recommendations.items():
         for recommendation in recommendations:
-            nsi_set = set(values['candidate']['nsi_name'] for key, values in recommendation.items())
+            nsi_set = set(values['candidate']['nsi_id'] for key, values in recommendation.items())
             if len(nsi_set) == 1:
-                nsi = nsi_set.pop()
-                debug_log.debug("The NSSIs in the solution belongs to the same NSI {}".format(nsi))
+                nsi_id = nsi_set.pop()
+                candidate = list(recommendation.values())[0]['candidate']
+                debug_log.debug("The NSSIs in the solution belongs to the same NSI {}"
+                                .format(nsi_id))
                 shared_nsi_solution = dict()
-                shared_nsi_solution["NSIName"] = nsi
+                shared_nsi_solution["NSIId"] = nsi_id
+                shared_nsi_solution["NSIName"] = candidate.get('nsi_name')
+                shared_nsi_solution["UUID"] = candidate.get('nsi_model_version_id')
+                shared_nsi_solution["invariantUUID"] = candidate.get('nsi_model_invariant_id')
                 shared_nsi_solutions.append(shared_nsi_solution)
             else:
                 nssi_solutions = get_nssi_solutions(recommendation)
