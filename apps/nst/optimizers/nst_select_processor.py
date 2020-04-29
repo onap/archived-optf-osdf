@@ -17,48 +17,45 @@
 
 
 import json
-from osdf.logging.osdf_logging import MH, audit_log
+import os
+BASE_DIR = os.path.dirname(__file__)
 """
 This application generates NST SELECTION API calls using the information received from SO
 """
 
-def buildSolution(request_json):
-    return {
-        "NSTsolution" : getNSTSolution(request_json)
-    }
 
-def getNSTSolution(request_json):
-# the file is in the same folder for now will move it to the conf folder o fthe has once its integrated there...
-    with open('./conf/configIinputs.json', 'r') as openfile:
-        serviceProfile = request_json["serviceProfile"]
-        resourceName = "NST"
-        serviceProfileParameters = serviceProfile["serviceProfileParameters"]
-        nst_object = json.load(openfile)
-        foundNst = False
-        for nst in nst_object[resourceName]:
-            [(nstName, nstList)] = nst.items()
-            matchall = False
-            for constraint_name in serviceProfileParameters:
-                value = serviceProfileParameters[constraint_name]
-                constraint_value= nstList[constraint_name]
-                if constraint_value != value:
-                    matchall = False
-                    break
-                else:
-                    matchall = True
-            if matchall:
-                foundNst = True
-                NSTName = nstList["name"]
-                matchlevel = 1
-    if not(foundNst):
-        NSTName = None
-        matchlevel = 0
-    return {
-        "invariantUUID" : "INvariant UUID",
-        "UUID" : "uuid",
-        "NSTName" : NSTName,
-        "matchLevel" : matchlevel
-    }
+def get_nst_solution(request_json):
+# the file is in the same folder for now will move it to the conf folder of the has once its integrated there...
+    config_input_json = os.path.join(BASE_DIR, 'conf/configIinputs.json')
+    try:
+        with open(config_input_json, 'r') as openfile:
+            serviceProfile = request_json["serviceProfile"]
+            nstSolutionList = []
+            resourceName = "NST"
+            serviceProfileParameters = serviceProfile["serviceProfileParameters"]
+            nst_object = json.load(openfile)
+            for nst in nst_object[resourceName]:
+                [(nstName, nstList)] = nst.items()
+                individual_nst = dict()
+                matchall = False
+                for constraint_name in serviceProfileParameters:
+                    value = serviceProfileParameters[constraint_name]
+                    constraint_value = nstList.get(constraint_name)
+                    if (not constraint_value):
+                        matchall = False
+                        break
+                    else:
+                        matchall = True
+                if matchall:
+                    individual_nst["NSTName"] = nstList.get("name")
+                    individual_nst["UUID"] = nstList.get("modeluuid")
+                    individual_nst["invariantUUID"] = nstList.get("modelinvariantuuid")
+                    individual_nst["individual_nst"] = 1
+                    nstSolutionList.append(individual_nst)
+
+        return nstSolutionList
+    except Exception as err:
+        raise err
 
 
 def process_nst_selection( request_json, osdf_config):
@@ -68,7 +65,7 @@ def process_nst_selection( request_json, osdf_config):
     :param osdf_config: Configuration specific to OSDF application (core + deployment)
     :return: response from NST Opt
     """
-    solution = buildSolution(request_json)
+    solution = get_nst_solution(request_json)
 
     return {
         "requestId" : request_json['requestInfo']['requestId'],
