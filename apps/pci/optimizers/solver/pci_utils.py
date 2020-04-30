@@ -16,6 +16,13 @@
 # -------------------------------------------------------------------------
 #
 
+def mapping(network_cell_info):
+    cell_id_mapping= dict()
+    id_cell_mapping = dict()
+    for i in network_cell_info['cell_list']:
+        cell_id_mapping[i['cell_id']] = i['id']
+        id_cell_mapping[i['id']] = i['cell_id']
+    return cell_id_mapping, id_cell_mapping
 
 def get_id(network_cell_info, cell_id):
     for i in network_cell_info['cell_list']:

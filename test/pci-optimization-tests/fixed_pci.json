@@ -1,0 +1,42 @@
+{
+
+  "requestInfo": {
+
+    "transactionId": "xxx-xxx-xxxx",
+
+    "requestId": "yyy-yyy-yyyy",
+
+    "callbackUrl": "https://wiki.onap.org:5000/callbackUrl/",
+
+    "sourceId": "SO",
+
+    "requestType": "create",
+
+    "numSolutions": 1,
+
+    "optimizers": [
+
+      "pci-anr"
+
+    ],
+
+    "timeout": 600
+
+  },
+
+  "cellInfo": {
+
+    "networkId": "2000",
+
+    "cellIdList": [
+
+      "cell0"
+
+    ],
+
+    "fixedPCICells": ["cell21","cell22"],
+    "anrInputList": [{"cellId": "cell20", "removeableNeighbors" :["cell23"]}],
+    "trigger": "NbrListChange"
+  }
+
+}

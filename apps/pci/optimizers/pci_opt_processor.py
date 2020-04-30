@@ -89,10 +89,16 @@ def get_solutions(cell_info_list, network_cell_info, request_json):
 def build_solution_list(cell_info_list, network_cell_info, request_json):
     status = "success"
     req_id = request_json["requestInfo"]["requestId"]
+    pci_solutions =[]
+    anr_solutions=[]
     try:
         opt_solution = optimize(network_cell_info, cell_info_list, request_json)
-        pci_solutions = build_pci_solution(network_cell_info, opt_solution['pci'])
-        anr_solutions = build_anr_solution(network_cell_info, opt_solution.get('removables', {}))
+        if  opt_solution == 'UNSATISFIABLE':
+            status = 'inconsistent input'
+            return status, pci_solutions, anr_solutions
+        else:
+            pci_solutions = build_pci_solution(network_cell_info, opt_solution['pci'])
+            anr_solutions = build_anr_solution(network_cell_info, opt_solution.get('removables', {}))
     except RuntimeError:
         error_log.error("Failed finding solution for {} {}".format(req_id, traceback.format_exc()))
         status = "failed"
