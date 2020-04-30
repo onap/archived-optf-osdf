@@ -192,9 +192,15 @@ def gen_attribute_policy(vnf_list, attribute_policy):
     cur_policies, related_policies = gen_policy_instance(vnf_list, attribute_policy, rtype=None)
     for p_new, p_main in zip(cur_policies, related_policies):  # add additional fields to each policy
         properties = p_main[list(p_main.keys())[0]]['properties']['attributeProperties']
-        attribute_mapping = policy_config_mapping['filtering_attributes']  # wanted attributes and mapping
-        p_new[p_main[list(p_main.keys())[0]]['properties']['identity']]['properties'] = {
-            'evaluate': dict((attribute_mapping[k], properties.get(k) 
+        if(properties.get('NST')):
+            p_new[p_main[list(p_main.keys())[0]]['properties']['identity']]['properties'] = {
+                'evaluate': dict(properties.get('NST'))
+            }
+
+        else:
+            attribute_mapping = policy_config_mapping['filtering_attributes']  # wanted attributes and mapping
+            p_new[p_main[list(p_main.keys())[0]]['properties']['identity']]['properties'] = {
+                'evaluate': dict((attribute_mapping[k], properties.get(k)
                               if k != "cloudRegion" else gen_cloud_region(properties)) 
                               for k in attribute_mapping.keys()) 
         }
@@ -296,14 +302,14 @@ def get_demand_properties(demand, policies):
             prop['passthrough_attributes'] = dict()
             for attr_key, attr_val in policy_property['passthroughAttributes'].items():
                 update_converted_attribute(attr_key, attr_val, prop, 'passthrough_attributes')
-
-        prop['filtering_attributes'].update({'global-customer-id': policy_property['customerId']}
+        if(demand.get("resourceModelInfo")):
+        	prop['filtering_attributes'].update({'global-customer-id': policy_property['customerId']}
                                             if 'customerId' in policy_property and policy_property['customerId'] else {})
-        prop['filtering_attributes'].update({'model-invariant-id': demand['resourceModelInfo']['modelInvariantId']}
+        	prop['filtering_attributes'].update({'model-invariant-id': demand['resourceModelInfo']['modelInvariantId']}
                                             if 'modelInvariantId' in demand['resourceModelInfo'] and demand['resourceModelInfo']['modelInvariantId'] else {})
-        prop['filtering_attributes'].update({'model-version-id': demand['resourceModelInfo']['modelVersionId']}
+        	prop['filtering_attributes'].update({'model-version-id': demand['resourceModelInfo']['modelVersionId']}
                                             if 'modelVersionId' in demand['resourceModelInfo'] and demand['resourceModelInfo']['modelVersionId'] else {})
-        prop['filtering_attributes'].update({'equipment-role': policy_property['equipmentRole']}
+        	prop['filtering_attributes'].update({'equipment-role': policy_property['equipmentRole']}
                                             if 'equipmentRole' in policy_property and policy_property['equipmentRole'] else {})
 
         prop.update(get_candidates_demands(demand))
