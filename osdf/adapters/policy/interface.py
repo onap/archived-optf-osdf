@@ -165,7 +165,7 @@ def local_policies_location(req_json, osdf_config, service_type):
         return None  # short-circuit to disable all local policies
     if lp.get('local_{}_policies_enabled'.format(service_type)):
         debug_log.debug('Loading local policies for service type: {}'.format(service_type))
-        if service_type == "scheduling":
+        if service_type == "scheduling" or service_type == "nst_selection":
             return lp.get('{}_policy_dir'.format(service_type)), lp.get('{}_policy_files'.format(service_type))
         else:
             service_name = req_json['serviceInfo']['serviceName']  # TODO: data_mapping.get_service_type(model_name)

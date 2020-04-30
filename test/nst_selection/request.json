@@ -1,0 +1,15 @@
+{
+  "requestInfo": {
+    "transactionId": "c86b3019-39f4-4cd3-b847-b22afe9f36dc",
+    "timeout": 600,
+    "requestId": "c86b3019-39f4-4cd3-b847-b22afe9f36dc",
+    "callbackUrl": "http://0.0.0.0:9000/callback/",
+    "sourceId": "so"
+  },
+  "serviceProfile": {
+    "serviceProfileParameters": {
+      "areaTrafficCapDL": 10000,
+      "latency": 20
+    }
+  }
+}

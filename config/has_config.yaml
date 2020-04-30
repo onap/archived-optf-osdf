@@ -1,5 +1,6 @@
 policy_config_mapping:
     filtering_attributes:
+        serviceProfileParameters: serviceProfileParameters
         hypervisor: hypervisor
         cloudVersion: cloud_version
         cloudType: cloud_type

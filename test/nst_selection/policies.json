@@ -1,0 +1,62 @@
+[{
+  "OSDF_FRANKFURT.queryPolicy_NST": {
+    "metadata": {
+      "policy-id": "OSDF_FRANKFURT.queryPolicy_NST",
+      "policy-version": 1
+    },
+    "type": "onap.policies.optimization.service.QueryPolicy",
+    "version": "1.0.0",
+    "properties": {
+      "scope": ["OSDF_FRANKFURT"],
+      "resources": ["NST"],
+      "queryProperties": [{
+        "attribute_location": "serviceProfileParameters",
+        "attribute": "serviceProfileParameters"
+      }],
+      "services": ["NST"],
+      "identity": "NST_Query_Policy"
+    },
+    "type_version": "1.0.0"
+  }
+}, {
+  "OSDF_FRANKFURT.Attribute_vNS_1": {
+    "metadata": {
+      "policy-id": "OSDF_FRANKFURT.Attribute_NST",
+      "policy-version": 1
+    },
+    "type": "onap.policies.optimization.resource.AttributePolicy",
+    "version": "1.0.0",
+    "properties": {
+      "scope": ["OSDF_FRANKFURT"],
+      "resources": ["NST"],
+      "attributeProperties": {
+        "serviceProfileParameters": {
+          "get_param": "serviceProfileParameters"
+        }
+      },
+      "identity": "attribute-NST"
+    },
+    "type_version": "1.0.0"
+  }
+}, {
+  "OSDF_FRANKFURT.vnfPolicy_NST": {
+    "metadata": {
+      "policy-id": "OSDF_FRANKFURT.vnfPolicy_NST",
+      "policy-version": 1
+    },
+    "type": "onap.policies.optimization.resource.VnfPolicy",
+    "version": "1.0.0",
+    "properties": {
+      "resources": ["NST"],
+      "applicableResources": "any",
+      "vnfProperties": [{
+        "inventoryProvider": "file_system",
+        "inventoryType": "NST"
+      }],
+      "identity": "vnf_NST",
+      "scope": ["OSDF_FRANKFURT", "NST"],
+      "services": ["NST"]
+    },
+    "type_version": "1.0.0"
+  }
+}]

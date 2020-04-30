@@ -17,45 +17,62 @@
 
 
 import json
-import os
-BASE_DIR = os.path.dirname(__file__)
+import traceback
+from requests import RequestException
+from osdf.adapters.conductor import conductor
+from osdf.adapters.policy.interface import get_policies
+from osdf.logging.osdf_logging import error_log, debug_log
 """
 This application generates NST SELECTION API calls using the information received from SO
 """
 
+def get_nst_demands(model_name):
+    """
+    :param model_name: NST
+    """
+    nst_slice_demand = dict()
+    nst_slice_demands = list()
+    nst_slice_demand["resourceModuleName"] = model_name
+    nst_slice_demands.append((nst_slice_demand))
+    return nst_slice_demands
 
-def get_nst_solution(request_json):
-# the file is in the same folder for now will move it to the conf folder of the has once its integrated there...
-    config_input_json = os.path.join(BASE_DIR, 'conf/configIinputs.json')
+def get_nst_solution(request_json, osdf_config):
+    """Process the nst selection request from API layer
+        :param request_json: api request
+        :param osdf_config: configuration specific to OSDF app
+        :return: response as a dictionary
+        """
+    req_info = request_json['requestInfo']
     try:
-        with open(config_input_json, 'r') as openfile:
-            serviceProfile = request_json["serviceProfile"]
-            nstSolutionList = []
-            resourceName = "NST"
-            serviceProfileParameters = serviceProfile["serviceProfileParameters"]
-            nst_object = json.load(openfile)
-            for nst in nst_object[resourceName]:
-                [(nstName, nstList)] = nst.items()
-                individual_nst = dict()
-                matchall = False
-                for constraint_name in serviceProfileParameters:
-                    value = serviceProfileParameters[constraint_name]
-                    constraint_value = nstList.get(constraint_name)
-                    if (not constraint_value):
-                        matchall = False
-                        break
-                    else:
-                        matchall = True
-                if matchall:
-                    individual_nst["NSTName"] = nstList.get("name")
-                    individual_nst["UUID"] = nstList.get("modeluuid")
-                    individual_nst["invariantUUID"] = nstList.get("modelinvariantuuid")
-                    individual_nst["individual_nst"] = 1
-                    nstSolutionList.append(individual_nst)
 
-        return nstSolutionList
-    except Exception as err:
-        raise err
+        overall_recommendations = dict()
+        nst_name = "NST"
+        policies = get_policies(request_json, "nst_selection")
+        demands = get_nst_demands(nst_name)
+        request_parameters = request_json.get("serviceProfile")
+        service_info = {}
+        req_info['numSolutions'] = 'all'
+        resp = conductor.request(req_info, demands, request_parameters, service_info, False,
+                                osdf_config, policies)
+        overall_recommendations[nst_name] = resp["plans"][0].get("recommendations")
+
+        return conductor_response_processor_for_nst(overall_recommendations, req_info)
+
+    except Exception as ex:
+        error_log.error("Error for {} {}".format(req_info.get('requestId'),
+                                                 traceback.format_exc()))
+        if isinstance(ex, RequestException):
+            try:
+                error_message = json.loads(ex.response)['plans'][0]['message']
+            except Exception:
+                error_message = "Problem connecting to conductor"
+        else:
+            error_message = str(ex)
+        return error_message
+
+
+
+
 
 
 def process_nst_selection( request_json, osdf_config):
@@ -65,7 +82,7 @@ def process_nst_selection( request_json, osdf_config):
     :param osdf_config: Configuration specific to OSDF application (core + deployment)
     :return: response from NST Opt
     """
-    solution = get_nst_solution(request_json)
+    solution = get_nst_solution(request_json, osdf_config)
 
     return {
         "requestId" : request_json['requestInfo']['requestId'],
@@ -74,3 +91,21 @@ def process_nst_selection( request_json, osdf_config):
         "requestStatus" : "accepted",
         "solutions" : solution
     }
+
+def conductor_response_processor_for_nst(overall_recommendations, request_info):
+    """Process conductor response to form the response for the API request
+        :param overall_recommendations: recommendations from conductor
+        :param request_info: request info
+        :return: response json as a dictionary
+    """
+    nstSolutionList = []
+    for nst_name, recommendations in overall_recommendations.items():
+        for recommendation in recommendations:
+            nst_solutions = dict()
+            nst_solutions["invariantUUID"] = recommendation.get('NST').get("modelinvariantuuid")
+            nst_solutions["UUID"] = recommendation.get('NST').get("modeluuid")
+            nst_solutions["NSTName"] = recommendation.get('NST').get('candidate_id')
+            nst_solutions["matchLevel"] = 1
+            nstSolutionList.append(nst_solutions)
+
+    return nstSolutionList

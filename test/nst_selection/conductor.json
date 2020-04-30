@@ -1,0 +1,86 @@
+{
+  "plans": [{
+    "recommendations": [{
+      "NST": {
+        "resourceSharingLevel": "shared",
+        "maxNumberofUEs": 300,
+        "downlink": 1,
+        "uplink": 7,
+        "name": "NST",
+        "areaTrafficCapDL": 100,
+        "areaTrafficCapUL": 100,
+        "expDataRateUL": 30,
+        "node_id": "NST|EmbbNST_2",
+        "areas": " area1|area2",
+        "cost": 2,
+        "modeluuid": "7981375e-5e0a-4bf5-93fa-f3e3c02f2b15",
+        "modelinvariantuuid": "087f11b4-aca0-4341-8104-e5bb2b73285g",
+        "uEMobilityLevel": "stationary",
+        "latency": 3,
+        "uniqueness": "true",
+        "skip_post_instantiation_configuration": "true",
+        "inventory_provider": "file_system",
+        "candidate_id": "EmbbNST_2",
+        "expDataRateDL": 10,
+        "id": "EmbbNST_2_id",
+        "inventory_type": "NST",
+        "constraints": [{
+          "name": "attribute-NST_NST",
+          "constraint_type": "attribute",
+          "status": "passed"
+        }],
+        "controller_actor": "SO-REF-DATA"
+      }
+    }, {
+      "NST": {
+        "resourceSharingLevel": "shared",
+        "maxNumberofUEs": 10000,
+        "downlink": 8,
+        "uplink": 5,
+        "name": "NST",
+        "areaTrafficCapDL": 10,
+        "areaTrafficCapUL": 100,
+        "expDataRateUL": 1000,
+        "node_id": "NST|EmbbNst",
+        "uEMobilityLevel": "stationary",
+        "areas": " area1|area2",
+        "cost": 2,
+        "reliability": 95,
+        "modeluuid": "fe6c82b9-4e53-4322-a671-e2d8637bfbb7",
+        "coverageAreaTAList": "Beijing;Beijing;HaidanDistrict;WanshouluStreet",
+        "modelinvariantuuid": "7d7df980-cb81-45f8-bad9-4e5ad2876393",
+        "activityFactor": "0",
+        "latency": 20,
+        "sST": "embb",
+        "uniqueness": "true",
+        "skip_post_instantiation_configuration": "true",
+        "inventory_provider": "file_system",
+        "sNSSAI": "01-3226E7D1",
+        "candidate_id": "EmbbNst",
+        "plmnIdList": "39-00",
+        "expDataRateDL": 10,
+        "id": "EmbbNst_1",
+        "inventory_type": "NST",
+        "constraints": [{
+          "name": "attribute-NST_NST",
+          "constraint_type": "attribute",
+          "status": "passed"
+        }, {
+          "name": "attribute-NST_NST",
+          "constraint_type": "attribute",
+          "status": "passed"
+        }],
+        "controller_actor": "SO-REF-DATA"
+      }
+    }],
+    "links": [
+      [{
+        "href": "http://0.0.0.0:8091/v1/plans/21727f62-f6e2-4282-95b8-b4c41e164632",
+        "rel": "self"
+      }]
+    ],
+    "id": "21727f62-f6e2-4282-95b8-b4c41e164632",
+    "name": "c86b3019-39f4-4cd3-b847-b22afe9f36dc",
+    "status": "done"
+  }]
+}

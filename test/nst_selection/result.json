@@ -1,0 +1,17 @@
+{
+  "requestId": "c86b3019-39f4-4cd3-b847-b22afe9f36dc",
+  "requestStatus": "accepted",
+  "solutions": [{
+    "NSTName": "EmbbNST_2",
+    "UUID": "7981375e-5e0a-4bf5-93fa-f3e3c02f2b15",
+    "invariantUUID": "087f11b4-aca0-4341-8104-e5bb2b73285g",
+    "matchLevel": 1
+  }, {
+    "NSTName": "EmbbNst",
+    "UUID": "fe6c82b9-4e53-4322-a671-e2d8637bfbb7",
+    "invariantUUID": "7d7df980-cb81-45f8-bad9-4e5ad2876393",
+    "matchLevel": 1
+  }],
+  "statusMessage": " ",
+  "transactionId": "c86b3019-39f4-4cd3-b847-b22afe9f36dc"
+}
