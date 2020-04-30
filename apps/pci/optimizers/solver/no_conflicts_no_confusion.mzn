@@ -44,6 +44,15 @@ int: NUM_SECOND_LEVEL_NEIGHBORS;
 % Each line represents an edge between undirect neighbors as defined before.
 array[1..NUM_SECOND_LEVEL_NEIGHBORS, 1..2] of int: SECOND_LEVEL_NEIGHBORS;
 
+% ids of cells for which the pci should remain unchanged
+set of int: PCI_UNCHANGEABLE_CELLS;
+
+% This array has the original pcis of all the cells. array is indexed by the ids
+% of the cell. eg. ORIGINAL_PCIS[3] returns the pci of cell whose id is 3.
+% ids start from 0
+% array[0..NUM_NODES-1] of 0..NUM_PCIS-1: ORIGINAL_PCIS;
+array[1..NUM_NODES] of 0..NUM_PCIS-1: ORIGINAL_PCIS;
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Decision variables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -54,6 +63,14 @@ array[0..NUM_NODES-1] of var 0..NUM_PCIS-1: pci;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Constraints
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+constraint
+if(length(PCI_UNCHANGEABLE_CELLS) !=0) then
+forall(i in PCI_UNCHANGEABLE_CELLS)(
+    pci[i] == ORIGINAL_PCIS[i+1]
+)
+endif;
+
 
 % Direct neighbors must have different PCIs for avoid **COLLISION**.
 constraint

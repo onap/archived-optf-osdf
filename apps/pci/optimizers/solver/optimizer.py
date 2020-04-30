@@ -19,28 +19,56 @@
 import itertools
 import os
 from collections import defaultdict
-
 import pymzn
 
-from .pci_utils import get_id
+from .pci_utils import get_id,mapping
 
 BASE_DIR = os.path.dirname(__file__)
-
+cell_id_mapping = dict()
+id_cell_mapping = dict()
 
 def pci_optimize(network_cell_info, cell_info_list, request_json):
+    global cell_id_mapping, id_cell_mapping
+    cell_id_mapping, id_cell_mapping = mapping(network_cell_info)
+    original_pcis = get_original_pci_list(network_cell_info)
+    unchangeable_pcis = get_ids_of_fixed_pci_cells(request_json['cellInfo'].get('fixedPCICells', []))
     neighbor_edges = get_neighbor_list(network_cell_info)
     second_level_edges = get_second_level_neighbor(network_cell_info)
     ignorable_links = get_ignorable_links(network_cell_info, request_json)
     anr_flag = is_anr(request_json)
 
-    dzn_data = build_dzn_data(cell_info_list, ignorable_links, neighbor_edges, second_level_edges, anr_flag)
+    dzn_data = build_dzn_data(cell_info_list, ignorable_links, neighbor_edges, second_level_edges, anr_flag, original_pcis, unchangeable_pcis)
 
     return build_pci_solution(dzn_data, ignorable_links, anr_flag)
+
+def get_ids_of_fixed_pci_cells(fixed_pci_list):
+    fixed_pci_ids = set()
+    for cell in fixed_pci_list:
+        fixed_pci_ids.add(cell_id_mapping[cell])
+    return fixed_pci_ids
+
+
+def get_cell_id_pci_mapping(network_cell_info):
+    original_pcis = dict()
+    for cell in network_cell_info['cell_list']:
+        for nbr in cell['nbr_list']:
+            if cell_id_mapping[nbr['targetCellId']] not in original_pcis:
+                original_pcis[cell_id_mapping[nbr['targetCellId']]] = nbr['pciValue']
+    return original_pcis
+
+
+def get_original_pci_list(network_cell_info):
+    cell_id_pci_mapping = get_cell_id_pci_mapping(network_cell_info)
+    original_pcis_list = []
+    for i in range(len(cell_id_pci_mapping)):
+        original_pcis_list.append(cell_id_pci_mapping.get(i))
+    return original_pcis_list
 
 
 def build_pci_solution(dzn_data, ignorable_links, anr_flag):
     mzn_solution = solve(get_mzn_model(anr_flag), dzn_data)
-
+    if mzn_solution == 'UNSATISFIABLE':
+        return mzn_solution
     solution = {'pci': mzn_solution[0]['pci']}
 
     if anr_flag:
@@ -55,14 +83,16 @@ def build_pci_solution(dzn_data, ignorable_links, anr_flag):
     return solution
 
 
-def build_dzn_data(cell_info_list, ignorable_links, neighbor_edges, second_level_edges, anr_flag):
+def build_dzn_data(cell_info_list, ignorable_links, neighbor_edges, second_level_edges, anr_flag,original_pcis, unchangeable_pcis):
     dzn_data = {
         'NUM_NODES': len(cell_info_list),
         'NUM_PCIS': len(cell_info_list),
         'NUM_NEIGHBORS': len(neighbor_edges),
         'NEIGHBORS': get_list(neighbor_edges),
         'NUM_SECOND_LEVEL_NEIGHBORS': len(second_level_edges),
-        'SECOND_LEVEL_NEIGHBORS': get_list(second_level_edges)
+        'SECOND_LEVEL_NEIGHBORS': get_list(second_level_edges),
+        'PCI_UNCHANGEABLE_CELLS': unchangeable_pcis,
+        'ORIGINAL_PCIS': original_pcis
     }
     if anr_flag:
         dzn_data['NUM_IGNORABLE_NEIGHBOR_LINKS'] = len(ignorable_links)
