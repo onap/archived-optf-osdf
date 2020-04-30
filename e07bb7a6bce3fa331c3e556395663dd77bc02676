@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "050b2e01_fa9dab8b",
+        "filename": "apps/pci/optimizers/solver/optimizer.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-04-30T13:41:01Z",
+      "side": 1,
+      "message": "Can this raised as an exception, so that the calling method can catch it and process it accordingly.",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 27
+      },
+      "revId": "e07bb7a6bce3fa331c3e556395663dd77bc02676",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
