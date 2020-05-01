@@ -22,12 +22,21 @@ from schematics.types.compound import ModelType, ListType, DictType
 
 
 # TODO: update osdf.models
+class NSSI(OSDFModel):
+    NSSIId = StringType(required=True)
+    NSSIName = StringType(required=True)
+    UUID = StringType(required=True)
+    invariantUUID = StringType(required=True)
+    sliceProfile = ListType(DictType(BaseType))
+
+
 class SharedNSISolution(OSDFModel):
     invariantUUID = StringType(required=True)
     UUID = StringType(required=True)
     NSIName = StringType(required=True)
     NSIId = StringType(required=True)
     matchLevel = StringType(required=True)
+    NSSIs = ListType(ModelType(NSSI))
 
 
 class NSSTInfo(OSDFModel):

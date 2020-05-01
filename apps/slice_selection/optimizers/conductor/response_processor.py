@@ -54,6 +54,19 @@ def conductor_response_processor(overall_recommendations, nst_info_map, request_
                 shared_nsi_solution["NSIName"] = candidate.get('nsi_name')
                 shared_nsi_solution["UUID"] = candidate.get('nsi_model_version_id')
                 shared_nsi_solution["invariantUUID"] = candidate.get('nsi_model_invariant_id')
+
+                nssi_info_list = get_nssi_solutions(recommendation)
+                nssis = list()
+                for nssi_info in nssi_info_list:
+                    nssi = dict()
+                    nssi["NSSIId"] = nssi_info.get("NSSISolution").get("NSSIId")
+                    nssi["NSSIName"] = nssi_info.get("NSSISolution").get("NSSIName")
+                    nssi["UUID"] = ""
+                    nssi["invariantUUID"] = ""
+                    nssi["sliceProfile"] = [nssi_info.get("sliceProfile")]
+                    nssis.append(nssi)
+
+                shared_nsi_solution["NSSIs"] = nssis
                 shared_nsi_solutions.append(shared_nsi_solution)
             else:
                 nssi_solutions = get_nssi_solutions(recommendation)

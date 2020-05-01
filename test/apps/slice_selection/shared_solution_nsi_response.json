@@ -1,19 +1,51 @@
 {
-   "requestId":"d290f1ee-6c54-4b01-90e6-d701748f0851",
-   "transactionId":"d290f1ee-6c54-4b01-90e6-d701748f0851",
-   "requestStatus":"completed",
-   "statusMessage":"",
-   "solutions":{
-      "sharedNSISolutions":[
-         {
-            "NSIName":"nsi_test_0212",
-            "NSIId":"7ecdfb7a-bc38-4abd-9cb3-6677d71e892f",
-            "UUID":"c3d8a690-f138-4554-89af-9349aeb9b19a",
-            "invariantUUID":"590b9fcf-6927-495e-a898-a1418dd4820c"
-         }
-      ],
-      "newNSISolutions":[
-
-      ]
-   }
+    "requestId": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "requestStatus": "completed",
+    "solutions": {
+        "newNSISolutions": [],
+        "sharedNSISolutions": [
+            {
+                "NSIId": "7ecdfb7a-bc38-4abd-9cb3-6677d71e892f",
+                "NSIName": "nsi_test_0212",
+                "NSSIs": [
+                    {
+                        "NSSIId": "1a636c4d-5e76-427e-bfd6-241a947224b0",
+                        "NSSIName": "nssi_test_0211",
+                        "UUID": "",
+                        "invariantUUID": "",
+                        "sliceProfile": [
+                            {
+                                "coverage_area_ta_list": "[{\"province\":\"??\",\"city\":\"???\",\"county\":\"???\",\"street\":\"?????\"}]",
+                                "exp_data_rate_dl": 100,
+                                "exp_data_rate_ul": 100,
+                                "latency": 20,
+                                "resource_sharing_level": "0",
+                                "ue_mobility_level": "stationary"
+                            }
+                        ]
+                    },
+                    {
+                        "NSSIId": "490c68b0-639c-11ea-bc55-0242ac130003",
+                        "NSSIName": "nssi_test_ran_0211",
+                        "UUID": "",
+                        "invariantUUID": "",
+                        "sliceProfile": [
+                            {
+                                "coverage_area_ta_list": "[{\"province\":\"??\",\"city\":\"???\",\"county\":\"???\",\"street\":\"?????\"}]",
+                                "exp_data_rate_dl": 100,
+                                "exp_data_rate_ul": 100,
+                                "latency": 15,
+                                "resource_sharing_level": "0",
+                                "ue_mobility_level": "stationary"
+                            }
+                        ]
+                    }
+                ],
+                "UUID": "c3d8a690-f138-4554-89af-9349aeb9b19a",
+                "invariantUUID": "590b9fcf-6927-495e-a898-a1418dd4820c"
+            }
+        ]
+    },
+    "statusMessage": "",
+    "transactionId": "d290f1ee-6c54-4b01-90e6-d701748f0851"
 }
