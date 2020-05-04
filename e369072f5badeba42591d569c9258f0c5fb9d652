@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c84917bd_25802faa",
+        "filename": "config/common_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-05-04T12:42:56Z",
+      "side": 1,
+      "message": "we don\u0027t need service name for fetching the policies, since we don\u0027t get any in the request",
+      "range": {
+        "startLine": 100,
+        "startChar": 14,
+        "endLine": 101,
+        "endChar": 43
+      },
+      "revId": "e369072f5badeba42591d569c9258f0c5fb9d652",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ca8b9ed_b78e3210",
         "filename": "osdf/adapters/conductor/translation.py",
         "patchSetId": 1
