@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ca8b9ed_b78e3210",
+        "filename": "osdf/adapters/conductor/translation.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-05-04T12:20:11Z",
+      "side": 1,
+      "message": "The conductor adapter has to be generic and all the use case specific things have to be model driven. It has to come from policy.",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 195,
+        "endChar": 34
+      },
+      "revId": "e369072f5badeba42591d569c9258f0c5fb9d652",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
