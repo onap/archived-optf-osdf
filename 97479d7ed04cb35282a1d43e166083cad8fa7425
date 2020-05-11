@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c7b0ae6_04c9e994",
+        "filename": "osdf/adapters/policy/interface.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 2701
+      },
+      "writtenOn": "2020-05-11T15:43:52Z",
+      "side": 1,
+      "message": "Exception was going from here. List of generators (*policies) was also adding the same policy to the set of policies.",
+      "revId": "97479d7ed04cb35282a1d43e166083cad8fa7425",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
