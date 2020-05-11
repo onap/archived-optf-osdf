@@ -76,9 +76,10 @@ def get_by_scope(rest_client, req, config_local, type_service):
             keys = scope_fields.keys() & policies[policyName]['properties'].keys()
             policy = {}
             policy[policyName] = policies[policyName]
-            scope_policies.append(policy for k in keys
-                                  if set(policies.get(policyName, {}).get('properties',{}).get(k)) >= set(scope_fields[k])
-                                  and policy not in scope_policies)
+            for k in keys:
+                if set(policies.get(policyName, {}).get('properties',{}).get(k)) >= set(scope_fields[k])\
+                        and policy not in scope_policies:
+                    scope_policies.append(policy)
 
     return scope_policies
 
@@ -146,7 +147,7 @@ def remote_api(req_json, osdf_config, service_type="placement"):
         policies = get_by_scope(rc, req_json, osdf_config.core, service_type)
 
     formatted_policies = []
-    for x in itertools.chain(*policies):
+    for x in policies:
         if x[list(x.keys())[0]].get('properties') is None:
             raise BusinessException("Properties not found for policy with name %s" % x[list(x.keys()[0])])
         else:

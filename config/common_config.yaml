@@ -38,7 +38,7 @@ osdf_temp:  # special configuration required for "workarounds" or testing
         placement_policy_files_vfw_td:
             - vnfPolicy_vFW_TD.json
             - vnfPolicy_vPGN_TD.json
-            - affinity_vFW_TD.json
+            - Affinity_vFW_TD.json
             - QueryPolicy_vFW_TD.json
         slice_selection_policy_dir_urllc_1: "./test/policy-local-files/"
         slice_selection_policy_files_urllc_1:

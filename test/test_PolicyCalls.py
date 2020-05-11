@@ -92,7 +92,7 @@ class TestPolicyCalls(unittest.TestCase):
             policy_config_file = yaml.load(yaml_file2)
             with patch('osdf.utils.interfaces.RestClient.request', return_value=req_json_obj2):
                 policies_list = interface.get_by_scope(RestClient, req_json_obj, policy_config_file, 'placement')
-                self.assertTrue(policies_list, 'is null')
+                self.assertFalse(policies_list)
                 self.assertRaises(Exception)
 
     def test_gen_demands(self):
