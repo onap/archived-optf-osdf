@@ -25,7 +25,7 @@ import traceback
 from requests import RequestException
 
 from apps.slice_selection.optimizers.conductor.response_processor \
-    import conductor_response_processor, conductor_error_response_processor
+    import conductor_response_processor, conductor_error_response_processor, solution_with_only_slice_profile, get_nsi_selection_response
 from osdf.adapters.conductor import conductor
 from osdf.adapters.policy.interface import get_policies
 from osdf.adapters.policy.utils import group_policies_gen
@@ -46,29 +46,40 @@ def process_nsi_selection_opt(request_json, osdf_config):
 
         overall_recommendations = dict()
         nst_info_map = dict()
+        new_nsi_solutions = list()
         for nst_info in request_json["NSTInfoList"]:
             nst_name = nst_info["modelName"]
-            nst_info_map["nst_name"] = {"NSTName": nst_name,
-                                        "UUID": nst_info["modelVersionId"],
-                                        "invariantUUID": nst_info["modelInvariantId"]}
+            nst_info_map[nst_name] =  {"NSTName": nst_name,
+                                                    "UUID": nst_info["modelVersionId"],
+                                                    "invariantUUID": nst_info["modelInvariantId"]}
 
-            policy_request_json = request_json.copy()
-            policy_request_json['serviceInfo']['serviceName'] = nst_name
+            if request_json["serviceProfile"]["resourceSharingLevel"] == "non-shared":
+                new_nsi_solution = solution_with_only_slice_profile(request_json['serviceProfile'], nst_info_map.get(nst_name))
+                new_nsi_solutions.append(new_nsi_solution)
+            else:
+                policy_request_json = request_json.copy()
+                policy_request_json['serviceInfo']['serviceName'] = nst_name
+                policies = get_policies(policy_request_json, "slice_selection")
 
-            policies = get_policies(policy_request_json, "slice_selection")
+                demands = get_slice_demands(nst_name, policies, osdf_config.core)
 
-            demands = get_slice_demands(nst_name, policies, osdf_config.core)
-
-            request_parameters = request_json.get('serviceProfile',{})
-            service_info = {}
-            req_info['numSolutions'] = 'all'
-            resp = conductor.request(req_info, demands, request_parameters, service_info, False,
+                request_parameters = request_json.get('serviceProfile',{})
+                service_info = {}
+                req_info['numSolutions'] = 'all'
+                resp = conductor.request(req_info, demands, request_parameters, service_info, False,
                                      osdf_config, policies)
-            debug_log.debug("Response from conductor {}".format(str(resp)))
-            overall_recommendations[nst_name] = resp["plans"][0].get("recommendations")
+                if resp["plans"][0].get("status") == "not found":
+                    resp["recommendations"] = list()
+                debug_log.debug("Response from conductor {}".format(str(resp)))
+                overall_recommendations[nst_name] = resp["plans"][0].get("recommendations")
 
-        return conductor_response_processor(overall_recommendations, nst_info_map, req_info)
-
+        if request_json["serviceProfile"]["resourceSharingLevel"] == "non-shared":
+            solutions = dict()
+            solutions['newNSISolutions'] = new_nsi_solutions
+            solutions['sharedNSISolutions'] = []
+            return get_nsi_selection_response(req_info, solutions)
+        else:    
+            return conductor_response_processor(overall_recommendations, nst_info_map, req_info, request_json["serviceProfile"])
     except Exception as ex:
         error_log.error("Error for {} {}".format(req_info.get('requestId'),
                                                  traceback.format_exc()))

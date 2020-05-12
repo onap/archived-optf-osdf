@@ -1,0 +1,18 @@
+{
+    "plans": [
+        {
+            "id": "d8c07237-5f66-4aa6-871c-a04221d99458",
+            "links": [
+                [
+                    {
+                        "href": "https://oof-has-api:8091/v1/plans/d8c07237-5f66-4aa6-871c-a04221d99458",
+                        "rel": "self"
+                    }
+                ]
+            ],
+            "message": "Plan d8c07237-5f66-4aa6-871c-a04221d99458 search failed, no recommendations found by machine dev-oof-has-solver-65d478b6d-ql5fp",
+            "name": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+            "status": "not found"
+        }
+    ]
+}
