@@ -1,0 +1,18 @@
+{
+   "plans":[
+      {
+         "status":"done",
+         "id":"plan_id",
+         "name":"Plan Name 1",
+         "links":[
+            [
+               {
+                  "href":"http://conductor:8091/v1/plans/plan_id",
+                  "rel":"self"
+               }
+            ]
+         ],
+         "recommendations": []
+      }
+   ]
+}

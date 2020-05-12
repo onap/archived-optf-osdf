@@ -7,7 +7,8 @@
     "connDensity": 100000,
     "expDataRate": 50,
     "jitter": 1,
-    "survivalTime": 0
+    "survivalTime": 0,
+    "resourceSharingLevel":"shared" 
   },
   "serviceInfo":{
       "serviceInstanceId": "209fb01e-60ca-4325-b074-c5ad4e0499f8",

@@ -23,15 +23,15 @@ Module for processing response from conductor for slice selection
 from osdf.logging.osdf_logging import debug_log
 
 
-SLICE_PROFILE_FIELDS = ["latency", "max_number_of_ues", "coverage_area_ta_list",
-                        "ue_mobility_level", "resource_sharing_level", "exp_data_rate_ul",
-                        "exp_data_rate_dl", "area_traffic_cap_ul", "area_traffic_cap_dl",
-                        "activity_factor", "e2e_latency", "jitter", "survival_time",
-                        "exp_data_rate", "payload_size", "traffic_density", "conn_density",
-                        "reliability", "service_area_dimension", "cs_availability"]
+SLICE_PROFILE_FIELDS = {"latency":"latency", "max_number_of_ues":"maxNumberOfUEs", "coverage_area_ta_list": "coverageAreaTAList",
+                        "ue_mobility_level":"uEMobilityLevel", "resource_sharing_level":"resourceSharingLevel", "exp_data_rate_ul": "expDataRateUL",
+                        "exp_data_rate_dl":"expDataRateDL", "area_traffic_cap_ul":"areaTrafficCapUL", "area_traffic_cap_dl": "areaTrafficCapDL",
+                        "activity_factor":"activityFactor", "e2e_latency":"e2eLatency", "jitter":"jitter", "survival_time": "survivalTime",
+                        "exp_data_rate":"expDataRate", "payload_size":"payloadSize", "traffic_density":"trafficDensity", "conn_density":"connDensity",
+                        "reliability":"reliability", "service_area_dimension":"serviceAreaDimension", "cs_availability": "csAvailability"}
 
 
-def conductor_response_processor(overall_recommendations, nst_info_map, request_info):
+def conductor_response_processor(overall_recommendations, nst_info_map, request_info, service_profile):
     """Process conductor response to form the response for the API request
         :param overall_recommendations: recommendations from conductor
         :param nst_info_map: NST info from the request
@@ -40,8 +40,12 @@ def conductor_response_processor(overall_recommendations, nst_info_map, request_
     """
     shared_nsi_solutions = list()
     new_nsi_solutions = list()
-
     for nst_name, recommendations in overall_recommendations.items():
+        if  not (recommendations):
+            new_nsi_solution = solution_with_only_slice_profile(service_profile, nst_info_map.get(nst_name))
+            new_nsi_solutions.append(new_nsi_solution)
+            continue
+
         for recommendation in recommendations:
             nsi_set = set(values['candidate']['nsi_id'] for key, values in recommendation.items())
             if len(nsi_set) == 1:
@@ -82,6 +86,14 @@ def conductor_response_processor(overall_recommendations, nst_info_map, request_
     return get_nsi_selection_response(request_info, solutions)
 
 
+def solution_with_only_slice_profile(service_profile, nst_info):
+    nssi_solutions = get_slice_profile_from_service_profile(service_profile)
+    new_nsi_solution = dict()
+    new_nsi_solution['matchLevel'] = ""
+    new_nsi_solution['NSTInfo'] = nst_info
+    new_nsi_solution['NSSISolutions'] = nssi_solutions
+    return new_nsi_solution
+
 def conductor_error_response_processor(request_info, error_message):
     """Form response message from the error message
         :param request_info: request info
@@ -92,6 +104,14 @@ def conductor_error_response_processor(request_info, error_message):
             'transactionId': request_info['transactionId'],
             'requestStatus': 'error',
             'statusMessage': error_message}
+
+
+def get_slice_profile_from_service_profile(service_profile):
+    nssi_solutions = list()
+    service_profile["domainType"] = "cn"
+    nssi_solution = {"sliceProfile": service_profile}
+    nssi_solutions.append(nssi_solution)
+    return nssi_solutions
 
 
 def get_nssi_solutions(recommendation):
@@ -123,7 +143,7 @@ def get_solution_from_candidate(candidate):
 
     for field in SLICE_PROFILE_FIELDS:
         if candidate[field]:
-            slice_profile[field] = candidate[field]
+            slice_profile[SLICE_PROFILE_FIELDS[field]] = candidate[field]
 
     return nssi_info, slice_profile
 
@@ -134,8 +154,11 @@ def get_nsi_selection_response(request_info, solutions):
         :param solutions: final solutions
         :return: NSI selection response to send back as dictionary
     """
+    debug_log.debug("actual resp: ")
+    debug_log.debug(solutions)
     return {'requestId': request_info['requestId'],
             'transactionId': request_info['transactionId'],
             'requestStatus': 'completed',
             'statusMessage': '',
             'solutions': solutions}
+
