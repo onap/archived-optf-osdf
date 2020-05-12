@@ -1,0 +1,37 @@
+{
+   "requestId":"d290f1ee-6c54-4b01-90e6-d701748f0851",
+   "transactionId":"d290f1ee-6c54-4b01-90e6-d701748f0851",
+   "requestStatus":"completed",
+   "statusMessage":"",
+   "solutions":{
+      "sharedNSISolutions":[
+
+      ],
+      "newNSISolutions":[
+         {
+            "matchLevel":"",
+            "NSTInfo":{"invariantUUID": "fda3c1e8-7653-4acd-80ef-f5755c1d3859",
+                       "UUID": "a6906768-1cae-4e78-acd1-d753ac61f3e8",
+                       "NSTName": "URLLC_1"
+                },
+
+            "NSSISolutions":[
+               {
+                  "sliceProfile": {
+                  "latency": 2,
+                  "security": "High",
+                  "reliability": 99.9999,
+                  "trafficDensity": 1,
+                  "connDensity": 100000,
+                  "expDataRate": 50,
+                  "jitter": 1,
+                  "survivalTime": 0,
+                  "domainType":"cn",
+                  "resourceSharingLevel":"shared"
+                }
+               }
+            ]
+         }
+      ]
+   }
+}

@@ -45,13 +45,20 @@ class TestRemoteOptProcessor(unittest.TestCase):
     def test_process_nsi_selection_opt(self):
         main_dir = ""
         request_file = main_dir + 'test/apps/slice_selection/nsi_request.json'
+        not_shared_request_file = main_dir + 'test/apps/slice_selection/not_shared_nsi_request.json'
+        #response files
         new_solution_response_file = main_dir + 'test/apps/slice_selection/new_solution_nsi_response.json'
         shared_solution_response_file = main_dir + 'test/apps/slice_selection/shared_solution_nsi_response.json'
+        no_solution_response_file = main_dir + 'test/apps/slice_selection/no_recomm_nsi_response.json'
+        not_shared_response_file = main_dir + 'test/apps/slice_selection/not_shared_nsi_response.json'
         error_response_file = main_dir + 'test/apps/slice_selection/nsi_error_response.json'
 
+        not_shared_request_json = json_from_file(not_shared_request_file)
+        not_shared_response_json = json_from_file(not_shared_response_file)
         request_json = json_from_file(request_file)
         new_solution_response_json = json_from_file(new_solution_response_file)
         shared_solution_response_json = json_from_file(shared_solution_response_file)
+        no_solution_response_json = json_from_file(no_solution_response_file)
         error_response_json = json_from_file(error_response_file)
 
         policies_path = main_dir + 'test/policy-local-files'
@@ -62,7 +69,7 @@ class TestRemoteOptProcessor(unittest.TestCase):
         self.patcher_get_policies = patch('osdf.adapters.policy.interface.remote_api',
                                           return_value=policies)
         self.Mock_get_policies = self.patcher_get_policies.start()
-
+        # new solution
         new_solution_conductor_response_file = 'test/apps/slice_selection/new_solution_conductor_response.json'
         new_solution_conductor_response = json_from_file(new_solution_conductor_response_file)
         self.patcher_req = patch('osdf.adapters.conductor.conductor.request',
@@ -70,13 +77,25 @@ class TestRemoteOptProcessor(unittest.TestCase):
         self.Mock_req = self.patcher_req.start()
         self.assertEquals(new_solution_response_json, process_nsi_selection_opt(request_json, self.osdf_config))
         self.patcher_req.stop()
-
+        # shared solution
         shared_solution_conductor_response_file = 'test/apps/slice_selection/shared_solution_conductor_response.json'
         shared_solution_conductor_response = json_from_file(shared_solution_conductor_response_file)
         self.patcher_req = patch('osdf.adapters.conductor.conductor.request',
                                  return_value=shared_solution_conductor_response)
         self.Mock_req = self.patcher_req.start()
         self.assertEquals(shared_solution_response_json,
+                          process_nsi_selection_opt(request_json, self.osdf_config))
+        self.patcher_req.stop()
+        # not-shared solution
+        self.assertEquals(not_shared_response_json,
+                          process_nsi_selection_opt(not_shared_request_json, self.osdf_config))
+        # no recommendation
+        no_solution_conductor_response_file = 'test/apps/slice_selection/no_rec.json'
+        no_solution_conductor_response = json_from_file(no_solution_conductor_response_file)
+        self.patcher_req = patch('osdf.adapters.conductor.conductor.request',
+                                 return_value=no_solution_conductor_response)
+        self.Mock_req = self.patcher_req.start()
+        self.assertEquals(no_solution_response_json,
                           process_nsi_selection_opt(request_json, self.osdf_config))
         self.patcher_req.stop()
 
