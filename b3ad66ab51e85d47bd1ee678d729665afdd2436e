@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4419c14_a5c6754a",
+        "filename": "apps/slice_selection/optimizers/conductor/remote_opt_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-05-13T04:50:21Z",
+      "side": 1,
+      "message": "should this be not declared outside the loop?",
+      "range": {
+        "startLine": 51,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 38
+      },
+      "revId": "b3ad66ab51e85d47bd1ee678d729665afdd2436e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cabdc33d_08bcb088",
+        "filename": "apps/slice_selection/optimizers/conductor/response_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-05-13T04:50:21Z",
+      "side": 1,
+      "message": "Can you remove this debug statement ?",
+      "range": {
+        "startLine": 157,
+        "startChar": 3,
+        "endLine": 158,
+        "endChar": 30
+      },
+      "revId": "b3ad66ab51e85d47bd1ee678d729665afdd2436e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
