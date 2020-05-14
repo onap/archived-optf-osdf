@@ -18,7 +18,7 @@
 
 import json
 import unittest
-from requests import RequestException
+from requests import RequestException, Response
 
 from apps.slice_selection.optimizers.conductor.remote_opt_processor import process_nsi_selection_opt
 from osdf.adapters.local_data import local_policies
@@ -102,8 +102,10 @@ class TestRemoteOptProcessor(unittest.TestCase):
         conductor_error_response_file = 'test/apps/slice_selection/conductor_error_response.json'
         conductor_error_response = json_from_file(conductor_error_response_file)
 
+        response = Response()
+        response._content = json.dumps(conductor_error_response).encode()
         self.patcher_req = patch('osdf.adapters.conductor.conductor.request',
-                                 side_effect=RequestException(response=json.dumps(conductor_error_response)))
+                                 side_effect=RequestException(response=response))
         self.Mock_req = self.patcher_req.start()
         self.assertEquals(error_response_json, process_nsi_selection_opt(request_json, self.osdf_config))
         self.patcher_req.stop()

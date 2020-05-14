@@ -66,10 +66,13 @@ def process_nsi_selection_opt(request_json, osdf_config):
                 request_parameters = request_json.get('serviceProfile',{})
                 service_info = {}
                 req_info['numSolutions'] = 'all'
-                resp = conductor.request(req_info, demands, request_parameters, service_info, False,
-                                     osdf_config, policies)
-                if resp["plans"][0].get("status") == "not found":
-                    resp["recommendations"] = list()
+                try:
+                    resp = conductor.request(req_info, demands, request_parameters, service_info, False,
+                                             osdf_config, policies)
+                except RequestException as e:
+                    resp = e.response.json()
+                    error = resp['plans'][0]['message']
+                    error_log.error('Error from conductor {}'.format(error))
                 debug_log.debug("Response from conductor {}".format(str(resp)))
                 overall_recommendations[nst_name] = resp["plans"][0].get("recommendations")
 
@@ -78,18 +81,12 @@ def process_nsi_selection_opt(request_json, osdf_config):
             solutions['newNSISolutions'] = new_nsi_solutions
             solutions['sharedNSISolutions'] = []
             return get_nsi_selection_response(req_info, solutions)
-        else:    
+        else:
             return conductor_response_processor(overall_recommendations, nst_info_map, req_info, request_json["serviceProfile"])
     except Exception as ex:
         error_log.error("Error for {} {}".format(req_info.get('requestId'),
                                                  traceback.format_exc()))
-        if isinstance(ex, RequestException):
-            try:
-                error_message = json.loads(ex.response)['plans'][0]['message']
-            except Exception:
-                error_message = "Problem connecting to conductor"
-        else:
-            error_message = str(ex)
+        error_message = str(ex)
         return conductor_error_response_processor(req_info, error_message)
 
 
