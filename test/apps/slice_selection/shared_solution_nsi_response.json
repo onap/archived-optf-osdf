@@ -20,7 +20,8 @@
                                 "expDataRateUL": 100,
                                 "latency": 20,
                                 "resourceSharingLevel": "0",
-                                "uEMobilityLevel": "stationary"
+                                "uEMobilityLevel": "stationary",
+                                "domainType" : "cn"
                             }
                         ]
                     },
@@ -36,7 +37,9 @@
                                 "expDataRateUL": 100,
                                 "latency": 15,
                                 "resourceSharingLevel": "0",
-                                "uEMobilityLevel": "stationary"
+                                "uEMobilityLevel": "stationary",
+                                 "domainType" : "cn"
+
                             }
                         ]
                     }
