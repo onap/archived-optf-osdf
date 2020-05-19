@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee07043c_3382ed7b",
+        "filename": "apps/slice_selection/optimizers/conductor/response_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2020-05-19T14:07:25Z",
+      "side": 1,
+      "message": "Why are we hardcoding the domain to be Core ? Is the assumption that if only one domain exists, it would be the core ?",
+      "revId": "f87b829e4181a445844bd565acd58137b3444c15",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22596e91_ab420e80",
+        "filename": "apps/slice_selection/optimizers/conductor/response_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2020-05-19T14:07:25Z",
+      "side": 1,
+      "message": "Can be removed ?",
+      "revId": "f87b829e4181a445844bd565acd58137b3444c15",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
