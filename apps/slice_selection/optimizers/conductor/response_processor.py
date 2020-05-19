@@ -67,10 +67,13 @@ def conductor_response_processor(overall_recommendations, nst_info_map, request_
                     nssi["NSSIName"] = nssi_info.get("NSSISolution").get("NSSIName")
                     nssi["UUID"] = ""
                     nssi["invariantUUID"] = ""
+                    nssi_info.get("sliceProfile").update({"domainType":"cn"})
                     nssi["sliceProfile"] = [nssi_info.get("sliceProfile")]
                     nssis.append(nssi)
 
                 shared_nsi_solution["NSSIs"] = nssis
+                debug_log.debug("printtttttt")
+                debug_log.debug(shared_nsi_solution)
                 shared_nsi_solutions.append(shared_nsi_solution)
             else:
                 nssi_solutions = get_nssi_solutions(recommendation)
