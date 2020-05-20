@@ -1286,7 +1286,7 @@
           "$ref": "#/definitions/RequestInfo2"
         },
         "serviceProfile": {
-          "$ref": "#/definitions/ServiceProfile"
+          "$ref": "#/definitions/ServiceProfileNst"
         }
       }
     },
@@ -1375,6 +1375,17 @@
       "description": "JSON blob. Containing service profile parameters. The contents are based on 3GPP TS 23.541 Release 16 contents, and will be in the form of attribute value pairs.",
       "example": {
         "blob": "content"
+      }
+    },
+    "ServiceProfileNst": {
+      "type": "object",
+      "required": [
+          "serviceProfileParameters"
+      ],
+      "properties": {
+        "serviceProfileParameters":{
+          "$ref": "#/definitions/ServiceProfile"
+        }
       }
     },
     "SliceProfile": {
@@ -1587,6 +1598,47 @@
           "type": "string",
           "format": "uuid",
           "description": "Id of NSI"
+        },
+        "NSSIs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NSSI"
+          },
+          "description": "A list of NSSIs"
+        },
+      }
+    },
+    "NSSI":{
+      "type": "object",
+      "required": [
+        "NSSIName",
+        "NSSIId",
+        "UUID",
+        "invariantUUID"
+      ],
+      "properties": {
+        "NSSIName": {
+          "type": "string",
+          "description": "Name of NSSI"
+        },
+        "NSSIId": {
+          "type": "string",
+          "description": "Id of NSSI"
+        },
+        "UUID": {
+          "type": "string",
+          "description": "UUID of NSST"
+        },
+        "invariantUUID": {
+          "type": "string",
+          "description": "invariantUUID of NSST"
+        },
+        "sliceProfile": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SliceProfile"
+          },
+          "description": "list of SliceProfiles",
         }
       }
     },
