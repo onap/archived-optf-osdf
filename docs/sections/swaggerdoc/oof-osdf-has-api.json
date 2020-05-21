@@ -74,7 +74,53 @@
       }
     },
     "/api/oof/placement/v1": {
-      "$ref": "#/paths/~1v2~1placement"
+      "post": {
+        "tags": [
+          "Placement Optimization"
+        ],
+        "summary": "create/update a placement",
+        "operationId": "createPlacementv1",
+        "description": "create/update a placement",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "placementRequest",
+            "description": "placement request",
+            "schema": {
+              "$ref": "#/definitions/PlacementRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "An optimization solution is found."
+          },
+          "202": {
+            "description": "An optimization request is accepted"
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "401": {
+            "description": "Request body is not compliant with the API definition"
+          },
+          "404": {
+            "description": "The server cannot find the requested URI"
+          },
+          "405": {
+            "description": "The requested method is not supported by a server."
+          },
+          "500": {
+            "description": "The server encountered an internal server error or timed out"
+          }
+        }
+      }
     },
     "/api/oof/v1/pci": {
       "post": {
@@ -126,7 +172,53 @@
       }
     },
     "/api/oof/pci/v1": {
-      "$ref": "#/paths/~1api~1oof~1v1~1pci"
+      "post": {
+        "tags": [
+          "PCI/ANR Optimization"
+        ],
+        "summary": "Initiate PCI/ANR Optimization",
+        "operationId": "initiatePCIOptRequestv1",
+        "description": "Initiate PCI/ANR Optimization",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "PCIOptimizationRequest",
+            "description": "PCI request",
+            "schema": {
+              "$ref": "#/definitions/PCIOptRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "An optimization solution is found."
+          },
+          "202": {
+            "description": "An optimization request is accepted"
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "401": {
+            "description": "Request body is not compliant with the API definition"
+          },
+          "404": {
+            "description": "The server cannot find the requested URI"
+          },
+          "405": {
+            "description": "The requested method is not supported by a server."
+          },
+          "500": {
+            "description": "The server encountered an internal server error or timed out"
+          }
+        }
+      }
     },
     "/api/oof/selection/nst/v1": {
       "post": {
@@ -1380,10 +1472,10 @@
     "ServiceProfileNst": {
       "type": "object",
       "required": [
-          "serviceProfileParameters"
+        "serviceProfileParameters"
       ],
       "properties": {
-        "serviceProfileParameters":{
+        "serviceProfileParameters": {
           "$ref": "#/definitions/ServiceProfile"
         }
       }
@@ -1605,10 +1697,10 @@
             "$ref": "#/definitions/NSSI"
           },
           "description": "A list of NSSIs"
-        },
+        }
       }
     },
-    "NSSI":{
+    "NSSI": {
       "type": "object",
       "required": [
         "NSSIName",
@@ -1638,7 +1730,7 @@
           "items": {
             "$ref": "#/definitions/SliceProfile"
           },
-          "description": "list of SliceProfiles",
+          "description": "list of SliceProfiles"
         }
       }
     },
