@@ -27,7 +27,7 @@ Release Data
 | **OOF Project**                      |                                      |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
-| **Docker images**                    |   optf-osdf 2.0.2                    |
+| **Docker images**                    |   optf-osdf 2.0.4                    |
 |                                      |                                      |
 |                                      |                                      |
 +--------------------------------------+--------------------------------------+
@@ -42,7 +42,24 @@ Release Data
 New features
 ------------
 
+- Project is restructured into apps and libs.
+- A Generic optimizing engine is implemented.
+- New optimizer model for route optimization is added.
+- Policy apis are migrated from legacy apis to new decision api.
+- The Conductor adapter is moved from placement to adapters.
+- NST and NSI selection function has been implemented for Network
+  Slicing use case.
+- PCI optimization is enhanced to support fixed cells field.
 
+Bug Fixes
+---------
+
+- OPTFRA-482 The field "unique" should be defined in vnf policy.
+- OPTFRA-729 OSDF fails to start in the k8s environment.
+- OPTFRA-731 OSDF Policy interface is not working
+- OPTFRA-754 Return slice profile when service profile indicates the
+  resource sharing level as not shared
+- OPTFRA-755 OOF Policy filtering does not work.
 
 Known Limitations, Issues and Workarounds
 =========================================
