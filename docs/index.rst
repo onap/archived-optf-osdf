@@ -18,4 +18,4 @@ Optimization Framework: Optimization Service Design Framework (OSDF)
    ./sections/administration.rst
    ./sections/humaninterfaces.rst
    ./sections/release-notes.rst
-
+   ./sections/upgradestrategy.rst
