@@ -1,0 +1,16 @@
+{
+   "esr-thirdparty-sdnc":[
+      {
+         "thirdparty-sdnc-id":"Controller1"
+      },
+      {
+         "thirdparty-sdnc-id":"Controller2"
+      },
+      {
+         "thirdparty-sdnc-id":"Controller3"
+      },
+      {
+         "thirdparty-sdnc-id":"Controller4"
+      }
+   ]
+}
