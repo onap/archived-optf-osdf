@@ -57,5 +57,11 @@ aaiGetLinksUrl: "/aai/v16/network/logical-links"
 pciHMSUsername: test
 pciHMSPassword: passwd
 
+#AAI config for MDONS
+aaiBaseUrl: https://aai.onap:8443
+aaiGetControllersUrl: /aai/v19/external-system/esr-thirdparty-sdnc-list
+controllerQueryUrl: /aai/v19/query?format=resource
+aaiGetInterDomainLinksUrl: /aai/v19/network/logical-links?link-type=inter-domain&operational-status=up
+
 #key
 #appkey: os35@rrtky400fdntc#001t5
