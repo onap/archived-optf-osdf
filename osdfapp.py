@@ -33,6 +33,7 @@ from apps.nst.optimizers.nst_select_processor import process_nst_selection
 from apps.pci.optimizers.pci_opt_processor import process_pci_optimation
 from apps.placement.models.api.placementRequest import PlacementAPI
 from apps.placement.optimizers.conductor.remote_opt_processor import process_placement_opt
+from apps.route.optimizers.inter_domain_route_opt import InterDomainRouteOpt
 from apps.route.optimizers.simple_route_opt import RouteOpt
 from apps.slice_selection.models.api.nsi_selection_request import NSISelectionAPI
 from apps.slice_selection.optimizers.conductor.remote_opt_processor import process_nsi_selection_opt
@@ -102,6 +103,16 @@ def do_route_calc():
     request_json = request.get_json()
     audit_log.info("Calculate Route request received!")
     response = RouteOpt().get_route(request_json, osdf_config)
+    return response
+
+@app.route("/api/oof/mdons/route/v1", methods=["POST"])
+def do_mdons_route_calc():
+    """
+    Perform the inter domain route calculation
+    """
+    request_json = request.get_json()
+    audit_log.info("Inter Domain Calculation  Route request received!")
+    response = InterDomainRouteOpt().get_route(request_json, osdf_config)
     return response
 
 @app.route("/api/oof/v1/selection/nst", methods=["POST"])
