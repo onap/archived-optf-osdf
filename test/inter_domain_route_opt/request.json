@@ -1,0 +1,30 @@
+{
+   "requestInfo":{
+      "transactionId":"123456",
+      "requestId":"789456",
+      "callbackUrl":"",
+      "callbackHeader": "",
+      "sourceId":"SDNC",
+      "requestType":"create",
+      "numSolutions":1,
+      "optimizers":[
+         "route"
+      ],
+      "timeout":600
+   },
+   "routeInfo":{
+      "routeRequest":{
+         "srcDetails":{
+            "interfaceId":"int19",
+            "nodeId":"pnf1",
+            "controllerId":"Controller1"
+         },
+         "dstDetails":{
+            "interfaceId":"int20",
+            "nodeId":"pnf4",
+            "controllerId":"Controller3"
+         },
+         "serviceRate":"ODU2"
+      }
+   }
+}
