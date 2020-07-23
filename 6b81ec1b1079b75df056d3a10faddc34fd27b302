@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62c6894d_8c4fc523",
+        "filename": "config/osdf_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 2041
+      },
+      "writtenOn": "2020-07-23T13:51:55Z",
+      "side": 1,
+      "message": "We seem to be having two AAI endpoints and configs here - needs to be merged into one.",
+      "revId": "6b81ec1b1079b75df056d3a10faddc34fd27b302",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
