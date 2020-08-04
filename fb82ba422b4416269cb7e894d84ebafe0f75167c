@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea128d8d_00dd569d",
+        "filename": "docs/sections/swaggerdoc/oof-osdf-has-api.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-04T12:25:16Z",
+      "side": 1,
+      "message": "Is routeInfo object or array? The example in the wiki page states that it is an array. Please check once.",
+      "range": {
+        "startLine": 541,
+        "startChar": 7,
+        "endLine": 541,
+        "endChar": 19
+      },
+      "revId": "fb82ba422b4416269cb7e894d84ebafe0f75167c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
