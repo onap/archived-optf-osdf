@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9afadaea_6322cae7",
+        "filename": "docs/sections/swaggerdoc/oof-osdf-has-api.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-04T11:22:39Z",
+      "side": 1,
+      "message": "Please change this to a different value. operationId must be unique within a swagger file. You can use something like \"getInterDomainRoute\"",
+      "range": {
+        "startLine": 420,
+        "startChar": 23,
+        "endLine": 420,
+        "endChar": 31
+      },
+      "revId": "aa405c6216342fd9903f3dc4085750594dadae90",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
