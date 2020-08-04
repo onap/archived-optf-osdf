@@ -407,9 +407,181 @@
           }
         }
       }
-    }
+    },
+    "/api/oof/mdons/route/v1": {
+      "post": {
+        "tags": [
+         "Inter Domain Route Select"
+        ],
+        "summary":"Find the optimistic inter domain route for multi domain optical system",
+        "description":"",
+        "operationId":"getInterDomainRoute",
+        "consumes": [
+          "application/json"
+        ],
+        "produces":[
+          "application/json"
+        ],
+        "parameters":[
+          {
+            "in":"body",
+            "name":"body",
+            "description":"Source and Destination interfaces across which optmistic route have to be obtained.",
+            "required":true,
+            "schema":{
+             "$ref":"#/definitions/InterDomainRouteRequest"
+            }
+          }
+        ],
+        "responses":{
+         "200":{
+          "description":"successful operation",
+          "schema":{
+            "$ref":"#/definitions/InterDomainRouteResponseBody"
+          }
+         },
+        "400":{
+         "description":"bad request"
+       },
+        "401":{
+          "description":"Request body is not compliant with the API definition"
+        },
+       "404":{
+          "description":"The server cannot find the requested URI"
+       },
+       "405":{
+         "description":"The requested method is not supported by a server."
+       },
+       "500":{
+          "description":"The server encountered an internal server error or timed out"
+       }
+      }
+     }
+   }
   },
   "definitions": {
+   "InterDomainRouteRequest":{
+     "type":"object",
+     "properties":{
+       "requestInfo":{
+         "$ref":"#/definitions/requestInfo"
+       },
+       "routeInfo":{
+         "$ref":"#/definitions/interDomainRouteInfo"
+       }
+     }
+   },
+   "interDomainRouteInfo":{
+     "type":"object",
+     "properties":{
+       "routeRequest":{
+         "$ref":"#/definitions/interDomainRouteRequest"
+       }
+     }
+   },
+   "interDomainRouteRequest":{
+     "type":"object",
+     "properties":{
+       "srcDetails":{
+         "$ref":"#/definitions/interDomainPortDetails"
+       },
+       "dstDetails":{
+         "$ref":"#/definitions/interDomainPortDetails"
+       },
+       "serviceRate":{
+         "type":"string",
+         "description":"The rate of the service."
+       }
+     }
+   },
+   "interDomainPortDetails":{
+     "type":"object",
+     "properties":{
+       "interfaceId":{
+         "type":"string",
+         "description":"The port id."
+       },
+       "nodeId":{
+         "type":"string",
+         "description":"The node id."
+       },
+       "controllerId":{
+         "type":"string",
+         "description":"The controller id to which the node belongs to."
+       }
+     }
+   },
+   "InterDomainRouteResponseBody":{
+     "type":"object",
+     "properties":{
+       "requestId":{
+         "type":"string",
+         "description":"A unique Id for an ONAP transaction."
+       },
+       "transactionId":{
+         "type":"string",
+         "description":"A unique ID to track multiple requests associated with a transaction."
+       },
+       "statusMessage":{
+         "type":"string",
+         "description":"Reasoning if a requestStatus is failure."
+       },
+       "requestStatus":{
+         "type":"string",
+         "description":"The status of a request."
+       },
+       "solutions":{
+         "$ref":"#/definitions/InterDomainRouteSolutionInfo"
+       }
+     }
+   },
+   "InterDomainRouteSolutionInfo":{
+     "type":"object",
+     "properties":{
+       "routeInfo":{
+         "$ref":"#/definitions/interDomainResponseRouteinfo"
+       }
+     }
+   },
+   "interDomainResponseRouteinfo":{
+     "type":"object",
+     "properties":{
+       "serviceRoute":{
+         "type":"array",
+         "items":{
+           "$ref":"#/definitions/serviceRouteDetails"
+         }
+       },
+       "linkList":{
+         "type":"array",
+         "items":{
+           "type":"string"
+         },
+         "description":"A list of link names of the route.",
+         "example":[
+           "link1",
+           "link2"
+         ]
+       }
+     }
+   },
+   "serviceRouteDetails":{
+     "type":"object",
+     "properties":{
+       "srcInterfaceId":{
+         "type":"string",
+         "description":"Source port Id of the domain Service."
+       },
+       "dstInterfaceId":{
+         "type":"string",
+         "description":"Destination Port Id of the domain Service."
+       },
+       "controllerId":{
+         "type":"string",
+         "description":"Controller Id of the domain."
+       }
+     }
+    },
     "RouteRequest": {
       "type": "object",
       "properties": {
