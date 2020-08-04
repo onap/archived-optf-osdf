@@ -22,6 +22,30 @@
       "revId": "fb82ba422b4416269cb7e894d84ebafe0f75167c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8860bb_6ad6ccd8",
+        "filename": "docs/sections/swaggerdoc/oof-osdf-has-api.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-04T12:51:10Z",
+      "side": 1,
+      "message": "Clarified.",
+      "parentUuid": "ea128d8d_00dd569d",
+      "range": {
+        "startLine": 541,
+        "startChar": 7,
+        "endLine": 541,
+        "endChar": 19
+      },
+      "revId": "fb82ba422b4416269cb7e894d84ebafe0f75167c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
