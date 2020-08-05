@@ -367,6 +367,55 @@
         }
       }
     },
+    "/api/oof/terminate/nxi/v1": {
+      "post": {
+        "tags": [
+          "NSSI/NSI Termination"
+        ],
+        "summary": "NSSI/NSI Termination",
+        "operationId": "terminateNxiRequest",
+        "description": "Request for NSSI/NSI Termination",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "NxITerminationRequest",
+            "description": "NSSI/NSI termination request",
+            "schema": {
+              "$ref": "#/definitions/NxITerminationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "request has succeeded",
+            "schema": {
+              "$ref": "#/definitions/SynchronousTerminationResponse"
+            }
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "401": {
+            "description": "Request body is not compliant with the API definition"
+          },
+          "404": {
+            "description": "The server cannot find the requested URI"
+          },
+          "405": {
+            "description": "The requested method is not supported by a server."
+          },
+          "500": {
+            "description": "The server encountered an internal server error or timed out"
+          }
+        }
+      }
+    },
     "/api/oof/route/v1": {
       "post": {
         "tags": [
@@ -1130,6 +1179,51 @@
         }
       }
     },
+    "SynchronousTerminationResponse": {
+      "type": "object",
+      "required": [
+        "requestId",
+        "transactionId",
+        "requestStatus",
+        "terminateResponse"
+      ],
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "A unique Id for an ONAP transaction",
+          "example": "ONAP transaction id"
+        },
+        "transactionId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "A unique ID to track multiple requests associated with a transaction.",
+          "example": "requests id"
+        },
+        "statusMessage": {
+          "type": "string",
+          "description": "Reasoning if a requestStatus is failure.",
+          "example": "requestStatus"
+        },
+        "requestStatus": {
+          "type": "string",
+          "enum": [
+            "success",
+            "failure"
+          ],
+          "description": "The status of a request.",
+          "example": "success"
+        },
+        "terminateResponse": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason if terminateResponse is false",
+          "example": "Restricted by Policy"
+        }
+      }
+    },
     "PlacementAsynchronousResponse": {
       "type": "object",
       "required": [
@@ -1550,7 +1644,7 @@
           "$ref": "#/definitions/RequestInfo2"
         },
         "serviceProfile": {
-          "$ref": "#/definitions/ServiceProfileNst"
+          "$ref": "#/definitions/ServiceProfile"
         }
       }
     },
@@ -1559,7 +1653,9 @@
       "required": [
         "requestInfo",
         "serviceProfile",
-        "NSTInfo"
+        "NSTInfo",
+        "NSSTInfo",
+        "subnetCapabilities"
       ],
       "properties": {
         "serviceProfile": {
@@ -1569,10 +1665,23 @@
           "$ref": "#/definitions/RequestInfo2"
         },
         "NSTInfo": {
+          "$ref": "#/definitions/NSTInfo"
+        },
+        "NSSTInfo": {
           "type": "array",
-          "description": "List of NST(s)",
+          "description": "List of constituent NSST(s) of the NST",
           "items": {
-            "$ref": "#/definitions/NSTInfo"
+            "$ref": "#/definitions/NSSTInfo"
+          }
+        },
+        "preferReuse": {
+          "type": "boolean"
+        },
+        "subnetCapabilities": {
+          "type": "array",
+          "description": "List of subnet capabilities",
+          "items": {
+            "$ref": "#/definitions/SubnetCapability"
           }
         }
       }
@@ -1596,11 +1705,68 @@
         }
       }
     },
+    "NxITerminationRequest": {
+      "type": "object",
+      "required": [
+        "requestInfo",
+        "type",
+        "NxIId"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+	  "enum": [
+	     "NSI", 
+	     "NSSI"	  
+           ],
+          "description": "indicates if the request is for NSI/NSSI termination"
+        },
+        "NxIId": {
+          "type": "string",
+          "format": "UUID",
+          "description": "Id of NSI / NSSI"
+        },
+        "UUID": {
+          "type": "string",
+          "format": "UUID",
+          "description": "UUID of NST/NSST model"
+        },
+        "invariantUUID": {
+          "type": "string",
+          "format": "UUID",
+          "description": "invariant UUID of NST/NSST model"
+        },
+        "requestInfo": {
+          "$ref": "#/definitions/RequestInfo2"
+        }
+      }
+    },
+    "SubnetCapability": {
+      "type": "object",
+      "required": [
+        "domainType",
+        "capabilityDetails"
+      ],
+      "properties": {
+        "domainType": {
+          "type": "string",
+          "description": "type of the subnet"
+        },
+        "capabilityDetails": {
+          "type": "string",
+          "description": "A JSON object containing capability parameters",
+          "example": {
+            "blob": "content"
+          }
+        }
+      }
+    },
     "NSTInfo": {
       "type": "object",
       "required": [
         "UUID",
-        "invariantUUID"
+        "invariantUUID",
+        "name"
       ],
       "properties": {
         "UUID": {
@@ -1612,6 +1778,10 @@
           "type": "string",
           "format": "uuid",
           "description": "Invariant UUID"
+        },
+        "name": {
+          "type": "string",
+          "description": "name of the NST model"
         }
       }
     },
@@ -1619,7 +1789,8 @@
       "type": "object",
       "required": [
         "UUID",
-        "invariantUUID"
+        "invariantUUID",
+        "name"
       ],
       "properties": {
         "UUID": {
@@ -1631,6 +1802,10 @@
           "type": "string",
           "format": "uuid",
           "description": "Invariant UUID"
+        },
+        "name": {
+          "type": "string",
+          "description": "name of the NSST model"
         }
       }
     },
@@ -1639,17 +1814,6 @@
       "description": "JSON blob. Containing service profile parameters. The contents are based on 3GPP TS 23.541 Release 16 contents, and will be in the form of attribute value pairs.",
       "example": {
         "blob": "content"
-      }
-    },
-    "ServiceProfileNst": {
-      "type": "object",
-      "required": [
-        "serviceProfileParameters"
-      ],
-      "properties": {
-        "serviceProfileParameters": {
-          "$ref": "#/definitions/ServiceProfile"
-        }
       }
     },
     "SliceProfile": {
@@ -1702,6 +1866,18 @@
           "type": "integer",
           "description": "A tolerance window (in second) for expecting solutions.",
           "example": 5
+        },
+        "numSolutions": {
+          "type": "integer",
+          "description": "Expected number of solutions.",
+          "example": 1
+        },
+        "addtnlArgs": {
+          "type": "string",
+          "description": "JSON blob. The header information a client expecting in a async callback.",
+          "example": {
+            "blob": "content"
+          }
         }
       }
     },
@@ -1811,26 +1987,28 @@
           "description": "The status of a request."
         },
         "solutions": {
-          "$ref": "#/definitions/NSISolution"
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NSISolution"
+          },
+          "description": "A list of solutions"
         }
       }
     },
     "NSISolution": {
       "type": "object",
+      "required": [
+        "existingNSI"
+      ],
       "properties": {
-        "sharedNSIsolutions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SharedNSISolution"
-          },
-          "description": "A list of shared NSI solutions"
+        "existingNSI": {
+          "type": "boolean"
         },
-        "newNSISolutions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/NewNSISolution"
-          },
-          "description": "A list of new NSI solutions"
+        "sharedNSISolution": {
+          "$ref": "#/definitions/SharedNSISolution"
+        },
+        "newNSISolution": {
+          "$ref": "#/definitions/NewNSISolution"
         }
       }
     },
@@ -1861,67 +2039,7 @@
         "NSIId": {
           "type": "string",
           "format": "uuid",
-          "description": "Id of NSI"
-        },
-        "NSSIs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/NSSI"
-          },
-          "description": "A list of NSSIs"
-        }
-      }
-    },
-    "NSSI": {
-      "type": "object",
-      "required": [
-        "NSSIName",
-        "NSSIId",
-        "UUID",
-        "invariantUUID"
-      ],
-      "properties": {
-        "NSSIName": {
-          "type": "string",
-          "description": "Name of NSSI"
-        },
-        "NSSIId": {
-          "type": "string",
-          "description": "Id of NSSI"
-        },
-        "UUID": {
-          "type": "string",
-          "description": "UUID of NSST"
-        },
-        "invariantUUID": {
-          "type": "string",
-          "description": "invariantUUID of NSST"
-        },
-        "sliceProfile": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SliceProfile"
-          },
-          "description": "list of SliceProfiles"
-        }
-      }
-    },
-    "NewNSISolution": {
-      "type": "object",
-      "required": [
-        "NSSISolutions",
-        "matchLevel"
-      ],
-      "properties": {
-        "NSTInfo": {
-          "$ref": "#/definitions/NSTResponseInfo"
-        },
-        "NSSISolutions": {
-          "type": "array",
-          "description": "List of NSSIs which when concatenated shall form the NSI, in case NSSI is not present, only the sliceProfile will be included",
-          "items": {
-            "$ref": "#/definitions/NSSIInfo"
-          }
+          "description": "Instance Id of NSI"
         },
         "matchLevel": {
           "type": "string",
@@ -1929,91 +2047,23 @@
         }
       }
     },
-    "NSTResponseInfo": {
+    "NewNSISolution": {
       "type": "object",
       "required": [
-        "UUID",
-        "invariantUUID",
-        "NSTName"
-      ],
-      "properties": {
-        "NSTName": {
-          "type": "string",
-          "description": "NST name"
-        },
-        "UUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "UUID of NST"
-        },
-        "invariantUUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "Invariant UUID"
-        }
-      }
-    },
-    "NSSIInfo": {
-      "type": "object",
-      "required": [
-        "sliceProfile"
-      ],
-      "properties": {
-        "sliceProfile": {
-          "type": "string",
-          "description": "JSON blob. Containing details of match of requirements in slice profile and percentage of fit"
-        },
-        "NSSTInfo": {
-          "$ref": "#/definitions/NSSTResponseInfo"
-        },
-        "NSSISolution": {
-          "$ref": "#/definitions/NSSIObject"
-        }
-      }
-    },
-    "NSSTResponseInfo": {
-      "type": "object",
-      "required": [
-        "NSSTName",
-        "UUID",
-        "invariantUUID"
-      ],
-      "properties": {
-        "NSSTName": {
-          "type": "string",
-          "description": "Name of the NSST"
-        },
-        "UUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "UUID of NSST"
-        },
-        "invariantUUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "Invariant UUID"
-        }
-      }
-    },
-    "NSSIObject": {
-      "type": "object",
-      "required": [
-        "NSSIName",
-        "NSSIId",
+        "sliceProfiles",
         "matchLevel"
       ],
       "properties": {
-        "NSSIName": {
-          "type": "string",
-          "description": "Name of NSSI"
-        },
-        "NSSIId": {
-          "type": "string",
-          "description": "Id of NSSI"
+        "sliceProfiles": {
+          "type": "array",
+          "description": "List of slice profiles",
+          "items": {
+            "$ref": "#/definitions/SliceProfile"
+          }
         },
         "matchLevel": {
           "type": "string",
-          "description": "JSON blob. Containing details of match of requirements in slice profile and percentage of fit"
+          "description": "JSON blob. Containing details of match of requirements in service profile, and recommendation rank"
         }
       }
     },
@@ -2054,13 +2104,13 @@
         "solutions": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/NSSISolution"
+            "$ref": "#/definitions/SharedNSSISolution"
           },
-          "description": "A list of NSSI solutions"
+          "description": "A list of NSSI solutions, empty list will be returned if no solution is found"
         }
       }
     },
-    "NSSISolution": {
+    "SharedNSSISolution": {
       "type": "object",
       "required": [
         "invariantUUID",
@@ -2086,7 +2136,7 @@
         },
         "NSSIId": {
           "type": "string",
-          "description": "Id of NSSI"
+          "description": "Instance Id of NSSI"
         },
         "matchLevel": {
           "type": "string",
