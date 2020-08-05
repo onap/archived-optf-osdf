@@ -1,2103 +1,2151 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "description": "This is the ONAP OOF OSDF (Optimization Service Design Framework) API",
-    "version": "1.0.0",
-    "title": "OSDF API",
-    "contact": {
-      "email": "frank.sandoval@oamtechnologies.com"
-    },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    }
-  },
-  "securityDefinitions": {
-    "basicAuth": {
-      "type": "basic",
-      "description": "HTTP Basic Auth"
-    }
-  },
-  "security": [
-    {
-      "basicAuth": []
-    }
-  ],
-  "paths": {
-    "/v2/placement": {
-      "post": {
-        "tags": [
-          "Placement Optimization"
-        ],
-        "summary": "create/update a placement",
-        "operationId": "createPlacement",
-        "description": "create/update a placement",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "placementRequest",
-            "description": "placement request",
-            "schema": {
-              "$ref": "#/definitions/PlacementRequest"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "An optimization solution is found."
-          },
-          "202": {
-            "description": "An optimization request is accepted"
-          },
-          "400": {
-            "description": "bad request"
-          },
-          "401": {
-            "description": "Request body is not compliant with the API definition"
-          },
-          "404": {
-            "description": "The server cannot find the requested URI"
-          },
-          "405": {
-            "description": "The requested method is not supported by a server."
-          },
-          "500": {
-            "description": "The server encountered an internal server error or timed out"
-          }
-        }
+   "swagger":"2.0",
+   "info":{
+      "description":"This is the ONAP OOF OSDF (Optimization Service Design Framework) API",
+      "version":"1.0.0",
+      "title":"OSDF API",
+      "contact":{
+         "email":"frank.sandoval@oamtechnologies.com"
+      },
+      "license":{
+         "name":"Apache 2.0",
+         "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
       }
-    },
-    "/api/oof/placement/v1": {
-      "post": {
-        "tags": [
-          "Placement Optimization"
-        ],
-        "summary": "create/update a placement",
-        "operationId": "createPlacementv1",
-        "description": "create/update a placement",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "placementRequest",
-            "description": "placement request",
-            "schema": {
-              "$ref": "#/definitions/PlacementRequest"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "An optimization solution is found."
-          },
-          "202": {
-            "description": "An optimization request is accepted"
-          },
-          "400": {
-            "description": "bad request"
-          },
-          "401": {
-            "description": "Request body is not compliant with the API definition"
-          },
-          "404": {
-            "description": "The server cannot find the requested URI"
-          },
-          "405": {
-            "description": "The requested method is not supported by a server."
-          },
-          "500": {
-            "description": "The server encountered an internal server error or timed out"
-          }
-        }
-      }
-    },
-    "/api/oof/v1/pci": {
-      "post": {
-        "tags": [
-          "PCI/ANR Optimization"
-        ],
-        "summary": "Initiate PCI/ANR Optimization",
-        "operationId": "initiatePCIOptRequest",
-        "description": "Initiate PCI/ANR Optimization",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "PCIOptimizationRequest",
-            "description": "PCI request",
-            "schema": {
-              "$ref": "#/definitions/PCIOptRequest"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "An optimization solution is found."
-          },
-          "202": {
-            "description": "An optimization request is accepted"
-          },
-          "400": {
-            "description": "bad request"
-          },
-          "401": {
-            "description": "Request body is not compliant with the API definition"
-          },
-          "404": {
-            "description": "The server cannot find the requested URI"
-          },
-          "405": {
-            "description": "The requested method is not supported by a server."
-          },
-          "500": {
-            "description": "The server encountered an internal server error or timed out"
-          }
-        }
-      }
-    },
-    "/api/oof/pci/v1": {
-      "post": {
-        "tags": [
-          "PCI/ANR Optimization"
-        ],
-        "summary": "Initiate PCI/ANR Optimization",
-        "operationId": "initiatePCIOptRequestv1",
-        "description": "Initiate PCI/ANR Optimization",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "PCIOptimizationRequest",
-            "description": "PCI request",
-            "schema": {
-              "$ref": "#/definitions/PCIOptRequest"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "An optimization solution is found."
-          },
-          "202": {
-            "description": "An optimization request is accepted"
-          },
-          "400": {
-            "description": "bad request"
-          },
-          "401": {
-            "description": "Request body is not compliant with the API definition"
-          },
-          "404": {
-            "description": "The server cannot find the requested URI"
-          },
-          "405": {
-            "description": "The requested method is not supported by a server."
-          },
-          "500": {
-            "description": "The server encountered an internal server error or timed out"
-          }
-        }
-      }
-    },
-    "/api/oof/selection/nst/v1": {
-      "post": {
-        "tags": [
-          "NST Selection"
-        ],
-        "summary": "NST selection",
-        "operationId": "selectNstRequest",
-        "description": "Request for NST selection",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "NSTSelectionRequest",
-            "description": "nst selection request",
-            "schema": {
-              "$ref": "#/definitions/NSTSelectionRequest"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "An optimization request is accepted",
-            "schema": {
-              "$ref": "#/definitions/SynchronousResponse"
-            }
-          },
-          "400": {
-            "description": "bad request"
-          },
-          "401": {
-            "description": "Request body is not compliant with the API definition"
-          },
-          "404": {
-            "description": "The server cannot find the requested URI"
-          },
-          "405": {
-            "description": "The requested method is not supported by a server."
-          },
-          "500": {
-            "description": "The server encountered an internal server error or timed out"
-          }
-        }
-      }
-    },
-    "/api/oof/selection/nsi/v1": {
-      "post": {
-        "tags": [
-          "NSI Selection"
-        ],
-        "summary": "NSI selection",
-        "operationId": "selectNsiRequest",
-        "description": "Request for NSI selection",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "NSISelectionRequest",
-            "description": "NSI selection request",
-            "schema": {
-              "$ref": "#/definitions/NSISelectionRequest"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "An optimization request is accepted",
-            "schema": {
-              "$ref": "#/definitions/SynchronousResponse"
-            }
-          },
-          "400": {
-            "description": "bad request"
-          },
-          "401": {
-            "description": "Request body is not compliant with the API definition"
-          },
-          "404": {
-            "description": "The server cannot find the requested URI"
-          },
-          "405": {
-            "description": "The requested method is not supported by a server."
-          },
-          "500": {
-            "description": "The server encountered an internal server error or timed out"
-          }
-        }
-      }
-    },
-    "/api/oof/selection/nssi/v1": {
-      "post": {
-        "tags": [
-          "NSSI Selection"
-        ],
-        "summary": "NSSI selection",
-        "operationId": "selectNssiRequest",
-        "description": "Request for NSSI selection",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "NSSISelectionRequest",
-            "description": "NSSI selection request",
-            "schema": {
-              "$ref": "#/definitions/NSSISelectionRequest"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "An optimization request is accepted",
-            "schema": {
-              "$ref": "#/definitions/SynchronousResponse"
-            }
-          },
-          "400": {
-            "description": "bad request"
-          },
-          "401": {
-            "description": "Request body is not compliant with the API definition"
-          },
-          "404": {
-            "description": "The server cannot find the requested URI"
-          },
-          "405": {
-            "description": "The requested method is not supported by a server."
-          },
-          "500": {
-            "description": "The server encountered an internal server error or timed out"
-          }
-        }
-      }
-    },
-    "/api/oof/route/v1": {
-      "post": {
-        "tags": [
-          "Route Select"
-        ],
-        "summary": "Find the optimistic route between OTN domains",
-        "description": "",
-        "operationId": "getRoute",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Source and Destination nodes across which optmistic route have to be obtained.",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/RouteRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/routeResponseBody"
-              }
-            }
-          },
-          "405": {
-            "description": "Invalid input"
-          }
-        }
-      }
-    },
-    "/api/oof/mdons/route/v1": {
-      "post": {
-        "tags": [
-         "Inter Domain Route Select"
-        ],
-        "summary":"Find the optimistic inter domain route for multi domain optical system",
-        "description":"",
-        "operationId":"getInterDomainRoute",
-        "consumes": [
-          "application/json"
-        ],
-        "produces":[
-          "application/json"
-        ],
-        "parameters":[
-          {
-            "in":"body",
-            "name":"body",
-            "description":"Source and Destination interfaces across which optmistic route have to be obtained.",
-            "required":true,
-            "schema":{
-             "$ref":"#/definitions/InterDomainRouteRequest"
-            }
-          }
-        ],
-        "responses":{
-         "200":{
-          "description":"successful operation",
-          "schema":{
-            "$ref":"#/definitions/InterDomainRouteResponseBody"
-          }
-         },
-        "400":{
-         "description":"bad request"
-       },
-        "401":{
-          "description":"Request body is not compliant with the API definition"
-        },
-       "404":{
-          "description":"The server cannot find the requested URI"
-       },
-       "405":{
-         "description":"The requested method is not supported by a server."
-       },
-       "500":{
-          "description":"The server encountered an internal server error or timed out"
-       }
-      }
-     }
-   }
-  },
-  "definitions": {
-   "InterDomainRouteRequest":{
-     "type":"object",
-     "properties":{
-       "requestInfo":{
-         "$ref":"#/definitions/requestInfo"
-       },
-       "routeInfo":{
-         "$ref":"#/definitions/interDomainRouteInfo"
-       }
-     }
    },
-   "interDomainRouteInfo":{
-     "type":"object",
-     "properties":{
-       "routeRequest":{
-         "$ref":"#/definitions/interDomainRouteRequest"
-       }
-     }
+   "securityDefinitions":{
+      "basicAuth":{
+         "type":"basic",
+         "description":"HTTP Basic Auth"
+      }
    },
-   "interDomainRouteRequest":{
-     "type":"object",
-     "properties":{
-       "srcDetails":{
-         "$ref":"#/definitions/interDomainPortDetails"
-       },
-       "dstDetails":{
-         "$ref":"#/definitions/interDomainPortDetails"
-       },
-       "serviceRate":{
-         "type":"string",
-         "description":"The rate of the service."
-       }
-     }
-   },
-   "interDomainPortDetails":{
-     "type":"object",
-     "properties":{
-       "interfaceId":{
-         "type":"string",
-         "description":"The port id."
-       },
-       "nodeId":{
-         "type":"string",
-         "description":"The node id."
-       },
-       "controllerId":{
-         "type":"string",
-         "description":"The controller id to which the node belongs to."
-       }
-     }
-   },
-   "InterDomainRouteResponseBody":{
-     "type":"object",
-     "properties":{
-       "requestId":{
-         "type":"string",
-         "description":"A unique Id for an ONAP transaction."
-       },
-       "transactionId":{
-         "type":"string",
-         "description":"A unique ID to track multiple requests associated with a transaction."
-       },
-       "statusMessage":{
-         "type":"string",
-         "description":"Reasoning if a requestStatus is failure."
-       },
-       "requestStatus":{
-         "type":"string",
-         "description":"The status of a request."
-       },
-       "solutions":{
-         "$ref":"#/definitions/InterDomainRouteSolutionInfo"
-       }
-     }
-   },
-   "InterDomainRouteSolutionInfo":{
-     "type":"object",
-     "properties":{
-       "routeInfo":{
-         "$ref":"#/definitions/interDomainResponseRouteinfo"
-       }
-     }
-   },
-   "interDomainResponseRouteinfo":{
-     "type":"object",
-     "properties":{
-       "serviceRoute":{
-         "type":"array",
-         "items":{
-           "$ref":"#/definitions/serviceRouteDetails"
-         }
-       },
-       "linkList":{
-         "type":"array",
-         "items":{
-           "type":"string"
-         },
-         "description":"A list of link names of the route.",
-         "example":[
-           "link1",
-           "link2"
+   "security":[
+      {
+         "basicAuth":[
+
          ]
-       }
-     }
-   },
-   "serviceRouteDetails":{
-     "type":"object",
-     "properties":{
-       "srcInterfaceId":{
-         "type":"string",
-         "description":"Source port Id of the domain Service."
-       },
-       "dstInterfaceId":{
-         "type":"string",
-         "description":"Destination Port Id of the domain Service."
-       },
-       "controllerId":{
-         "type":"string",
-         "description":"Controller Id of the domain."
-       }
-     }
-    },
-    "RouteRequest": {
-      "type": "object",
-      "properties": {
-        "requestInfo": {
-          "$ref": "#/definitions/requestInfo"
-        },
-        "routeInfo": {
-          "$ref": "#/definitions/routeInfo"
-        }
       }
-    },
-    "requestInfo": {
-      "type": "object",
-      "properties": {
-        "transactionId": {
-          "type": "string",
-          "description": "A unique ID to track an ONAP transaction."
-        },
-        "requestId": {
-          "type": "string",
-          "description": "A unique ID to track multiple requests associated with a transaction."
-        },
-        "callbackUrl": {
-          "type": "string",
-          "description": "The end point of a callback service where recommendations are posted."
-        },
-        "callbackHeader": {
-          "type": "string",
-          "description": "The header information a client expecting in a async callback."
-        },
-        "sourceId": {
-          "type": "string",
-          "description": "The unique ID of a client making an optimization call."
-        },
-        "requestType": {
-          "type": "string",
-          "format": "string",
-          "description": "The type of request being placed.",
-          "enum": [
-            "create",
-            "update",
-            "delete"
-          ]
-        },
-        "numSolutions": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Expected number of solutions. numSolution can also be specified using an optimization query policies, where the default configured value is 1. The value from a request gets higher precedence over the value defined in a policy."
-        },
-        "optimizers": {
-          "description": "A list of optimization services that can be used to resolve the route",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "timeout": {
-          "type": "integer",
-          "format": "int32",
-          "description": "A tolerance window (in secs) for expecting solutions. Default is 600 secs."
-        }
-      }
-    },
-    "routeInfo": {
-      "type": "object",
-      "properties": {
-        "routeRequest": {
-          "$ref": "#/definitions/routeRequest"
-        }
-      }
-    },
-    "routeRequest": {
-      "type": "object",
-      "properties": {
-        "srcPort": {
-          "$ref": "#/definitions/routePortInfo"
-        },
-        "destPort": {
-          "$ref": "#/definitions/routePortInfo"
-        }
-      }
-    },
-    "routePortInfo": {
-      "type": "object",
-      "properties": {
-        "accessTopologyId": {
-          "type": "string",
-          "description": "A unique ID of the Access Topology."
-        },
-        "accessClientId": {
-          "type": "string",
-          "format": "string",
-          "description": "A unique ID of the client which provides the access."
-        },
-        "accessProviderId": {
-          "type": "string",
-          "format": "string",
-          "description": "A unique ID of the access provider"
-        },
-        "accessNodeId": {
-          "type": "string",
-          "format": "string",
-          "description": "A unique ID of the node to/from which the route has to be established."
-        },
-        "accessLtpId": {
-          "type": "integer",
-          "format": "int32",
-          "description": "A unique ID of the Termination Point to/from which the route has to be established."
-        }
-      }
-    },
-    "routeResponseBody": {
-      "type": "object",
-      "properties": {
-        "requestId": {
-          "type": "string",
-          "description": "A unique Id for an ONAP transaction."
-        },
-        "transactionId": {
-          "type": "string",
-          "description": "A unique ID to track multiple requests associated with a transaction."
-        },
-        "statusMessage": {
-          "type": "string",
-          "description": "Reasoning if a requestStatus is failure."
-        },
-        "requestStatus": {
-          "type": "string",
-          "description": "The status of a request."
-        },
-        "solutions": {
-          "$ref": "#/definitions/RouteSolutionInfo"
-        }
-      }
-    },
-    "RouteSolutionInfo": {
-      "type": "object",
-      "properties": {
-        "startTime": {
-          "type": "string",
-          "format": "date-time",
-          "description": "start time of the operation in  RFC 3339 notation for example, 2017-07-21T17:32:28Z."
-        },
-        "finishTime": {
-          "type": "string",
-          "format": "date-time",
-          "description": "end time of the operation in  RFC 3339 notation for example, 2017-07-21T17:32:28Z."
-        },
-        "links": {
-          "description": "A list of vpn info that can be used to establish the route between source and destination port/node.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/link"
-          }
-        }
-      }
-    },
-    "link": {
-      "type": "object",
-      "properties": {
-        "linkId": {
-          "type": "string",
-          "description": "Id or name identifies a link uniquely."
-        }
-      }
-    },
-    "PlacementRequest": {
-      "type": "object",
-      "required": [
-        "requestInfo",
-        "placementInfo",
-        "licenseInfo",
-        "serviceInfo"
-      ],
-      "properties": {
-        "requestInfo": {
-          "$ref": "#/definitions/RequestInfo"
-        },
-        "placementInfo": {
-          "$ref": "#/definitions/PlacementInfo"
-        },
-        "licenseInfo": {
-          "$ref": "#/definitions/LicenseInfo"
-        },
-        "serviceInfo": {
-          "$ref": "#/definitions/ServiceInfo"
-        }
-      }
-    },
-    "RequestInfo": {
-      "type": "object",
-      "required": [
-        "transactionId",
-        "requestId",
-        "callbackUrl",
-        "sourceId",
-        "requestType",
-        "optimizers",
-        "timeout"
-      ],
-      "properties": {
-        "transactionId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "unique ID to track an ONAP transaction",
-          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "requestId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "A unique ID to track multiple requests associated with a transaction",
-          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "callbackUrl": {
-          "type": "string",
-          "format": "url",
-          "description": "The end point of a callback service where recommendations are posted.",
-          "example": "myDomain.com/myCallback"
-        },
-        "callbackHeader": {
-          "type": "string",
-          "description": "JSON blob. The header information a client expecting in a async callback.",
-          "example": {
-            "blob": "content"
-          }
-        },
-        "sourceId": {
-          "type": "string",
-          "description": "The unique ID of a client making an optimization call.",
-          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "requestType": {
-          "type": "string",
-          "enum": [
-            "create",
-            "update",
-            "delete"
-          ],
-          "description": "The type of a request",
-          "example": "create"
-        },
-        "numSolutions": {
-          "type": "integer",
-          "description": "Expected number of solutions.",
-          "example": 1
-        },
-        "optimizers": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "placement",
-              "pci",
-              "pci-anr"
-            ]
-          },
-          "description": "A list of optimization services.",
-          "example": [
-            "placement"
-          ]
-        },
-        "timeout": {
-          "type": "integer",
-          "description": "A tolerance window (in second) for expecting solutions.",
-          "example": 5
-        }
-      }
-    },
-    "PlacementInfo": {
-      "type": "object",
-      "required": [
-        "requestParameters",
-        "placementDemands"
-      ],
-      "properties": {
-        "requestParameters": {
-          "type": "string",
-          "description": "JSON blob. A service ordering information",
-          "example": {
-            "blob": "content"
-          }
-        },
-        "placementDemands": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PlacementDemand"
-          },
-          "description": "The resource information for a placement service"
-        },
-        "subscriberInfo": {
-          "type": "object",
-          "items": {
-            "$ref": "#/definitions/SubscriberInfo"
-          },
-          "description": "The information of a service subscriber."
-        }
-      }
-    },
-    "PlacementDemand": {
-      "type": "object",
-      "required": [
-        "resourceModuleName",
-        "serviceResourceId",
-        "resourceModelInfo"
-      ],
-      "properties": {
-        "resourceModuleName": {
-          "type": "string",
-          "description": "A resource name as defined in a service mode",
-          "example": "myResourceName"
-        },
-        "serviceResourceId": {
-          "type": "string",
-          "description": "A unique resource Id with a local scope between client and OOF.",
-          "example": "myResourceId"
-        },
-        "givenPlacement": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "object",
-            "properties": {
-              "key": {
-                "type": "string"
-              },
-              "value": {
-                "type": "string"
-              }
+   ],
+   "paths":{
+      "/v2/placement":{
+         "post":{
+            "tags":[
+               "Placement Optimization"
+            ],
+            "summary":"create/update a placement",
+            "operationId":"createPlacement",
+            "description":"create/update a placement",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "in":"body",
+                  "name":"placementRequest",
+                  "description":"placement request",
+                  "schema":{
+                     "$ref":"#/definitions/PlacementRequest"
+                  }
+               }
+            ],
+            "responses":{
+               "201":{
+                  "description":"An optimization solution is found."
+               },
+               "202":{
+                  "description":"An optimization request is accepted"
+               },
+               "400":{
+                  "description":"bad request"
+               },
+               "401":{
+                  "description":"Request body is not compliant with the API definition"
+               },
+               "404":{
+                  "description":"The server cannot find the requested URI"
+               },
+               "405":{
+                  "description":"The requested method is not supported by a server."
+               },
+               "500":{
+                  "description":"The server encountered an internal server error or timed out"
+               }
             }
-          },
-          "description": "placement parameters defined in the ordering system, keyname include tenantId",
-          "example": {
-            "tenantId": "1"
-          }
-        },
-        "resourceModelInfo": {
-          "$ref": "#/definitions/ModelMetaData"
-        },
-        "existingCandidates": {
-          "$ref": "#/definitions/Candidates"
-        },
-        "excludedCandidates": {
-          "$ref": "#/definitions/Candidates"
-        },
-        "requiredCandidates": {
-          "$ref": "#/definitions/Candidates"
-        }
+         }
+      },
+      "/api/oof/placement/v1":{
+         "post":{
+            "tags":[
+               "Placement Optimization"
+            ],
+            "summary":"create/update a placement",
+            "operationId":"createPlacementv1",
+            "description":"create/update a placement",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "in":"body",
+                  "name":"placementRequest",
+                  "description":"placement request",
+                  "schema":{
+                     "$ref":"#/definitions/PlacementRequest"
+                  }
+               }
+            ],
+            "responses":{
+               "201":{
+                  "description":"An optimization solution is found."
+               },
+               "202":{
+                  "description":"An optimization request is accepted"
+               },
+               "400":{
+                  "description":"bad request"
+               },
+               "401":{
+                  "description":"Request body is not compliant with the API definition"
+               },
+               "404":{
+                  "description":"The server cannot find the requested URI"
+               },
+               "405":{
+                  "description":"The requested method is not supported by a server."
+               },
+               "500":{
+                  "description":"The server encountered an internal server error or timed out"
+               }
+            }
+         }
+      },
+      "/api/oof/v1/pci":{
+         "post":{
+            "tags":[
+               "PCI/ANR Optimization"
+            ],
+            "summary":"Initiate PCI/ANR Optimization",
+            "operationId":"initiatePCIOptRequest",
+            "description":"Initiate PCI/ANR Optimization",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "in":"body",
+                  "name":"PCIOptimizationRequest",
+                  "description":"PCI request",
+                  "schema":{
+                     "$ref":"#/definitions/PCIOptRequest"
+                  }
+               }
+            ],
+            "responses":{
+               "201":{
+                  "description":"An optimization solution is found."
+               },
+               "202":{
+                  "description":"An optimization request is accepted"
+               },
+               "400":{
+                  "description":"bad request"
+               },
+               "401":{
+                  "description":"Request body is not compliant with the API definition"
+               },
+               "404":{
+                  "description":"The server cannot find the requested URI"
+               },
+               "405":{
+                  "description":"The requested method is not supported by a server."
+               },
+               "500":{
+                  "description":"The server encountered an internal server error or timed out"
+               }
+            }
+         }
+      },
+      "/api/oof/pci/v1":{
+         "post":{
+            "tags":[
+               "PCI/ANR Optimization"
+            ],
+            "summary":"Initiate PCI/ANR Optimization",
+            "operationId":"initiatePCIOptRequestv1",
+            "description":"Initiate PCI/ANR Optimization",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "in":"body",
+                  "name":"PCIOptimizationRequest",
+                  "description":"PCI request",
+                  "schema":{
+                     "$ref":"#/definitions/PCIOptRequest"
+                  }
+               }
+            ],
+            "responses":{
+               "201":{
+                  "description":"An optimization solution is found."
+               },
+               "202":{
+                  "description":"An optimization request is accepted"
+               },
+               "400":{
+                  "description":"bad request"
+               },
+               "401":{
+                  "description":"Request body is not compliant with the API definition"
+               },
+               "404":{
+                  "description":"The server cannot find the requested URI"
+               },
+               "405":{
+                  "description":"The requested method is not supported by a server."
+               },
+               "500":{
+                  "description":"The server encountered an internal server error or timed out"
+               }
+            }
+         }
+      },
+      "/api/oof/selection/nst/v1":{
+         "post":{
+            "tags":[
+               "NST Selection"
+            ],
+            "summary":"NST selection",
+            "operationId":"selectNstRequest",
+            "description":"Request for NST selection",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "in":"body",
+                  "name":"NSTSelectionRequest",
+                  "description":"nst selection request",
+                  "schema":{
+                     "$ref":"#/definitions/NSTSelectionRequest"
+                  }
+               }
+            ],
+            "responses":{
+               "202":{
+                  "description":"An optimization request is accepted",
+                  "schema":{
+                     "$ref":"#/definitions/SynchronousResponse"
+                  }
+               },
+               "400":{
+                  "description":"bad request"
+               },
+               "401":{
+                  "description":"Request body is not compliant with the API definition"
+               },
+               "404":{
+                  "description":"The server cannot find the requested URI"
+               },
+               "405":{
+                  "description":"The requested method is not supported by a server."
+               },
+               "500":{
+                  "description":"The server encountered an internal server error or timed out"
+               }
+            }
+         }
+      },
+      "/api/oof/selection/nsi/v1":{
+         "post":{
+            "tags":[
+               "NSI Selection"
+            ],
+            "summary":"NSI selection",
+            "operationId":"selectNsiRequest",
+            "description":"Request for NSI selection",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "in":"body",
+                  "name":"NSISelectionRequest",
+                  "description":"NSI selection request",
+                  "schema":{
+                     "$ref":"#/definitions/NSISelectionRequest"
+                  }
+               }
+            ],
+            "responses":{
+               "202":{
+                  "description":"An optimization request is accepted",
+                  "schema":{
+                     "$ref":"#/definitions/SynchronousResponse"
+                  }
+               },
+               "400":{
+                  "description":"bad request"
+               },
+               "401":{
+                  "description":"Request body is not compliant with the API definition"
+               },
+               "404":{
+                  "description":"The server cannot find the requested URI"
+               },
+               "405":{
+                  "description":"The requested method is not supported by a server."
+               },
+               "500":{
+                  "description":"The server encountered an internal server error or timed out"
+               }
+            }
+         }
+      },
+      "/api/oof/selection/nssi/v1":{
+         "post":{
+            "tags":[
+               "NSSI Selection"
+            ],
+            "summary":"NSSI selection",
+            "operationId":"selectNssiRequest",
+            "description":"Request for NSSI selection",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "in":"body",
+                  "name":"NSSISelectionRequest",
+                  "description":"NSSI selection request",
+                  "schema":{
+                     "$ref":"#/definitions/NSSISelectionRequest"
+                  }
+               }
+            ],
+            "responses":{
+               "202":{
+                  "description":"An optimization request is accepted",
+                  "schema":{
+                     "$ref":"#/definitions/SynchronousResponse"
+                  }
+               },
+               "400":{
+                  "description":"bad request"
+               },
+               "401":{
+                  "description":"Request body is not compliant with the API definition"
+               },
+               "404":{
+                  "description":"The server cannot find the requested URI"
+               },
+               "405":{
+                  "description":"The requested method is not supported by a server."
+               },
+               "500":{
+                  "description":"The server encountered an internal server error or timed out"
+               }
+            }
+         }
+      },
+      "/api/oof/terminate/nxi/v1":{
+         "post":{
+            "tags":[
+               "NSSI/NSI Termination"
+            ],
+            "summary":"NSSI/NSI Termination",
+            "operationId":"terminateNxiRequest",
+            "description":"Request for NSSI/NSI Termination",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "in":"body",
+                  "name":"NxITerminationRequest",
+                  "description":"NSSI/NSI termination request",
+                  "schema":{
+                     "$ref":"#/definitions/NxITerminationRequest"
+                  }
+               }
+            ],
+            "responses":{
+               "202":{
+                  "description":"An request is accepted",
+                  "schema":{
+                     "$ref":"#/definitions/SynchronousTerminationResponse"
+                  }
+               },
+               "400":{
+                  "description":"bad request"
+               },
+               "401":{
+                  "description":"Request body is not compliant with the API definition"
+               },
+               "404":{
+                  "description":"The server cannot find the requested URI"
+               },
+               "405":{
+                  "description":"The requested method is not supported by a server."
+               },
+               "500":{
+                  "description":"The server encountered an internal server error or timed out"
+               }
+            }
+         }
+      },
+      "/api/oof/route/v1":{
+         "post":{
+            "tags":[
+               "Route Select"
+            ],
+            "summary":"Find the optimistic route between OTN domains",
+            "description":"",
+            "operationId":"getRoute",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "in":"body",
+                  "name":"body",
+                  "description":"Source and Destination nodes across which optmistic route have to be obtained.",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/RouteRequest"
+                  }
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"successful operation",
+                  "schema":{
+                     "type":"array",
+                     "items":{
+                        "$ref":"#/definitions/routeResponseBody"
+                     }
+                  }
+               },
+               "405":{
+                  "description":"Invalid input"
+               }
+            }
+         }
+      },
+      "/api/oof/mdons/route/v1":{
+         "post":{
+            "tags":[
+               "Inter Domain Route Select"
+            ],
+            "summary":"Find the optimistic inter domain route for multi domain optical system",
+            "description":"",
+            "operationId":"getInterDomainRoute",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "in":"body",
+                  "name":"body",
+                  "description":"Source and Destination interfaces across which optmistic route have to be obtained.",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/InterDomainRouteRequest"
+                  }
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"successful operation",
+                  "schema":{
+                     "$ref":"#/definitions/InterDomainRouteResponseBody"
+                  }
+               },
+               "400":{
+                  "description":"bad request"
+               },
+               "401":{
+                  "description":"Request body is not compliant with the API definition"
+               },
+               "404":{
+                  "description":"The server cannot find the requested URI"
+               },
+               "405":{
+                  "description":"The requested method is not supported by a server."
+               },
+               "500":{
+                  "description":"The server encountered an internal server error or timed out"
+               }
+            }
+         }
       }
-    },
-    "ModelMetaData": {
-      "type": "object",
-      "required": [
-        "modelInvariantId",
-        "modelVersionId"
-      ],
-      "properties": {
-        "modelInvariantId": {
-          "type": "string",
-          "description": "A model invariant Id as defined in a service model.",
-          "example": "my model invariant Id"
-        },
-        "modelVersionId": {
-          "type": "string",
-          "description": "A unique model Id as defined in a service model.",
-          "example": "my unique model Id"
-        },
-        "modelName": {
-          "type": "string",
-          "description": "A model name as defined in a service model",
-          "example": "my model name"
-        },
-        "modelType": {
-          "type": "string",
-          "description": "A model type as defined in a service model.",
-          "example": "my model type"
-        },
-        "modelVersion": {
-          "type": "string",
-          "description": "A model version as defined in a service model.",
-          "example": "my model version"
-        },
-        "modelCustomizationName": {
-          "type": "string",
-          "description": "A model customization name as defined in a service model.",
-          "example": "my model customization"
-        }
+   },
+   "definitions":{
+      "InterDomainRouteRequest":{
+         "type":"object",
+         "properties":{
+            "requestInfo":{
+               "$ref":"#/definitions/requestInfo"
+            },
+            "routeInfo":{
+               "$ref":"#/definitions/interDomainRouteInfo"
+            }
+         }
+      },
+      "interDomainRouteInfo":{
+         "type":"object",
+         "properties":{
+            "routeRequest":{
+               "$ref":"#/definitions/interDomainRouteRequest"
+            }
+         }
+      },
+      "interDomainRouteRequest":{
+         "type":"object",
+         "properties":{
+            "srcDetails":{
+               "$ref":"#/definitions/interDomainPortDetails"
+            },
+            "dstDetails":{
+               "$ref":"#/definitions/interDomainPortDetails"
+            },
+            "serviceRate":{
+               "type":"string",
+               "description":"The rate of the service."
+            }
+         }
+      },
+      "interDomainPortDetails":{
+         "type":"object",
+         "properties":{
+            "interfaceId":{
+               "type":"string",
+               "description":"The port id."
+            },
+            "nodeId":{
+               "type":"string",
+               "description":"The node id."
+            },
+            "controllerId":{
+               "type":"string",
+               "description":"The controller id to which the node belongs to."
+            }
+         }
+      },
+      "InterDomainRouteResponseBody":{
+         "type":"object",
+         "properties":{
+            "requestId":{
+               "type":"string",
+               "description":"A unique Id for an ONAP transaction."
+            },
+            "transactionId":{
+               "type":"string",
+               "description":"A unique ID to track multiple requests associated with a transaction."
+            },
+            "statusMessage":{
+               "type":"string",
+               "description":"Reasoning if a requestStatus is failure."
+            },
+            "requestStatus":{
+               "type":"string",
+               "description":"The status of a request."
+            },
+            "solutions":{
+               "$ref":"#/definitions/InterDomainRouteSolutionInfo"
+            }
+         }
+      },
+      "InterDomainRouteSolutionInfo":{
+         "type":"object",
+         "properties":{
+            "routeInfo":{
+               "$ref":"#/definitions/interDomainResponseRouteinfo"
+            }
+         }
+      },
+      "interDomainResponseRouteinfo":{
+         "type":"object",
+         "properties":{
+            "serviceRoute":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/serviceRouteDetails"
+               }
+            },
+            "linkList":{
+               "type":"array",
+               "items":{
+                  "type":"string"
+               },
+               "description":"A list of link names of the route.",
+               "example":[
+                  "link1",
+                  "link2"
+               ]
+            }
+         }
+      },
+      "serviceRouteDetails":{
+         "type":"object",
+         "properties":{
+            "srcInterfaceId":{
+               "type":"string",
+               "description":"Source port Id of the domain Service."
+            },
+            "dstInterfaceId":{
+               "type":"string",
+               "description":"Destination Port Id of the domain Service."
+            },
+            "controllerId":{
+               "type":"string",
+               "description":"Controller Id of the domain."
+            }
+         }
+      },
+      "RouteRequest":{
+         "type":"object",
+         "properties":{
+            "requestInfo":{
+               "$ref":"#/definitions/requestInfo"
+            },
+            "routeInfo":{
+               "$ref":"#/definitions/routeInfo"
+            }
+         }
+      },
+      "requestInfo":{
+         "type":"object",
+         "properties":{
+            "transactionId":{
+               "type":"string",
+               "description":"A unique ID to track an ONAP transaction."
+            },
+            "requestId":{
+               "type":"string",
+               "description":"A unique ID to track multiple requests associated with a transaction."
+            },
+            "callbackUrl":{
+               "type":"string",
+               "description":"The end point of a callback service where recommendations are posted."
+            },
+            "callbackHeader":{
+               "type":"string",
+               "description":"The header information a client expecting in a async callback."
+            },
+            "sourceId":{
+               "type":"string",
+               "description":"The unique ID of a client making an optimization call."
+            },
+            "requestType":{
+               "type":"string",
+               "format":"string",
+               "description":"The type of request being placed.",
+               "enum":[
+                  "create",
+                  "update",
+                  "delete"
+               ]
+            },
+            "numSolutions":{
+               "type":"integer",
+               "format":"int32",
+               "description":"Expected number of solutions. numSolution can also be specified using an optimization query policies, where the default configured value is 1. The value from a request gets higher precedence over the value defined in a policy."
+            },
+            "optimizers":{
+               "description":"A list of optimization services that can be used to resolve the route",
+               "type":"array",
+               "items":{
+                  "type":"string"
+               }
+            },
+            "timeout":{
+               "type":"integer",
+               "format":"int32",
+               "description":"A tolerance window (in secs) for expecting solutions. Default is 600 secs."
+            }
+         }
+      },
+      "routeInfo":{
+         "type":"object",
+         "properties":{
+            "routeRequest":{
+               "$ref":"#/definitions/routeRequest"
+            }
+         }
+      },
+      "routeRequest":{
+         "type":"object",
+         "properties":{
+            "srcPort":{
+               "$ref":"#/definitions/routePortInfo"
+            },
+            "destPort":{
+               "$ref":"#/definitions/routePortInfo"
+            }
+         }
+      },
+      "routePortInfo":{
+         "type":"object",
+         "properties":{
+            "accessTopologyId":{
+               "type":"string",
+               "description":"A unique ID of the Access Topology."
+            },
+            "accessClientId":{
+               "type":"string",
+               "format":"string",
+               "description":"A unique ID of the client which provides the access."
+            },
+            "accessProviderId":{
+               "type":"string",
+               "format":"string",
+               "description":"A unique ID of the access provider"
+            },
+            "accessNodeId":{
+               "type":"string",
+               "format":"string",
+               "description":"A unique ID of the node to/from which the route has to be established."
+            },
+            "accessLtpId":{
+               "type":"integer",
+               "format":"int32",
+               "description":"A unique ID of the Termination Point to/from which the route has to be established."
+            }
+         }
+      },
+      "routeResponseBody":{
+         "type":"object",
+         "properties":{
+            "requestId":{
+               "type":"string",
+               "description":"A unique Id for an ONAP transaction."
+            },
+            "transactionId":{
+               "type":"string",
+               "description":"A unique ID to track multiple requests associated with a transaction."
+            },
+            "statusMessage":{
+               "type":"string",
+               "description":"Reasoning if a requestStatus is failure."
+            },
+            "requestStatus":{
+               "type":"string",
+               "description":"The status of a request."
+            },
+            "solutions":{
+               "$ref":"#/definitions/RouteSolutionInfo"
+            }
+         }
+      },
+      "RouteSolutionInfo":{
+         "type":"object",
+         "properties":{
+            "startTime":{
+               "type":"string",
+               "format":"date-time",
+               "description":"start time of the operation in  RFC 3339 notation for example, 2017-07-21T17:32:28Z."
+            },
+            "finishTime":{
+               "type":"string",
+               "format":"date-time",
+               "description":"end time of the operation in  RFC 3339 notation for example, 2017-07-21T17:32:28Z."
+            },
+            "links":{
+               "description":"A list of vpn info that can be used to establish the route between source and destination port/node.",
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/link"
+               }
+            }
+         }
+      },
+      "link":{
+         "type":"object",
+         "properties":{
+            "linkId":{
+               "type":"string",
+               "description":"Id or name identifies a link uniquely."
+            }
+         }
+      },
+      "PlacementRequest":{
+         "type":"object",
+         "required":[
+            "requestInfo",
+            "placementInfo",
+            "licenseInfo",
+            "serviceInfo"
+         ],
+         "properties":{
+            "requestInfo":{
+               "$ref":"#/definitions/RequestInfo"
+            },
+            "placementInfo":{
+               "$ref":"#/definitions/PlacementInfo"
+            },
+            "licenseInfo":{
+               "$ref":"#/definitions/LicenseInfo"
+            },
+            "serviceInfo":{
+               "$ref":"#/definitions/ServiceInfo"
+            }
+         }
+      },
+      "RequestInfo":{
+         "type":"object",
+         "required":[
+            "transactionId",
+            "requestId",
+            "callbackUrl",
+            "sourceId",
+            "requestType",
+            "optimizers",
+            "timeout"
+         ],
+         "properties":{
+            "transactionId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"unique ID to track an ONAP transaction",
+               "example":"d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "requestId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique ID to track multiple requests associated with a transaction",
+               "example":"d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "callbackUrl":{
+               "type":"string",
+               "format":"url",
+               "description":"The end point of a callback service where recommendations are posted.",
+               "example":"myDomain.com/myCallback"
+            },
+            "callbackHeader":{
+               "type":"string",
+               "description":"JSON blob. The header information a client expecting in a async callback.",
+               "example":{
+                  "blob":"content"
+               }
+            },
+            "sourceId":{
+               "type":"string",
+               "description":"The unique ID of a client making an optimization call.",
+               "example":"d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "requestType":{
+               "type":"string",
+               "enum":[
+                  "create",
+                  "update",
+                  "delete"
+               ],
+               "description":"The type of a request",
+               "example":"create"
+            },
+            "numSolutions":{
+               "type":"integer",
+               "description":"Expected number of solutions.",
+               "example":1
+            },
+            "optimizers":{
+               "type":"array",
+               "items":{
+                  "type":"string",
+                  "enum":[
+                     "placement",
+                     "pci",
+                     "pci-anr"
+                  ]
+               },
+               "description":"A list of optimization services.",
+               "example":[
+                  "placement"
+               ]
+            },
+            "timeout":{
+               "type":"integer",
+               "description":"A tolerance window (in second) for expecting solutions.",
+               "example":5
+            }
+         }
+      },
+      "PlacementInfo":{
+         "type":"object",
+         "required":[
+            "requestParameters",
+            "placementDemands"
+         ],
+         "properties":{
+            "requestParameters":{
+               "type":"string",
+               "description":"JSON blob. A service ordering information",
+               "example":{
+                  "blob":"content"
+               }
+            },
+            "placementDemands":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/PlacementDemand"
+               },
+               "description":"The resource information for a placement service"
+            },
+            "subscriberInfo":{
+               "type":"object",
+               "items":{
+                  "$ref":"#/definitions/SubscriberInfo"
+               },
+               "description":"The information of a service subscriber."
+            }
+         }
+      },
+      "PlacementDemand":{
+         "type":"object",
+         "required":[
+            "resourceModuleName",
+            "serviceResourceId",
+            "resourceModelInfo"
+         ],
+         "properties":{
+            "resourceModuleName":{
+               "type":"string",
+               "description":"A resource name as defined in a service mode",
+               "example":"myResourceName"
+            },
+            "serviceResourceId":{
+               "type":"string",
+               "description":"A unique resource Id with a local scope between client and OOF.",
+               "example":"myResourceId"
+            },
+            "givenPlacement":{
+               "type":"object",
+               "additionalProperties":{
+                  "type":"object",
+                  "properties":{
+                     "key":{
+                        "type":"string"
+                     },
+                     "value":{
+                        "type":"string"
+                     }
+                  }
+               },
+               "description":"placement parameters defined in the ordering system, keyname include tenantId",
+               "example":{
+                  "tenantId":"1"
+               }
+            },
+            "resourceModelInfo":{
+               "$ref":"#/definitions/ModelMetaData"
+            },
+            "existingCandidates":{
+               "$ref":"#/definitions/Candidates"
+            },
+            "excludedCandidates":{
+               "$ref":"#/definitions/Candidates"
+            },
+            "requiredCandidates":{
+               "$ref":"#/definitions/Candidates"
+            }
+         }
+      },
+      "ModelMetaData":{
+         "type":"object",
+         "required":[
+            "modelInvariantId",
+            "modelVersionId"
+         ],
+         "properties":{
+            "modelInvariantId":{
+               "type":"string",
+               "description":"A model invariant Id as defined in a service model.",
+               "example":"my model invariant Id"
+            },
+            "modelVersionId":{
+               "type":"string",
+               "description":"A unique model Id as defined in a service model.",
+               "example":"my unique model Id"
+            },
+            "modelName":{
+               "type":"string",
+               "description":"A model name as defined in a service model",
+               "example":"my model name"
+            },
+            "modelType":{
+               "type":"string",
+               "description":"A model type as defined in a service model.",
+               "example":"my model type"
+            },
+            "modelVersion":{
+               "type":"string",
+               "description":"A model version as defined in a service model.",
+               "example":"my model version"
+            },
+            "modelCustomizationName":{
+               "type":"string",
+               "description":"A model customization name as defined in a service model.",
+               "example":"my model customization"
+            }
+         }
+      },
+      "Candidates":{
+         "type":"object",
+         "required":[
+            "identifierType",
+            "identifiers"
+         ],
+         "properties":{
+            "identifierType":{
+               "type":"string",
+               "enum":[
+                  "service_instance_id",
+                  "vnf_name",
+                  "cloud_region_id"
+               ],
+               "description":"The type of a candidate.",
+               "example":"service_instance_id"
+            },
+            "identifiers":{
+               "type":"array",
+               "items":{
+                  "type":"string"
+               },
+               "description":"A list of identifiers.",
+               "example":"candidateId"
+            },
+            "cloudOwner":{
+               "type":"string",
+               "description":"The name of a cloud owner. Only required if identifierType is cloud_region_id",
+               "example":"cloud_owner"
+            }
+         }
+      },
+      "SubscriberInfo":{
+         "type":"object",
+         "required":[
+            "globalSubscriberId",
+            "subscriberName",
+            "subscriberCommonSiteId"
+         ],
+         "properties":{
+            "globalSubscriberId":{
+               "type":"string",
+               "description":"An ID of a subscriber.",
+               "example":"subscriber_id"
+            },
+            "subscriberName":{
+               "type":"string",
+               "description":"The name of a subscriber. If the name is not known, the value must be 'unknown'",
+               "example":"subscriber_name"
+            },
+            "subscriberCommonSiteId":{
+               "type":"string",
+               "description":"Id representing a subscriber location",
+               "example":"subscriber_location_id"
+            }
+         }
+      },
+      "LicenseInfo":{
+         "type":"object",
+         "required":[
+            "licenseDemands"
+         ],
+         "properties":{
+            "licenseDemands":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/LicenseDemands"
+               },
+               "description":"A list of resources for license selection"
+            }
+         }
+      },
+      "LicenseDemands":{
+         "type":"object",
+         "required":[
+            "resourceModuleName",
+            "serviceResourceId",
+            "resourceModelInfo"
+         ],
+         "properties":{
+            "resourceModuleName":{
+               "type":"string",
+               "description":"A resource name as defined in a service model.",
+               "example":"service_instance_id"
+            },
+            "serviceResourceId":{
+               "type":"string",
+               "description":"A unique resource Id with a local scope between client and OOF.",
+               "example":"service_instance_id"
+            },
+            "resourceModelInfo":{
+               "$ref":"#/definitions/ModelMetaData"
+            },
+            "existingLicenses":{
+               "$ref":"#/definitions/LicenseModel"
+            }
+         }
+      },
+      "LicenseModel":{
+         "type":"object",
+         "required":[
+            "entitlementPoolUUID",
+            "licenseKeyGroupUUID"
+         ],
+         "properties":{
+            "entitlementPoolUUID":{
+               "type":"array",
+               "items":{
+                  "type":"string",
+                  "format":"uuid"
+               },
+               "description":"Entitlement pool UUIDs associated with a resource.",
+               "example":"candidateId"
+            },
+            "licenseKeyGroupUUID":{
+               "type":"array",
+               "items":{
+                  "type":"string",
+                  "format":"uuid"
+               },
+               "description":"License key groups associated with a resource",
+               "example":"candidateId"
+            }
+         }
+      },
+      "SynchronousResponse":{
+         "type":"object",
+         "required":[
+            "requestId",
+            "transactionId",
+            "requestStatus"
+         ],
+         "properties":{
+            "requestId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique Id for an ONAP transaction",
+               "example":"ONAP transaction id"
+            },
+            "transactionId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique ID to track multiple requests associated with a transaction.",
+               "example":"requests id"
+            },
+            "statusMessage":{
+               "type":"string",
+               "description":"Reasoning if a requestStatus is failure.",
+               "example":"requestStatus"
+            },
+            "requestStatus":{
+               "type":"string",
+               "enum":[
+                  "success",
+                  "failure"
+               ],
+               "description":"The status of a request.",
+               "example":"success"
+            }
+         }
+      },
+      "SynchronousTerminationResponse":{
+         "type":"object",
+         "required":[
+            "requestId",
+            "transactionId",
+            "requestStatus",
+            "terminateResponse"
+         ],
+         "properties":{
+            "requestId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique Id for an ONAP transaction",
+               "example":"ONAP transaction id"
+            },
+            "transactionId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique ID to track multiple requests associated with a transaction.",
+               "example":"requests id"
+            },
+            "statusMessage":{
+               "type":"string",
+               "description":"Reasoning if a requestStatus is failure.",
+               "example":"requestStatus"
+            },
+            "requestStatus":{
+               "type":"string",
+               "enum":[
+                  "success",
+                  "failure"
+               ],
+               "description":"The status of a request.",
+               "example":"success"
+            },
+            "terminateResponse":{
+               "type":"boolean"
+            },
+            "reason":{
+               "type":"string",
+               "description":"Reason if terminateResponse is false",
+               "example":"Restricted by Policy"
+            }
+         }
+      },
+      "PlacementAsynchronousResponse":{
+         "type":"object",
+         "required":[
+            "requestId",
+            "transactionId",
+            "requestStatus",
+            "solutions"
+         ],
+         "properties":{
+            "requestId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique Id for an ONAP transaction",
+               "example":"ONAP transaction id"
+            },
+            "transactionId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique ID to track multiple requests associated with a transaction.",
+               "example":"requests id"
+            },
+            "statusMessage":{
+               "type":"string",
+               "description":"Reasoning if a requestStatus is failure.",
+               "example":"requestStatus"
+            },
+            "requestStatus":{
+               "type":"string",
+               "enum":[
+                  "success",
+                  "failure"
+               ],
+               "description":"The status of a request.",
+               "example":"success"
+            },
+            "solutions":{
+               "$ref":"#/definitions/Solutions"
+            }
+         }
+      },
+      "Solutions":{
+         "type":"object",
+         "required":[
+            "placementSolutions",
+            "licenseSolutions"
+         ],
+         "properties":{
+            "placementSolutions":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/ComprehensiveSolution"
+               },
+               "description":"A list of placement solutions."
+            },
+            "licenseSolutions":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/LicenseSolution"
+               },
+               "description":"A list of license solutions."
+            }
+         }
+      },
+      "ComprehensiveSolution":{
+         "type":"object",
+         "required":[
+            "placementSolutions"
+         ],
+         "properties":{
+            "placementSolutions":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/PlacementSolution"
+               },
+               "description":"A list of placement solutions."
+            }
+         }
+      },
+      "PlacementSolution":{
+         "type":"object",
+         "required":[
+            "resourceModuleName",
+            "serviceResourceId",
+            "identifierType",
+            "identifier"
+         ],
+         "properties":{
+            "resourceModuleName":{
+               "type":"string",
+               "description":"The name of a resource as defined in the service model",
+               "example":"resource name"
+            },
+            "serviceResourceId":{
+               "type":"string",
+               "description":"A resource Id as defined in a service model.",
+               "example":"resource id"
+            },
+            "identifierType":{
+               "type":"string",
+               "enum":[
+                  "service_instance_id"
+               ],
+               "description":"The type of a candidate.",
+               "example":"candidate type"
+            },
+            "identifier":{
+               "type":"string",
+               "description":"The id of a candidate.",
+               "example":"candidate id"
+            },
+            "assignmentInfo":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/AssignmentInfo"
+               },
+               "description":"Additional information related to a candidate."
+            }
+         }
+      },
+      "AssignmentInfo":{
+         "type":"object",
+         "required":[
+            "key",
+            "value"
+         ],
+         "properties":{
+            "key":{
+               "type":"string",
+               "description":"An attribute name",
+               "example":"attribute name"
+            },
+            "value":{
+               "type":"string",
+               "description":"An attribute value.",
+               "example":"attribute value"
+            }
+         }
+      },
+      "LicenseSolution":{
+         "type":"object",
+         "required":[
+            "resourceModuleName",
+            "serviceResourceId",
+            "entitlementPoolUUID",
+            "licenseKeyGroupUUID",
+            "entitlementPoolInvariantUUID",
+            "licenseKeyGroupInvariantUUID"
+         ],
+         "properties":{
+            "resourceModuleName":{
+               "type":"string",
+               "description":"A resource name as defined in a service",
+               "example":"resource name"
+            },
+            "serviceResourceId":{
+               "type":"string",
+               "description":"A resource Id as defined in a service.",
+               "example":"resource Id"
+            },
+            "entitlementPoolUUID":{
+               "type":"array",
+               "items":{
+                  "type":"string",
+                  "format":"uuid"
+               },
+               "description":"A list of entitlementPoolUUIDs",
+               "example":"entitlementPoolUUID"
+            },
+            "licenseKeyGroupUUID":{
+               "type":"array",
+               "items":{
+                  "type":"string",
+                  "format":"uuid"
+               },
+               "description":"A list of licenseKeyGroupUUID.",
+               "example":"licenseKeyGroupUUID"
+            },
+            "entitlementPoolInvariantUUID":{
+               "type":"array",
+               "items":{
+                  "type":"string",
+                  "format":"uuid"
+               },
+               "description":"A list of entitlementPoolInvariantUUID",
+               "example":"entitlementPoolInvariantUUID"
+            },
+            "licenseKeyGroupInvariantUUID":{
+               "type":"array",
+               "items":{
+                  "type":"string",
+                  "format":"uuid"
+               },
+               "description":"A list of licenseKeyGroupInvariantUUID",
+               "example":"licenseKeyGroupInvariantUUID"
+            }
+         }
+      },
+      "ServiceInfo":{
+         "type":"object",
+         "required":[
+            "serviceInstanceId",
+            "modelInfo",
+            "serviceName"
+         ],
+         "properties":{
+            "serviceInstanceId":{
+               "type":"string",
+               "description":"A service instance id associated with a request.",
+               "example":"service_instance_id"
+            },
+            "modelInfo":{
+               "$ref":"#/definitions/ModelMetaData"
+            },
+            "serviceName":{
+               "type":"string",
+               "description":"The name of a service",
+               "example":"service_name"
+            }
+         }
+      },
+      "PCIOptRequest":{
+         "type":"object",
+         "required":[
+            "requestInfo",
+            "cellInfo"
+         ],
+         "properties":{
+            "requestInfo":{
+               "$ref":"#/definitions/RequestInfo"
+            },
+            "cellInfo":{
+               "$ref":"#/definitions/CellInfo"
+            }
+         }
+      },
+      "CellInfo":{
+         "type":"object",
+         "required":[
+            "networkId",
+            "cellIdList",
+            "anrInputList",
+            "trigger"
+         ],
+         "properties":{
+            "networkId":{
+               "type":"string",
+               "description":"Id of network requiring PCI optimization",
+               "example":100
+            },
+            "cellIdList":{
+               "type":"array",
+               "items":{
+                  "type":"string"
+               },
+               "description":"List of cellIds triggering need for PCI optimization (eg.potential confusion)",
+               "example":[
+                  "cell0001",
+                  "cell0002"
+               ]
+            },
+            "anrInputList":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/ANRInfo"
+               },
+               "description":"A list of ANR Input."
+            },
+            "fixedPCICells":{
+               "type":"array",
+               "items":{
+                  "type":"string"
+               },
+               "description":"List of blacklisted cells whose PCI values should not be changed",
+               "example":[
+                  "cell0007",
+                  "cell0009"
+               ]
+            },
+            "priorityTreatmentCells":{
+               "type":"array",
+               "items":{
+                  "type":"string"
+               },
+               "description":"List of cells which should be given special treatment during optimization",
+               "example":[
+                  "cell0010",
+                  "cell0003"
+               ]
+            },
+            "trigger":{
+               "type":"string",
+               "description":"Type of trigger causing need for PCI optimization",
+               "example":"NbrListChange"
+            }
+         }
+      },
+      "PCIAsynchronousResponse":{
+         "type":"object",
+         "required":[
+            "requestId",
+            "transactionId",
+            "requestStatus",
+            "solutions"
+         ],
+         "properties":{
+            "requestId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique Id for an ONAP transaction",
+               "example":"ONAP transaction id"
+            },
+            "transactionId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique ID to track multiple requests associated with a transaction.",
+               "example":"requests id"
+            },
+            "statusMessage":{
+               "type":"string",
+               "description":"Reasoning if a requestStatus is failure.",
+               "example":"requestStatus"
+            },
+            "requestStatus":{
+               "type":"string",
+               "enum":[
+                  "success",
+                  "failure"
+               ],
+               "description":"The status of a request.",
+               "example":"success"
+            },
+            "solutions":{
+               "$ref":"#/definitions/PCIANRSolutions"
+            }
+         }
+      },
+      "PCIANRSolutions":{
+         "type":"object",
+         "required":[
+            "networkId",
+            "pciSolutions",
+            "anrSolutions"
+         ],
+         "properties":{
+            "networkId":{
+               "type":"string",
+               "description":"Id of network requiring PCI optimization",
+               "example":100
+            },
+            "pciSolutions":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/PCISolution"
+               },
+               "description":"A list of PCI solutions."
+            },
+            "anrSolutions":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/ANRInfo"
+               },
+               "description":"A list of ANR solutions."
+            }
+         }
+      },
+      "PCISolution":{
+         "type":"object",
+         "required":[
+            "cellId",
+            "pci"
+         ],
+         "properties":{
+            "cellId":{
+               "type":"string",
+               "description":"cellId with modified PCI value",
+               "example":"cell0001"
+            },
+            "pci":{
+               "type":"integer",
+               "description":"New PCI value for cellId",
+               "example":1
+            }
+         }
+      },
+      "ANRInfo":{
+         "type":"object",
+         "required":[
+            "cellId",
+            "removeableNeighbors"
+         ],
+         "properties":{
+            "cellId":{
+               "type":"string",
+               "description":"cellId with modified PCI value",
+               "example":"cell0001"
+            },
+            "removeableNeighbors":{
+               "type":"array",
+               "items":{
+                  "type":"string"
+               },
+               "description":"List of neighbors to be removed",
+               "example":[
+                  "cell0002",
+                  "cell0003"
+               ]
+            }
+         }
+      },
+      "NSTSelectionRequest":{
+         "type":"object",
+         "required":[
+            "requestInfo",
+            "serviceProfile"
+         ],
+         "properties":{
+            "requestInfo":{
+               "$ref":"#/definitions/RequestInfo2"
+            },
+            "serviceProfile":{
+               "$ref":"#/definitions/ServiceProfile"
+            }
+         }
+      },
+      "NSISelectionRequest":{
+         "type":"object",
+         "required":[
+            "requestInfo",
+            "serviceProfile",
+            "NSTInfo",
+            "NSSTInfo",
+            "subnetCapabilities"
+         ],
+         "properties":{
+            "serviceProfile":{
+               "$ref":"#/definitions/ServiceProfile"
+            },
+            "requestInfo":{
+               "$ref":"#/definitions/RequestInfo2"
+            },
+            "NSTInfo":{
+               "$ref":"#/definitions/NSTInfo"
+            },
+            "NSSTInfo":{
+               "type":"array",
+               "description":"List of constituent NSST(s) of the NST",
+               "items":{
+                  "$ref":"#/definitions/NSSTInfo"
+               }
+            },
+            "preferReuse":{
+               "type":"boolean"
+            },
+            "subnetCapabilities":{
+               "type":"array",
+               "description":"List of subnet capabilities",
+               "items":{
+                  "$ref":"#/definitions/SubnetCapability"
+               }
+            }
+         }
+      },
+      "NSSISelectionRequest":{
+         "type":"object",
+         "required":[
+            "requestInfo",
+            "NSSTInfo",
+            "sliceProfile"
+         ],
+         "properties":{
+            "sliceProfile":{
+               "$ref":"#/definitions/SliceProfile"
+            },
+            "requestInfo":{
+               "$ref":"#/definitions/RequestInfo2"
+            },
+            "NSSTInfo":{
+               "$ref":"#/definitions/NSSTInfo"
+            }
+         }
+      },
+      "NxITerminationRequest":{
+         "type":"object",
+         "required":[
+            "requestInfo",
+            "type",
+            "NxIId"
+         ],
+         "properties":{
+            "type":{
+               "type":"string",
+               "description":"UUID of NST"
+            },
+            "NxIId":{
+               "type":"string",
+               "format":"UUID",
+               "description":"Id of NSI / NSSI"
+            },
+            "UUID":{
+               "type":"string",
+               "format":"UUID",
+               "description":"UUID of NST/NSST model"
+            },
+            "invariantUUID":{
+               "type":"string",
+               "format":"UUID",
+               "description":"invariant UUID of NST/NSST model"
+            },
+            "requestInfo":{
+               "$ref":"#/definitions/RequestInfo2"
+            }
+         }
+      },
+      "SubnetCapability":{
+         "type":"object",
+         "required":[
+            "domainType",
+            "capabilityDetails"
+         ],
+         "properties":{
+            "domainType":{
+               "type":"string",
+               "description":"type of the subnet"
+            },
+            "capabilityDetails":{
+               "type":"string",
+               "description":"A JSON object containing capability parameters",
+               "example":{
+                  "blob":"content"
+               }
+            }
+         }
+      },
+      "NSTInfo":{
+         "type":"object",
+         "required":[
+            "UUID",
+            "invariantUUID",
+            "name"
+         ],
+         "properties":{
+            "UUID":{
+               "type":"string",
+               "format":"uuid",
+               "description":"UUID of NST"
+            },
+            "invariantUUID":{
+               "type":"string",
+               "format":"uuid",
+               "description":"Invariant UUID"
+            },
+            "name":{
+               "type":"string",
+               "description":"name of the NST model"
+            }
+         }
+      },
+      "NSSTInfo":{
+         "type":"object",
+         "required":[
+            "UUID",
+            "invariantUUID",
+            "name"
+         ],
+         "properties":{
+            "UUID":{
+               "type":"string",
+               "format":"uuid",
+               "description":"UUID of NSST"
+            },
+            "invariantUUID":{
+               "type":"string",
+               "format":"uuid",
+               "description":"Invariant UUID"
+            },
+            "name":{
+               "type":"string",
+               "description":"name of the NSST model"
+            }
+         }
+      },
+      "ServiceProfile":{
+         "type":"string",
+         "description":"JSON blob. Containing service profile parameters. The contents are based on 3GPP TS 23.541 Release 16 contents, and will be in the form of attribute value pairs.",
+         "example":{
+            "blob":"content"
+         }
+      },
+      "SliceProfile":{
+         "type":"string",
+         "description":"JSON blob. Containing slice profile parameters. The contents are based on 3GPP TS 23.541 Release 16 contents, and will be in the form of attribute value pairs.",
+         "example":{
+            "blob":"content"
+         }
+      },
+      "RequestInfo2":{
+         "type":"object",
+         "required":[
+            "transactionId",
+            "requestId",
+            "callbackUrl",
+            "sourceId"
+         ],
+         "properties":{
+            "transactionId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"unique ID to track an ONAP transaction",
+               "example":"d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "requestId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique ID to track multiple requests associated with a transaction",
+               "example":"d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "callbackUrl":{
+               "type":"string",
+               "format":"url",
+               "description":"The end point of a callback service where recommendations are posted.",
+               "example":"myDomain.com/myCallback"
+            },
+            "callbackHeader":{
+               "type":"string",
+               "description":"JSON blob. The header information a client expecting in a async callback.",
+               "example":{
+                  "blob":"content"
+               }
+            },
+            "sourceId":{
+               "type":"string",
+               "description":"The unique ID of a client making an optimization call.",
+               "example":"d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "timeout":{
+               "type":"integer",
+               "description":"A tolerance window (in second) for expecting solutions.",
+               "example":5
+            },
+            "numSolutions":{
+               "type":"integer",
+               "description":"Expected number of solutions.",
+               "example":1
+            },
+            "addtnlArgs":{
+               "type":"string",
+               "description":"JSON blob. The header information a client expecting in a async callback.",
+               "example":{
+                  "blob":"content"
+               }
+            }
+         }
+      },
+      "NSTAsynchronousResponse":{
+         "type":"object",
+         "required":[
+            "transactionId",
+            "requestId",
+            "requestStatus",
+            "solutions"
+         ],
+         "properties":{
+            "transactionId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"unique ID to track an ONAP transaction",
+               "example":"d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "requestId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique ID to track multiple requests associated with a transaction",
+               "example":"d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "statusMessage":{
+               "type":"string",
+               "description":"Reasoning if a requestStatus is failed."
+            },
+            "requestStatus":{
+               "type":"string",
+               "enum":[
+                  "completed",
+                  "failed",
+                  "pending"
+               ],
+               "description":"The status of a request."
+            },
+            "solutions":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/NSTSolution"
+               },
+               "description":"A list of NST solutions"
+            }
+         }
+      },
+      "NSTSolution":{
+         "type":"object",
+         "required":[
+            "UUID",
+            "NSTName",
+            "invariantUUID",
+            "matchLevel"
+         ],
+         "properties":{
+            "invariantUUID":{
+               "type":"string",
+               "format":"uuid",
+               "description":"Invariant UUID of NST"
+            },
+            "UUID":{
+               "type":"string",
+               "format":"UUID of NST"
+            },
+            "NSTName":{
+               "type":"string",
+               "description":"NST name"
+            },
+            "matchLevel":{
+               "type":"string",
+               "description":"JSON blob. Containing details of match of requirements in slice profile and percentage of fit"
+            }
+         }
+      },
+      "NSIAsynchronousResponse":{
+         "type":"object",
+         "required":[
+            "transactionId",
+            "requestId",
+            "requestStatus",
+            "solutions"
+         ],
+         "properties":{
+            "transactionId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"unique ID to track an ONAP transaction",
+               "example":"d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "requestId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique ID to track multiple requests associated with a transaction",
+               "example":"d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "statusMessage":{
+               "type":"string",
+               "description":"Reasoning if a requestStatus is failed."
+            },
+            "requestStatus":{
+               "type":"string",
+               "enum":[
+                  "completed",
+                  "failed",
+                  "pending"
+               ],
+               "description":"The status of a request."
+            },
+            "solutions":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/NSISolution"
+               },
+               "description":"A list of solutions"
+            }
+         }
+      },
+      "NSISolution":{
+         "type":"object",
+         "required":[
+            "existingNSI"
+         ],
+         "properties":{
+            "existingNSI":{
+               "type":"boolean"
+            },
+            "sharedNSISolution":{
+               "$ref":"#/definitions/SharedNSISolution"
+            },
+            "newNSISolution":{
+               "$ref":"#/definitions/NewNSISolution"
+            }
+         }
+      },
+      "SharedNSISolution":{
+         "type":"object",
+         "required":[
+            "invariantUUID",
+            "UUID",
+            "NSIName",
+            "NSIId",
+            "matchLevel"
+         ],
+         "properties":{
+            "invariantUUID":{
+               "type":"string",
+               "format":"uuid",
+               "description":"Invariant UUID of NST"
+            },
+            "UUID":{
+               "type":"string",
+               "format":"uuid",
+               "description":"UUID of NST"
+            },
+            "NSIName":{
+               "type":"string",
+               "description":"Name of NSI"
+            },
+            "NSIId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"Instance Id of NSI"
+            },
+            "matchLevel":{
+               "type":"string",
+               "description":"JSON blob. Containing details of match of requirements in service profile, and recommendation rank"
+            }
+         }
+      },
+      "NewNSISolution":{
+         "type":"object",
+         "required":[
+            "sliceProfiles",
+            "matchLevel"
+         ],
+         "properties":{
+            "sliceProfiles":{
+               "type":"array",
+               "description":"List of slice profiles",
+               "items":{
+                  "$ref":"#/definitions/SliceProfile"
+               }
+            },
+            "matchLevel":{
+               "type":"string",
+               "description":"JSON blob. Containing details of match of requirements in service profile, and recommendation rank"
+            }
+         }
+      },
+      "NSSIAsynchronousResponse":{
+         "type":"object",
+         "required":[
+            "transactionId",
+            "requestId",
+            "requestStatus",
+            "solutions"
+         ],
+         "properties":{
+            "transactionId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"unique ID to track an ONAP transaction",
+               "example":"d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "requestId":{
+               "type":"string",
+               "format":"uuid",
+               "description":"A unique ID to track multiple requests associated with a transaction",
+               "example":"d290f1ee-6c54-4b01-90e6-d701748f0851"
+            },
+            "statusMessage":{
+               "type":"string",
+               "description":"Reasoning if a requestStatus is failed."
+            },
+            "requestStatus":{
+               "type":"string",
+               "enum":[
+                  "completed",
+                  "failed",
+                  "pending"
+               ],
+               "description":"The status of a request."
+            },
+            "solutions":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/SharedNSSISolution"
+               },
+               "description":"A list of NSSI solutions"
+            }
+         }
+      },
+      "SharedNSSISolution":{
+         "type":"object",
+         "required":[
+            "invariantUUID",
+            "UUID",
+            "NSSIName",
+            "NSSIId",
+            "matchLevel"
+         ],
+         "properties":{
+            "invariantUUID":{
+               "type":"string",
+               "format":"uuid",
+               "description":"Invariant UUID of NSST"
+            },
+            "UUID":{
+               "type":"string",
+               "format":"uuid",
+               "description":"UUID of NSST"
+            },
+            "NSSIName":{
+               "type":"string",
+               "description":"Name of NSSI"
+            },
+            "NSSIId":{
+               "type":"string",
+               "description":"Instance Id of NSSI"
+            },
+            "matchLevel":{
+               "type":"string",
+               "description":"JSON blob. Containing details of match of requirements in slice profile and percentage of fit"
+            }
+         }
       }
-    },
-    "Candidates": {
-      "type": "object",
-      "required": [
-        "identifierType",
-        "identifiers"
-      ],
-      "properties": {
-        "identifierType": {
-          "type": "string",
-          "enum": [
-            "service_instance_id",
-            "vnf_name",
-            "cloud_region_id"
-          ],
-          "description": "The type of a candidate.",
-          "example": "service_instance_id"
-        },
-        "identifiers": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "A list of identifiers.",
-          "example": "candidateId"
-        },
-        "cloudOwner": {
-          "type": "string",
-          "description": "The name of a cloud owner. Only required if identifierType is cloud_region_id",
-          "example": "cloud_owner"
-        }
-      }
-    },
-    "SubscriberInfo": {
-      "type": "object",
-      "required": [
-        "globalSubscriberId",
-        "subscriberName",
-        "subscriberCommonSiteId"
-      ],
-      "properties": {
-        "globalSubscriberId": {
-          "type": "string",
-          "description": "An ID of a subscriber.",
-          "example": "subscriber_id"
-        },
-        "subscriberName": {
-          "type": "string",
-          "description": "The name of a subscriber. If the name is not known, the value must be 'unknown'",
-          "example": "subscriber_name"
-        },
-        "subscriberCommonSiteId": {
-          "type": "string",
-          "description": "Id representing a subscriber location",
-          "example": "subscriber_location_id"
-        }
-      }
-    },
-    "LicenseInfo": {
-      "type": "object",
-      "required": [
-        "licenseDemands"
-      ],
-      "properties": {
-        "licenseDemands": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/LicenseDemands"
-          },
-          "description": "A list of resources for license selection"
-        }
-      }
-    },
-    "LicenseDemands": {
-      "type": "object",
-      "required": [
-        "resourceModuleName",
-        "serviceResourceId",
-        "resourceModelInfo"
-      ],
-      "properties": {
-        "resourceModuleName": {
-          "type": "string",
-          "description": "A resource name as defined in a service model.",
-          "example": "service_instance_id"
-        },
-        "serviceResourceId": {
-          "type": "string",
-          "description": "A unique resource Id with a local scope between client and OOF.",
-          "example": "service_instance_id"
-        },
-        "resourceModelInfo": {
-          "$ref": "#/definitions/ModelMetaData"
-        },
-        "existingLicenses": {
-          "$ref": "#/definitions/LicenseModel"
-        }
-      }
-    },
-    "LicenseModel": {
-      "type": "object",
-      "required": [
-        "entitlementPoolUUID",
-        "licenseKeyGroupUUID"
-      ],
-      "properties": {
-        "entitlementPoolUUID": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "description": "Entitlement pool UUIDs associated with a resource.",
-          "example": "candidateId"
-        },
-        "licenseKeyGroupUUID": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "description": "License key groups associated with a resource",
-          "example": "candidateId"
-        }
-      }
-    },
-    "SynchronousResponse": {
-      "type": "object",
-      "required": [
-        "requestId",
-        "transactionId",
-        "requestStatus"
-      ],
-      "properties": {
-        "requestId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "A unique Id for an ONAP transaction",
-          "example": "ONAP transaction id"
-        },
-        "transactionId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "A unique ID to track multiple requests associated with a transaction.",
-          "example": "requests id"
-        },
-        "statusMessage": {
-          "type": "string",
-          "description": "Reasoning if a requestStatus is failure.",
-          "example": "requestStatus"
-        },
-        "requestStatus": {
-          "type": "string",
-          "enum": [
-            "success",
-            "failure"
-          ],
-          "description": "The status of a request.",
-          "example": "success"
-        }
-      }
-    },
-    "PlacementAsynchronousResponse": {
-      "type": "object",
-      "required": [
-        "requestId",
-        "transactionId",
-        "requestStatus",
-        "solutions"
-      ],
-      "properties": {
-        "requestId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "A unique Id for an ONAP transaction",
-          "example": "ONAP transaction id"
-        },
-        "transactionId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "A unique ID to track multiple requests associated with a transaction.",
-          "example": "requests id"
-        },
-        "statusMessage": {
-          "type": "string",
-          "description": "Reasoning if a requestStatus is failure.",
-          "example": "requestStatus"
-        },
-        "requestStatus": {
-          "type": "string",
-          "enum": [
-            "success",
-            "failure"
-          ],
-          "description": "The status of a request.",
-          "example": "success"
-        },
-        "solutions": {
-          "$ref": "#/definitions/Solutions"
-        }
-      }
-    },
-    "Solutions": {
-      "type": "object",
-      "required": [
-        "placementSolutions",
-        "licenseSolutions"
-      ],
-      "properties": {
-        "placementSolutions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ComprehensiveSolution"
-          },
-          "description": "A list of placement solutions."
-        },
-        "licenseSolutions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/LicenseSolution"
-          },
-          "description": "A list of license solutions."
-        }
-      }
-    },
-    "ComprehensiveSolution": {
-      "type": "object",
-      "required": [
-        "placementSolutions"
-      ],
-      "properties": {
-        "placementSolutions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PlacementSolution"
-          },
-          "description": "A list of placement solutions."
-        }
-      }
-    },
-    "PlacementSolution": {
-      "type": "object",
-      "required": [
-        "resourceModuleName",
-        "serviceResourceId",
-        "identifierType",
-        "identifier"
-      ],
-      "properties": {
-        "resourceModuleName": {
-          "type": "string",
-          "description": "The name of a resource as defined in the service model",
-          "example": "resource name"
-        },
-        "serviceResourceId": {
-          "type": "string",
-          "description": "A resource Id as defined in a service model.",
-          "example": "resource id"
-        },
-        "identifierType": {
-          "type": "string",
-          "enum": [
-            "service_instance_id"
-          ],
-          "description": "The type of a candidate.",
-          "example": "candidate type"
-        },
-        "identifier": {
-          "type": "string",
-          "description": "The id of a candidate.",
-          "example": "candidate id"
-        },
-        "assignmentInfo": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/AssignmentInfo"
-          },
-          "description": "Additional information related to a candidate."
-        }
-      }
-    },
-    "AssignmentInfo": {
-      "type": "object",
-      "required": [
-        "key",
-        "value"
-      ],
-      "properties": {
-        "key": {
-          "type": "string",
-          "description": "An attribute name",
-          "example": "attribute name"
-        },
-        "value": {
-          "type": "string",
-          "description": "An attribute value.",
-          "example": "attribute value"
-        }
-      }
-    },
-    "LicenseSolution": {
-      "type": "object",
-      "required": [
-        "resourceModuleName",
-        "serviceResourceId",
-        "entitlementPoolUUID",
-        "licenseKeyGroupUUID",
-        "entitlementPoolInvariantUUID",
-        "licenseKeyGroupInvariantUUID"
-      ],
-      "properties": {
-        "resourceModuleName": {
-          "type": "string",
-          "description": "A resource name as defined in a service",
-          "example": "resource name"
-        },
-        "serviceResourceId": {
-          "type": "string",
-          "description": "A resource Id as defined in a service.",
-          "example": "resource Id"
-        },
-        "entitlementPoolUUID": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "description": "A list of entitlementPoolUUIDs",
-          "example": "entitlementPoolUUID"
-        },
-        "licenseKeyGroupUUID": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "description": "A list of licenseKeyGroupUUID.",
-          "example": "licenseKeyGroupUUID"
-        },
-        "entitlementPoolInvariantUUID": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "description": "A list of entitlementPoolInvariantUUID",
-          "example": "entitlementPoolInvariantUUID"
-        },
-        "licenseKeyGroupInvariantUUID": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "description": "A list of licenseKeyGroupInvariantUUID",
-          "example": "licenseKeyGroupInvariantUUID"
-        }
-      }
-    },
-    "ServiceInfo": {
-      "type": "object",
-      "required": [
-        "serviceInstanceId",
-        "modelInfo",
-        "serviceName"
-      ],
-      "properties": {
-        "serviceInstanceId": {
-          "type": "string",
-          "description": "A service instance id associated with a request.",
-          "example": "service_instance_id"
-        },
-        "modelInfo": {
-          "$ref": "#/definitions/ModelMetaData"
-        },
-        "serviceName": {
-          "type": "string",
-          "description": "The name of a service",
-          "example": "service_name"
-        }
-      }
-    },
-    "PCIOptRequest": {
-      "type": "object",
-      "required": [
-        "requestInfo",
-        "cellInfo"
-      ],
-      "properties": {
-        "requestInfo": {
-          "$ref": "#/definitions/RequestInfo"
-        },
-        "cellInfo": {
-          "$ref": "#/definitions/CellInfo"
-        }
-      }
-    },
-    "CellInfo": {
-      "type": "object",
-      "required": [
-        "networkId",
-        "cellIdList",
-        "anrInputList",
-        "trigger"
-      ],
-      "properties": {
-        "networkId": {
-          "type": "string",
-          "description": "Id of network requiring PCI optimization",
-          "example": 100
-        },
-        "cellIdList": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "List of cellIds triggering need for PCI optimization (eg.potential confusion)",
-          "example": [
-            "cell0001",
-            "cell0002"
-          ]
-        },
-        "anrInputList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ANRInfo"
-          },
-          "description": "A list of ANR Input."
-        },
-        "fixedPCICells": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "List of blacklisted cells whose PCI values should not be changed",
-          "example": [
-            "cell0007",
-            "cell0009"
-          ]
-        },
-        "priorityTreatmentCells": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "List of cells which should be given special treatment during optimization",
-          "example": [
-            "cell0010",
-            "cell0003"
-          ]
-        },
-        "trigger": {
-          "type": "string",
-          "description": "Type of trigger causing need for PCI optimization",
-          "example": "NbrListChange"
-        }
-      }
-    },
-    "PCIAsynchronousResponse": {
-      "type": "object",
-      "required": [
-        "requestId",
-        "transactionId",
-        "requestStatus",
-        "solutions"
-      ],
-      "properties": {
-        "requestId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "A unique Id for an ONAP transaction",
-          "example": "ONAP transaction id"
-        },
-        "transactionId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "A unique ID to track multiple requests associated with a transaction.",
-          "example": "requests id"
-        },
-        "statusMessage": {
-          "type": "string",
-          "description": "Reasoning if a requestStatus is failure.",
-          "example": "requestStatus"
-        },
-        "requestStatus": {
-          "type": "string",
-          "enum": [
-            "success",
-            "failure"
-          ],
-          "description": "The status of a request.",
-          "example": "success"
-        },
-        "solutions": {
-          "$ref": "#/definitions/PCIANRSolutions"
-        }
-      }
-    },
-    "PCIANRSolutions": {
-      "type": "object",
-      "required": [
-        "networkId",
-        "pciSolutions",
-        "anrSolutions"
-      ],
-      "properties": {
-        "networkId": {
-          "type": "string",
-          "description": "Id of network requiring PCI optimization",
-          "example": 100
-        },
-        "pciSolutions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PCISolution"
-          },
-          "description": "A list of PCI solutions."
-        },
-        "anrSolutions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ANRInfo"
-          },
-          "description": "A list of ANR solutions."
-        }
-      }
-    },
-    "PCISolution": {
-      "type": "object",
-      "required": [
-        "cellId",
-        "pci"
-      ],
-      "properties": {
-        "cellId": {
-          "type": "string",
-          "description": "cellId with modified PCI value",
-          "example": "cell0001"
-        },
-        "pci": {
-          "type": "integer",
-          "description": "New PCI value for cellId",
-          "example": 1
-        }
-      }
-    },
-    "ANRInfo": {
-      "type": "object",
-      "required": [
-        "cellId",
-        "removeableNeighbors"
-      ],
-      "properties": {
-        "cellId": {
-          "type": "string",
-          "description": "cellId with modified PCI value",
-          "example": "cell0001"
-        },
-        "removeableNeighbors": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "List of neighbors to be removed",
-          "example": [
-            "cell0002",
-            "cell0003"
-          ]
-        }
-      }
-    },
-    "NSTSelectionRequest": {
-      "type": "object",
-      "required": [
-        "requestInfo",
-        "serviceProfile"
-      ],
-      "properties": {
-        "requestInfo": {
-          "$ref": "#/definitions/RequestInfo2"
-        },
-        "serviceProfile": {
-          "$ref": "#/definitions/ServiceProfileNst"
-        }
-      }
-    },
-    "NSISelectionRequest": {
-      "type": "object",
-      "required": [
-        "requestInfo",
-        "serviceProfile",
-        "NSTInfo"
-      ],
-      "properties": {
-        "serviceProfile": {
-          "$ref": "#/definitions/ServiceProfile"
-        },
-        "requestInfo": {
-          "$ref": "#/definitions/RequestInfo2"
-        },
-        "NSTInfo": {
-          "type": "array",
-          "description": "List of NST(s)",
-          "items": {
-            "$ref": "#/definitions/NSTInfo"
-          }
-        }
-      }
-    },
-    "NSSISelectionRequest": {
-      "type": "object",
-      "required": [
-        "requestInfo",
-        "NSSTInfo",
-        "sliceProfile"
-      ],
-      "properties": {
-        "sliceProfile": {
-          "$ref": "#/definitions/SliceProfile"
-        },
-        "requestInfo": {
-          "$ref": "#/definitions/RequestInfo2"
-        },
-        "NSSTInfo": {
-          "$ref": "#/definitions/NSSTInfo"
-        }
-      }
-    },
-    "NSTInfo": {
-      "type": "object",
-      "required": [
-        "UUID",
-        "invariantUUID"
-      ],
-      "properties": {
-        "UUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "UUID of NST"
-        },
-        "invariantUUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "Invariant UUID"
-        }
-      }
-    },
-    "NSSTInfo": {
-      "type": "object",
-      "required": [
-        "UUID",
-        "invariantUUID"
-      ],
-      "properties": {
-        "UUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "UUID of NSST"
-        },
-        "invariantUUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "Invariant UUID"
-        }
-      }
-    },
-    "ServiceProfile": {
-      "type": "string",
-      "description": "JSON blob. Containing service profile parameters. The contents are based on 3GPP TS 23.541 Release 16 contents, and will be in the form of attribute value pairs.",
-      "example": {
-        "blob": "content"
-      }
-    },
-    "ServiceProfileNst": {
-      "type": "object",
-      "required": [
-        "serviceProfileParameters"
-      ],
-      "properties": {
-        "serviceProfileParameters": {
-          "$ref": "#/definitions/ServiceProfile"
-        }
-      }
-    },
-    "SliceProfile": {
-      "type": "string",
-      "description": "JSON blob. Containing slice profile parameters. The contents are based on 3GPP TS 23.541 Release 16 contents, and will be in the form of attribute value pairs.",
-      "example": {
-        "blob": "content"
-      }
-    },
-    "RequestInfo2": {
-      "type": "object",
-      "required": [
-        "transactionId",
-        "requestId",
-        "callbackUrl",
-        "sourceId"
-      ],
-      "properties": {
-        "transactionId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "unique ID to track an ONAP transaction",
-          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "requestId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "A unique ID to track multiple requests associated with a transaction",
-          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "callbackUrl": {
-          "type": "string",
-          "format": "url",
-          "description": "The end point of a callback service where recommendations are posted.",
-          "example": "myDomain.com/myCallback"
-        },
-        "callbackHeader": {
-          "type": "string",
-          "description": "JSON blob. The header information a client expecting in a async callback.",
-          "example": {
-            "blob": "content"
-          }
-        },
-        "sourceId": {
-          "type": "string",
-          "description": "The unique ID of a client making an optimization call.",
-          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "timeout": {
-          "type": "integer",
-          "description": "A tolerance window (in second) for expecting solutions.",
-          "example": 5
-        }
-      }
-    },
-    "NSTAsynchronousResponse": {
-      "type": "object",
-      "required": [
-        "transactionId",
-        "requestId",
-        "requestStatus",
-        "solutions"
-      ],
-      "properties": {
-        "transactionId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "unique ID to track an ONAP transaction",
-          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "requestId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "A unique ID to track multiple requests associated with a transaction",
-          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "statusMessage": {
-          "type": "string",
-          "description": "Reasoning if a requestStatus is failed."
-        },
-        "requestStatus": {
-          "type": "string",
-          "enum": [
-            "completed",
-            "failed",
-            "pending"
-          ],
-          "description": "The status of a request."
-        },
-        "solutions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/NSTSolution"
-          },
-          "description": "A list of NST solutions"
-        }
-      }
-    },
-    "NSTSolution": {
-      "type": "object",
-      "required": [
-        "UUID",
-        "NSTName",
-        "invariantUUID",
-        "matchLevel"
-      ],
-      "properties": {
-        "invariantUUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "Invariant UUID of NST"
-        },
-        "UUID": {
-          "type": "string",
-          "format": "UUID of NST"
-        },
-        "NSTName": {
-          "type": "string",
-          "description": "NST name"
-        },
-        "matchLevel": {
-          "type": "string",
-          "description": "JSON blob. Containing details of match of requirements in slice profile and percentage of fit"
-        }
-      }
-    },
-    "NSIAsynchronousResponse": {
-      "type": "object",
-      "required": [
-        "transactionId",
-        "requestId",
-        "requestStatus",
-        "solutions"
-      ],
-      "properties": {
-        "transactionId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "unique ID to track an ONAP transaction",
-          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "requestId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "A unique ID to track multiple requests associated with a transaction",
-          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "statusMessage": {
-          "type": "string",
-          "description": "Reasoning if a requestStatus is failed."
-        },
-        "requestStatus": {
-          "type": "string",
-          "enum": [
-            "completed",
-            "failed",
-            "pending"
-          ],
-          "description": "The status of a request."
-        },
-        "solutions": {
-          "$ref": "#/definitions/NSISolution"
-        }
-      }
-    },
-    "NSISolution": {
-      "type": "object",
-      "properties": {
-        "sharedNSIsolutions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SharedNSISolution"
-          },
-          "description": "A list of shared NSI solutions"
-        },
-        "newNSISolutions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/NewNSISolution"
-          },
-          "description": "A list of new NSI solutions"
-        }
-      }
-    },
-    "SharedNSISolution": {
-      "type": "object",
-      "required": [
-        "invariantUUID",
-        "UUID",
-        "NSIName",
-        "NSIId",
-        "matchLevel"
-      ],
-      "properties": {
-        "invariantUUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "Invariant UUID of NST"
-        },
-        "UUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "UUID of NST"
-        },
-        "NSIName": {
-          "type": "string",
-          "description": "Name of NSI"
-        },
-        "NSIId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "Id of NSI"
-        },
-        "NSSIs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/NSSI"
-          },
-          "description": "A list of NSSIs"
-        }
-      }
-    },
-    "NSSI": {
-      "type": "object",
-      "required": [
-        "NSSIName",
-        "NSSIId",
-        "UUID",
-        "invariantUUID"
-      ],
-      "properties": {
-        "NSSIName": {
-          "type": "string",
-          "description": "Name of NSSI"
-        },
-        "NSSIId": {
-          "type": "string",
-          "description": "Id of NSSI"
-        },
-        "UUID": {
-          "type": "string",
-          "description": "UUID of NSST"
-        },
-        "invariantUUID": {
-          "type": "string",
-          "description": "invariantUUID of NSST"
-        },
-        "sliceProfile": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SliceProfile"
-          },
-          "description": "list of SliceProfiles"
-        }
-      }
-    },
-    "NewNSISolution": {
-      "type": "object",
-      "required": [
-        "NSSISolutions",
-        "matchLevel"
-      ],
-      "properties": {
-        "NSTInfo": {
-          "$ref": "#/definitions/NSTResponseInfo"
-        },
-        "NSSISolutions": {
-          "type": "array",
-          "description": "List of NSSIs which when concatenated shall form the NSI, in case NSSI is not present, only the sliceProfile will be included",
-          "items": {
-            "$ref": "#/definitions/NSSIInfo"
-          }
-        },
-        "matchLevel": {
-          "type": "string",
-          "description": "JSON blob. Containing details of match of requirements in service profile, and recommendation rank"
-        }
-      }
-    },
-    "NSTResponseInfo": {
-      "type": "object",
-      "required": [
-        "UUID",
-        "invariantUUID",
-        "NSTName"
-      ],
-      "properties": {
-        "NSTName": {
-          "type": "string",
-          "description": "NST name"
-        },
-        "UUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "UUID of NST"
-        },
-        "invariantUUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "Invariant UUID"
-        }
-      }
-    },
-    "NSSIInfo": {
-      "type": "object",
-      "required": [
-        "sliceProfile"
-      ],
-      "properties": {
-        "sliceProfile": {
-          "type": "string",
-          "description": "JSON blob. Containing details of match of requirements in slice profile and percentage of fit"
-        },
-        "NSSTInfo": {
-          "$ref": "#/definitions/NSSTResponseInfo"
-        },
-        "NSSISolution": {
-          "$ref": "#/definitions/NSSIObject"
-        }
-      }
-    },
-    "NSSTResponseInfo": {
-      "type": "object",
-      "required": [
-        "NSSTName",
-        "UUID",
-        "invariantUUID"
-      ],
-      "properties": {
-        "NSSTName": {
-          "type": "string",
-          "description": "Name of the NSST"
-        },
-        "UUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "UUID of NSST"
-        },
-        "invariantUUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "Invariant UUID"
-        }
-      }
-    },
-    "NSSIObject": {
-      "type": "object",
-      "required": [
-        "NSSIName",
-        "NSSIId",
-        "matchLevel"
-      ],
-      "properties": {
-        "NSSIName": {
-          "type": "string",
-          "description": "Name of NSSI"
-        },
-        "NSSIId": {
-          "type": "string",
-          "description": "Id of NSSI"
-        },
-        "matchLevel": {
-          "type": "string",
-          "description": "JSON blob. Containing details of match of requirements in slice profile and percentage of fit"
-        }
-      }
-    },
-    "NSSIAsynchronousResponse": {
-      "type": "object",
-      "required": [
-        "transactionId",
-        "requestId",
-        "requestStatus",
-        "solutions"
-      ],
-      "properties": {
-        "transactionId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "unique ID to track an ONAP transaction",
-          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "requestId": {
-          "type": "string",
-          "format": "uuid",
-          "description": "A unique ID to track multiple requests associated with a transaction",
-          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
-        },
-        "statusMessage": {
-          "type": "string",
-          "description": "Reasoning if a requestStatus is failed."
-        },
-        "requestStatus": {
-          "type": "string",
-          "enum": [
-            "completed",
-            "failed",
-            "pending"
-          ],
-          "description": "The status of a request."
-        },
-        "solutions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/NSSISolution"
-          },
-          "description": "A list of NSSI solutions"
-        }
-      }
-    },
-    "NSSISolution": {
-      "type": "object",
-      "required": [
-        "invariantUUID",
-        "UUID",
-        "NSSIName",
-        "NSSIId",
-        "matchLevel"
-      ],
-      "properties": {
-        "invariantUUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "Invariant UUID of NSST"
-        },
-        "UUID": {
-          "type": "string",
-          "format": "uuid",
-          "description": "UUID of NSST"
-        },
-        "NSSIName": {
-          "type": "string",
-          "description": "Name of NSSI"
-        },
-        "NSSIId": {
-          "type": "string",
-          "description": "Id of NSSI"
-        },
-        "matchLevel": {
-          "type": "string",
-          "description": "JSON blob. Containing details of match of requirements in slice profile and percentage of fit"
-        }
-      }
-    }
-  },
-  "schemes": [
-    "https"
-  ],
-  "host": "virtserver.swaggerhub.com",
-  "basePath": "/oof-osdf/v1"
+   },
+   "schemes":[
+      "https"
+   ],
+   "host":"virtserver.swaggerhub.com",
+   "basePath":"/oof-osdf/v1"
 }
