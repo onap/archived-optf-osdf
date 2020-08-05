@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffeb937b_d682ab98",
+        "filename": "docs/sections/swaggerdoc/oof-osdf-has-api.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-05T14:52:08Z",
+      "side": 1,
+      "message": "The response code should be 200, since the request is completed by the synchronous response.",
+      "range": {
+        "startLine": 395,
+        "startChar": 11,
+        "endLine": 395,
+        "endChar": 14
+      },
+      "revId": "ed58ded501970f913f6ed7060b72a9d8625e1110",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e94bfc_38e6edd0",
+        "filename": "docs/sections/swaggerdoc/oof-osdf-has-api.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1755,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-05T14:52:08Z",
+      "side": 1,
+      "message": "Are we keeping this as model driven or enumeration?",
+      "range": {
+        "startLine": 1749,
+        "startChar": 11,
+        "endLine": 1755,
+        "endChar": 12
+      },
+      "revId": "ed58ded501970f913f6ed7060b72a9d8625e1110",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
