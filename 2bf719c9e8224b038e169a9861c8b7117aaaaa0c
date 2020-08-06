@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f6fd5c6_523b8012",
+        "filename": "docs/sections/swaggerdoc/oof-osdf-has-api.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1718,
+      "author": {
+        "id": 6703
+      },
+      "writtenOn": "2020-08-06T07:25:30Z",
+      "side": 1,
+      "message": "Type indicates whether it is NSI or NSSI (since the API is common to both NSI and NSSI).",
+      "range": {
+        "startLine": 1718,
+        "startChar": 0,
+        "endLine": 1718,
+        "endChar": 38
+      },
+      "revId": "2bf719c9e8224b038e169a9861c8b7117aaaaa0c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
