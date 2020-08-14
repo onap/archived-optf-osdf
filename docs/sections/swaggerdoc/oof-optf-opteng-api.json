@@ -1,0 +1,584 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the ONAP Optimization Engine (Generic Solver) API",
+    "version": "1.0.0",
+    "title": "ONAP Optimization ENGINE API",
+    "contact": {
+      "email": "vikas.varma@att.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "securityDefinitions": {
+    "basicAuth": {
+      "type": "basic",
+      "description": "HTTP Basic Auth"
+    }
+  },
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "paths": {
+    "/optengine/v1": {
+      "post": {
+        "tags": [
+          "Generic Solver Optimization"
+        ],
+        "summary": "Call the Generic Optimization engine",
+        "operationId": "optimizationRequest",
+        "description": "call optimization engine",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "optimizationRequest",
+            "description": "optimization request",
+            "schema": {
+              "$ref": "#/definitions/OptimizationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OptimizationResponse"
+            }
+          },
+          "202": {
+            "description": "An optimization request is accepted"
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "401": {
+            "description": "Request body is not compliant with the API definition"
+          },
+          "404": {
+            "description": "The server cannot find the requested URI"
+          },
+          "405": {
+            "description": "The requested method is not supported by a server."
+          },
+          "500": {
+            "description": "The server encountered an internal server error or timed out"
+          }
+        }
+      }
+    },
+    "/optmodel/v1": {
+      "post": {
+        "tags": [
+          "Request to add the Optimizer model, metadata"
+        ],
+        "summary": "Add/Insert the optimization models in the database",
+        "operationId": "optimModelRequestAPI",
+        "description": "Request to add update the Optimizer model, metadata",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "optimModelRequest",
+            "description": "optimization model request",
+            "schema": {
+              "$ref": "#/definitions/OptimModelRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OptimModelResponse"
+            }
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "401": {
+            "description": "Request body is not compliant with the API definition"
+          },
+          "404": {
+            "description": "The server cannot find the requested URI"
+          },
+          "405": {
+            "description": "The requested method is not supported by a server."
+          },
+          "500": {
+            "description": "The server encountered an internal server error or timed out"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Request to update the Optimizer model, metadata"
+        ],
+        "summary": "Add/update the optimization models in the database",
+        "operationId": "updateModelRequestAPI",
+        "description": "Request to add update the Optimizer model, metadata",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "optimModelRequest",
+            "description": "optimization model request",
+            "schema": {
+              "$ref": "#/definitions/OptimModelRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OptimModelResponse"
+            }
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "401": {
+            "description": "Request body is not compliant with the API definition"
+          },
+          "404": {
+            "description": "The server cannot find the requested URI"
+          },
+          "405": {
+            "description": "The requested method is not supported by a server."
+          },
+          "500": {
+            "description": "The server encountered an internal server error or timed out"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Retrieve all models"
+        ],
+        "summary": "Gets all Optim Model data",
+        "description": "Retrieves all Optim Models",
+        "operationId": "getAllOptModelData",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ArrayOfOptimModelResponse"
+            }
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "401": {
+            "description": "Request body is not compliant with the API definition"
+          },
+          "404": {
+            "description": "The server cannot find the requested URI"
+          },
+          "405": {
+            "description": "The requested method is not supported by a server."
+          },
+          "500": {
+            "description": "The server encountered an internal server error or timed out"
+          }
+        }
+      }
+    },
+    "/optmodel/v1/{model_id}": {
+      "get": {
+        "tags": [
+          "Retrieve Model Data"
+        ],
+        "summary": "Gets the Optim Model data",
+        "description": "Retrieves the Optim Model data given modelId",
+        "operationId": "getOptModelById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_id",
+            "description": "Model ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OptimModelResponse"
+            }
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "401": {
+            "description": "Request body is not compliant with the API definition"
+          },
+          "404": {
+            "description": "The server cannot find the requested URI"
+          },
+          "405": {
+            "description": "The requested method is not supported by a server."
+          },
+          "500": {
+            "description": "The server encountered an internal server error or timed out"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Delete Model Data"
+        ],
+        "summary": "Delete the Optim Model data",
+        "description": "Deletes the Optim Model data given modelId",
+        "operationId": "deleteOptModelById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_id",
+            "description": "Model ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteModelResponse"
+            }
+          },
+          "400": {
+            "description": "bad request"
+          },
+          "401": {
+            "description": "Request body is not compliant with the API definition"
+          },
+          "404": {
+            "description": "The server cannot find the requested URI"
+          },
+          "405": {
+            "description": "The requested method is not supported by a server."
+          },
+          "500": {
+            "description": "The server encountered an internal server error or timed out"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "OptimizationResponse": {
+      "type": "object",
+      "required": [
+        "transactionId",
+        "requestID",
+        "requestStatus"
+      ],
+      "properties": {
+        "transactionId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique ID to track an ONAP transaction",
+          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "requestID": {
+          "type": "string",
+          "format": "uuid",
+          "description": "A unique ID to track multiple requests associated with a transaction",
+          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "requestStatus": {
+          "type": "string",
+          "description": "request status (accepted, done, completed,failed)",
+          "example": "done"
+        },
+        "statusMessage": {
+          "type": "string",
+          "description": "Status message (incomplete, complete, unsatisfiable, unknown, unbounded, unsat_or_unbounded, error)",
+          "example": "complete"
+        },
+        "solutions": {
+          "additionalProperties": {
+            "type": "object"
+          },
+          "example": {
+            "SCHEDULED": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "OPTIMIZED": 2
+          }
+        }
+      }
+    },
+    "OptimizationRequest": {
+      "type": "object",
+      "required": [
+        "requestInfo",
+        "optimInfo"
+      ],
+      "properties": {
+        "requestInfo": {
+          "$ref": "#/definitions/RequestInfo"
+        },
+        "optimInfo": {
+          "$ref": "#/definitions/OptimInfo"
+        }
+      }
+    },
+    "RequestInfo": {
+      "type": "object",
+      "required": [
+        "transactionId",
+        "requestID",
+        "sourceId"
+      ],
+      "properties": {
+        "transactionId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique ID to track an ONAP transaction",
+          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "requestID": {
+          "type": "string",
+          "format": "uuid",
+          "description": "A unique ID to track multiple requests associated with a transaction",
+          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "callbackUrl": {
+          "type": "string",
+          "format": "url",
+          "description": "The end point of a callback service where recommendations are posted.",
+          "example": "myDomain.com/myCallback"
+        },
+        "sourceId": {
+          "type": "string",
+          "description": "The unique ID of a client making an optimization call.",
+          "example": "son-handler"
+        },
+        "timeout": {
+          "type": "integer",
+          "description": "A tolerance window (in second) for expecting solutions",
+          "example": 5
+        }
+      }
+    },
+    "OptimInfo": {
+      "type": "object",
+      "properties": {
+        "modelId": {
+          "type": "string",
+          "description": "ModelId from the database, if its not populated,  assume that solverModel will be populated",
+          "example": "pci_model1"
+        },
+        "solver": {
+          "type": "string",
+          "description": "type of solver (mzn, py, etc.)",
+          "example": "mzn"
+        },
+        "solverArgs": {
+          "type": "object",
+          "description": "Arguments for solver",
+          "additionalProperties": {
+            "type": "object"
+          },
+          "example": {
+            "solver": "cbc",
+            "timeout": 5
+          }
+        },
+        "modelContent": {
+          "type": "string",
+          "description": "a large blob string containing the model (which is not that problematic since models are fairly small)."
+        },
+        "optData": {
+          "$ref": "#/definitions/DataInfo"
+        }
+      }
+    },
+    "DataInfo": {
+      "type": "object",
+      "description": "Data Payload, input data for the solver, either text or json",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Solver data as a string",
+          "example": "flour = 8000; \r\nbanana = 11;\r\n "
+        },
+        "json": {
+          "type": "object",
+          "description": "Solver data as a json",
+          "additionalProperties": {
+            "type": "object"
+          },
+          "example": {
+            "flour": 8000,
+            "banana": 11
+          }
+        }
+      }
+    },
+    "OptimModelRequest": {
+      "type": "object",
+      "required": [
+        "requestInfo",
+        "modelInfo"
+      ],
+      "properties": {
+        "requestInfo": {
+          "$ref": "#/definitions/ModelRequestInfo"
+        },
+        "modelInfo": {
+          "$ref": "#/definitions/OptimModelInfo"
+        }
+      }
+    },
+    "ModelRequestInfo": {
+      "type": "object",
+      "required": [
+        "transactionId",
+        "requestID",
+        "sourceId"
+      ],
+      "properties": {
+        "transactionId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "unique ID to track an ONAP transaction",
+          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "requestID": {
+          "type": "string",
+          "format": "uuid",
+          "description": "A unique ID to track multiple requests associated with a transaction",
+          "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "sourceId": {
+          "type": "string",
+          "description": "The unique ID of a client making an optimization call.",
+          "example": "optf-osdf"
+        }
+      }
+    },
+    "OptimModelInfo": {
+      "type": "object",
+      "required": [
+        "modelId",
+        "solver",
+        "description",
+        "modelContent"
+      ],
+      "properties": {
+        "modelId": {
+          "type": "string",
+          "description": "ModelId from the database",
+          "example": "pci_anr_model1"
+        },
+        "solver": {
+          "type": "string",
+          "description": "type of solver (mzn, py, etc.)",
+          "example": "mzn"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the model",
+          "example": "mzn model to optimize pci/anr models"
+        },
+        "modelContent": {
+          "type": "string",
+          "description": "a large blob string containing the model (which is not that problematic since models are fairly small).",
+          "example": "mzn content"
+        }
+      }
+    },
+    "ArrayOfOptimModelResponse": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/OptimModelResponse"
+      }
+    },
+    "OptimModelResponse": {
+      "type": "object",
+      "required": [
+        "modelId",
+        "solver",
+        "modelContent"
+      ],
+      "properties": {
+        "modelId": {
+          "type": "string",
+          "description": "ModelId from the database",
+          "example": "pci_anr_model1"
+        },
+        "solver": {
+          "type": "string",
+          "description": "type of solver (mzn, py, etc.)",
+          "example": "mzn"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the model",
+          "example": "mzn model to optimize pci/anr models"
+        },
+        "modelContent": {
+          "type": "string",
+          "description": "a large blob string containing the model (which is not that problematic since models are fairly small).",
+          "example": "mzn content"
+        },
+        "statusMessage": {
+          "type": "string",
+          "description": "status message.",
+          "example": "mzn content"
+        }
+      }
+    },
+    "DeleteModelResponse": {
+      "type": "object",
+      "required": [
+        "statusMessage"
+      ],
+      "properties": {
+        "statusMessage": {
+          "type": "string",
+          "description": "status message.",
+          "example": "model data for modelId pci_anr_model1 deleted"
+        }
+      }
+    }
+  },
+  "schemes": [
+    "https"
+  ],
+  "host": "virtserver.swaggerhub.com",
+  "basePath": "/api/oof/"
+}
