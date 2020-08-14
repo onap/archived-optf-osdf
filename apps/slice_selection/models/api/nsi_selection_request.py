@@ -26,29 +26,31 @@ class RequestInfo(OSDFModel):
     transactionId = StringType(required=True)
     requestId = StringType(required=True)
     callbackUrl = URLType(required=True)
-    callbackHeader = DictType(BaseType)
     sourceId = StringType(required=True)
+    callbackHeader = DictType(BaseType)
     timeout = IntType()
+    numSolutions = IntType()
+    addtnlArgs = DictType(BaseType)
 
 
-class NSTInfo(OSDFModel):
-    """Preferred candidate for a resource (sent as part of a request from client)"""
-    modelInvariantId = StringType(required=True)
-    modelVersionId = StringType(required=True)
-    modelName = StringType()
-    modelType = StringType()
-    modelVersion = StringType()
-    modelCustomizationName = StringType()
+class NxTInfo(OSDFModel):
+    """Information about NST/NSST model"""
+    invariantUUID = StringType(required=True)
+    UUID = StringType(required=True)
+    name = StringType(required=True)
 
 
-class ServiceInfo(OSDFModel):
-    serviceInstanceId = StringType(required=True)
-    serviceName = StringType(required=True)
+class SubnetCapability(OSDFModel):
+    """Subnet capability of every subnet"""
+    domainType = StringType(required=True)
+    capabilityDetails = DictType(BaseType, required=True)
 
 
 class NSISelectionAPI(OSDFModel):
     """Request for nsi selection (specific to optimization and additional metadata"""
     requestInfo = ModelType(RequestInfo, required=True)
-    NSTInfoList = ListType(ModelType(NSTInfo), required=True)
-    serviceInfo = ModelType(ServiceInfo, required=True)
+    NSTInfo = ModelType(NxTInfo, required=True)
+    NSSTInfo = ListType(ModelType(NxTInfo), required=True)
     serviceProfile = DictType(BaseType, required=True)
+    subnetCapabilities = ListType(ModelType(SubnetCapability), required=True)
+    preferReuse = BooleanType()

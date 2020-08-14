@@ -17,66 +17,38 @@
 #
 
 from osdf.models.api.common import OSDFModel
-from schematics.types import BaseType, StringType
+from schematics.types import BaseType, StringType, BooleanType
 from schematics.types.compound import ModelType, ListType, DictType
 
 
 # TODO: update osdf.models
-class NSSI(OSDFModel):
-    NSSIId = StringType(required=True)
-    NSSIName = StringType(required=True)
-    UUID = StringType(required=True)
-    invariantUUID = StringType(required=True)
-    sliceProfile = ListType(DictType(BaseType))
-
-
 class SharedNSISolution(OSDFModel):
+    """Represents the shared NSI Solution object"""
     invariantUUID = StringType(required=True)
     UUID = StringType(required=True)
     NSIName = StringType(required=True)
     NSIId = StringType(required=True)
     matchLevel = StringType(required=True)
-    NSSIs = ListType(ModelType(NSSI))
-
-
-class NSSTInfo(OSDFModel):
-    invariantUUID = StringType(required=True)
-    UUID = StringType(required=True)
-    NSSTName = StringType(required=True)
-
-
-class NSSIInfo(OSDFModel):
-    NSSIName = StringType(required=True)
-    NSSIId = StringType(required=True)
-    matchLevel = StringType(required=True)
-
-
-class NSSISolution(OSDFModel):
-    sliceProfile = DictType(BaseType)
-    NSSTInfo = ModelType(NSSTInfo, required=True)
-    NSSISolution = ModelType(NSSIInfo, required=True)
-
-
-class NSTInfo(OSDFModel):
-    invariantUUID = StringType(required=True)
-    UUID = StringType(required=True)
-    NSTName = StringType(required=True)
 
 
 class NewNSISolution(OSDFModel):
+    """Represents the New NSI Solution object containing tuple of slice profiles"""
+    sliceProfiles = ListType(DictType(BaseType), required=True)
     matchLevel = StringType(required=True)
-    NSTInfo = ModelType(NSTInfo, required=True)
-    NSSISolutions = ListType(ModelType(NSSISolution))
 
 
-class Solution(OSDFModel):
-    sharedNSISolutions = ListType(ModelType(SharedNSISolution))
-    newNSISolutions = ListType(ModelType(NewNSISolution))
+class NSISolution(OSDFModel):
+    """Represents the NSI Solution object"""
+    """This solution object contains either sharedNSISolution or newNSISolution"""
+    existingNSI = BooleanType(required=True)
+    sharedNSISolution = ModelType(SharedNSISolution)
+    newNSISolution = ModelType(NewNSISolution)
 
 
 class NSISelectionResponse(OSDFModel):
+    """Response sent to NSMF(SO)"""
     transactionId = StringType(required=True)
     requestId = StringType(required=True)
     requestStatus = StringType(required=True)
+    solutions = ListType(ModelType(NSISolution), required=True)
     statusMessage = StringType()
-    solutions = ModelType(Solution, required=True)
