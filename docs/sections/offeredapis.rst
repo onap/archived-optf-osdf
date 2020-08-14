@@ -11,8 +11,20 @@ This document describes the OSDF HAS (Homing and Allocation Service) API
 To view API documentation in the interactive swagger UI download the following and
 paste into the swagger tool here: https://editor.swagger.io
 
-:download:`oof-osdf-has-api.json <./swaggerdoc/oof-osdf-has-api.json>`
+.. csv-table::
+   :header: "API name", "Swagger JSON"
+   :widths: 10,5
 
+   "OOF OSDF HAS API", ":download:`link <./swaggerdoc/oof-osdf-has-api.json>`"
+   "OOF OPTENG API", ":download:`link <./swaggerdoc/oof-optf-opteng-api.json>`"
+
+OOF OSDF HAS API
+................
 .. swaggerv2doc:: ./swaggerdoc/oof-osdf-has-api.json
+
+
+OOF OPTENG API
+..............
+.. swaggerv2doc:: ./swaggerdoc/oof-optf-opteng-api.json
 
 
