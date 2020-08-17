@@ -23,6 +23,7 @@ from schematics.exceptions import DataError
 from apps.placement.models.api.placementRequest import PlacementAPI
 from apps.placement.models.api.placementResponse import PlacementResponse
 from apps.slice_selection.models.api.nsi_selection_request import NSISelectionAPI
+from apps.slice_selection.models.api.nssi_selection_request import NSSISelectionAPI
 
 
 class TestReqValidation(unittest.TestCase):
@@ -46,6 +47,16 @@ class TestReqValidation(unittest.TestCase):
         req_file = "./test/apps/slice_selection/nsi_selection_invalid_request.json"
         req_json = json.loads(open(req_file).read())
         self.assertRaises(DataError, lambda: NSISelectionAPI(req_json).validate())
+
+    def test_req_nssi_validation(self):
+        req_file = "./test/apps/slice_selection/nssi_selection_request.json"
+        req_json = json.loads(open(req_file).read())
+        self.assertEqual(NSSISelectionAPI(req_json).validate(), None)
+
+    def test_req_invalid_nssi(self):
+        req_file = "./test/apps/slice_selection/nssi_selection_invalid_request.json"
+        req_json = json.loads(open(req_file).read())
+        self.assertRaises(DataError, lambda: NSSISelectionAPI(req_json).validate())
 
     def test_req_failure(self):
         req_json = {}

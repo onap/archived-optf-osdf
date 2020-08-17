@@ -154,5 +154,20 @@ def do_nsi_selection():
                       request_status="accepted", status_message="")
 
 
+@app.route("/api/oof/selection/nssi/v1", methods=["POST"])
+def do_nssi_selection():
+    request_json = request.get_json()
+    req_id = request_json['requestInfo']['requestId']
+    g.request_id = req_id
+    audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
+    NSSISelectionAPI(request_json).validate()
+    audit_log.info(MH.new_worker_thread(req_id, "[for NSSI selection]"))
+    t = Thread(target=process_nsi_selection_opt, args=(request_json, osdf_config))
+    t.start()
+    return req_accept(request_id=req_id,
+                      transaction_id=request_json['requestInfo']['transactionId'],
+                      request_status="accepted", status_message="")
+
+
 if __name__ == "__main__":
     run_app()
