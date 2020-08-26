@@ -44,6 +44,8 @@ from osdf.logging.osdf_logging import MH, audit_log
 from osdf.operation.responses import osdf_response_for_request_accept as req_accept
 from osdf.utils import api_data_utils
 from osdf.webapp.appcontroller import auth_basic
+from apps.nxi_termination.optimizers.remote_opt_processor import process_nxi_termination_opt
+from apps.nxi_termination.models.api.nxi_termination_request import  NxiTerminationApi
 
 
 @app.route("/api/oof/v1/healthcheck", methods=["GET"])
@@ -105,6 +107,7 @@ def do_route_calc():
     response = RouteOpt().get_route(request_json, osdf_config)
     return response
 
+
 @app.route("/api/oof/mdons/route/v1", methods=["POST"])
 def do_mdons_route_calc():
     """
@@ -114,6 +117,7 @@ def do_mdons_route_calc():
     audit_log.info("Inter Domain Calculation  Route request received!")
     response = InterDomainRouteOpt().get_route(request_json, osdf_config)
     return response
+
 
 @app.route("/api/oof/v1/selection/nst", methods=["POST"])
 def do_nst_selection():
@@ -179,6 +183,14 @@ def do_nssi_selection():
                       transaction_id=request_json['requestInfo']['transactionId'],
                       request_status="accepted", status_message="")
 
+@app.route("/api/oof/terminate/nxi/v1",methods=["POST"])
+def do_nxi_terminaton():
+    request_json = request.get_json()
+    req_id = request_json['requestInfo']['requestId']
+    g.request_id = req_id
+    audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
+    NxiTerminationApi(request_json).validate()
+    return process_nxi_termination_opt(request_json,osdf_config)
 
 if __name__ == "__main__":
     run_app()
