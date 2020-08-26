@@ -53,6 +53,7 @@ configDbGetNbrListUrl: 'SDNCConfigDBAPI/getNbrList'
 #aai api
 aaiUrl: "https://aai.url:30233"
 aaiGetLinksUrl: "/aai/v16/network/logical-links"
+aaiServiceInstanceUrl : "/aai/v20/nodes/service-instances/service-instance/"
 aaiGetControllersUrl: /aai/v19/external-system/esr-thirdparty-sdnc-list
 controllerQueryUrl: /aai/v19/query?format=resource
 aaiGetInterDomainLinksUrl: /aai/v19/network/logical-links?link-type=inter-domain&operational-status=up

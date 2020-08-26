@@ -1,0 +1,45 @@
+# -------------------------------------------------------------------------
+#   Copyright (C) 2020 Wipro Limited.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+# -------------------------------------------------------------------------
+#
+
+def get_nxi_termination_response(request_info, response):
+
+    """Get NXI termination response from final solution
+
+       :param request_info: request info
+       :param response: response to be send
+       :return: NxI Termination response to send back as dictionary
+    """
+    return {'requestId': request_info['requestId'],
+            'transactionId': request_info['transactionId'],
+            'requestStatus': response["requestStatus"],
+            'terminateResponse': response["terminateResponse"],
+            'reason': response['reason']}
+
+
+def get_nxi_termination_failure_response(request_info, response):
+
+    """Get NXI termination response from final solution
+
+       :param request_info: request info
+       :param response: response to be send
+       :return: NxI Termination response to send back as dictionary
+    """
+    return {'requestId': request_info['requestId'],
+            'transactionId': request_info['transactionId'],
+            'requestStatus': response["requestStatus"],
+            'reason': response['reason']}

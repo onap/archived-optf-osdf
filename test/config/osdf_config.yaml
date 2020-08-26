@@ -67,3 +67,6 @@ pciHMSPassword: ""   # pcihandler password for call back.
 # Credentials for the OOF PCI Opt service
 osdfPCIOptUsername: PCI-OSDF-USER
 osdfPCIOptPassword: PCI-OSDF-PASSWD
+
+aaiUrl: "https://aai.url:30233"
+aaiServiceInstanceUrl : "/aai/v20/nodes/service-instances/service-instance/"

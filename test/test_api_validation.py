@@ -24,6 +24,7 @@ from apps.placement.models.api.placementRequest import PlacementAPI
 from apps.placement.models.api.placementResponse import PlacementResponse
 from apps.slice_selection.models.api.nsi_selection_request import NSISelectionAPI
 from apps.slice_selection.models.api.nssi_selection_request import NSSISelectionAPI
+from apps.nxi_termination.models.api.nxi_termination_request import NxiTerminationApi
 
 
 class TestReqValidation(unittest.TestCase):
@@ -61,6 +62,16 @@ class TestReqValidation(unittest.TestCase):
     def test_req_failure(self):
         req_json = {}
         self.assertRaises(DataError, lambda: PlacementAPI(req_json).validate())
+
+    def test_req_nxi_validation(self):
+        req_file = "./test/apps/nxi_termination/nxi_termination.json"
+        req_json = json.loads(open(req_file).read())
+        self.assertEqual(NxiTerminationApi(req_json).validate(), None)
+
+    def test_req_invalid_nxi(self):
+        req_file = "./test/apps/nxi_termination/invalid_request.json"
+        req_json = json.loads(open(req_file).read())
+        self.assertRaises(DataError, lambda: NxiTerminationApi(req_json).validate())
 
 
 class TestResponseValidation(unittest.TestCase):
