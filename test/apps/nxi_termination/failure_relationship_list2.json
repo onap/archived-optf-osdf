@@ -1,0 +1,52 @@
+[
+            {
+                "related-to": "service-instance",
+                "relationship-label": "org.onap.relationships.inventory.ComposedOf",
+                "related-link": "/aai/v16/business/customers/customer/5GCustomer/service-subscriptions/service-subscription/5G/service-instances/service-instance/4115d3c8-dd59-45d6-b09d-e756dee9b518",
+                "relationship-data": [
+                    {
+                        "relationship-key": "customer.global-customer-id",
+                        "relationship-value": "5GCustomer"
+                    },
+                    {
+                        "relationship-key": "service-subscription.service-type",
+                        "relationship-value": "5G"
+                    },
+                    {
+                        "relationship-key": "service-instance.service-instance-id",
+                        "relationship-value": "4115d3c8-dd59-45d6-b09d-e756dee9b567"
+                    }
+                ],
+                "related-to-property": [
+                    {
+                        "property-key": "service-instance.service-instance-name",
+                        "property-value": "nsi_test_0211"
+                    }
+                ]
+            },
+   {
+                "related-to": "service-instance",
+                "relationship-label": "org.onap.relationships.inventory.ComposedOf",
+                "related-link": "/aai/v16/business/customers/customer/5GCustomer/service-subscriptions/service-subscription/5G/service-instances/service-instance/4115d3c8-dd59-45d6-b09d-e756dee9b518",
+                "relationship-data": [
+                    {
+                        "relationship-key": "customer.global-customer-id",
+                        "relationship-value": "5GCustomer"
+                    },
+                    {
+                        "relationship-key": "service-subscription.service-type",
+                        "relationship-value": "5G"
+                    },
+                    {
+                        "relationship-key": "service-instance.service-instance-id",
+                        "relationship-value": "4115d3c8-dd59-45d6-b09d-e756dee9b567"
+                    }
+                ],
+                "related-to-property": [
+                    {
+                        "property-key": "service-instance.service-instance-name",
+                        "property-value": "nsi_test_0211"
+                    }
+                ]
+            }
+        ]
