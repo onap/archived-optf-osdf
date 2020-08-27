@@ -134,7 +134,7 @@ def do_pci_optimization():
     req_id = request_json['requestInfo']['requestId']
     audit_log.info('requestID obtained==>')
     audit_log.info(req_id)
-    
+
     g.request_id = req_id
     audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
     PCIOptimizationAPI(request_json).validate()
@@ -157,7 +157,12 @@ def do_nsi_selection():
     g.request_id = req_id
     audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
     NSISelectionAPI(request_json).validate()
-    return process_nsi_selection_opt(request_json, osdf_config)
+    audit_log.info(MH.new_worker_thread(req_id, "[for NSI selection]"))
+    t = Thread(target=process_nsi_selection_opt, args=(request_json, osdf_config))
+    t.start()
+    return req_accept(request_id=req_id,
+                      transaction_id=request_json['requestInfo']['transactionId'],
+                      request_status="accepted", status_message="")
 
 
 if __name__ == "__main__":
