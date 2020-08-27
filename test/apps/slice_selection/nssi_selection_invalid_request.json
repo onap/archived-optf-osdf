@@ -1,0 +1,23 @@
+{
+  "sliceProfile": {
+    "blob": "content"
+  },
+  "requestInfo": {
+    "transactionId": "t670f1ee-6c54-4b01-90e6-d701748f0851",
+    "requestId": "r450f1ee-6c54-4b01-90e6-d701748f0851",
+    "callbackUrl": "http://0.0.0.0:9000/osdfCallback/",
+    "callbackHeader": {
+      "blob": "content"
+    },
+    "sourceId": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "timeout": 5,
+    "numSolutions": 1,
+    "addtnlArgs": {
+      "blob": "content"
+    }
+  },
+  "NSSTInfo": {
+    "UUID": "y7785f64-5717-4562-b3fc-2c963f66afa6",
+    "name": "embb-cn"
+  }
+}
