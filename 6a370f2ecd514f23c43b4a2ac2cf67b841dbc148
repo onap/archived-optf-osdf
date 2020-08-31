@@ -1,0 +1,232 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e721535_32b68a33",
+        "filename": ".project",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-31T07:05:46Z",
+      "side": 1,
+      "message": "Remove all the IDE related files",
+      "revId": "6a370f2ecd514f23c43b4a2ac2cf67b841dbc148",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d46bea_e341302e",
+        "filename": ".pydevproject",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-31T07:05:46Z",
+      "side": 1,
+      "message": "Remove all the IDE related files",
+      "revId": "6a370f2ecd514f23c43b4a2ac2cf67b841dbc148",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a57cc3_5e43306a",
+        "filename": "apps/nxi_termination/models/api/nxi_termination_request.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-31T07:05:46Z",
+      "side": 1,
+      "message": "Add license to the file",
+      "revId": "6a370f2ecd514f23c43b4a2ac2cf67b841dbc148",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91548849_e37e0107",
+        "filename": "apps/nxi_termination/models/api/nxi_termination_request.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-31T07:05:46Z",
+      "side": 1,
+      "message": "There are only two possible values. You can put it in the \u0027choices\u0027 argument.",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "6a370f2ecd514f23c43b4a2ac2cf67b841dbc148",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ea4206_b410f19d",
+        "filename": "apps/nxi_termination/optimizers/remote_opt_processor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-31T07:05:46Z",
+      "side": 1,
+      "message": "Add license to the file",
+      "revId": "6a370f2ecd514f23c43b4a2ac2cf67b841dbc148",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bad0684_58ec34cc",
+        "filename": "apps/nxi_termination/optimizers/remote_opt_processor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-31T07:05:46Z",
+      "side": 1,
+      "message": "Return failure response. Not exception",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 16
+      },
+      "revId": "6a370f2ecd514f23c43b4a2ac2cf67b841dbc148",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874976dc_feb1af4d",
+        "filename": "apps/nxi_termination/optimizers/remote_opt_processor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-31T07:05:46Z",
+      "side": 1,
+      "message": "Return failure response. Not exception message.",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 65
+      },
+      "revId": "6a370f2ecd514f23c43b4a2ac2cf67b841dbc148",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d7ccae_161335df",
+        "filename": "apps/nxi_termination/optimizers/response_processor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-31T07:05:46Z",
+      "side": 1,
+      "message": "Add license to the file",
+      "revId": "6a370f2ecd514f23c43b4a2ac2cf67b841dbc148",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba02604_8a15ee30",
+        "filename": "osdf/adapters/aai/fetch_aai_data.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-31T07:05:46Z",
+      "side": 1,
+      "message": "Add license to the file",
+      "revId": "6a370f2ecd514f23c43b4a2ac2cf67b841dbc148",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1352286a_2c1ccfdd",
+        "filename": "osdfapp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-31T07:05:46Z",
+      "side": 1,
+      "message": "Add Copyright info",
+      "revId": "6a370f2ecd514f23c43b4a2ac2cf67b841dbc148",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d90c5e9_ec259245",
+        "filename": "test/apps/nxi_termination/test_remote_opt_processor_termination.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-31T07:05:46Z",
+      "side": 1,
+      "message": "Add license to the file.\n\nHandle AAI exceptions too",
+      "revId": "6a370f2ecd514f23c43b4a2ac2cf67b841dbc148",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f26c3e_63931fb3",
+        "filename": "test/apps/nxi_termination/test_remote_opt_processor_termination.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-08-31T07:05:46Z",
+      "side": 1,
+      "message": "Do not comment the code. Remove if not required.",
+      "range": {
+        "startLine": 106,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 33
+      },
+      "revId": "6a370f2ecd514f23c43b4a2ac2cf67b841dbc148",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
