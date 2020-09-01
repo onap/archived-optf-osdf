@@ -7,6 +7,27 @@ linkcheck_ignore = [
     'http://localhost',
 ]
 
+extensions = [
+   'sphinxcontrib.redoc',
+]
+
+redoc = [
+		    {
+		        'name': 'OSDF API',
+		        'page': './osdf-api',
+		        'spec': './api/swagger/oof-osdf-has-api.json',
+		        'embed': True,
+		    },
+		    {
+		        'name': 'OPTENG API',
+		        'page': './opteng-api',
+		        'spec': './api/swagger/oof-osdf-has-api.json',
+		        'embed': True,
+		    }
+        ]
+
+redoc_uri = 'https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js'
+
 intersphinx_mapping = {}
 
 html_last_updated_fmt = '%d-%b-%y %H:%M'

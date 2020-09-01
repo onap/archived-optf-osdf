@@ -1676,7 +1676,7 @@
         },
         "preferReuse": {
           "type": "boolean",
-	  "description": "true if reusing an existing NSI is preferred/false if creating a new NSI is preferred "
+      "description": "true if reusing an existing NSI is preferred/false if creating a new NSI is preferred "
         },
         "subnetCapabilities": {
           "type": "array",
@@ -1716,9 +1716,9 @@
       "properties": {
         "type": {
           "type": "string",
-	  "enum": [
-	     "NSI", 
-	     "NSSI"	  
+      "enum": [
+         "NSI", 
+         "NSSI"      
            ],
           "description": "indicates if the request is for NSI/NSSI termination"
         },
@@ -2004,7 +2004,7 @@
       "properties": {
         "existingNSI": {
           "type": "boolean",
-	  "description": "true if NSISolution object has shareNSISolution/false if NSISolution object has newNSISolution"
+      "description": "true if NSISolution object has shareNSISolution/false if NSISolution object has newNSISolution"
         },
         "sharedNSISolution": {
           "$ref": "#/definitions/SharedNSISolution"
