@@ -14,7 +14,7 @@
          ],
          "recommendations":[
             {
-               "embb-nst": {
+               "embb-cn": {
                   "inventory_provider": "aai",
                   "candidate": {
                      "exp_data_rate": 0,
@@ -32,18 +32,18 @@
                      "exp_data_rate_ul": 100,
                      "max_number_of_ues": 0,
                      "ue_mobility_level": "stationary",
-                     "candidate_type": "nsi",
+                     "candidate_type": "nssi",
                      "traffic_density": 0,
                      "payload_size": 0,
                      "exp_data_rate_dl": 100,
                      "jitter": 0,
                      "survival_time": 0,
                      "resource_sharing_level": "shared",
-                     "inventory_type": "nsi",
+                     "inventory_type": "nssi",
                      "reliability": null,
                      "cost": 1.0,
-                     "instance_id": "f1041cdc-12da-4f36-b84e-68c380e9cd47",
-                     "instance_name": "nsi_test_0211"
+                     "instance_id": "e1041cdc-12da-4f36-b84e-68c380e9cd47",
+                     "instance_name": "nssi_test_0211"
                   }
                }
             }

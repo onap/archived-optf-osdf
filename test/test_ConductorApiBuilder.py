@@ -43,6 +43,10 @@ class TestConductorApiBuilder(unittest.TestCase):
         parameter_data_file = self.main_dir + "test/placement-tests/request_placement_vfmod.json"
         self.request_placement_vfmod_json = json_from_file(parameter_data_file)
         self.policies = [json_from_file(policy_data_path + '/' + name) for name in valid_policies_files]
+        self.template_fields = {
+            'location_enabled': True,
+            'version': '2017-10-10'
+        }
 
     def test_conductor_api_call_builder(self):
         main_dir = self.main_dir
@@ -53,8 +57,8 @@ class TestConductorApiBuilder(unittest.TestCase):
         demands = request_json['placementInfo']['placementDemands']
         request_parameters = request_json['placementInfo']['requestParameters']
         service_info = request_json['serviceInfo']
-        templ_string = conductor_api_builder(req_info, demands, request_parameters, service_info, True, policies,
-                                             local_config, self.conductor_api_template)
+        templ_string = conductor_api_builder(req_info, demands, request_parameters, service_info, self.template_fields,
+                                             policies, local_config, self.conductor_api_template)
         templ_json = json.loads(templ_string)
         self.assertEqual(templ_json["name"], "yyy-yyy-yyyy")
 
@@ -66,8 +70,8 @@ class TestConductorApiBuilder(unittest.TestCase):
         demands = request_json['placementInfo']['placementDemands']
         request_parameters = request_json['placementInfo']['requestParameters']
         service_info = request_json['serviceInfo']
-        templ_string = conductor_api_builder(req_info, demands, request_parameters, service_info, True, policies,
-                                             local_config, self.conductor_api_template)
+        templ_string = conductor_api_builder(req_info, demands, request_parameters, service_info, self.template_fields,
+                                             policies, local_config, self.conductor_api_template)
         templ_json = json.loads(templ_string)
         self.assertEqual(templ_json, self.request_placement_vfmod_json)
 

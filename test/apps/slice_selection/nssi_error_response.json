@@ -1,0 +1,6 @@
+{
+   "requestId":"r450f1ee-6c54-4b01-90e6-d701748f0851",
+   "transactionId":"t670f1ee-6c54-4b01-90e6-d701748f0851",
+   "requestStatus":"error",
+   "statusMessage":"Slice selection for non-shared slice is not supported"
+}

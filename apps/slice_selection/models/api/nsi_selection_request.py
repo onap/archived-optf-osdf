@@ -17,8 +17,14 @@
 #
 
 from osdf.models.api.common import OSDFModel
-from schematics.types import BaseType, StringType, URLType, IntType, BooleanType
-from schematics.types.compound import ModelType, ListType, DictType
+from schematics.types import BaseType
+from schematics.types import BooleanType
+from schematics.types.compound import DictType
+from schematics.types.compound import ListType
+from schematics.types.compound import ModelType
+from schematics.types import IntType
+from schematics.types import StringType
+from schematics.types import URLType
 
 
 class RequestInfo(OSDFModel):
@@ -50,7 +56,7 @@ class NSISelectionAPI(OSDFModel):
     """Request for nsi selection (specific to optimization and additional metadata"""
     requestInfo = ModelType(RequestInfo, required=True)
     NSTInfo = ModelType(NxTInfo, required=True)
-    NSSTInfo = ListType(ModelType(NxTInfo), required=True)
+    NSSTInfo = ListType(ModelType(NxTInfo), required=False)
     serviceProfile = DictType(BaseType, required=True)
     subnetCapabilities = ListType(ModelType(SubnetCapability), required=True)
     preferReuse = BooleanType()
