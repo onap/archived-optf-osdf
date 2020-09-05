@@ -16,7 +16,6 @@
 # -------------------------------------------------------------------------
 #
 import copy
-import json
 
 from collections import defaultdict
 import itertools
@@ -38,7 +37,7 @@ def group_policies_gen(flat_policies, config):
     aggregated_policies = dict()
     for plc in policies:
         attrs = [dot_notation(plc[list(plc.keys())[0]], dot_path) for key in priority.keys() for dot_path in priority[key]]
-        attrs_list  = [x if isinstance(x, list) else [x] for x in attrs]
+        attrs_list = [x if isinstance(x, list) else [x] for x in attrs]
         attributes = [list_flatten(x) if isinstance(x, list) else x for x in attrs_list]
         for y in itertools.product(*attributes):
             aggregated_policies.setdefault(y, [])

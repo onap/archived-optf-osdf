@@ -36,7 +36,9 @@ from apps.placement.optimizers.conductor.remote_opt_processor import process_pla
 from apps.route.optimizers.inter_domain_route_opt import InterDomainRouteOpt
 from apps.route.optimizers.simple_route_opt import RouteOpt
 from apps.slice_selection.models.api.nsi_selection_request import NSISelectionAPI
+from apps.slice_selection.models.api.nssi_selection_request import NSSISelectionAPI
 from apps.slice_selection.optimizers.conductor.remote_opt_processor import process_nsi_selection_opt
+from apps.slice_selection.optimizers.conductor.remote_opt_processor import process_nssi_selection_opt
 from osdf.adapters.policy.interface import get_policies
 from osdf.adapters.policy.interface import upload_policy_models
 from osdf.config.base import osdf_config
@@ -173,7 +175,7 @@ def do_nssi_selection():
     audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
     NSSISelectionAPI(request_json).validate()
     audit_log.info(MH.new_worker_thread(req_id, "[for NSSI selection]"))
-    t = Thread(target=process_nsi_selection_opt, args=(request_json, osdf_config))
+    t = Thread(target=process_nssi_selection_opt, args=(request_json, osdf_config))
     t.start()
     return req_accept(request_id=req_id,
                       transaction_id=request_json['requestInfo']['transactionId'],

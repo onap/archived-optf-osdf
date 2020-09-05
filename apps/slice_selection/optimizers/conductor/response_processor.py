@@ -41,7 +41,7 @@ def conductor_response_processor(overall_recommendations, nst_info_map, request_
     shared_nsi_solutions = list()
     new_nsi_solutions = list()
     for nst_name, recommendations in overall_recommendations.items():
-        if  not (recommendations):
+        if not (recommendations):
             new_nsi_solution = solution_with_only_slice_profile(service_profile, nst_info_map.get(nst_name))
             new_nsi_solutions.append(new_nsi_solution)
             continue
