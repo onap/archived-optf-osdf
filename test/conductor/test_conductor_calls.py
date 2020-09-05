@@ -35,6 +35,10 @@ class TestConductorCalls(unittest.TestCase):
         self.osdf_config = DotDict(config_loader.all_configs(**self.config_spec))
         self.lp = self.osdf_config.core.get('osdf_temp', {}).get('local_policies', {}
                                                                  ).get('placement_policy_files_vcpe')
+        self.template_fields = {
+            'location_enabled': True,
+            'version': '2017-10-10'
+        }
 
     def tearDown(self):
         pass
@@ -46,7 +50,8 @@ class TestConductorCalls(unittest.TestCase):
         demands = req_json['placementInfo']['placementDemands']
         request_parameters = req_json['placementInfo']['requestParameters']
         service_info = req_json['serviceInfo']
-        conductor.request(req_info, demands, request_parameters, service_info, True, self.osdf_config, policies)
+        conductor.request(req_info, demands, request_parameters, service_info, self.template_fields,
+                          self.osdf_config, policies)
 
     def test_request_vfmod(self):
         req_json = json_from_file("./test/placement-tests/request_vfmod.json")
@@ -55,7 +60,8 @@ class TestConductorCalls(unittest.TestCase):
         demands = req_json['placementInfo']['placementDemands']
         request_parameters = req_json['placementInfo']['requestParameters']
         service_info = req_json['serviceInfo']
-        conductor.request(req_info, demands, request_parameters, service_info, True, self.osdf_config, policies)
+        conductor.request(req_info, demands, request_parameters, service_info, self.template_fields,
+                          self.osdf_config, policies)
 
 
 if __name__ == "__main__":

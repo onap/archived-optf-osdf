@@ -40,13 +40,11 @@ osdf_temp:  # special configuration required for "workarounds" or testing
             - vnfPolicy_vPGN_TD.json
             - Affinity_vFW_TD.json
             - QueryPolicy_vFW_TD.json
-        slice_selection_policy_dir_urllc_1: "./test/policy-local-files/"
-        slice_selection_policy_files_urllc_1:
-            - vnfPolicy_URLLC_Core_1.json
-            - subscriber_policy_URLLC_1.json
-            - thresholdPolicy_URLLC_Core_1.json
-            - aggregationPolicy_URLLC_1.json
-            - queryPolicy_URLLC_.json
+        slice_selection_policy_dir_embb-nst: "./test/policy-local-files/slice-selection-files/"
+        slice_selection_policy_files_embb-nst:
+            - query_policy_nsi.json
+            - threshold_policy_nsi.json
+            - vnf_policy_nsi_shared_case.json
 
 service_info:
     vCPE:
@@ -66,6 +64,12 @@ references:
     subscriber_role:
         source: onap.policies.optimization.SubscriberPolicy
         value: properties.properties.subscriberRole
+    resource_sharing_level:
+        source: request
+        value: serviceProfile.resourceSharingLevel
+    reuse_preference:
+        source: request
+        value: preferReuse
 
 policy_info:
     prioritization_attributes:
@@ -82,9 +86,19 @@ policy_info:
         policy_scope:
             -
                 scope:
-                  - OSDF_FRANKFURT
+                  - OSDF_GUILIN
+                  - get_param: resource_sharing_level
+                  - get_param: reuse_preference
                 services:
                     - get_param: service_name
+
+    subnet_selection:
+        policy_fetch: by_scope
+        policy_scope:
+            - scope:
+                  - OSDF_GUILIN
+              services:
+                  - get_param: service_name
 
     placement:
         policy_fetch: by_scope

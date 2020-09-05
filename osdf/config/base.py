@@ -1,5 +1,6 @@
 # -------------------------------------------------------------------------
 #   Copyright (c) 2015-2017 AT&T Intellectual Property
+#   Copyright (C) 2020 Wipro Limited.
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -26,6 +27,10 @@ config_spec = {
     "deployment": os.environ.get("OSDF_CONFIG_FILE", "config/osdf_config.yaml"),
     "core": "config/common_config.yaml"
 }
+
+slicing_spec = "config/slicing_config.yaml"
+
+slice_config = config_loader.load_config_file(slicing_spec)
 
 osdf_config = DotDict(config_loader.all_configs(**config_spec))
 
