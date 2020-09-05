@@ -73,6 +73,7 @@ def conductor_api_builder(req_info, demands, request_parameters, service_info,
     demand_list = tr.gen_demands(demands, gp['onap.policies.optimization.resource.VnfPolicy'])
     attribute_policy_list = tr.gen_attribute_policy(
         demand_name_list, gp['onap.policies.optimization.resource.AttributePolicy'])
+
     distance_to_location_policy_list = tr.gen_distance_to_location_policy(
         demand_name_list, gp['onap.policies.optimization.resource.DistancePolicy'])
     inventory_policy_list = tr.gen_inventory_group_policy(

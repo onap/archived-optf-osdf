@@ -1,4 +1,3 @@
-subscriber_policy_URLLC_1.json
-thresholdPolicy_URLLC_Core_1.json
-vnfPolicy_URLLC_Core_1.json
-aggregationPolicy_URLLC_1.json
+query_policy_nsi.json
+threshold_policy_nsi.json
+vnf_policy_nsi_shared_case.json
