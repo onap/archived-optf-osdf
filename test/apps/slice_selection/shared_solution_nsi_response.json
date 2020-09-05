@@ -1,54 +1,17 @@
 {
     "requestId": "d290f1ee-6c54-4b01-90e6-d701748f0851",
     "requestStatus": "completed",
-    "solutions": {
-        "newNSISolutions": [],
-        "sharedNSISolutions": [
-            {
-                "NSIId": "7ecdfb7a-bc38-4abd-9cb3-6677d71e892f",
-                "NSIName": "nsi_test_0212",
-                "NSSIs": [
-                    {
-                        "NSSIId": "1a636c4d-5e76-427e-bfd6-241a947224b0",
-                        "NSSIName": "nssi_test_0211",
-                        "UUID": "",
-                        "invariantUUID": "",
-                        "sliceProfile": [
-                            {
-                                "coverageAreaTAList": "[{\"province\":\"??\",\"city\":\"???\",\"county\":\"???\",\"street\":\"?????\"}]",
-                                "expDataRateDL": 100,
-                                "expDataRateUL": 100,
-                                "latency": 20,
-                                "resourceSharingLevel": "0",
-                                "uEMobilityLevel": "stationary",
-                                "domainType" : "cn"
-                            }
-                        ]
-                    },
-                    {
-                        "NSSIId": "490c68b0-639c-11ea-bc55-0242ac130003",
-                        "NSSIName": "nssi_test_ran_0211",
-                        "UUID": "",
-                        "invariantUUID": "",
-                        "sliceProfile": [
-                            {
-                                "coverageAreaTAList": "[{\"province\":\"??\",\"city\":\"???\",\"county\":\"???\",\"street\":\"?????\"}]",
-                                "expDataRateDL": 100,
-                                "expDataRateUL": 100,
-                                "latency": 15,
-                                "resourceSharingLevel": "0",
-                                "uEMobilityLevel": "stationary",
-                                 "domainType" : "cn"
-
-                            }
-                        ]
-                    }
-                ],
-                "UUID": "c3d8a690-f138-4554-89af-9349aeb9b19a",
-                "invariantUUID": "590b9fcf-6927-495e-a898-a1418dd4820c"
+    "solutions": [
+        {
+            "existingNSI": true,
+            "sharedNSISolution": {
+                "UUID": "3fa85f64-5717-4562-b3fc-2c963f66afa1",
+                "invariantUUID": "7ua85f64-5717-4562-b3fc-2c963f66afa6",
+                "NSIName": "nsi_test_0211",
+                "NSIId": "f1041cdc-12da-4f36-b84e-68c380e9cd47"
             }
-        ]
-    },
+        }
+    ],
     "statusMessage": "",
     "transactionId": "d290f1ee-6c54-4b01-90e6-d701748f0851"
 }

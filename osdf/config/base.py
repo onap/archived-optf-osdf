@@ -27,6 +27,10 @@ config_spec = {
     "core": "config/common_config.yaml"
 }
 
+slicing_spec = "config/slicing_config.yaml"
+
+slice_config = config_loader.load_config_file(slicing_spec)
+
 osdf_config = DotDict(config_loader.all_configs(**config_spec))
 
 http_basic_auth_credentials = creds.load_credentials(osdf_config)

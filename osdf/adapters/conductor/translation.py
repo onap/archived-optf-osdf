@@ -19,8 +19,8 @@
 import copy
 import json
 import re
-
 import yaml
+
 from osdf.utils.programming_utils import dot_notation
 
 policy_config_mapping = yaml.safe_load(open('config/has_config.yaml')).get('policy_config_mapping')
@@ -41,8 +41,8 @@ CONSTRAINT_TYPE_MAP = {"onap.policies.optimization.resource.AttributePolicy": "a
 
 
 def get_opt_query_data(request_parameters, policies):
-    """
-        Fetch service and order specific details from the requestParameters field of a request.
+    """Fetch service and order specific details from the requestParameters field of a request.
+
         :param request_parameters: A list of request parameters
         :param policies: A set of policies
         :return: A dictionary with service and order-specific attributes.
@@ -60,10 +60,20 @@ def get_opt_query_data(request_parameters, policies):
 
 def gen_optimization_policy(vnf_list, optimization_policy):
     """Generate optimization policy details to pass to Conductor
+
     :param vnf_list: List of vnf's to used in placement request
     :param optimization_policy: optimization objective policy information provided in the incoming request
     :return: List of optimization objective policies in a format required by Conductor
     """
+    if len(optimization_policy) == 1:
+        policy = optimization_policy[0]
+        policy_content = policy[list(policy.keys())[0]]
+        if policy_content['type_version'] == '2.0.0':
+            properties = policy_content['properties']
+            objective = {'goal': properties['goal'],
+                         'operation_function': properties['operation_function']}
+            return [objective]
+
     optimization_policy_list = []
     for policy in optimization_policy:
         content = policy[list(policy.keys())[0]]['properties']
@@ -71,7 +81,7 @@ def gen_optimization_policy(vnf_list, optimization_policy):
         parameters = ["cloud_version", "hpa_score"]
 
         for attr in content['objectiveParameter']['parameterAttributes']:
-            parameter = attr['parameter'] if attr['parameter'] in parameters else attr['parameter']+"_between"
+            parameter = attr['parameter'] if attr['parameter'] in parameters else attr['parameter'] + "_between"
             default, vnfs = get_matching_vnfs(attr['resources'], vnf_list)
             for vnf in vnfs:
                 value = [vnf] if attr['parameter'] in parameters else [attr['customerLocationInfo'], vnf]
@@ -80,13 +90,14 @@ def gen_optimization_policy(vnf_list, optimization_policy):
                 })
 
         optimization_policy_list.append({
-                content['objective']: {content['objectiveParameter']['operator']: parameter_list }
+            content['objective']: {content['objectiveParameter']['operator']: parameter_list}
         })
     return optimization_policy_list
 
 
 def get_matching_vnfs(resources, vnf_list, match_type="intersection"):
     """Get a list of matching VNFs from the list of resources
+
     :param resources:
     :param vnf_list: List of vnfs to used in placement request
     :param match_type: "intersection" or "all" or "any" (any => send all_vnfs if there is any intersection)
@@ -106,6 +117,7 @@ def get_matching_vnfs(resources, vnf_list, match_type="intersection"):
 
 def gen_policy_instance(vnf_list, resource_policy, match_type="intersection", rtype=None):
     """Generate a list of policies
+
     :param vnf_list: List of vnf's to used in placement request
     :param resource_policy: policy for this specific resource
     :param match_type: How to match the vnf_names with the vnf_list (intersection or "any")
@@ -129,13 +141,14 @@ def gen_policy_instance(vnf_list, resource_policy, match_type="intersection", rt
             if default:
                 for d in demands:
                     resource_repeated = True \
-                        if {pc['properties']['identity']: {'type': CONSTRAINT_TYPE_MAP.get(pc['type']), 'demands': d}} \
-                           in resource_policy_list else False
+                        if {pc['properties']['identity']: {'type': CONSTRAINT_TYPE_MAP.get(pc['type']),
+                                                           'demands': d}} in resource_policy_list else False
                     if resource_repeated:
                         continue
                     else:
                         resource_policy_list.append(
-                            {pc['properties']['identity']: {'type': CONSTRAINT_TYPE_MAP.get(pc['type']), 'demands': d }})
+                            {pc['properties']['identity']: {'type': CONSTRAINT_TYPE_MAP.get(pc['type']),
+                                                            'demands': d}})
                         policy[list(policy.keys())[0]]['properties']['resources'] = d
                         related_policies.append(policy)
             # Need to override the default policies, here delete the outdated policy stored in the db
@@ -194,9 +207,9 @@ def gen_attribute_policy(vnf_list, attribute_policy):
         properties = p_main[list(p_main.keys())[0]]['properties']['attributeProperties']
         attribute_mapping = policy_config_mapping['filtering_attributes']  # wanted attributes and mapping
         p_new[p_main[list(p_main.keys())[0]]['properties']['identity']]['properties'] = {
-            'evaluate': dict((attribute_mapping[k], properties.get(k) 
-                              if k != "cloudRegion" else gen_cloud_region(properties)) 
-                              for k in attribute_mapping.keys()) 
+            'evaluate': dict((attribute_mapping[k], properties.get(k)
+                              if k != "cloudRegion" else gen_cloud_region(properties))
+                             for k in attribute_mapping.keys())
         }
     return cur_policies  # cur_policies gets updated in place...
 
@@ -271,7 +284,7 @@ def get_policy_properties(demand, policies):
         policy_demands = set([x.lower() for x in policy[list(policy.keys())[0]]['properties']['resources']])
         if policy_demands and demand['resourceModuleName'].lower() not in policy_demands:
             continue  # no match for this policy
-        elif policy_demands == set(): # Append resource name for default policy
+        elif policy_demands == set():  # Append resource name for default policy
             policy[list(policy.keys())[0]]['properties'].update(resources=list(demand.get('resourceModuleName')))
         for policy_property in policy[list(policy.keys())[0]]['properties']['vnfProperties']:
             yield policy_property
@@ -285,35 +298,44 @@ def get_demand_properties(demand, policies):
                     inventory_type=policy_property['inventoryType'],
                     service_type=demand.get('serviceResourceId', ''),
                     service_resource_id=demand.get('serviceResourceId', ''))
+        policy_property_mapping = {'filtering_attributes': 'attributes',
+                                   'passthrough_attributes': 'passthroughAttributes',
+                                   'default_attributes': 'defaultAttributes'}
 
         prop.update({'unique': policy_property['unique']} if 'unique' in policy_property and
                                                              policy_property['unique'] else {})
         prop['filtering_attributes'] = dict()
-        if policy_property.get('attributes'):
-            for attr_key, attr_val in policy_property['attributes'].items():
-                update_converted_attribute(attr_key, attr_val, prop, 'filtering_attributes')
-        if policy_property.get('passthroughAttributes'):
-            prop['passthrough_attributes'] = dict()
-            for attr_key, attr_val in policy_property['passthroughAttributes'].items():
-                update_converted_attribute(attr_key, attr_val, prop, 'passthrough_attributes')
+        for key, value in policy_property_mapping.items():
+            get_demand_attributes(prop, policy_property, key, value)
 
         prop['filtering_attributes'].update({'global-customer-id': policy_property['customerId']}
-                                            if 'customerId' in policy_property and policy_property['customerId'] else {})
+                                            if 'customerId' in policy_property and policy_property['customerId']
+                                            else {})
         prop['filtering_attributes'].update({'model-invariant-id': demand['resourceModelInfo']['modelInvariantId']}
-                                            if 'modelInvariantId' in demand['resourceModelInfo'] and demand['resourceModelInfo']['modelInvariantId'] else {})
+                                            if 'modelInvariantId' in demand['resourceModelInfo']
+                                               and demand['resourceModelInfo']['modelInvariantId'] else {})
         prop['filtering_attributes'].update({'model-version-id': demand['resourceModelInfo']['modelVersionId']}
-                                            if 'modelVersionId' in demand['resourceModelInfo'] and demand['resourceModelInfo']['modelVersionId'] else {})
+                                            if 'modelVersionId' in demand['resourceModelInfo']
+                                               and demand['resourceModelInfo']['modelVersionId'] else {})
         prop['filtering_attributes'].update({'equipment-role': policy_property['equipmentRole']}
-                                            if 'equipmentRole' in policy_property and policy_property['equipmentRole'] else {})
+                                            if 'equipmentRole' in policy_property and policy_property['equipmentRole']
+                                            else {})
 
         prop.update(get_candidates_demands(demand))
         demand_properties.append(prop)
     return demand_properties
 
 
+def get_demand_attributes(prop, policy_property, attribute_type, key):
+    if policy_property.get(key):
+        prop[attribute_type] = dict()
+        for attr_key, attr_val in policy_property[key].items():
+            update_converted_attribute(attr_key, attr_val, prop, attribute_type)
+
+
 def update_converted_attribute(attr_key, attr_val, properties, attribute_type):
-    """
-    Updates dictonary of attributes with one specified in the arguments.
+    """Updates dictonary of attributes with one specified in the arguments.
+
     Automatically translates key namr from camelCase to hyphens
     :param attribute_type: attribute section name
     :param attr_key: key of the attribute
@@ -333,6 +355,7 @@ def update_converted_attribute(attr_key, attr_val, properties, attribute_type):
 
 def gen_demands(demands, vnf_policies):
     """Generate list of demands based on request and VNF policies
+
     :param demands: A List of demands
     :param vnf_policies: Policies associated with demand resources
            (e.g. from grouped_policies['vnfPolicy'])
@@ -349,6 +372,6 @@ def gen_demands(demands, vnf_policies):
 def gen_cloud_region(property):
     prop = {"cloud_region_attributes": dict()}
     if 'cloudRegion' in property:
-        for k,v in property['cloudRegion'].items():
+        for k, v in property['cloudRegion'].items():
             update_converted_attribute(k, v, prop, 'cloud_region_attributes')
     return prop["cloud_region_attributes"]

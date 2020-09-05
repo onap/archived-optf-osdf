@@ -17,23 +17,26 @@
 # -------------------------------------------------------------------------
 #
 
-import json
 from jinja2 import Template
+import json
 from requests import RequestException
-
 import traceback
-from osdf.operation.error_handling import build_json_error_body
-from osdf.logging.osdf_logging import metrics_log, MH, error_log, debug_log
-from osdf.adapters.conductor import conductor
+
 from apps.license.optimizers.simple_license_allocation import license_optim
+from osdf.adapters.conductor import conductor
+from osdf.logging.osdf_logging import debug_log
+from osdf.logging.osdf_logging import error_log
+from osdf.logging.osdf_logging import metrics_log
+from osdf.logging.osdf_logging import MH
+from osdf.operation.error_handling import build_json_error_body
 from osdf.utils.interfaces import get_rest_client
 from osdf.utils.mdc_utils import mdc_from_json
 
 
 def conductor_response_processor(conductor_response, req_id, transaction_id):
     """Build a response object to be sent to client's callback URL from Conductor's response
-    This includes Conductor's placement optimization response, and required ASDC license artifacts
 
+    This includes Conductor's placement optimization response, and required ASDC license artifacts
     :param conductor_response: JSON response from Conductor
     :param raw_response: Raw HTTP response corresponding to above
     :param req_id: Id of a request
@@ -60,13 +63,15 @@ def conductor_response_processor(conductor_response, req_id, transaction_id):
                     try:
                         solution['assignmentInfo'].append({"key": name_map.get(key, key), "value": value})
                     except KeyError:
-                        debug_log.debug("The key[{}] is not mapped and will not be returned in assignment info".format(key))
+                        debug_log.debug("The key[{}] is not mapped and will not be returned in assignment info"
+                                        .format(key))
 
             for key, value in reco[resource]['attributes'].items():
                 try:
                     solution['assignmentInfo'].append({"key": name_map.get(key, key), "value": value})
                 except KeyError:
-                    debug_log.debug("The key[{}] is not mapped and will not be returned in assignment info".format(key))
+                    debug_log.debug("The key[{}] is not mapped and will not be returned in assignment info"
+                                    .format(key))
             composite_solutions.append(solution)
 
     request_status = "completed" if conductor_response['plans'][0]['status'] == "done" \
@@ -91,8 +96,8 @@ def conductor_response_processor(conductor_response, req_id, transaction_id):
 def conductor_no_solution_processor(conductor_response, request_id, transaction_id,
                                     template_placement_response="templates/plc_opt_response.jsont"):
     """Build a response object to be sent to client's callback URL from Conductor's response
-    This is for case where no solution is found
 
+    This is for case where no solution is found
     :param conductor_response: JSON response from Conductor
     :param raw_response: Raw HTTP response corresponding to above
     :param request_id: request Id associated with the client request (same as conductor response's "name")
@@ -108,6 +113,7 @@ def conductor_no_solution_processor(conductor_response, request_id, transaction_
 
 def process_placement_opt(request_json, policies, osdf_config):
     """Perform the work for placement optimization (e.g. call SDC artifact and make conductor request)
+
     NOTE: there is scope to make the requests to policy asynchronous to speed up overall performance
     :param request_json: json content from original request
     :param policies: flattened policies corresponding to this request
@@ -115,7 +121,7 @@ def process_placement_opt(request_json, policies, osdf_config):
     :param prov_status: provStatus retrieved from Subscriber policy
     :return: None, but make a POST to callback URL
     """
-    
+
     try:
         mdc_from_json(request_json)
         rc = get_rest_client(request_json, service="so")
@@ -134,7 +140,11 @@ def process_placement_opt(request_json, policies, osdf_config):
             demands = request_json['placementInfo']['placementDemands']
             request_parameters = request_json['placementInfo']['requestParameters']
             service_info = request_json['serviceInfo']
-            resp = conductor.request(req_info, demands, request_parameters, service_info, True,
+            template_fields = {
+                'location_enabled': True,
+                'version': '2017-10-10'
+            }
+            resp = conductor.request(req_info, demands, request_parameters, service_info, template_fields,
                                      osdf_config, policies)
             if resp["plans"][0].get("recommendations"):
                 placement_response = conductor_response_processor(resp, req_id, transaction_id)
@@ -162,8 +172,7 @@ def process_placement_opt(request_json, policies, osdf_config):
         return
 
     try:
-        metrics_log.info(MH.calling_back_with_body(req_id, rc.url,placement_response))
+        metrics_log.info(MH.calling_back_with_body(req_id, rc.url, placement_response))
         rc.request(json=placement_response, noresponse=True)
-    except RequestException :  # can't do much here but log it and move on
+    except RequestException:  # can't do much here but log it and move on
         error_log.error("Error sending asynchronous notification for {} {}".format(req_id, traceback.format_exc()))
-
