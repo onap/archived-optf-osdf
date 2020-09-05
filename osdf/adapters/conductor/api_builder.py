@@ -20,14 +20,14 @@
 from jinja2 import Template
 import json
 
-from osdf.adapters.policy.utils import group_policies_gen
 import osdf.adapters.conductor.translation as tr
+from osdf.adapters.policy.utils import group_policies_gen
 from osdf.utils.programming_utils import list_flatten
 
 
 def _build_parameters(group_policies, service_info, request_parameters):
-    """
-        Function prepares parameters section for has request
+    """Function prepares parameters section for has request
+
         :param group_policies: filtered policies
         :param service_info: service info
         :param request_parameters: request parameters
@@ -50,14 +50,15 @@ def _build_parameters(group_policies, service_info, request_parameters):
 
 
 def conductor_api_builder(req_info, demands, request_parameters, service_info,
-                          location_enabled, flat_policies: list, local_config,
+                          template_fields, flat_policies: list, local_config,
                           template="osdf/adapters/conductor/templates/conductor_interface.json"):
     """Build an OSDF southbound API call for HAS-Conductor/Placement optimization
+
         :param req_info: parameter data received from a client
         :param demands: list of demands
         :param request_parameters: request parameters
         :param service_info: service info object
-        :param location_enabled: boolean to check location to be sent in the request
+        :param template_fields: Fields that has to be passed to the template to render
         :param flat_policies: policy data received from the policy platform (flat policies)
         :param template: template to generate southbound API call to conductor
         :param local_config: local configuration file with pointers for
@@ -73,6 +74,7 @@ def conductor_api_builder(req_info, demands, request_parameters, service_info,
     demand_list = tr.gen_demands(demands, gp['onap.policies.optimization.resource.VnfPolicy'])
     attribute_policy_list = tr.gen_attribute_policy(
         demand_name_list, gp['onap.policies.optimization.resource.AttributePolicy'])
+
     distance_to_location_policy_list = tr.gen_distance_to_location_policy(
         demand_name_list, gp['onap.policies.optimization.resource.DistancePolicy'])
     inventory_policy_list = tr.gen_inventory_group_policy(
@@ -95,8 +97,8 @@ def conductor_api_builder(req_info, demands, request_parameters, service_info,
                                                     gp['onap.policies.optimization.resource.'
                                                        'ThresholdPolicy'])
     aggregation_policy_list = tr.gen_aggregation_policy(demand_name_list,
-                                                      gp['onap.policies.optimization.resource.'
-                                                         'AggregationPolicy'])
+                                                        gp['onap.policies.optimization.resource.'
+                                                           'AggregationPolicy'])
     req_params_dict = _build_parameters(gp, service_info, request_parameters)
     conductor_policies = [attribute_policy_list, distance_to_location_policy_list,
                           inventory_policy_list, resource_instance_policy_list,
@@ -114,7 +116,8 @@ def conductor_api_builder(req_info, demands, request_parameters, service_info,
         timeout=req_info['timeout'],
         limit=req_info['numSolutions'],
         request_params=req_params_dict,
-        location_enabled=location_enabled,
+        location_enabled=template_fields.get('location_enabled'),
+        version=template_fields.get('version'),
         json=json)
     json_payload = json.dumps(json.loads(rendered_req))  # need this because template's JSON is ugly!
     return json_payload

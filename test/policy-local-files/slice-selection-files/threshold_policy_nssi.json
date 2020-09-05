@@ -1,0 +1,46 @@
+
+         {
+            "OSDF_GUILIN.Threshold_URLLC":{
+               "metadata":{
+                  "policy-id":"OSDF_GUILIN.Threshold_URLLC",
+                  "policy-version":1
+               },
+               "properties":{
+                  "geography":[
+
+                  ],
+                  "identity":"Threshold_URLLC",
+                  "resources":[
+                     "embb-cn"
+                  ],
+                  "scope":[
+                     "SHARED"
+                  ],
+                  "services":[
+                     "embb-cn"
+                  ],
+                  "thresholdProperties":[
+                     {
+                        "attribute":"latency",
+                        "operator":"lte",
+                        "threshold":{
+                           "get_param":"latency"
+                        },
+                        "unit":"ms"
+                     },
+                     {
+                        "attribute":"reliability",
+                        "operator":"gte",
+                        "threshold":{
+                           "get_param":"reliability"
+                        },
+                        "unit":""
+                     }
+                  ]
+               },
+               "type":"onap.policies.optimization.resource.ThresholdPolicy",
+               "type_version":"1.0.0",
+               "version":"1.0.0"
+            }
+         }
+
