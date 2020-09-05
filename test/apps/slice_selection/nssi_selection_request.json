@@ -1,6 +1,9 @@
 {
   "sliceProfile": {
-    "blob": "content"
+    "latency":5,
+      "security":"High",
+      "reliability":99.999,
+      "resourceSharingLevel":"shared"
   },
   "requestInfo": {
     "transactionId": "t670f1ee-6c54-4b01-90e6-d701748f0851",
@@ -17,7 +20,7 @@
     }
   },
   "NSSTInfo": {
-    "UUID": "y7785f64-5717-4562-b3fc-2c963f66afa6",
+    "UUID": "a7785f64-5717-4562-b3fc-2c963f66afa6",
     "invariantUUID": "9fh85f64-5717-4562-b3fc-2c963f66afa6",
     "name": "embb-cn"
   }

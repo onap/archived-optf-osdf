@@ -4,7 +4,7 @@
   "timeout": {{ timeout }},
   "num_solution": "{{ limit }}",
   "template": {
-    "homing_template_version": "2017-10-10",
+    "homing_template_version": "{{ version }}",
     "parameters": {
       {% set comma=joiner(",") %}
       {% for key, value in request_params.items() %} {{ comma() }}

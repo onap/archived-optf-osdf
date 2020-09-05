@@ -1,0 +1,15 @@
+{
+    "requestId": "r450f1ee-6c54-4b01-90e6-d701748f0851",
+    "requestStatus": "completed",
+    "solutions": [
+        {
+                "UUID": "a7785f64-5717-4562-b3fc-2c963f66afa6",
+                "invariantUUID": "9fh85f64-5717-4562-b3fc-2c963f66afa6",
+                "NSSIName": "nssi_test_0211",
+                "NSSIId": "e1041cdc-12da-4f36-b84e-68c380e9cd47"
+
+        }
+    ],
+    "statusMessage": "",
+    "transactionId": "t670f1ee-6c54-4b01-90e6-d701748f0851"
+}

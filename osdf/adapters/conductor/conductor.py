@@ -18,17 +18,16 @@
 #
 
 import json
-
 from requests import RequestException
 import time
 
 from osdf.adapters.conductor.api_builder import conductor_api_builder
 from osdf.logging.osdf_logging import debug_log
-from osdf.utils.interfaces import RestClient
 from osdf.operation.exceptions import BusinessException
+from osdf.utils.interfaces import RestClient
 
 
-def request(req_info, demands, request_parameters, service_info, location_enabled,
+def request(req_info, demands, request_parameters, service_info, template_fields,
             osdf_config, flat_policies):
     config = osdf_config.deployment
     local_config = osdf_config.core
@@ -53,7 +52,7 @@ def request(req_info, demands, request_parameters, service_info, location_enable
     rc = RestClient(userid=uid, passwd=passwd, method="GET", log_func=debug_log.debug,
                     headers=headers)
     conductor_req_json_str = conductor_api_builder(req_info, demands, request_parameters,
-                                                   service_info, location_enabled, flat_policies,
+                                                   service_info, template_fields, flat_policies,
                                                    local_config)
     conductor_req_json = json.loads(conductor_req_json_str)
 
@@ -74,7 +73,7 @@ def request(req_info, demands, request_parameters, service_info, location_enable
 
             if resp["plans"][0].get("status") in ["done", "not found"]:
                 return resp
-            new_url = resp['plans'][0]['links'][0][0]['href']  # TODO: check why a list of lists
+            new_url = resp['plans'][0]['links'][0][0]['href']  # TODO(krishna): check why a list of lists
 
         if total_time >= max_timeout:
             raise BusinessException("Conductor could not provide a solution within {} seconds,"
@@ -95,6 +94,7 @@ def request(req_info, demands, request_parameters, service_info, location_enable
 
 def initial_request_to_conductor(rc, conductor_url, conductor_req_json):
     """First steps in the request-redirect chain in making a call to Conductor
+
     :param rc: REST client object for calling conductor
     :param conductor_url: conductor's base URL to submit a placement request
     :param conductor_req_json: request json object to send to Conductor
@@ -112,7 +112,7 @@ def initial_request_to_conductor(rc, conductor_url, conductor_req_json):
     debug_log.debug("Attempting to read the plan from "
                     "the conductor provided url {}".format(plan_url))
     raw_resp = rc.request(raw_response=True,
-                          url=plan_url)  # TODO: check why a list of lists for links
+                          url=plan_url)
     resp = raw_resp.json()
 
     if resp["plans"][0]["status"] in ["error"]:

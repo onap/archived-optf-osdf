@@ -1,0 +1,37 @@
+
+         {
+            "OSDF_GUILIN.vnfPolicy_URLLC":{
+               "metadata":{
+                  "policy-id":"OSDF_GUILIN.vnfPolicy_URLLC",
+                  "policy-version":1
+               },
+               "properties":{
+                  "identity":"vnf_URLLC",
+                  "resources":["embb-cn"],
+                  "scope":[
+                     "SHARED"
+                  ],
+                  "services":[
+                     "embb-cn"
+                  ],
+                  "geography":[],
+                  "vnfProperties":[
+                     {
+                        "attributes":{
+                           "modelInvariantId":"bfbg3636-e39c-iidd-0987-27c28f4oo3",
+                           "modelVersionId":"bfbg3636-e39c-iidd-0987-27c28f4d33",
+                           "environment-context":"shared",
+                           "service-role":"nssi"
+                        },
+                        "inventoryProvider":"aai",
+                        "inventoryType":"nssi",
+                        "unique":"true"
+                     }
+                  ]
+               },
+               "type":"onap.policies.optimization.resource.VnfPolicy",
+               "type_version":"1.0.0",
+               "version":"1.0.0"
+            }
+         }
+
