@@ -1,0 +1,38 @@
+{
+    "OSDF_FRANKFURT.minimizeCost_URLLC": {
+        "metadata": {
+            "policy-id": "OSDF_FRANKFURT.minimizeCost_URLLC",
+            "policy-version": 1
+        },
+        "properties": {
+            "geography": [],
+            "identity": "optimization",
+            "goal": "minimize",
+            "operation_function": {
+                "operator": "sum",
+                "operands": [
+                    {
+                        "function": "attribute",
+                        "params": {
+                            "attribute": "creation_cost",
+                            "demand": "embb-nst"
+                        }
+                    }
+                ]
+            },
+            "resources": [
+                "embb-nst"
+            ],
+            "scope": [
+                "REUSE",
+                "SHARED"
+            ],
+            "services": [
+                "embb-nst"
+            ]
+        },
+        "type": "onap.policies.optimization.resource.OptimizationPolicy",
+        "type_version": "2.0.0",
+        "version": "1.0.0"
+    }
+}

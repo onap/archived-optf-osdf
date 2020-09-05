@@ -20,92 +20,118 @@
 Module for processing slice selection request
 """
 
-import json
-import traceback
 from requests import RequestException
+import traceback
 
-from apps.slice_selection.optimizers.conductor.response_processor \
-    import conductor_response_processor, conductor_error_response_processor, solution_with_only_slice_profile, get_nsi_selection_response
+from apps.slice_selection.optimizers.conductor.response_processor import conductor_error_response_processor
+from apps.slice_selection.optimizers.conductor.response_processor import conductor_response_processor
+from apps.slice_selection.optimizers.conductor import utils
 from osdf.adapters.conductor import conductor
 from osdf.adapters.policy.interface import get_policies
-from osdf.adapters.policy.utils import group_policies_gen
-from osdf.logging.osdf_logging import error_log, debug_log
+from osdf.logging.osdf_logging import debug_log
+from osdf.logging.osdf_logging import error_log
+from osdf.utils.interfaces import get_rest_client
 from osdf.utils.mdc_utils import mdc_from_json
 
 
-def process_nsi_selection_opt(request_json, osdf_config):
-    """Process the nsi selection request from API layer
+APP_INFO = {
+    'NSI': {
+        'app_name': 'slice_selection',
+        'requirements_field': 'serviceProfile',
+        'model_info': 'NSTInfo'
+    },
+    'NSSI': {
+        'app_name': 'subnet_selection',
+        'requirements_field': 'sliceProfile',
+        'model_info': 'NSSTInfo'
+    }
+}
+
+
+def process_slice_selection_opt(request_json, osdf_config, model_type):
+    """Process the slice selection request from the API layer
+
         :param request_json: api request
-        :param policies: flattened policies corresponding to this request
         :param osdf_config: configuration specific to OSDF app
+        :param model_type: type of the slice, NSI/NSSI
         :return: response as a dictionary
-        """
+    """
     req_info = request_json['requestInfo']
+    rc = get_rest_client(request_json, service='so')
+
     try:
-        mdc_from_json(request_json)
+        if model_type == 'NSSI' and request_json['sliceProfile']['resourceSharingLevel'] == 'not-shared':
+            message = "Slice selection for non-shared slice is not supported"
+            final_response = conductor_error_response_processor(req_info, message)
 
-        overall_recommendations = dict()
-        nst_info_map = dict()
-        new_nsi_solutions = list()
-        for nst_info in request_json["NSTInfoList"]:
-            nst_name = nst_info["modelName"]
-            nst_info_map[nst_name] =  {"NSTName": nst_name,
-                                                    "UUID": nst_info["modelVersionId"],
-                                                    "invariantUUID": nst_info["modelInvariantId"]}
-
-            if request_json["serviceProfile"]["resourceSharingLevel"] == "non-shared":
-                new_nsi_solution = solution_with_only_slice_profile(request_json['serviceProfile'], nst_info_map.get(nst_name))
-                new_nsi_solutions.append(new_nsi_solution)
-            else:
-                policy_request_json = request_json.copy()
-                policy_request_json['serviceInfo']['serviceName'] = nst_name
-                policies = get_policies(policy_request_json, "slice_selection")
-
-                demands = get_slice_demands(nst_name, policies, osdf_config.core)
-
-                request_parameters = request_json.get('serviceProfile',{})
-                service_info = {}
-                req_info['numSolutions'] = 'all'
-                try:
-                    resp = conductor.request(req_info, demands, request_parameters, service_info, False,
-                                             osdf_config, policies)
-                except RequestException as e:
-                    resp = e.response.json()
-                    error = resp['plans'][0]['message']
-                    error_log.error('Error from conductor {}'.format(error))
-                debug_log.debug("Response from conductor {}".format(str(resp)))
-                overall_recommendations[nst_name] = resp["plans"][0].get("recommendations")
-
-        if request_json["serviceProfile"]["resourceSharingLevel"] == "non-shared":
-            solutions = dict()
-            solutions['newNSISolutions'] = new_nsi_solutions
-            solutions['sharedNSISolutions'] = []
-            return get_nsi_selection_response(req_info, solutions)
         else:
-            return conductor_response_processor(overall_recommendations, nst_info_map, req_info, request_json["serviceProfile"])
+            final_response = do_slice_selection(request_json, model_type, osdf_config)
+
     except Exception as ex:
         error_log.error("Error for {} {}".format(req_info.get('requestId'),
                                                  traceback.format_exc()))
         error_message = str(ex)
-        return conductor_error_response_processor(req_info, error_message)
+        final_response = conductor_error_response_processor(req_info, error_message)
+
+    try:
+        rc.request(json=final_response, noresponse=True)
+    except RequestException:
+        error_log.error("Error sending asynchronous notification for {} {}".format(req_info['request_id'],
+                                                                                   traceback.format_exc()))
 
 
-def get_slice_demands(model_name, policies, config):
-    """
-    :param model_name: model name of the slice
-    :param policies: flattened polcies corresponding to the request
-    :param config: configuration specific to OSDF app
-    :return: list of demands for the request
-    """
-    group_policies = group_policies_gen(policies, config)
-    subscriber_policy_list = group_policies["onap.policies.optimization.service.SubscriberPolicy"]
-    slice_demands = list()
-    for subscriber_policy in subscriber_policy_list:
-        policy_properties = subscriber_policy[list(subscriber_policy.keys())[0]]['properties']
-        if model_name in policy_properties["services"]:
-            for subnet in policy_properties["properties"]["subscriberName"]:
-                slice_demand = dict()
-                slice_demand["resourceModuleName"] = subnet
-                slice_demand['resourceModelInfo'] = {}
-                slice_demands.append(slice_demand)
-    return slice_demands
+def do_slice_selection(request_json, model_type, osdf_config):
+    req_info = request_json['requestInfo']
+    app_info = APP_INFO[model_type]
+    mdc_from_json(request_json)
+    requirements = request_json.get(app_info['requirements_field'], {})
+    model_info = request_json.get(app_info['model_info'])
+    model_name = model_info['name']
+    policies = get_app_policies(request_json, model_name, app_info['app_name'])
+    request_parameters = get_request_parameters(request_json, requirements)
+
+    demands = [
+        {
+            "resourceModuleName": model_name,
+            "resourceModelInfo": {}
+        }
+    ]
+
+    try:
+        template_fields = {
+            'location_enabled': False,
+            'version': '2020-08-13'
+        }
+        resp = conductor.request(req_info, demands, request_parameters, {}, template_fields,
+                                 osdf_config, policies)
+    except RequestException as e:
+        resp = e.response.json()
+        error = resp['plans'][0]['message']
+        error_log.error('Error from conductor {}'.format(error))
+        return conductor_error_response_processor(req_info, error)
+
+    debug_log.debug("Response from conductor {}".format(str(resp)))
+    recommendations = resp["plans"][0].get("recommendations")
+    subnets = [subnet['domainType'] for subnet in request_json['subnetCapabilities']] \
+        if request_json.get('subnetCapabilities') else []
+    return conductor_response_processor(recommendations, model_info, subnets, req_info)
+
+
+def get_request_parameters(request_json, requirements):
+    request_params = utils.convert_to_snake_case(requirements)
+    subnet_capabilities = request_json.get('subnetCapabilities')
+    if subnet_capabilities:
+        for subnet_capability in subnet_capabilities:
+            domain_type = f"{subnet_capability['domainType'].lower().replace('-', '_')}_"
+            capability_details = subnet_capability['capabilityDetails']
+            for key, value in capability_details.items():
+                request_params[f"{domain_type}{utils.CAMEL_TO_SNAKE[key]}"] = value
+    return request_params
+
+
+def get_app_policies(request_json, model_name, app_name):
+    policy_request_json = request_json.copy()
+    policy_request_json['serviceInfo'] = {'serviceName': model_name}
+    if 'preferReuse' in request_json:
+        policy_request_json['preferReuse'] = "reuse" if request_json['preferReuse'] else "create_new"
+    return get_policies(policy_request_json, app_name)

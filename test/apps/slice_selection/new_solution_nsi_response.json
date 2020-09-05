@@ -1,56 +1,35 @@
 {
-   "requestId":"d290f1ee-6c54-4b01-90e6-d701748f0851",
-   "transactionId":"d290f1ee-6c54-4b01-90e6-d701748f0851",
-   "requestStatus":"completed",
-   "statusMessage":"",
-   "solutions":{
-      "sharedNSISolutions":[
-
-      ],
-      "newNSISolutions":[
-         {
-            "matchLevel":"",
-            "NSTInfo":{"invariantUUID": "fda3c1e8-7653-4acd-80ef-f5755c1d3859",
-      "UUID": "a6906768-1cae-4e78-acd1-d753ac61f3e8",
-      "NSTName": "URLLC_1"
-                },
-            "NSSISolutions":[
+   "requestId": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+   "transactionId": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+   "requestStatus": "completed",
+   "statusMessage": "",
+   "solutions": [
+      {
+         "existingNSI": false,
+         "newNSISolution": {
+            "slice_profiles": [
                {
-                  "sliceProfile":{
-                     "latency":20,
-                     "coverageAreaTAList":"[{\"province\":\"??\",\"city\":\"???\",\"county\":\"???\",\"street\":\"?????\"}]",
-                     "uEMobilityLevel":"stationary",
-                     "resourceSharingLevel":"0",
-                     "expDataRateUL":100,
-                     "expDataRateDL":100
-                  },
-                  "NSSTInfo":{
-                     "NSSTName":"URLLC_Core_1"
-                  },
-                  "NSSISolution":{
-                     "NSSIName":"nssi_test_0211",
-                     "NSSIId":"1a636c4d-5e76-427e-bfd6-241a947224b0"
-                  }
+                  "domainType": "AN",
+                  "resourceSharingLevel": "shared",
+                  "latency": 10,
+                  "reliability": 99.99,
+                  "uEMobilityLevel": "stationary",
+                  "maxNumberOfUEs": 100
                },
                {
-                  "sliceProfile":{
-                     "latency":15,
-                     "coverageAreaTAList":"[{\"province\":\"??\",\"city\":\"???\",\"county\":\"???\",\"street\":\"?????\"}]",
-                     "uEMobilityLevel":"stationary",
-                     "resourceSharingLevel":"0",
-                     "expDataRateUL":100,
-                     "expDataRateDL":100
-                  },
-                  "NSSTInfo":{
-                     "NSSTName":"URLLC_Ran_1"
-                  },
-                  "NSSISolution":{
-                     "NSSIName":"nssi_test_ran_0211",
-                     "NSSIId":"490c68b0-639c-11ea-bc55-0242ac130003"
-                  }
+                  "domainType": "CN",
+                  "resourceSharingLevel": "shared",
+                  "latency": 5,
+                  "reliability": 99.99
+               },
+               {
+                  "domainType": "TN-BH",
+                  "resourceSharingLevel": "shared",
+                  "latency": 5,
+                  "reliability": 99.99
                }
             ]
          }
-      ]
-   }
+      }
+   ]
 }

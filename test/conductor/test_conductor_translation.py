@@ -40,6 +40,9 @@ class TestConductorTranslation(unittest.TestCase):
         self.request_vfmod_json = json_from_file(parameter_data_file)
         self.policies = [json_from_file(policy_data_path + '/' + name) for name in valid_policies_files]
 
+        self.optimization_policies = [json_from_file(policy_data_path + '/'
+                                                     + "slice-selection-files/opt_policy_nsi_reuse.json")]
+
     def tearDown(self):
         pass
 
@@ -57,6 +60,26 @@ class TestConductorTranslation(unittest.TestCase):
                         == "onap.policies.optimization.VnfPolicy"]
         res = tr.gen_demands(self.request_vfmod_json['placementInfo']['placementDemands'], vnf_policies)
         assert res is not None
+
+    def test_gen_optimization_policy(self):
+        expected = [{
+            "goal": "minimize",
+            "operation_function": {
+                "operator": "sum",
+                "operands": [
+                    {
+                        "function": "attribute",
+                        "params": {
+                            "attribute": "creation_cost",
+                            "demand": "embb-nst"
+                        }
+                    }
+                ]
+            }
+        }]
+        self.assertEqual(expected,
+                         tr.gen_optimization_policy(self.request_vfmod_json['placementInfo']['placementDemands'],
+                                                    self.optimization_policies))
 
 
 if __name__ == "__main__":
