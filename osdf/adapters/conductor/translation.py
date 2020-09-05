@@ -194,9 +194,9 @@ def gen_attribute_policy(vnf_list, attribute_policy):
         properties = p_main[list(p_main.keys())[0]]['properties']['attributeProperties']
         attribute_mapping = policy_config_mapping['filtering_attributes']  # wanted attributes and mapping
         p_new[p_main[list(p_main.keys())[0]]['properties']['identity']]['properties'] = {
-            'evaluate': dict((attribute_mapping[k], properties.get(k) 
-                              if k != "cloudRegion" else gen_cloud_region(properties)) 
-                              for k in attribute_mapping.keys()) 
+            'evaluate': dict((attribute_mapping[k], properties.get(k)
+                              if k != "cloudRegion" else gen_cloud_region(properties))
+                              for k in attribute_mapping.keys())
         }
     return cur_policies  # cur_policies gets updated in place...
 
@@ -285,17 +285,15 @@ def get_demand_properties(demand, policies):
                     inventory_type=policy_property['inventoryType'],
                     service_type=demand.get('serviceResourceId', ''),
                     service_resource_id=demand.get('serviceResourceId', ''))
+        policy_property_mapping = {'filtering_attributes': 'attributes',
+                                   'passthrough_attributes': 'passthroughAttributes',
+                                   'default_attributes': 'defaultAttributes'}
 
         prop.update({'unique': policy_property['unique']} if 'unique' in policy_property and
                                                              policy_property['unique'] else {})
         prop['filtering_attributes'] = dict()
-        if policy_property.get('attributes'):
-            for attr_key, attr_val in policy_property['attributes'].items():
-                update_converted_attribute(attr_key, attr_val, prop, 'filtering_attributes')
-        if policy_property.get('passthroughAttributes'):
-            prop['passthrough_attributes'] = dict()
-            for attr_key, attr_val in policy_property['passthroughAttributes'].items():
-                update_converted_attribute(attr_key, attr_val, prop, 'passthrough_attributes')
+        for key, value in policy_property_mapping.items():
+            get_demand_attributes(prop, policy_property, key, value)
 
         prop['filtering_attributes'].update({'global-customer-id': policy_property['customerId']}
                                             if 'customerId' in policy_property and policy_property['customerId'] else {})
@@ -309,6 +307,13 @@ def get_demand_properties(demand, policies):
         prop.update(get_candidates_demands(demand))
         demand_properties.append(prop)
     return demand_properties
+
+
+def get_demand_attributes(prop, policy_property, attribute_type, key):
+    if policy_property.get(key):
+        prop[attribute_type] = dict()
+        for attr_key, attr_val in policy_property[key].items():
+            update_converted_attribute(attr_key, attr_val, prop, attribute_type)
 
 
 def update_converted_attribute(attr_key, attr_val, properties, attribute_type):
