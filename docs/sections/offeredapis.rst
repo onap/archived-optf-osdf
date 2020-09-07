@@ -20,11 +20,15 @@ paste into the swagger tool here: https://editor.swagger.io
 
 OOF OSDF HAS API
 ................
-.. swaggerv2doc:: ./swaggerdoc/oof-osdf-has-api.json
+.. raw:: html
+
+    <a class="reference internal" href="../osdf-api.html">OSDF API</a>
+
 
 
 OOF OPTENG API
 ..............
-.. swaggerv2doc:: ./swaggerdoc/oof-optf-opteng-api.json
+.. raw:: html
 
+    <a class="reference internal" href="../opteng-api.html">OPTENG API</a>
 
