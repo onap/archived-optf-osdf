@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3df9fe43_5087fd36",
+        "filename": "docs/developer_guide/oof_journal.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-09-09T07:50:32Z",
+      "side": 1,
+      "message": "Remove all trailing whitespaces",
+      "revId": "b148756a682e88dc5a5d8ff529fbfaef3f0b424a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa6d243_df5dde7b",
+        "filename": "docs/developer_guide/oof_journal.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-09-09T07:50:32Z",
+      "side": 1,
+      "message": "We can make the description more ellaborative. We can take it from the wiki. We should include the policy driven approach, which is a significant feature of OOF.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 250
+      },
+      "revId": "b148756a682e88dc5a5d8ff529fbfaef3f0b424a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812c5780_6a79fb68",
+        "filename": "docs/images/docker.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-09-09T07:50:32Z",
+      "side": 1,
+      "message": "can we copy paste the output into a code block within rst files itself. I don\u0027t see a significant need for a png image here.",
+      "revId": "b148756a682e88dc5a5d8ff529fbfaef3f0b424a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
