@@ -14,13 +14,13 @@ extensions = [
 redoc = [
 		    {
 		        'name': 'OSDF API',
-		        'page': './osdf-api',
+		        'page': 'sections/osdf-api',
 		        'spec': './api/swagger/oof-osdf-has-api.json',
 		        'embed': True,
 		    },
 		    {
 		        'name': 'OPTENG API',
-		        'page': './opteng-api',
+		        'page': 'sections/opteng-api',
 		        'spec': './api/swagger/oof-osdf-has-api.json',
 		        'embed': True,
 		    }

@@ -15,20 +15,17 @@ paste into the swagger tool here: https://editor.swagger.io
    :header: "API name", "Swagger JSON"
    :widths: 10,5
 
-   "OOF OSDF HAS API", ":download:`link <./swaggerdoc/oof-osdf-has-api.json>`"
-   "OOF OPTENG API", ":download:`link <./swaggerdoc/oof-optf-opteng-api.json>`"
+   "OOF OSDF HAS API", ":download:`link <../api/swagger/oof-osdf-has-api.json>`"
+   "OOF OPTENG API", ":download:`link <../api/swagger/oof-optf-opteng-api.json>`"
 
 OOF OSDF HAS API
 ................
-.. raw:: html
 
-    <a class="reference internal" href="../osdf-api.html">OSDF API</a>
-
+`OSDF API <osdf-api.html>`_
 
 
 OOF OPTENG API
 ..............
-.. raw:: html
 
-    <a class="reference internal" href="../opteng-api.html">OPTENG API</a>
+`OPTENG API <opteng-api.html>`_
 
