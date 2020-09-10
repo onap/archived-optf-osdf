@@ -16,6 +16,24 @@
       "revId": "d80941f1b6eb5b5c063becb4e15af519be4a48d5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dcb2240_552ed92a",
+        "filename": "apps/slice_selection/optimizers/conductor/utils.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-09-10T14:48:31Z",
+      "side": 1,
+      "message": "I agree Shankar. Let me to move it to a config.",
+      "parentUuid": "729f238c_35689ff9",
+      "revId": "d80941f1b6eb5b5c063becb4e15af519be4a48d5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
