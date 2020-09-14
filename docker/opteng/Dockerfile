@@ -17,12 +17,13 @@
 # -------------------------------------------------------------------------
 #
 
-FROM python:3.8-alpine
+FROM ubuntu:20.04
 
 ARG MVN_ARTIFACT_VERSION
 ARG REPO
 ARG HTTP_PROXY=${HTTP_PROXY}
 ARG HTTPS_PROXY=${HTTPS_PROXY}
+ARG DEBIAN_FRONTEND=noninteractive
 
 ENV http_proxy $HTTP_PROXY
 ENV https_proxy $HTTPS_PROXY
@@ -30,29 +31,32 @@ ENV https_proxy $HTTPS_PROXY
 ENV OSDF_PORT "8699"
 EXPOSE ${OSDF_PORT}
 
-ENV MZN 2.4.2
-ENV MZN_BASENAME MiniZincIDE-${MZN}-bundle-linux
-ENV MZN_GH_BASE https://github.com/MiniZinc/MiniZincIDE
-ENV MZN_DL_URL ${MZN_GH_BASE}/releases/download/${MZN}/${MZN_BASENAME}-x86_64.tgz
+RUN apt-get update -y \
+    && apt-get install -y --no-install-recommends software-properties-common wget \
+    curl ca-certificates vim unzip zip git binutils binfmt-support build-essential  \
+    python3 python3-setuptools python3-dev \
+    && ln -s /usr/bin/python3.8 /usr/bin/python \
+    && curl -s https://bootstrap.pypa.io/get-pip.py | python \
+    && python -m pip --no-cache-dir  install --upgrade pip wheel setuptools && rm -rf /var/lib/apt/lists/*
 
-RUN apk update  && apk upgrade \
-    && apk --no-cache --update add --virtual build-deps openssl wget  \
-    && apk --no-cache --update add less ca-certificates bash libxslt-dev unzip \
-                                freetype freetype-dev libstdc++ build-base libc6-compat lapack-dev openblas-dev \
-    && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2 \
-    && pip install --no-cache-dir --upgrade pip wheel setuptools
+ARG MZN_DL_URL=https://github.com/MiniZinc/MiniZincIDE/releases/download/2.4.3/MiniZincIDE-2.4.3-bundle-linux-x86_64.tgz
+ARG ORTOOLS_URL=https://github.com/google/or-tools/releases/download/v7.8/or-tools_ubuntu-20.04_v7.8.7959.tar.gz
 
 # Minizinc
-RUN wget -q $MZN_DL_URL -O mz.tgz \
-    && tar xzf mz.tgz \
-    && mv $MZN_BASENAME /mz-dist \
-    && rm mz.tgz \
-    && echo PATH=/mz-dist/bin:$PATH >> ~/.bashrc
+RUN wget -q $MZN_DL_URL -O /tmp/mz.tgz \
+    && mkdir -p /mz-dist && tar xzf /tmp/mz.tgz -C /mz-dist --strip-components 1\
+    && rm /tmp/mz.tgz
+
+RUN wget -q ${ORTOOLS_URL} -O /tmp/flatzinc.tar.gz \
+    && mkdir -p /ortools \
+    && tar zxf /tmp/flatzinc.tar.gz -C /ortools --strip-components 1 \
+    && rm /tmp/flatzinc.tar.gz
 
 ENV SHELL /bin/bash
 ENV PATH /mz-dist/bin:$PATH
 
-RUN addgroup -S onap && adduser -S -G onap onap
+RUN groupadd onap \
+    && useradd -m -g onap onap
 
 # OSDF
 WORKDIR /opt/osdf
@@ -68,8 +72,7 @@ RUN mkdir -p /var/log/onap/optf/osdf/ \
     && chown onap:onap /var/log/onap -R \
     && chown onap:onap /opt/osdf -R
 
-RUN pip install --no-cache-dir -r requirements.txt -r requirements-opteng.txt\
-    && apk del build-deps && rm -rf /var/cache/apk/*
+RUN python -m pip install --no-cache-dir -r requirements.txt -r requirements-opteng.txt
 
 USER onap
 
