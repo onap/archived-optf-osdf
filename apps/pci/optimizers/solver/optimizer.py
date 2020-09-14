@@ -1,5 +1,6 @@
 # -------------------------------------------------------------------------
 #   Copyright (c) 2018 AT&T Intellectual Property
+#   Copyright (C) 2020 Wipro Limited.
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -16,18 +17,21 @@
 # -------------------------------------------------------------------------
 #
 
+from collections import defaultdict
 import itertools
 import os
-from collections import defaultdict
 import pymzn
 
-from .pci_utils import get_id,mapping
+from apps.pci.optimizers.solver.ml_model import MlModel
+from apps.pci.optimizers.solver.pci_utils import get_id
+from apps.pci.optimizers.solver.pci_utils import mapping
 
 BASE_DIR = os.path.dirname(__file__)
 cell_id_mapping = dict()
 id_cell_mapping = dict()
 
-def pci_optimize(network_cell_info, cell_info_list, request_json):
+
+def pci_optimize(network_cell_info, cell_info_list, request_json, osdf_config):
     global cell_id_mapping, id_cell_mapping
     cell_id_mapping, id_cell_mapping = mapping(network_cell_info)
     original_pcis = get_original_pci_list(network_cell_info)
@@ -37,9 +41,15 @@ def pci_optimize(network_cell_info, cell_info_list, request_json):
     ignorable_links = get_ignorable_links(network_cell_info, request_json)
     anr_flag = is_anr(request_json)
 
-    dzn_data = build_dzn_data(cell_info_list, ignorable_links, neighbor_edges, second_level_edges, anr_flag, original_pcis, unchangeable_pcis)
+    dzn_data = build_dzn_data(cell_info_list, ignorable_links, neighbor_edges, second_level_edges, anr_flag,
+                              original_pcis, unchangeable_pcis)
+
+    ml_enabled = osdf_config.core['PCI']['ml_enabled']
+    if ml_enabled:
+        MlModel(osdf_config).get_additional_inputs(dzn_data, network_cell_info)
 
     return build_pci_solution(dzn_data, ignorable_links, anr_flag)
+
 
 def get_ids_of_fixed_pci_cells(fixed_pci_list):
     fixed_pci_ids = set()
@@ -83,7 +93,8 @@ def build_pci_solution(dzn_data, ignorable_links, anr_flag):
     return solution
 
 
-def build_dzn_data(cell_info_list, ignorable_links, neighbor_edges, second_level_edges, anr_flag,original_pcis, unchangeable_pcis):
+def build_dzn_data(cell_info_list, ignorable_links, neighbor_edges, second_level_edges, anr_flag, original_pcis,
+                   unchangeable_pcis):
     dzn_data = {
         'NUM_NODES': len(cell_info_list),
         'NUM_PCIS': len(cell_info_list),

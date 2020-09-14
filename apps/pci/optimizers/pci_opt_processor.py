@@ -1,5 +1,6 @@
 # -------------------------------------------------------------------------
 #   Copyright (c) 2018 AT&T Intellectual Property
+#   Copyright (C) 2020 Wipro Limited.
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -21,23 +22,26 @@ import traceback
 from onaplogging.mdcContext import MDC
 from requests import RequestException
 
-from osdf.logging.osdf_logging import metrics_log, MH, error_log
+from apps.pci.optimizers.configdb import request as config_request
+from apps.pci.optimizers.solver.optimizer import pci_optimize as optimize
+from apps.pci.optimizers.solver.pci_utils import get_cell_id
+from apps.pci.optimizers.solver.pci_utils import get_pci_value
+from osdf.logging.osdf_logging import error_log
+from osdf.logging.osdf_logging import metrics_log
+from osdf.logging.osdf_logging import MH
 from osdf.operation.error_handling import build_json_error_body
 from osdf.utils.interfaces import get_rest_client
-from .configdb import request as config_request
-from .solver.optimizer import pci_optimize as optimize
-from .solver.pci_utils import get_cell_id, get_pci_value
 from osdf.utils.mdc_utils import mdc_from_json
 
-"""
-This application generates PCI Optimization API calls using the information received from PCI-Handler-MS, SDN-C
+
+"""This application generates PCI Optimization API calls using the information received from PCI-Handler-MS, SDN-C
 and Policy.
 """
 
 
 def process_pci_optimation(request_json, osdf_config, flat_policies):
-    """
-    Process a PCI request from a Client (build config-db, policy and  API call, make the call, return result)
+    """Process a PCI request from a Client (build config-db, policy and  API call, make the call, return result)
+
     :param req_object: Request parameters from the client
     :param osdf_config: Configuration specific to OSDF application (core + deployment)
     :param flat_policies: policies related to pci (fetched based on request)
@@ -48,7 +52,7 @@ def process_pci_optimation(request_json, osdf_config, flat_policies):
         rc = get_rest_client(request_json, service="pcih")
         req_id = request_json["requestInfo"]["requestId"]
         cell_info_list, network_cell_info = config_request(request_json, osdf_config, flat_policies)
-        pci_response = get_solutions(cell_info_list, network_cell_info, request_json)
+        pci_response = get_solutions(cell_info_list, network_cell_info, request_json, osdf_config)
 
         metrics_log.info(MH.inside_worker_thread(req_id))
     except Exception as err:
@@ -58,11 +62,10 @@ def process_pci_optimation(request_json, osdf_config, flat_policies):
             body = build_json_error_body(err)
             metrics_log.info(MH.sending_response(req_id, "ERROR"))
             rc.request(json=body, noresponse=True)
-        except RequestException as err:
-            MDC.put('requestID',req_id)
+        except RequestException:
+            MDC.put('requestID', req_id)
             error_log.error("Error sending asynchronous notification for {} {}".format(req_id, traceback.format_exc()))
         raise err
-
 
     try:
         metrics_log.info(MH.calling_back_with_body(req_id, rc.url, pci_response))
@@ -71,8 +74,9 @@ def process_pci_optimation(request_json, osdf_config, flat_policies):
         error_log.error("Error sending asynchronous notification for {} {}".format(req_id, traceback.format_exc()))
 
 
-def get_solutions(cell_info_list, network_cell_info, request_json):
-    status, pci_solutions, anr_solutions = build_solution_list(cell_info_list, network_cell_info, request_json)
+def get_solutions(cell_info_list, network_cell_info, request_json, osdf_config):
+    status, pci_solutions, anr_solutions = build_solution_list(cell_info_list, network_cell_info,
+                                                               request_json, osdf_config)
     return {
         "transactionId": request_json['requestInfo']['transactionId'],
         "requestId": request_json["requestInfo"]["requestId"],
@@ -86,14 +90,15 @@ def get_solutions(cell_info_list, network_cell_info, request_json):
     }
 
 
-def build_solution_list(cell_info_list, network_cell_info, request_json):
+def build_solution_list(cell_info_list, network_cell_info, request_json, osdf_config):
     status = "success"
     req_id = request_json["requestInfo"]["requestId"]
-    pci_solutions =[]
-    anr_solutions=[]
+    pci_solutions = []
+    anr_solutions = []
     try:
-        opt_solution = optimize(network_cell_info, cell_info_list, request_json)
-        if  opt_solution == 'UNSATISFIABLE':
+        # TODO(krishna): osdf_config is being passed around methods.
+        opt_solution = optimize(network_cell_info, cell_info_list, request_json, osdf_config)
+        if opt_solution == 'UNSATISFIABLE':
             status = 'inconsistent input'
             return status, pci_solutions, anr_solutions
         else:
