@@ -62,3 +62,13 @@ policy_info:
     default:  # if no explicit service related information is needed
         policy_fetch: by_name
         policy_scope: none
+
+PCI:
+    ML:
+        average_ho_threshold: 10000
+        latest_ho_threshold: 500
+    DES:
+        service_id: ho_metric
+        filter:
+            interval: 10
+    ml_enabled: false

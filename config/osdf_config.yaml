@@ -58,6 +58,14 @@ aaiGetControllersUrl: /aai/v19/external-system/esr-thirdparty-sdnc-list
 controllerQueryUrl: /aai/v19/query?format=resource
 aaiGetInterDomainLinksUrl: /aai/v19/network/logical-links?link-type=inter-domain&operational-status=up
 
+#DES api
+desUrl: https://des.url:9000
+desApiPath: /datalake/v1/exposure/
+desHeaders:
+  Accept: application/json
+  Content-Type: application/json
+desUsername:
+desPassword:
 
 pciHMSUsername: test
 pciHMSPassword: passwd
