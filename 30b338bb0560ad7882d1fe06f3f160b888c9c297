@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d534e66a_f7b72cc2",
+        "filename": "apps/pci/optimizers/pci_opt_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-09-15T15:04:48Z",
+      "side": 1,
+      "message": "Same comment, you don\u0027t have to pass osdf_config as a parameter\n\nfrom osdf.config.base import osdf_config should be enough.",
+      "revId": "30b338bb0560ad7882d1fe06f3f160b888c9c297",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38440434_3ff86fea",
+        "filename": "osdf/adapters/dcae/des.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2923
+      },
+      "writtenOn": "2020-09-15T15:04:48Z",
+      "side": 1,
+      "message": "osdf_config is a global cached variable, you don\u0027t have to pass it as a parameter.",
+      "revId": "30b338bb0560ad7882d1fe06f3f160b888c9c297",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
