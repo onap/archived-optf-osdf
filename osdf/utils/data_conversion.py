@@ -50,9 +50,9 @@ def utc_time_from_ts(timestamp):
     return parse(timestamp).astimezone(tz.tzutc()).strftime('%Y-%m-%d %H:%M:%S')
 
 
-def list_flatten(l):
+def list_flatten(_l):
     """Flatten a complex nested list of nested lists into a flat list"""
-    return itertools.chain(*[list_flatten(j) if isinstance(j, list) else [j] for j in l])
+    return itertools.chain(*[list_flatten(j) if isinstance(j, list) else [j] for j in _l])
 
 
 text_to_symbol = {
@@ -60,3 +60,10 @@ text_to_symbol = {
     'less': "<",
     'equal': "="
 }
+
+
+def decode_data(data):
+    """
+    Decode bytes to string
+    """
+    return data.decode(encoding='utf-8') if isinstance(data, bytes) else data

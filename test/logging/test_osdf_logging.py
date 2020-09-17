@@ -16,13 +16,11 @@
 # -------------------------------------------------------------------------
 #
 import unittest
-import json
-import yaml
+from unittest import mock
 
 from osdf.logging import osdf_logging as L1
-from osdf.logging.osdf_logging import OOF_OSDFLogMessageHelper as MH
-from osdf.logging.osdf_logging import OOF_OSDFLogMessageFormatter as formatter
-from unittest import mock
+from osdf.logging.osdf_logging import OOFOSDFLogMessageFormatter as formatter
+from osdf.logging.osdf_logging import OOFOSDFLogMessageHelper as MH
 
 
 class TestOSDFLogging(unittest.TestCase):
@@ -46,7 +44,7 @@ class TestOSDFLogging(unittest.TestCase):
         self.F = formatter
 
     def test_format_exception(self):
-        res = L1.format_exception(Exception("Some error"))
+        L1.format_exception(Exception("Some error"))
 
     def test_accepted_valid_request(self):
         res = formatter.accepted_valid_request(self.req_id, self.request)
@@ -91,7 +89,7 @@ class TestOSDFLogging(unittest.TestCase):
     def test_error_calling_back(self):
         res = formatter.error_calling_back(self.service_name, self.callback_url, self.err)
         assert res.startswith("Error while posting result to callback URL")
-        
+
     def test_calling_back(self):
         res = formatter.calling_back(self.req_id, self.callback_url)
         assert res.startswith("Posting result to callback URL")
@@ -167,4 +165,3 @@ class TestOSDFLogging(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
