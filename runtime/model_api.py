@@ -19,12 +19,16 @@
 import json
 import traceback
 
+from flask import Flask
+from flask import g
+from flask import Response
 import mysql.connector
-from flask import g, Flask, Response
 
 from osdf.config.base import osdf_config
-from osdf.logging.osdf_logging import debug_log, error_log
+from osdf.logging.osdf_logging import debug_log
+from osdf.logging.osdf_logging import error_log
 from osdf.operation.exceptions import BusinessException
+from osdf.utils.data_conversion import decode_data
 
 
 def init_db():
@@ -33,20 +37,22 @@ def init_db():
 
 
 def get_db():
-    """Opens a new database connection if there is none yet for the
-        current application context. 
+    """Opens a new database connection if there is none yet for the current application context.
+
     """
     if not hasattr(g, 'pg'):
         properties = osdf_config['deployment']
-        host, db_port, db = properties["osdfDatabaseHost"], properties["osdfDatabasePort"], \
-                            properties.get("osdfDatabaseSchema")
+        host, db_port, db = properties["osdfDatabaseHost"], properties["osdfDatabasePort"], properties.get(
+            "osdfDatabaseSchema")
         user, password = properties["osdfDatabaseUsername"], properties["osdfDatabasePassword"]
         g.pg = mysql.connector.connect(host=host, port=db_port, user=user, password=password, database=db)
     return g.pg
 
 
 def close_db():
-    """Closes the database again at the end of the request."""
+    """Closes the database again at the end of the request.
+
+    """
     if hasattr(g, 'pg'):
         g.pg.close()
 
@@ -109,7 +115,7 @@ def build_model_dict(resp_data, content_needed=True):
     resp = {'modelId': resp_data[0], 'description': resp_data[2] if resp_data[2] else '',
             'solver': resp_data[3]}
     if content_needed:
-        resp.update({'modelContent': resp_data[1]})
+        resp.update({'modelContent': decode_data(resp_data[1])})
     return resp
 
 
@@ -124,7 +130,6 @@ def delete_model_data(model_id):
     with app.app_context():
         try:
             debug_log.debug("deleting model data given model_id = {}".format(model_id))
-            d = dict();
             connection = get_db()
             cursor = connection.cursor(buffered=True)
             query = "delete from optim_model_data WHERE model_id = %s"
@@ -146,10 +151,11 @@ def get_model_data(model_id):
     with app.app_context():
         try:
             debug_log.debug("getting model data given model_id = {}".format(model_id))
-            d = dict();
+            d = dict()
             connection = get_db()
             cursor = connection.cursor(buffered=True)
-            query = "SELECT model_id, model_content, description, solver_type  FROM optim_model_data WHERE model_id = %s"
+            query = "SELECT model_id, model_content, description, " \
+                    "solver_type  FROM optim_model_data WHERE model_id = %s"
             values = (model_id,)
             cursor.execute(query, values)
             if cursor is None:
@@ -194,7 +200,7 @@ def get_all_models():
             connection = get_db()
             cursor = connection.cursor(buffered=True)
             query = "SELECT model_id, model_content, description, solver_type  FROM optim_model_data"
-    
+
             cursor.execute(query)
             if cursor is None:
                 return 400, "FAILED"
