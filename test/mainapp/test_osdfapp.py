@@ -17,20 +17,23 @@
 #
 
 import unittest
-
-from osdf.apps import baseapp
-from osdf.operation.exceptions import BusinessException
-from requests import Request, RequestException
-from schematics.exceptions import DataError
 from unittest import mock, TestCase
 from unittest.mock import patch
+
+from requests import Request, RequestException
+from schematics.exceptions import DataError
+
+from osdf.apps import baseapp
+from osdf.apps.baseapp import app
+from osdf.operation.exceptions import BusinessException
 
 
 class TestOSDFApp(TestCase):
 
     def setUp(self):
-        self.patcher_g = patch('osdf.apps.baseapp.g', return_value={'request_id':'DUMMY-REQ'})
-        self.Mock_g = self.patcher_g.start()
+        with app.app_context():
+            self.patcher_g = patch('osdf.apps.baseapp.g', return_value={'request_id': 'DUMMY-REQ'})
+            self.Mock_g = self.patcher_g.start()
         # self.patcher2 = patch('package.module.Class2')
         # self.MockClass2 = self.patcher2.start()
 

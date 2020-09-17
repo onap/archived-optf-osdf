@@ -19,6 +19,7 @@
 from flask import Response
 
 from osdf.operation.exceptions import BusinessException
+from osdf.utils.data_conversion import decode_data
 from .model_api import get_model_data
 from .models.api.optim_request import OptimizationAPI
 from .solvers.mzn.mzn_solver import solve as mzn_solve
@@ -69,7 +70,7 @@ def get_model_content(request_json):
     if model_id:
         status, data = get_model_data(model_id)
         if status == 200:
-            model_content = data[1]
+            model_content = decode_data(data[1])
             solver = data[3]
         else:
             raise BusinessException('model_id [{}] not found in the model database'.format(model_id))

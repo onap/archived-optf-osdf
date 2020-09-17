@@ -20,8 +20,8 @@ import json
 import yaml
 
 from osdf.logging import osdf_logging as L1
-from osdf.logging.osdf_logging import OOF_OSDFLogMessageHelper as MH
-from osdf.logging.osdf_logging import OOF_OSDFLogMessageFormatter as formatter
+from osdf.logging.osdf_logging import OOFOSDFLogMessageHelper as MH
+from osdf.logging.osdf_logging import OOFOSDFLogMessageFormatter as formatter
 from unittest import mock
 
 

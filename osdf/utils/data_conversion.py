@@ -60,3 +60,10 @@ text_to_symbol = {
     'less': "<",
     'equal': "="
 }
+
+
+def decode_data(data):
+    """
+    Decode bytes to string
+    """
+    return data.decode(encoding='utf-8') if isinstance(data, bytes) else data

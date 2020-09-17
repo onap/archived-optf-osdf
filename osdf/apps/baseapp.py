@@ -29,16 +29,18 @@ from optparse import OptionParser
 
 import pydevd
 from flask import Flask, request, Response, g
+from onaplogging.mdcContext import MDC
 from requests import RequestException
 from schematics.exceptions import DataError
 
 import osdf.adapters.aaf.sms as sms
 import osdf.operation.responses
 from osdf.config.base import osdf_config
-from osdf.logging.osdf_logging import error_log, debug_log
+from osdf.logging.osdf_logging import error_log, debug_log, audit_log
 from osdf.operation.error_handling import request_exception_to_json_body, internal_error_message
 from osdf.operation.exceptions import BusinessException
-from osdf.utils.mdc_utils import clear_mdc, mdc_from_json, default_mdc, get_request_id
+from osdf.utils.mdc_utils import clear_mdc, set_error_details, populate_mdc, \
+    populate_default_mdc, get_request_id
 
 ERROR_TEMPLATE = osdf.ERROR_TEMPLATE
 
@@ -50,7 +52,8 @@ BAD_CLIENT_REQUEST_MESSAGE = 'Client sent an invalid request'
 @app.errorhandler(BusinessException)
 def handle_business_exception(e):
     """An exception explicitly raised due to some business rule"""
-    error_log.error("Synchronous error for request id {} {}".format(g.request_id, traceback.format_exc()))
+    error_log.error("Synchronous error for request id {} {}"
+                    .format(g.request_id, traceback.format_exc()))
     err_msg = ERROR_TEMPLATE.render(description=str(e))
     response = Response(err_msg, content_type='application/json; charset=utf-8')
     response.status_code = 400
@@ -89,24 +92,58 @@ def handle_data_error(e):
 
 @app.before_request
 def log_request():
-    g.request_start = time.process_time()
-    if request.data:
-        if request.get_json():
-            request_json = request.get_json()
-            g.request_id = get_request_id(request_json)
-            mdc_from_json(request_json)
-        else:
-            g.request_id = "N/A"
-            default_mdc()
+    clear_mdc()
+    if request.content_type and 'json' in request.content_type:
+        populate_mdc(request)
+        g.request_id = get_request_id(request.get_json())
+        log_message(json.dumps(request.get_json()), "INPROGRESS", 'ENTRY')
     else:
-        g.request_id = "N/A"
-        default_mdc()
+        populate_default_mdc(request)
+        log_message('', "INPROGRESS", 'ENTRY')
 
 
 @app.after_request
 def log_response(response):
-    clear_mdc()
+    log_response_data(response)
     return response
+
+
+def log_response_data(response):
+    status_value = ''
+    try:
+        status_value = map_status_value(response)
+        log_message(response.get_data(as_text=True), status_value, 'EXIT')
+    except Exception:
+        try:
+            set_default_audit_mdc(request, status_value, 'EXIT')
+            audit_log.info(response.get_data(as_text=True))
+        except Exception:
+            set_error_details(300, 'Internal Error')
+            error_log.error("Error logging the response data due to {}".format(traceback.format_exc()))
+
+
+def set_default_audit_mdc(request, status_value, p_marker):
+    MDC.put('partnerName', 'internal')
+    MDC.put('serviceName', request.path)
+    MDC.put('statusCode', status_value)
+    MDC.put('requestID', 'internal')
+    MDC.put('timer', int((time.process_time() - g.request_start) * 1000))
+    MDC.put('customField1', p_marker)
+
+
+def log_message(message, status_value, p_marker='INVOKE'):
+    MDC.put('statusCode', status_value)
+    MDC.put('customField1', p_marker)
+    MDC.put('timer', int((time.process_time() - g.request_start) * 1000))
+    audit_log.info(message)
+
+
+def map_status_value(response):
+    if 200 <= response.status_code < 300:
+        status_value = "COMPLETE"
+    else:
+        status_value = "ERROR"
+    return status_value
 
 
 @app.errorhandler(500)

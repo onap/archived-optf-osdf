@@ -25,6 +25,7 @@ from flask import g, Flask, Response
 from osdf.config.base import osdf_config
 from osdf.logging.osdf_logging import debug_log, error_log
 from osdf.operation.exceptions import BusinessException
+from osdf.utils.data_conversion import decode_data
 
 
 def init_db():
@@ -109,7 +110,7 @@ def build_model_dict(resp_data, content_needed=True):
     resp = {'modelId': resp_data[0], 'description': resp_data[2] if resp_data[2] else '',
             'solver': resp_data[3]}
     if content_needed:
-        resp.update({'modelContent': resp_data[1]})
+        resp.update({'modelContent': decode_data(resp_data[1])})
     return resp
 
 
