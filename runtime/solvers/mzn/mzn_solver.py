@@ -16,10 +16,15 @@
 # -------------------------------------------------------------------------
 #
 
-import json
 from datetime import datetime
+import json
 
-from pymzn import Status, minizinc, cbc, gecode, chuffed, or_tools
+from pymzn import cbc
+from pymzn import chuffed
+from pymzn import gecode
+from pymzn import minizinc
+from pymzn import or_tools
+from pymzn import Status
 
 from osdf.utils.file_utils import delete_file_folder
 
@@ -47,6 +52,11 @@ def map_status(status):
 
 
 def solve(request_json, mzn_content):
+    """Given the request and minizinc content.  Translates the json request
+    to the format minizinc understands
+
+    return: returns the optimized solution.
+    """
     req_info = request_json['requestInfo']
     opt_info = request_json['optimInfo']
     try:
@@ -71,6 +81,9 @@ def solve(request_json, mzn_content):
 
 
 def mzn_solver(mzn_content, opt_info):
+    """Calls the minizinc optimizer.
+
+    """
     args = opt_info['solverArgs']
     solver = get_mzn_solver(args.pop('solver'))
     mzn_opts = dict()
@@ -85,18 +98,36 @@ def mzn_solver(mzn_content, opt_info):
 
 
 def persist_opt_data(opt_info):
+    """Persist the opt data, if included as part of the request.
 
-    if opt_info['optData'].get('json'):
-        data_content = json.dumps(opt_info['optData']['json'])
-        file_name = '/tmp/optim_engine_{}.json'.format(datetime.timestamp(datetime.now()))
-    elif opt_info['optData'].get('text'):
-        data_content = opt_info['optData']['text']
-        file_name = '/tmp/optim_engine_{}.dzn'.format(datetime.timestamp(datetime.now()))
-
-    with open(file_name, "wt") as data:
-        data.write(data_content)
+    return: file_name path of the optim_data
+            returns None if no optData is part of the request
+    """
+    file_name = None
+    if 'optData' in opt_info:
+        if opt_info['optData'].get('json'):
+            data_content = json.dumps(opt_info['optData']['json'])
+            file_name = '/tmp/optim_engine_{}.json'.format(datetime.timestamp(datetime.now()))
+            persist_data(data_content, file_name)
+        elif opt_info['optData'].get('text'):
+            data_content = opt_info['optData']['text']
+            file_name = '/tmp/optim_engine_{}.dzn'.format(datetime.timestamp(datetime.now()))
+            persist_data(data_content, file_name)
     return file_name
 
 
+def persist_data(data_content, file_name):
+    """Save the dzn data into a file
+
+    """
+    with open(file_name, "wt") as data:
+        data.write(data_content)
+
+
 def get_mzn_solver(solver):
+    """Returns a solver type object for minizinc optimizers
+
+    solver: solver that is part of the request
+    return: solver mapped object
+    """
     return solver_dict.get(solver)

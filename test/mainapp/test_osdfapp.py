@@ -17,20 +17,25 @@
 #
 
 import unittest
+from unittest import TestCase
+from unittest import mock
+from unittest.mock import patch
+
+from requests import Request
+from requests import RequestException
+from schematics.exceptions import DataError
 
 from osdf.apps import baseapp
+from osdf.apps.baseapp import app
 from osdf.operation.exceptions import BusinessException
-from requests import Request, RequestException
-from schematics.exceptions import DataError
-from unittest import mock, TestCase
-from unittest.mock import patch
 
 
 class TestOSDFApp(TestCase):
 
     def setUp(self):
-        self.patcher_g = patch('osdf.apps.baseapp.g', return_value={'request_id':'DUMMY-REQ'})
-        self.Mock_g = self.patcher_g.start()
+        with app.app_context():
+            self.patcher_g = patch('osdf.apps.baseapp.g', return_value={'request_id': 'DUMMY-REQ'})
+            self.Mock_g = self.patcher_g.start()
         # self.patcher2 = patch('package.module.Class2')
         # self.MockClass2 = self.patcher2.start()
 
@@ -45,7 +50,7 @@ class TestOSDFApp(TestCase):
         e.response.content = "Some request exception occurred"
         # request().raise_for_status.side_effect = e
         return e
- 
+
     def test_handle_business_exception(self):
         e = BusinessException("Business Exception Description")
         resp = baseapp.handle_business_exception(e)
@@ -67,9 +72,8 @@ class TestOSDFApp(TestCase):
         assert resp.status_code == 500
 
     def test_get_options_default(self):
-        opts = baseapp.get_options(["PROG"])  # ensure nothing breaks
+        baseapp.get_options(["PROG"])  # ensure nothing breaks
 
 
 if __name__ == "__main__":
     unittest.main()
-

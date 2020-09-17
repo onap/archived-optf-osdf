@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------
-#   Copyright (c) 2017-2018 AT&T Intellectual Property
+#   Copyright (c) 2020 AT&T Intellectual Property
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -16,6 +16,20 @@
 # -------------------------------------------------------------------------
 #
 
-import yaml
 
-yaml.warnings({'YAMLLoadWarning': False})
+__all__ = ["patch_all"]
+
+from onaplogging.logWatchDog import patch_loggingYaml
+
+from osdf.logging.oof_mdc_context import patch_logging_mdc
+
+
+def patch_all(mdc=True, yaml=True):
+    """monkey patch osdf logging to enable mdc
+
+    """
+    if mdc is True:
+        patch_logging_mdc()
+
+    if yaml is True:
+        patch_loggingYaml()

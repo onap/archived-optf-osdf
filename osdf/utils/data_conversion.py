@@ -16,8 +16,8 @@
 # -------------------------------------------------------------------------
 #
 
-import itertools
 from collections import defaultdict
+import itertools
 
 from dateutil import tz
 from dateutil.parser import parse
@@ -25,6 +25,7 @@ from dateutil.parser import parse
 
 def tuples_to_multi_val_dict(kvw_tuples, colnums=(0, 1)):
     """Given a list of k,v tuples, get a dictionary of the form k -> [v1,v2,...,vn]
+
     :param kvw_tuples: list of k,v,w tuples (e.g. [(k1,v1,a1), (k2,v2,a2), (k1,v3,a3), (k1,v4,a4)]
     :param colnums: column numbers
     :return: a dict of str:set, something like {k1: {v1, v3, v4}, k2: {v2}} or {k1: {a1, a3, a4}, k2: {a2}}
@@ -38,6 +39,7 @@ def tuples_to_multi_val_dict(kvw_tuples, colnums=(0, 1)):
 
 def tuples_to_dict(kvw_tuples, colnums=(0, 1)):
     """Given a list of k,v tuples, get a dictionary of the form k -> v
+
     :param kvw_tuples: list of k,v,w tuples (e.g. [(k1,v1,a1), (k2,v2,a2), (k3,v3,a3), (k1,v4,a4)]
     :param colnums: column numbers
     :return: a dict; something like {k1: v4, k2: v2, k3: v3} (note, k1 is repeated, so last val is retained)
@@ -46,13 +48,17 @@ def tuples_to_dict(kvw_tuples, colnums=(0, 1)):
 
 
 def utc_time_from_ts(timestamp):
-    """Return corresponding UTC timestamp for a given ISO timestamp (or anything that parse accepts)"""
+    """Return corresponding UTC timestamp for a given ISO timestamp (or anything that parse accepts)
+
+    """
     return parse(timestamp).astimezone(tz.tzutc()).strftime('%Y-%m-%d %H:%M:%S')
 
 
-def list_flatten(l):
-    """Flatten a complex nested list of nested lists into a flat list"""
-    return itertools.chain(*[list_flatten(j) if isinstance(j, list) else [j] for j in l])
+def list_flatten(_l):
+    """Flatten a complex nested list of nested lists into a flat list
+
+    """
+    return itertools.chain(*[list_flatten(j) if isinstance(j, list) else [j] for j in _l])
 
 
 text_to_symbol = {
@@ -60,3 +66,10 @@ text_to_symbol = {
     'less': "<",
     'equal': "="
 }
+
+
+def decode_data(data):
+    """Decode bytes to string
+
+    """
+    return data.decode(encoding='utf-8') if isinstance(data, bytes) else data
