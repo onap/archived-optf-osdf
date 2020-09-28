@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "943c64d8_74efb779",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-09-28T17:00:44Z",
+      "side": 1,
+      "message": "Model type is not required. You are not using it anywhere in the methods",
+      "range": {
+        "startLine": 32,
+        "startChar": 50,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "b2d594cbea6adf40144d4a3afcac7c8b6f910de0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9019486c_18f2981d",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-09-28T17:00:44Z",
+      "side": 1,
+      "message": "You can use the multiline doc string itself. Just add a new line after the first line.",
+      "range": {
+        "startLine": 43,
+        "startChar": 9,
+        "endLine": 46,
+        "endChar": 39
+      },
+      "revId": "b2d594cbea6adf40144d4a3afcac7c8b6f910de0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb092f6a_cca49b5b",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-09-28T17:00:44Z",
+      "side": 1,
+      "message": "The solution object should be wrapped into the response body before sending. Refer return statement of the old code. But the status should be completed.",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 16
+      },
+      "revId": "b2d594cbea6adf40144d4a3afcac7c8b6f910de0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c0aa82_23bc1683",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-09-28T17:00:44Z",
+      "side": 1,
+      "message": "Not catching this exception will result in not sending the asynchronous response. Please catch this in the calling method and send an asynchronous response with the error status",
+      "range": {
+        "startLine": 89,
+        "startChar": 18,
+        "endLine": 89,
+        "endChar": 21
+      },
+      "revId": "b2d594cbea6adf40144d4a3afcac7c8b6f910de0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
