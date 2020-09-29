@@ -16,14 +16,18 @@
 # -------------------------------------------------------------------------
 #
 
-from schematics.types import BaseType, StringType, URLType, IntType
-from schematics.types.compound import ModelType, ListType, DictType
-
 from osdf.models.api.common import OSDFModel
-from osdf.logging.osdf_logging import MH, audit_log
+from schematics.types import BaseType
+from schematics.types.compound import DictType
+from schematics.types.compound import ModelType
+from schematics.types import IntType
+from schematics.types import StringType
+from schematics.types import URLType
+
 
 class RequestInfo(OSDFModel):
     """Info for northbound request from client such as SO"""
+
     transactionId = StringType(required=True)
     requestId = StringType(required=True)
     callbackUrl = URLType(required=True)
@@ -32,17 +36,8 @@ class RequestInfo(OSDFModel):
     timeout = IntType()
 
 
-class ServiceProfile(OSDFModel):
-    """Information specific to   ServiceProfile """
-   # resourceName = StringType(required=True)
-   # resourceId = StringType(required=True)
-    serviceProfileParameters = DictType(BaseType)
-
-
-
-
 class NSTSelectionAPI(OSDFModel):
     """Request for NST selection """
-    requestInfo = ModelType(RequestInfo, required=True)
-    serviceProfile = ModelType(ServiceProfile, required=True)
 
+    requestInfo = ModelType(RequestInfo, required=True)
+    serviceProfile = DictType(BaseType)
