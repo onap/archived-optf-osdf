@@ -31,18 +31,8 @@ class RequestInfo(OSDFModel):
     sourceId = StringType(required=True)
     timeout = IntType()
 
-
-class ServiceProfile(OSDFModel):
-    """Information specific to   ServiceProfile """
-   # resourceName = StringType(required=True)
-   # resourceId = StringType(required=True)
-    serviceProfileParameters = DictType(BaseType)
-
-
-
-
 class NSTSelectionAPI(OSDFModel):
     """Request for NST selection """
     requestInfo = ModelType(RequestInfo, required=True)
-    serviceProfile = ModelType(ServiceProfile, required=True)
+    serviceProfile = DictType(BaseType)
 
