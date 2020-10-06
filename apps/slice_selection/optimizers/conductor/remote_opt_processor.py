@@ -35,6 +35,7 @@ from osdf.utils.mdc_utils import mdc_from_json
 
 class SliceSelectionOptimizer(Thread):
     def __init__(self, osdf_config, slice_config, request_json, model_type):
+        super().__init__()
         self.osdf_config = osdf_config
         self.slice_config = slice_config
         self.request_json = request_json

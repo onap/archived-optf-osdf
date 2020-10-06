@@ -33,7 +33,7 @@
       {% set comma=joiner(",") %}
       {% for elem in optimization_policies %} {{ comma() }}
         {% for key, value in elem.items() %}
-          "{{key}}": {{ json.dumps(value) }}
+          "{{key}}": {{ json.dumps(value) }} {{ ", " if not loop.last }}
         {% endfor %}
       {% endfor %}
     }

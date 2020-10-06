@@ -86,10 +86,11 @@ policy_info:
         policy_scope:
             -
                 scope:
-                  - OSDF_GUILIN
                   - get_param: resource_sharing_level
                   - get_param: reuse_preference
                 services:
+                    - get_param: service_name
+                resources:
                     - get_param: service_name
 
     subnet_selection:
@@ -98,6 +99,8 @@ policy_info:
             - scope:
                   - OSDF_GUILIN
               services:
+                  - get_param: service_name
+              resources:
                   - get_param: service_name
 
     placement:
