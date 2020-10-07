@@ -16,6 +16,24 @@
       "revId": "1668918950d5590aab82710852257c8f8b89642d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d75399_db53e9a7",
+        "filename": "docs/conf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-10-07T15:13:49Z",
+      "side": 1,
+      "message": "Yes. That\u0027s my bad. Thanks for bringing it into the notice. Let me fix it.",
+      "parentUuid": "188bdeeb_c49911fc",
+      "revId": "1668918950d5590aab82710852257c8f8b89642d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
