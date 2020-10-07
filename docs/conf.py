@@ -21,7 +21,7 @@ redoc = [
 		    {
 		        'name': 'OPTENG API',
 		        'page': 'sections/opteng-api',
-		        'spec': './api/swagger/oof-osdf-has-api.json',
+		        'spec': './api/swagger/oof-optf-opteng-api.json',
 		        'embed': True,
 		    }
         ]
