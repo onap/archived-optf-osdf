@@ -24,8 +24,7 @@
                 "embb-nst"
             ],
             "scope": [
-                "REUSE",
-                "SHARED"
+                "shared,reuse"
             ],
             "services": [
                 "embb-nst"

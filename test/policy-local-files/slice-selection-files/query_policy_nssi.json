@@ -10,7 +10,7 @@
                },
                "properties":{
                   "scope":[
-                     "SHARED"
+                     "OSDF_GUILIN"
                   ],
                   "services":[
                      "embb-cn"
@@ -25,6 +25,14 @@
                      {
                         "attribute":"reliability",
                         "attribute_location":"reliability"
+                     },
+                     {
+                        "attribute":"model_invariant_id",
+                        "attribute_location":"invariantUUID"
+                     },
+                     {
+                        "attribute":"model_version_id",
+                        "attribute_location":"UUID"
                      }
                   ]
                }

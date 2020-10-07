@@ -64,12 +64,9 @@ references:
     subscriber_role:
         source: onap.policies.optimization.SubscriberPolicy
         value: properties.properties.subscriberRole
-    resource_sharing_level:
+    slice_scope:
         source: request
-        value: serviceProfile.resourceSharingLevel
-    reuse_preference:
-        source: request
-        value: preferReuse
+        value: slice_scope
 
 policy_info:
     prioritization_attributes:
@@ -86,8 +83,7 @@ policy_info:
         policy_scope:
             -
                 scope:
-                  - get_param: resource_sharing_level
-                  - get_param: reuse_preference
+                  - get_param: slice_scope
                 services:
                     - get_param: service_name
                 resources:
