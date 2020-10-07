@@ -9,8 +9,8 @@
                   "identity":"vnf_URLLC",
                   "resources":["embb-nst"],
                   "scope":[
-                     "OSDF_GUILIN",
-                     "shared"
+                     "shared,reuse",
+                     "shared,create_new"
                   ],
                   "services":[
                      "embb-nst"
@@ -19,8 +19,8 @@
                   "vnfProperties":[
                      {
                         "attributes":{
-                           "modelInvariantId":"bfbg3636-e39c-iidd-0987-27c28f4oo3",
-                           "modelVersionId":"bfbg3636-e39c-iidd-0987-27c28f4d33",
+                           "modelInvariantId":{"get_param":"model_invariant_id"},
+                           "modelVersionId":{"get_param":"model_version_id"},
                            "environment-context":"shared",
                            "service-role":"nsi"
                         },
@@ -33,6 +33,11 @@
                      },
                      {
                         "attributes":{
+                           "service_profile": {
+                              "latency": {"value": {"get_param": "latency"}, "operator": "lte"},
+                              "reliability": {"value": {"get_param": "reliability"}, "operator": "gte"}                           
+                           },
+                           "subnets": {
                            "core":{
                               "latency":{
                                  "max":{"get_param":"latency"},
@@ -71,6 +76,7 @@
                                     99.99
                                  ]
                               }
+                           }
                            }
                         },
                         "inventoryProvider":"generator",

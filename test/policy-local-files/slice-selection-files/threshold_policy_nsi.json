@@ -14,7 +14,9 @@
                      "embb-nst"
                   ],
                   "scope":[
-                     "OSDF_GUILIN"
+                     "shared,reuse",
+                     "shared,create_new",
+                     "not-shared"
                   ],
                   "services":[
                      "embb-nst"

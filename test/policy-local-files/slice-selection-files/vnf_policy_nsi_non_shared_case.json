@@ -9,8 +9,7 @@
                   "identity":"vnf_URLLC",
                   "resources":["embb-nst"],
                   "scope":[
-                     "OSDF_GUILIN",
-                     "non-shared"
+                     "not-shared"
                   ],
                   "services":[
                      "embb-nst"
@@ -19,6 +18,11 @@
                   "vnfProperties":[
                         {
                         "attributes":{
+                           "service_profile": {
+                              "latency": {"value": {"get_param": "latency"}, "operator": "lte"},
+                              "reliability": {"value": {"get_param": "reliability"}, "operator": "gte"}                           
+                           },
+                           "subnets": { 
                            "core":{
                               "latency":{
                                  "max":{"get_param":"latency"},
@@ -57,6 +61,7 @@
                                     99.99
                                  ]
                               }
+                           }
                            }
                         },
                         "inventoryProvider":"generator",

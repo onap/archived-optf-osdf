@@ -78,7 +78,7 @@ class SliceSelectionOptimizer(Thread):
         model_info = self.request_json.get(app_info['model_info'])
         model_name = model_info['name']
         policies = self.get_app_policies(model_name, app_info['app_name'])
-        request_parameters = self.get_request_parameters(requirements)
+        request_parameters = self.get_request_parameters(requirements, model_info)
 
         demands = [
             {
@@ -106,7 +106,7 @@ class SliceSelectionOptimizer(Thread):
             if self.request_json.get('subnetCapabilities') else []
         return self.response_processor.process_response(recommendations, model_info, subnets)
 
-    def get_request_parameters(self, requirements):
+    def get_request_parameters(self, requirements, model_info):
         camel_to_snake = self.slice_config['attribute_mapping']['camel_to_snake']
         request_params = {camel_to_snake[key]: value for key, value in requirements.items()}
         subnet_capabilities = self.request_json.get('subnetCapabilities')
@@ -116,11 +116,16 @@ class SliceSelectionOptimizer(Thread):
                 capability_details = subnet_capability['capabilityDetails']
                 for key, value in capability_details.items():
                     request_params[f"{domain_type}{camel_to_snake[key]}"] = value
+        request_params.update(model_info)
         return request_params
 
     def get_app_policies(self, model_name, app_name):
         policy_request_json = self.request_json.copy()
         policy_request_json['serviceInfo'] = {'serviceName': model_name}
-        if 'preferReuse' in self.request_json:
-            policy_request_json['preferReuse'] = "reuse" if self.request_json['preferReuse'] else "create_new"
+        if 'serviceProfile' in self.request_json:
+            slice_scope = self.request_json['serviceProfile']['resourceSharingLevel']
+            if 'preferReuse' in self.request_json and slice_scope == "shared":
+                slice_scope = slice_scope + "," + ("reuse" if self.request_json['preferReuse'] else "create_new")
+            policy_request_json['slice_scope'] = slice_scope
+        debug_log.debug("policy_request_json {}".format(str(policy_request_json)))
         return get_policies(policy_request_json, app_name)

@@ -9,7 +9,7 @@
                   "identity":"vnf_URLLC",
                   "resources":["embb-cn"],
                   "scope":[
-                     "SHARED"
+                     "OSDF_GUILIN"
                   ],
                   "services":[
                      "embb-cn"
@@ -18,8 +18,8 @@
                   "vnfProperties":[
                      {
                         "attributes":{
-                           "modelInvariantId":"bfbg3636-e39c-iidd-0987-27c28f4oo3",
-                           "modelVersionId":"bfbg3636-e39c-iidd-0987-27c28f4d33",
+                           "modelInvariantId":{"get_param":"model_invariant_id"},
+                           "modelVersionId":{"get_param":"model_version_id"},
                            "environment-context":"shared",
                            "service-role":"nssi"
                         },
