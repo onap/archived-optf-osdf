@@ -7,7 +7,7 @@
       {
          "existingNSI": false,
          "newNSISolution": {
-            "slice_profiles": [
+            "sliceProfiles": [
                {
                   "domainType": "AN",
                   "resourceSharingLevel": "shared",
