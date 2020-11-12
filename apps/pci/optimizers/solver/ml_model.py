@@ -16,6 +16,8 @@
 # -------------------------------------------------------------------------
 #
 
+import json
+
 from osdf.adapters.dcae import des
 from osdf.adapters.dcae.des import DESException
 from osdf.config.base import osdf_config
@@ -53,7 +55,7 @@ class MlModel(object):
         request_data = self.config['DES']['filter']
         request_data['cell_id'] = cell_id
         try:
-            result = des.extract_data(service_id, request_data)
+            result = des.extract_data(service_id, json.dumps(request_data))
         except DESException as e:
             error_log.error("Error while calling DES {}".format(e))
             return 0, 0
@@ -63,7 +65,7 @@ class MlModel(object):
 
         ho_list = []
         for pm_data in result:
-            ho = sum([int(meas['hashMap']['InterEnbOutAtt_X2HO']) for meas in pm_data['additionalMeasurements']])
+            ho = pm_data['overallHoAtt']
             ho_list.append(ho)
 
         return sum(ho_list) / len(ho_list), ho_list[0]
