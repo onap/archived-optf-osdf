@@ -67,7 +67,7 @@ class ResponseProcessor(object):
             return {
                 'existingNSI': False,
                 'newNSISolution': {
-                    'slice_profiles': self.get_slice_profiles_from_candidate(candidate, subnets)
+                    'sliceProfiles': self.get_slice_profiles_from_candidate(candidate, subnets)
                 }
             }
 

@@ -114,7 +114,7 @@ class SliceSelectionOptimizer(Thread):
         subnet_capabilities = self.request_json.get('subnetCapabilities')
         if subnet_capabilities:
             for subnet_capability in subnet_capabilities:
-                domain_type = f"{subnet_capability['domainType'].lower().replace('-', '_')}_"
+                domain_type = f"{subnet_capability['domainType']}_"
                 capability_details = subnet_capability['capabilityDetails']
                 for key, value in capability_details.items():
                     request_params[f"{domain_type}{camel_to_snake[key]}"] = value
