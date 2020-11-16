@@ -48,7 +48,7 @@ class MlModel(object):
                 fixed_cells.add(cell_id)
 
         fixed_cells.update(dzn_data.get('PCI_UNCHANGEABLE_CELLS', []))
-        dzn_data['PCI_UNCHANGEABLE_CELLS'] = list(fixed_cells)
+        dzn_data['PCI_UNCHANGEABLE_CELLS'] = fixed_cells
 
     def get_ho_details(self, cell_id):
         service_id = self.config['DES']['service_id']

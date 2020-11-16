@@ -48,7 +48,7 @@ class TestMlModel(unittest.TestCase):
             'NEIGHBORS': [],
             'NUM_SECOND_LEVEL_NEIGHBORS': 1,
             'SECOND_LEVEL_NEIGHBORS': [],
-            'PCI_UNCHANGEABLE_CELLS': [],
+            'PCI_UNCHANGEABLE_CELLS': {},
             'ORIGINAL_PCIS': []
         }
 
@@ -70,18 +70,18 @@ class TestMlModel(unittest.TestCase):
         self.Mock_req = self.patcher_req.start()
         mlmodel = MlModel()
         mlmodel.get_additional_inputs(dzn_data, network_cell_info)
-        self.assertEqual(['Chn0001'], dzn_data['PCI_UNCHANGEABLE_CELLS'])
+        self.assertEqual({'Chn0001'}, dzn_data['PCI_UNCHANGEABLE_CELLS'])
         self.patcher_req.stop()
 
         dzn_data['PCI_UNCHANGEABLE_CELLS'] = []
         self.patcher_req = patch('osdf.adapters.dcae.des.extract_data', side_effect=DESException('error'))
         self.Mock_req = self.patcher_req.start()
         mlmodel.get_additional_inputs(dzn_data, network_cell_info)
-        self.assertEqual([], dzn_data['PCI_UNCHANGEABLE_CELLS'])
+        self.assertEqual(set() , dzn_data['PCI_UNCHANGEABLE_CELLS'])
         self.patcher_req.stop()
 
         self.patcher_req = patch('osdf.adapters.dcae.des.extract_data', return_value=[])
         self.Mock_req = self.patcher_req.start()
         mlmodel.get_additional_inputs(dzn_data, network_cell_info)
-        self.assertEqual([], dzn_data['PCI_UNCHANGEABLE_CELLS'])
+        self.assertEqual(set() , dzn_data['PCI_UNCHANGEABLE_CELLS'])
         self.patcher_req.stop()
