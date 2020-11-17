@@ -6,6 +6,96 @@
 =============
 Release Notes
 =============
+
+..      ===========================
+..      * * *   GUILIN   * * *
+..      ===========================
+
+Abstract
+========
+
+This document provides the release notes for the Guilin release.
+
+Summary
+=======
+
+
+Release Data
+============
+
+
++--------------------------------------+--------------------------------------+
+| **OOF Project**                      |                                      |
+|                                      |                                      |
++--------------------------------------+--------------------------------------+
+| **Docker images**                    |   optf-osdf 3.0.2                    |
+|                                      |                                      |
+|                                      |                                      |
++--------------------------------------+--------------------------------------+
+| **Release designation**              | 7.0.0 guilin                         |
+|                                      |                                      |
++--------------------------------------+--------------------------------------+
+| **Release date**                     | 2020-11-19 (TBD)                     |
+|                                      |                                      |
++--------------------------------------+--------------------------------------+
+
+
+New features
+------------
+
+- NSI selection enhancements
+- Support for NSSI selection
+- Support for NSI/NSSI Termination
+- Support for Inter domain route optimization
+- Support for ML based SON optimization
+- Upgrade python version to 3.8
+
+Bug Fixes
+---------
+
+- OPTFRA-839  Remove python 2.7 from OSDF docker image
+- OPTFRA-855  Fix slice selection API
+- OPTFRA-852  Callback implementation for NST selection
+
+Known Limitations, Issues and Workarounds
+=========================================
+
+System Limitations
+------------------
+
+
+Known Vulnerabilities
+---------------------
+
+
+Workarounds
+-----------
+
+
+Security Notes
+--------------
+
+
+References
+==========
+
+For more information on the ONAP Guilin release, please see:
+
+#. `ONAP Home Page`_
+#. `ONAP Documentation`_
+#. `ONAP Release Downloads`_
+#. `ONAP Wiki Page`_
+
+
+.. _`ONAP Home Page`: https://www.onap.org
+.. _`ONAP Wiki Page`: https://wiki.onap.org
+.. _`ONAP Documentation`: https://docs.onap.org
+.. _`ONAP Release Downloads`: https://git.onap.org
+
+Quick Links:
+    - `OOF project page`_
+    - `Passing Badge information for OOF`_
+
 ..      ===========================
 ..      * * *    FRANKFURT    * * *
 ..      ===========================
