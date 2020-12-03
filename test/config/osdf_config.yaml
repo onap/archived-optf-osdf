@@ -79,3 +79,11 @@ desHeaders:
   Content-Type: application/json
 desUsername:
 desPassword:
+
+#consulconfig
+consulHost: '127.0.0.1'
+consulPort: 8500
+consulScheme: 'http'
+consulVerify: True
+consulCert: None
+activateConsulConfig: False
