@@ -72,3 +72,11 @@ pciHMSPassword: passwd
 
 #key
 #appkey: os35@rrtky400fdntc#001t5
+
+#consulconfig
+consulHost: '127.0.0.1'
+consulPort: 8500
+consulScheme: 'http'
+consulVerify: True
+consulCert: None
+activateConsulConfig: True

@@ -22,6 +22,8 @@ import os
 import osdf.config.credentials as creds
 import osdf.config.loader as config_loader
 from osdf.utils.programming_utils import DotDict
+from osdf.config.consulconfig import call_consul_kv
+from threading import Thread
 
 config_spec = {
     "deployment": os.environ.get("OSDF_CONFIG_FILE", "config/osdf_config.yaml"),
@@ -39,3 +41,11 @@ http_basic_auth_credentials = creds.load_credentials(osdf_config)
 dmaap_creds = creds.dmaap_creds()
 
 creds_prefixes = {"so": "so", "cm": "cmPortal", "pcih": "pciHMS"}
+
+osdf_config_deployment = osdf_config.deployment
+
+activateConsul = osdf_config_deployment['activateConsulConfig']
+
+if activateConsul:
+    consulthread1 = Thread(target=call_consul_kv, args=(osdf_config,))
+    consulthread1.start()
