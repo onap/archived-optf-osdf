@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be3e0135_d3b593c5",
+        "filename": "osdf/config/base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-12-18T05:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f043466_e4a19741",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 67
+      },
+      "revId": "9477d226546e935ee3f4359f82247b1b4a7c69e6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53f293b3_53436a95",
         "filename": "osdf/config/base.py",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "9477d226546e935ee3f4359f82247b1b4a7c69e6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aaff891_f356bfe6",
+        "filename": "osdf/config/base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-12-18T05:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53f293b3_53436a95",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 17
+      },
+      "revId": "9477d226546e935ee3f4359f82247b1b4a7c69e6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a9a0a4b3_4c4eb50a",
+        "filename": "osdf/config/consulconfig.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-12-18T05:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c313322_792f7eb8",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "9477d226546e935ee3f4359f82247b1b4a7c69e6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e73b16a7_e76bcc15",
         "filename": "osdf/config/consulconfig.py",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "bed57f12_3df50bbd",
+        "filename": "osdf/config/consulconfig.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-12-18T05:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e73b16a7_e76bcc15",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "9477d226546e935ee3f4359f82247b1b4a7c69e6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab584167_6812247a",
         "filename": "requirements.txt",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "9477d226546e935ee3f4359f82247b1b4a7c69e6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90943dae_f621a3d8",
+        "filename": "requirements.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2020-12-18T05:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab584167_6812247a",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 7
+      },
+      "revId": "9477d226546e935ee3f4359f82247b1b4a7c69e6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
