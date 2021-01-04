@@ -45,7 +45,7 @@ def get_aai_data(request_json, osdf_config):
     aai_req_url = aai_url + config["aaiServiceInstanceUrl"] + nxi_id + "?depth=2"
 
     try:
-        response = requests.get(aai_req_url, aai_headers, auth=HTTPBasicAuth("AAI", "AAI"), verify=False)
+        response = requests.get(aai_req_url, headers=aai_headers, auth=HTTPBasicAuth("AAI", "AAI"), verify=False)
     except RequestException as e:
         raise AAIException("Request exception was encountered {}".format(e))
 
