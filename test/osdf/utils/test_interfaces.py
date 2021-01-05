@@ -16,11 +16,12 @@
 # -------------------------------------------------------------------------
 #
 import requests
-import unittest
-
 from requests.models import Response
-from osdf.utils.interfaces import RestClient, get_rest_client
+import unittest
 from unittest.mock import patch
+
+from osdf.utils.interfaces import get_rest_client
+from osdf.utils.interfaces import RestClient
 
 
 m1 = Response()
@@ -39,7 +40,7 @@ class TestOsdfUtilsInterfaces(unittest.TestCase):
     def test_rc_request(self, mock_good_response):
         rc = RestClient()
         rc.add_headers({})
-        rc.request(req_id="testReq")
+        rc.request(url="http://localhost", req_id="testReq")
 
     @patch('requests.request', return_value=mock_good_response)
     def test_rc_request_v1(self, mock_good_response):
@@ -53,7 +54,7 @@ class TestOsdfUtilsInterfaces(unittest.TestCase):
     def test_rc_request_v2(self, mock_bad_response):
         rc = RestClient()
         try:
-            rc.request()
+            rc.request(url="http://localhost")
         except requests.RequestException:
             return
         raise Exception("Allows bad requests instead of raising exception")
@@ -66,4 +67,3 @@ class TestOsdfUtilsInterfaces(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

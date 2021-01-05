@@ -72,7 +72,7 @@ aaiUrl: "https://aai.url:30233"
 aaiServiceInstanceUrl : "/aai/v20/nodes/service-instances/service-instance/"
 
 #DES api
-desUrl: https://des.url:9000
+desUrl: http://des.url:9000
 desApiPath: /datalake/v1/exposure/
 desHeaders:
   Accept: application/json

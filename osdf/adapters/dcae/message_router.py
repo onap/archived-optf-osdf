@@ -17,8 +17,10 @@
 #
 
 import requests
-from osdf.utils.data_types import list_like
+
 from osdf.operation.exceptions import MessageBusConfigurationException
+from osdf.utils.data_types import list_like
+from osdf.utils.interfaces import RestClient
 
 
 class MessageRouterClient(object):
@@ -27,7 +29,8 @@ class MessageRouterClient(object):
                  consumer_group_id=':',
                  timeout_ms=15000, fetch_limit=1000,
                  userid_passwd=':'):
-        """
+        """Class initializer
+
         :param dmaap_url: protocol, host and port; can also be a list of URLs
                (e.g. https://dmaap-host.onapdemo.onap.org:3905/events/org.onap.dmaap.MULTICLOUD.URGENT),
                can also be a list of such URLs
@@ -44,14 +47,14 @@ class MessageRouterClient(object):
         self.topic_urls = [dmaap_url] if not list_like(dmaap_url) else dmaap_url
         self.timeout_ms = timeout_ms
         self.fetch_limit = fetch_limit
-        userid, passwd = userid_passwd.split(':')
-        self.auth = (userid, passwd) if userid and passwd else None
+        self.userid, self.passwd = userid_passwd.split(':')
         consumer_group, consumer_id = consumer_group_id.split(':')
         self.consumer_group = consumer_group
         self.consumer_id = consumer_id
 
     def get(self, outputjson=True):
         """Fetch messages from message router (DMaaP or UEB)
+
         :param outputjson: (optional, specifies if response is expected to be in json format), ignored for "POST"
         :return: response as a json object (if outputjson is True) or as a string
         """
@@ -61,7 +64,7 @@ class MessageRouterClient(object):
         for url in urls[:-1]:
             try:
                 return self.http_request(method='GET', url=url, outputjson=outputjson)
-            except:
+            except Exception:
                 pass
         return self.http_request(method='GET', url=urls[-1], outputjson=outputjson)
 
@@ -69,13 +72,13 @@ class MessageRouterClient(object):
         for url in self.topic_urls[:-1]:
             try:
                 return self.http_request(method='POST', url=url, inputjson=inputjson, msg=msg)
-            except:
+            except Exception:
                 pass
         return self.http_request(method='POST', url=self.topic_urls[-1], inputjson=inputjson, msg=msg)
 
     def http_request(self, url, method, inputjson=True, outputjson=True, msg=None, **kwargs):
-        """
-        Perform the actual URL request (GET or POST), and do error handling
+        """Perform the actual URL request (GET or POST), and do error handling
+
         :param url: full URL (including topic, limit, timeout, etc.)
         :param method: GET or POST
         :param inputjson: Specify whether input is in json format (valid only for POST)
@@ -83,9 +86,15 @@ class MessageRouterClient(object):
         :param msg: content to be posted (valid only for POST)
         :return: response as a json object (if outputjson or POST) or as a string; None if error
         """
-        res = requests.request(url=url, method=method, auth=self.auth, **kwargs)
-        if res.status_code == requests.codes.ok:
-            return res.json() if outputjson or method == "POST" else res.content
-        else:
-            raise Exception("HTTP Response Error: code {}; headers:{}, content: {}".format(
-                res.status_code, res.headers, res.content))
+
+        rc = RestClient(userid=self.userid, passwd=self.passwd, url=url, method=method)
+        try:
+            res = rc.request(raw_response=True, data=msg, **kwargs)
+            if res.status_code == requests.codes.ok:
+                return res.json() if outputjson or method == "POST" else res.content
+            else:
+                raise Exception("HTTP Response Error: code {}; headers:{}, content: {}".format(
+                    res.status_code, res.headers, res.content))
+
+        except requests.RequestException as ex:
+            raise Exception("Request Exception occurred {}".format(str(ex)))

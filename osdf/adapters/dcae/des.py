@@ -17,9 +17,10 @@
 #
 
 import requests
-from requests.auth import HTTPBasicAuth
+from requests.exceptions import HTTPError
 
 from osdf.config.base import osdf_config
+from osdf.utils.interfaces import RestClient
 
 
 class DESException(Exception):
@@ -36,16 +37,14 @@ def extract_data(service_id, request_data):
 
     config = osdf_config.deployment
     user, password = config['desUsername'], config['desPassword']
-    auth = HTTPBasicAuth(user, password)
     headers = config["desHeaders"]
     req_url = config["desUrl"] + config["desApiPath"] + service_id
+    rc = RestClient(userid=user, passwd=password, url=req_url, headers=headers, method="POST")
 
     try:
-        response = requests.post(req_url, data=request_data, headers=headers, auth=auth, verify=False)
+        response_json = rc.request(data=request_data)
+        return response_json.get("result")
     except requests.RequestException as e:
         raise DESException("Request exception was encountered {}".format(e))
-
-    if response.status_code == 200:
-        return response.json().get("result")
-    else:
-        raise DESException("Response code other than 200. Response code: {}".format(response.status_code))
+    except HTTPError as ex:
+        raise DESException("Response code other than 200. Response code: {}".format(ex.response.status_code))

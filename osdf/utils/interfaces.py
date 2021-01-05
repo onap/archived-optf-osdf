@@ -20,12 +20,15 @@ import json
 import requests
 import yaml
 
-from osdf.config.base import osdf_config, creds_prefixes
-from osdf.logging.osdf_logging import MH, debug_log
+from osdf.config.base import creds_prefixes
+from osdf.config.base import osdf_config
+from osdf.logging.osdf_logging import debug_log
+from osdf.logging.osdf_logging import MH
 
 
 def get_rest_client(request_json, service):
     """Get a RestClient based on request_json's callback URL and osdf_config's credentials based on service name
+
     :param request_json:
     :param service: so or cm
     :return: rc -- RestClient
@@ -53,7 +56,7 @@ class RestClient(object):
     """Simple REST Client that supports get/post and basic auth"""
 
     def __init__(self, userid=None, passwd=None, log_func=None, url=None, timeout=None, headers=None,
-                 method="POST", req_id=None):
+                 method="POST", req_id=None, verify=None):
         self.auth = (userid, passwd) if userid and passwd else None
         self.headers = headers if headers else {}
         self.method = method
@@ -61,13 +64,15 @@ class RestClient(object):
         self.log_func = log_func
         self.timeout = (30, 90) if timeout is None else timeout
         self.req_id = req_id
+        self.verify = verify
 
     def add_headers(self, headers):
         self.headers.update(headers)
 
     def request(self, url=None, method=None, asjson=True, ok_codes=(2, ),
                 raw_response=False, noresponse=False, timeout=None, **kwargs):
-        """
+        """Sends http request to the specified url
+
         :param url: REST end point to query
         :param method: GET or POST (default is None => self.method)
         :param asjson: whether the expected response is in json format
@@ -83,9 +88,16 @@ class RestClient(object):
         else:
             debug_log.debug("Requesting URL: {} for request ID: {}".format(url or self.url, self.req_id))
 
+        if not url:
+            url = self.url
+        if not self.verify and url.startswith("https"):
+            verify = osdf_config.deployment["aaf_ca_certs"]
+        else:
+            verify = self.verify
+
         res = requests.request(url=url or self.url, method=method or self.method,
                                auth=self.auth, headers=self.headers,
-                               timeout=timeout or self.timeout, **kwargs)
+                               timeout=timeout or self.timeout, verify=verify, **kwargs)
 
         if self.log_func:
             self.log_func(MH.received_http_response(res))

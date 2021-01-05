@@ -60,10 +60,6 @@ RUN groupadd onap \
 COPY onap-osdf-tm/optf-osdf-${MVN_ARTIFACT_VERSION}.zip /tmp/optf-osdf.zip
 COPY onap-osdf-tm/apps /opt/osdf/apps
 RUN unzip -q -o -B /tmp/optf-osdf.zip -d /opt/ && rm -f /tmp/optf-osdf.zip
-RUN mkdir -p /usr/local/share/ca-certificates \
-    && cp /opt/osdf/ssl_certs/aaf_root_ca.cer /usr/local/share/ca-certificates/aafcacert.crt \
-    && chmod 444 /usr/local/share/ca-certificates/aafcacert.crt \
-    && update-ca-certificates
 
 RUN mkdir -p /var/log/onap/optf/osdf/ \
     && chown -R onap:onap /var/log/onap \
