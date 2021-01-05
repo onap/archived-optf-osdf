@@ -19,6 +19,7 @@
 import requests
 from osdf.utils.data_types import list_like
 from osdf.operation.exceptions import MessageBusConfigurationException
+from osdf.utils.interfaces import RestClient
 
 
 class MessageRouterClient(object):
@@ -44,8 +45,7 @@ class MessageRouterClient(object):
         self.topic_urls = [dmaap_url] if not list_like(dmaap_url) else dmaap_url
         self.timeout_ms = timeout_ms
         self.fetch_limit = fetch_limit
-        userid, passwd = userid_passwd.split(':')
-        self.auth = (userid, passwd) if userid and passwd else None
+        self.userid, self.passwd = userid_passwd.split(':')
         consumer_group, consumer_id = consumer_group_id.split(':')
         self.consumer_group = consumer_group
         self.consumer_id = consumer_id
@@ -83,9 +83,15 @@ class MessageRouterClient(object):
         :param msg: content to be posted (valid only for POST)
         :return: response as a json object (if outputjson or POST) or as a string; None if error
         """
-        res = requests.request(url=url, method=method, auth=self.auth, **kwargs)
-        if res.status_code == requests.codes.ok:
-            return res.json() if outputjson or method == "POST" else res.content
-        else:
-            raise Exception("HTTP Response Error: code {}; headers:{}, content: {}".format(
-                res.status_code, res.headers, res.content))
+
+        rc = RestClient(userid=self.userid, passwd=self.passwd, url=url, method=method)
+        try:
+            res = rc.request(raw_response=True, data=msg, **kwargs)
+            if res.status_code == requests.codes.ok:
+                return res.json() if outputjson or method == "POST" else res.content
+            else:
+                raise Exception("HTTP Response Error: code {}; headers:{}, content: {}".format(
+                    res.status_code, res.headers, res.content))
+
+        except requests.RequestException as ex:
+            raise Exception("Request Exception occurred {}".format(str(ex)))

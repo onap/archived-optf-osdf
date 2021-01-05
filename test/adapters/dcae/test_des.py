@@ -19,6 +19,7 @@
 import mock
 from mock import patch
 from requests import RequestException
+from requests.exceptions import HTTPError
 import unittest
 from osdf.adapters.dcae import des
 from osdf.adapters.dcae.des import DESException
@@ -51,19 +52,20 @@ class TestDes(unittest.TestCase):
         response.status_code = 200
         response.ok = True
         response.json.return_value = response_json
-        self.patcher_req = patch('requests.post', return_value=response)
+        self.patcher_req = patch('requests.request', return_value=response)
         self.Mock_req = self.patcher_req.start()
         self.assertEqual(expected, des.extract_data(service_id, data))
         self.patcher_req.stop()
 
         response = mock.MagicMock()
         response.status_code = 404
-        self.patcher_req = patch('requests.post', return_value=response)
+        response.raise_for_status.side_effect = HTTPError("404")
+        self.patcher_req = patch('requests.request', return_value=response)
         self.Mock_req = self.patcher_req.start()
         self.assertRaises(DESException, des.extract_data, service_id, data)
         self.patcher_req.stop()
 
-        self.patcher_req = patch('requests.post', side_effect=RequestException("error"))
+        self.patcher_req = patch('requests.request', side_effect=RequestException("error"))
         self.Mock_req = self.patcher_req.start()
         self.assertRaises(DESException, des.extract_data, service_id, data)
         self.patcher_req.stop()

@@ -39,7 +39,7 @@ class TestOsdfUtilsInterfaces(unittest.TestCase):
     def test_rc_request(self, mock_good_response):
         rc = RestClient()
         rc.add_headers({})
-        rc.request(req_id="testReq")
+        rc.request(url="http://localhost", req_id="testReq")
 
     @patch('requests.request', return_value=mock_good_response)
     def test_rc_request_v1(self, mock_good_response):
@@ -53,7 +53,7 @@ class TestOsdfUtilsInterfaces(unittest.TestCase):
     def test_rc_request_v2(self, mock_bad_response):
         rc = RestClient()
         try:
-            rc.request()
+            rc.request(url="http://localhost")
         except requests.RequestException:
             return
         raise Exception("Allows bad requests instead of raising exception")
