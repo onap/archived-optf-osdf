@@ -20,9 +20,9 @@ attribute_mapping:
     dLThptPerUE: dl_thpt_per_ue
     uLThptPerUE: ul_thpt_per_ue
     sNSSAI: s_nssai
-    pLMNIdList: plmn_id_list
+    plmnIdList: plmn_id_list
     activityFactor: activity_factor
-    coverageAreaTAList: coverage_area_ta_List
+    coverageAreaTAList: coverage_area_ta_list
     availability: availability
     cSAvailabilityTarget: cs_availability_target
     reliability: reliability
@@ -44,6 +44,9 @@ attribute_mapping:
     expDataRate: exp_data_rate
     security: security
     maxThroughput: max_throughput
+    sliceProfileId: slice_profile_id
+    snssaiList: s_nssai_list
+    domainType: domain_type
 
   snake_to_camel:
     max_bandwidth: maxBandwidth
@@ -56,9 +59,9 @@ attribute_mapping:
     dl_thpt_per_ue: dLThptPerUE
     ul_thpt_per_ue: uLThptPerUE
     s_nssai: sNSSAI
-    plmn_id_list: pLMNIdList
+    plmn_id_list: plmnIdList
     activity_factor: activityFactor
-    coverage_area_ta_List: coverageAreaTAList
+    coverage_area_ta_list: coverageAreaTAList
     availability: availability
     cs_availability_target: cSAvailabilityTarget
     reliability: reliability
@@ -80,3 +83,6 @@ attribute_mapping:
     exp_data_rate: expDataRate
     security: security
     max_throughput: maxThroughput
+    slice_profile_id: sliceProfileId
+    s_nssai_list: snssaiList
+    domain_type: domainType
