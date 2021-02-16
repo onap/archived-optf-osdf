@@ -20,7 +20,7 @@ attribute_mapping:
     dLThptPerUE: dl_thpt_per_ue
     uLThptPerUE: ul_thpt_per_ue
     sNSSAI: s_nssai
-    pLMNIdList: plmn_id_list
+    plmnIdList: plmn_id_list
     activityFactor: activity_factor
     coverageAreaTAList: coverage_area_ta_List
     availability: availability
@@ -44,6 +44,8 @@ attribute_mapping:
     expDataRate: exp_data_rate
     security: security
     maxThroughput: max_throughput
+    sliceProfileId: slice_profile_id
+    snssaiList: s_nssai_list
 
   snake_to_camel:
     max_bandwidth: maxBandwidth
@@ -52,11 +54,11 @@ attribute_mapping:
     latency: latency
     resource_sharing_level: resourceSharingLevel
     ue_mobility_level: uEMobilityLevel
-    max_number_of_ues: maxNumberOfUEs
+    max_number_of_ues: maxNmberOfUEs
     dl_thpt_per_ue: dLThptPerUE
     ul_thpt_per_ue: uLThptPerUE
     s_nssai: sNSSAI
-    plmn_id_list: pLMNIdList
+    plmn_id_list: plmnIdList
     activity_factor: activityFactor
     coverage_area_ta_List: coverageAreaTAList
     availability: availability
@@ -80,3 +82,5 @@ attribute_mapping:
     exp_data_rate: expDataRate
     security: security
     max_throughput: maxThroughput
+    slice_profile_id: sliceProfileId
+    s_nssai_list: snssaiList
