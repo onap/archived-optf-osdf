@@ -40,7 +40,7 @@ aaf_user_roles:
   - '/pci:org.onap.oof.access|*|read ALL'
 
 # Secret Management Service from AAF
-aaf_sms_url: https://aaf-sms.onap:10443
+aaf_sms_url: http://aaf-sms.onap:10443
 aaf_sms_timeout: 30
 secret_domain: osdf
 aaf_ca_certs: ssl_certs/aaf_root_ca.cer
