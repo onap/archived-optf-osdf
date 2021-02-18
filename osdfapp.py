@@ -126,8 +126,10 @@ def do_mdons_route_calc():
 def do_nst_selection():
     request_json = request.get_json()
     req_id = request_json['requestInfo']['requestId']
+    audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
     NSTSelectionAPI(request_json).validate()
-    nst_selection = NstSelection(osdf_config, request_json)
+    audit_log.info(MH.new_worker_thread(req_id, "[for NST selection]"))
+    nst_selection = NstSelection(osdf_config, slice_config, request_json, 'NST')
     nst_selection.start()
     return req_accept(request_id=req_id,
                       transaction_id=request_json['requestInfo']['transactionId'],

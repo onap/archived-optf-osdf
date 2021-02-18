@@ -34,6 +34,7 @@ class RequestInfo(OSDFModel):
     callbackHeader = DictType(BaseType)
     sourceId = StringType(required=True)
     timeout = IntType()
+    numSolutions = IntType()
 
 
 class NSTSelectionAPI(OSDFModel):
