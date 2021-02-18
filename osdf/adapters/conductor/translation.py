@@ -320,7 +320,6 @@ def get_demand_properties(demand, policies):
         prop['filtering_attributes'].update({'equipment-role': policy_property['equipmentRole']}
                                             if 'equipmentRole' in policy_property and policy_property['equipmentRole']
                                             else {})
-
         prop.update(get_candidates_demands(demand))
         demand_properties.append(prop)
     return demand_properties
