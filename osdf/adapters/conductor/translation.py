@@ -304,6 +304,7 @@ def get_demand_properties(demand, policies):
 
         prop.update({'unique': policy_property['unique']} if 'unique' in policy_property and
                                                              policy_property['unique'] else {})
+
         prop['filtering_attributes'] = dict()
         for key, value in policy_property_mapping.items():
             get_demand_attributes(prop, policy_property, key, value)
