@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "700e8883_95ca7e6b",
+        "filename": "apps/nst/models/api/nstSelectionRequest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "Currently SO expects only one solution from OOF, so it does not send numSolutions. We can add this attribute after we receive the request and set it to 1.",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5351be62_7c1adbc6",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "model type is specific to nsi/nssi selection. Here it is not needed here. As you can see, we are not using them in the code anywhere else",
+      "range": {
+        "startLine": 40,
+        "startChar": 63,
+        "endLine": 40,
+        "endChar": 74
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a88702_8139aad7",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "I don\u0027t think you are using slice_config either. You can remove this and from the oasdfapp.py from where you are calling this method",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 49
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc3811b_a6a3941c",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "you can add the numSolutions here. Just add the following next to this line.\nself.request_info[\u0027numSolutions\u0027] \u003d 1",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 60
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60cdb270_69aa7ac8",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "We removed this last time itself, if remember correctly. refer to line 87",
+      "range": {
+        "startLine": 80,
+        "startChar": 58,
+        "endLine": 80,
+        "endChar": 86
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ff3194_00045e55",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "part of old code. It can be removed",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 77
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a496bce1_216ab1ee",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "this portion is not necessary. This is from the old code. You can remove it",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 60
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9870e06_bdd9c8b6",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "This logic is for setting the scope field to fetch the policy. We use only service and resource, we don\u0027t need this logic either.",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 142,
+        "endChar": 60
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f149b21f_72c58462",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "candidate id is not directly mapped to uuid. The uuid should be derived from the model-version-id in the candidate",
+      "range": {
+        "startLine": 187,
+        "startChar": 35,
+        "endLine": 187,
+        "endChar": 47
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e87990_5139524a",
+        "filename": "config/common_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "change this to nst",
+      "range": {
+        "startLine": 111,
+        "startChar": 22,
+        "endLine": 111,
+        "endChar": 45
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef60a06_248026b3",
+        "filename": "config/common_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "same for this",
+      "range": {
+        "startLine": 113,
+        "startChar": 22,
+        "endLine": 113,
+        "endChar": 45
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78184f21_8566d528",
+        "filename": "osdf/adapters/conductor/translation.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "you can remove this and also the region in the policy too. We are not using it in HAS",
+      "range": {
+        "startLine": 307,
+        "startChar": 8,
+        "endLine": 308,
+        "endChar": 95
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2f9c4c_97f02f4a",
+        "filename": "osdf/adapters/conductor/translation.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-18T14:09:10Z",
+      "side": 1,
+      "message": "was this change necessary? Without this, is the model-role not coming in the final template?",
+      "range": {
+        "startLine": 326,
+        "startChar": 7,
+        "endLine": 328,
+        "endChar": 52
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
