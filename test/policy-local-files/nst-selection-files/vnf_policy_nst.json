@@ -1,0 +1,34 @@
+{
+    "vnfPolicy_nst": {
+        "type": "onap.policies.optimization.resource.VnfPolicy",
+        "version": "1.0.0",
+        "type_version": "1.0.0",
+        "metadata": {
+            "policy-id": "vnfPolicy_nst",
+            "policy-version": 1
+        },
+        "properties": {
+            "scope": [
+                "OSDF_GUILIN"
+            ],
+            "resources": [
+                "nst"
+            ],
+            "services": [
+                "nst"
+            ],
+            "identity": "vnf_nst",
+            "applicableResources": "any",
+            "vnfProperties": [
+                {
+                    "inventoryProvider": "aai",
+                    "inventoryType": "nst",
+                    "unique": "true",
+                    "attributes": {
+                        "model-role": "nst"
+                    }
+                }
+            ]
+        }
+    }
+}
