@@ -18,6 +18,7 @@
 
 import json
 
+from apps.pci.optimizers.solver.pci_utils import get_id
 from osdf.adapters.dcae import des
 from osdf.adapters.dcae.des import DESException
 from osdf.config.base import osdf_config
@@ -45,7 +46,7 @@ class MlModel(object):
             cell_id = cell['cell_id']
             average_ho, latest_ho = self.get_ho_details(cell['cell_id'])
             if average_ho > average_ho_threshold or latest_ho > latest_ho_threshold:
-                fixed_cells.add(cell_id)
+                fixed_cells.add(get_id(network_cell_info, cell_id))
 
         fixed_cells.update(dzn_data.get('PCI_UNCHANGEABLE_CELLS', []))
         dzn_data['PCI_UNCHANGEABLE_CELLS'] = fixed_cells
