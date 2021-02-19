@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbb762fe_c40c6094",
+        "filename": "apps/nst/models/api/nstSelectionRequest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-19T05:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "700e8883_95ca7e6b",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5351be62_7c1adbc6",
         "filename": "apps/nst/optimizers/nst_select_processor.py",
         "patchSetId": 1
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "6b8e7b63_eb4fb8fa",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-19T05:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94a88702_8139aad7",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 49
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c56215f8_d8304d65",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-19T05:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5351be62_7c1adbc6",
+      "range": {
+        "startLine": 40,
+        "startChar": 63,
+        "endLine": 40,
+        "endChar": 74
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fc3811b_a6a3941c",
         "filename": "apps/nst/optimizers/nst_select_processor.py",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e5b4a6_a414744d",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-19T05:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fc3811b_a6a3941c",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 60
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4d653dc9_4a3c5018",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-19T05:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60cdb270_69aa7ac8",
+      "range": {
+        "startLine": 80,
+        "startChar": 58,
+        "endLine": 80,
+        "endChar": 86
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24ff3194_00045e55",
         "filename": "apps/nst/optimizers/nst_select_processor.py",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6473e6_243fb9ec",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-19T05:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24ff3194_00045e55",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 77
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c76d286b_5b7c68ec",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-19T05:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a496bce1_216ab1ee",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 60
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9870e06_bdd9c8b6",
         "filename": "apps/nst/optimizers/nst_select_processor.py",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a41187f_77015921",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-19T05:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9870e06_bdd9c8b6",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 142,
+        "endChar": 60
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "3dffe902_9af35672",
+        "filename": "apps/nst/optimizers/nst_select_processor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-19T05:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f149b21f_72c58462",
+      "range": {
+        "startLine": 187,
+        "startChar": 35,
+        "endLine": 187,
+        "endChar": 47
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5e87990_5139524a",
         "filename": "config/common_config.yaml",
         "patchSetId": 1
@@ -229,6 +445,30 @@
       "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efcac4d_2285a252",
+        "filename": "config/common_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-19T05:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5e87990_5139524a",
+      "range": {
+        "startLine": 111,
+        "startChar": 22,
+        "endLine": 111,
+        "endChar": 45
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "9e4d7b10_2e0346bf",
+        "filename": "config/common_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-19T05:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eef60a06_248026b3",
+      "range": {
+        "startLine": 113,
+        "startChar": 22,
+        "endLine": 113,
+        "endChar": 45
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78184f21_8566d528",
         "filename": "osdf/adapters/conductor/translation.py",
         "patchSetId": 1
@@ -275,6 +539,30 @@
       "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589b4851_a428fed8",
+        "filename": "osdf/adapters/conductor/translation.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-19T05:26:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78184f21_8566d528",
+      "range": {
+        "startLine": 307,
+        "startChar": 8,
+        "endLine": 308,
+        "endChar": 95
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
