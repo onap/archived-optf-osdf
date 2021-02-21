@@ -586,6 +586,30 @@
       "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87504d05_a96f89c0",
+        "filename": "osdf/adapters/conductor/translation.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-02-21T07:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b2f9c4c_97f02f4a",
+      "range": {
+        "startLine": 326,
+        "startChar": 7,
+        "endLine": 328,
+        "endChar": 52
+      },
+      "revId": "d31d1438412735303ff82d4346c0a9b6d12f0575",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
