@@ -1,0 +1,10 @@
+distribution_type: 'container'
+container_release_tag: '3.0.3'
+project: 'optf-osdf'
+log_dir: 'optf-osdf-maven-docker-stage-master/504/'
+ref: 818489f9580f62c71ee6d6ad7a9e6e080e4c2107
+containers:
+  - name: 'optf-osdf'
+    version: '3.0.3-STAGING-20210223T072953Z'
+  - name: 'optf-opteng'
+    version: '3.0.3-STAGING-20210223T072953Z'
