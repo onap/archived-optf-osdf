@@ -151,5 +151,5 @@ class NstSelection(Thread):
             return {
                 'UUID': candidate['model_version_id'],
                 'invariantUUID': candidate['model_invariant_id'],
-                'NSTName': candidate['name'],
+                'NSTName': candidate['model_name'],
             }
