@@ -1,4 +1,4 @@
- # -------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 #   Copyright (c) 2015-2017 AT&T Intellectual Property
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,21 +17,23 @@
 #
 
 import base64
-import itertools
 import json
-import yaml
 import os
-import uuid
-
-
 from requests import RequestException
-from osdf.operation.exceptions import BusinessException
+import uuid
+import yaml
+
 from osdf.adapters.local_data.local_policies import get_local_policies
-from osdf.adapters.policy.utils import policy_name_as_regex, retrieve_node
-from osdf.utils.programming_utils import list_flatten, dot_notation
+from osdf.adapters.policy.utils import policy_name_as_regex
 from osdf.config.base import osdf_config
-from osdf.logging.osdf_logging import audit_log, MH, metrics_log, debug_log
+from osdf.logging.osdf_logging import audit_log
+from osdf.logging.osdf_logging import debug_log
+from osdf.logging.osdf_logging import metrics_log
+from osdf.logging.osdf_logging import MH
+from osdf.operation.exceptions import BusinessException
 from osdf.utils.interfaces import RestClient
+from osdf.utils.programming_utils import dot_notation
+from osdf.utils.programming_utils import list_flatten
 
 
 def get_by_name(rest_client, policy_name_list, wildcards=True):
@@ -49,7 +51,8 @@ def get_by_name(rest_client, policy_name_list, wildcards=True):
 
 
 def get_by_scope(rest_client, req, config_local, type_service):
-    """ Get policies by scopes as defined in the configuration file.
+    """Get policies by scopes as defined in the configuration file.
+
     :param rest_client: a rest client object to make a call.
     :param req: an optimization request.
     :param config_local: application configuration file.
@@ -65,7 +68,7 @@ def get_by_scope(rest_client, req, config_local, type_service):
         for key in scopes.keys():
             for field in scopes[key]:
                 scope_fields[key] = list_flatten([get_scope_fields(field, references, req, policies)
-                                                      if 'get_param' in field else field])
+                                                  if 'get_param' in field else field])
         if scope_fields.get('resources') and len(scope_fields['resources']) > 1:
             for s in scope_fields['resources']:
                 scope_fields['resources'] = [s]
@@ -77,7 +80,7 @@ def get_by_scope(rest_client, req, config_local, type_service):
             policy = {}
             policy[policyName] = policies[policyName]
             for k in keys:
-                if set(policies.get(policyName, {}).get('properties',{}).get(k)) >= set(scope_fields[k])\
+                if set(policies.get(policyName, {}).get('properties', {}).get(k)) >= set(scope_fields[k]) \
                         and policy not in scope_policies:
                     scope_policies.append(policy)
 
@@ -85,9 +88,12 @@ def get_by_scope(rest_client, req, config_local, type_service):
 
 
 def get_scope_fields(field, references, req, policies):
-    """ Retrieve the values for scope fields from a request and policies as per the configuration
-    and references defined in a configuration file. If the value of a scope field missing in a request or
+    """Retrieve the values for scope fields from a request and policies
+
+    They are derived as per the configuration and references defined in a
+    configuration file. If the value of a scope field missing in a request or
     policies, throw an exception since correct policies cannot be retrieved.
+
     :param field: details on a scope field from a configuration file.
     :param references: references defined in a configuration file.
     :param req: an optimization request.
@@ -113,8 +119,10 @@ def get_scope_fields(field, references, req, policies):
         raise BusinessException("Field {} is missing a value in all policies of type {}".format(
             ref_value.split('.')[-1], ref_source))
 
+
 def policy_api_call(rest_client, scope_fields):
-    """
+    """Makes the api call to policy and return the response if policies are present
+
     :param rest_client: rest client to make a call
     :param scope_fields: a collection of scopes to be used for filtering
     :return: a list of policies matching all filters
@@ -124,10 +132,15 @@ def policy_api_call(rest_client, scope_fields):
                      "ONAPInstance": "OOF_Component_Instance",
                      "action": "optimize",
                      "resource": scope_fields}
-    return rest_client.request(json=api_call_body)
+    response = rest_client.request(json=api_call_body)
+    if not response.get("policies"):
+        raise Exception("Policies not found for the scope {}".format(scope_fields))
+    return response
+
 
 def remote_api(req_json, osdf_config, service_type="placement"):
     """Make a request to policy and return response -- it accounts for multiple requests that be needed
+
     :param req_json: policy request object (can have multiple policy names)
     :param osdf_config: main config that will have credential information
     :param service_type: the type of service to call: "placement", "scheduling"
@@ -156,8 +169,8 @@ def remote_api(req_json, osdf_config, service_type="placement"):
 
 
 def local_policies_location(req_json, osdf_config, service_type):
-    """
-    Get folder and list of policy_files if "local policies" option is enabled
+    """Get folder and list of policy_files if "local policies" option is enabled
+
     :param service_type: placement supported for now, but can be any other service
     :return: a tuple (folder, file_list) or None
     """
@@ -169,15 +182,16 @@ def local_policies_location(req_json, osdf_config, service_type):
         if service_type == "scheduling":
             return lp.get('{}_policy_dir'.format(service_type)), lp.get('{}_policy_files'.format(service_type))
         else:
-            service_name = req_json['serviceInfo']['serviceName']  # TODO: data_mapping.get_service_type(model_name)
+            service_name = req_json['serviceInfo']['serviceName']
             debug_log.debug('Loading local policies for service name: {}'.format(service_name))
             return lp.get('{}_policy_dir_{}'.format(service_type, service_name.lower())), \
-                   lp.get('{}_policy_files_{}'.format(service_type, service_name.lower()))
+                lp.get('{}_policy_files_{}'.format(service_type, service_name.lower()))
     return None
 
 
 def get_policies(request_json, service_type):
     """Validate the request and get relevant policies
+
     :param request_json: Request object
     :param service_type: the type of service to call: "placement", "scheduling"
     :return: policies associated with this request and provStatus retrieved from Subscriber policy
@@ -198,6 +212,7 @@ def get_policies(request_json, service_type):
         policies = remote_api(request_json, osdf_config, service_type)
 
     return policies
+
 
 def upload_policy_models():
     """Upload all the policy models reside in the folder"""
