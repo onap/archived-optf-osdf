@@ -33,6 +33,7 @@ cd ${DIR}
 # create directory for volume and copy configuration file
 # run docker containers
 OSDF_CONF=/tmp/osdf/properties/osdf_config.yaml
+AAF_CER=/tmp/osdf/properties/aaf_root_ca.cer
 IMAGE_NAME=nexus3.onap.org:10003/onap/optf-osdf
 IMAGE_VER=latest
 
@@ -40,6 +41,7 @@ mkdir -p /tmp/osdf/properties
 mkdir -p /tmp/sms/properties
 
 cp ${WORKSPACE}/scripts/osdf-properties/*.yaml /tmp/osdf/properties/.
+cp ${WORKSPACE}/scripts/osdf-properties/aaf_root_ca.cer /tmp/osdf/properties/.
 cp ${WORKSPACE}/scripts/osdf-properties/osdf.json /tmp/sms/properties/.
 
 #change conductor/configdb simulator urls
@@ -57,7 +59,7 @@ docker cp /tmp/sms/properties/osdf.json sms:/preload/config/osdf.json
 docker exec --user root -i sms  /bin/sh -c "/sms/bin/preload -cacert /sms/certs/aaf_root_ca.cer -jsondir /preload/config -serviceport 10443 -serviceurl http://localhost"
 
 docker logs vault
-docker run -d --name optf-osdf -v ${OSDF_CONF}:/opt/osdf/config/osdf_config.yaml -p "8698:8699" ${IMAGE_NAME}:${IMAGE_VER}
+docker run -d --name optf-osdf -v ${AAF_CER}:/opt/aaf_root_ca.cer -v ${OSDF_CONF}:/opt/osdf/config/osdf_config.yaml -p "8698:8699" ${IMAGE_NAME}:${IMAGE_VER}
 
 sleep 20
 

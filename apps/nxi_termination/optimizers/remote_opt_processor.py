@@ -15,109 +15,72 @@
 #
 # -------------------------------------------------------------------------
 #
-from apps.nxi_termination.optimizers.response_processor import get_nxi_termination_failure_response
+
+from jinja2 import Template
+
 from apps.nxi_termination.optimizers.response_processor import get_nxi_termination_response
 from osdf.adapters.aai.fetch_aai_data import AAIException
-from osdf.adapters.aai.fetch_aai_data import get_aai_data
+from osdf.adapters.aai.fetch_aai_data import execute_dsl_query
+from osdf.logging.osdf_logging import debug_log
 
 
 def process_nxi_termination_opt(request_json, osdf_config):
-
     """Process the nxi Termination request from API layer
 
-       :param request_json: api request
-       :param osdf_config: configuration specific to OSDF app
-       :return: response as a success,failure
+           :param request_json: api request
+           :param osdf_config: configuration specific to OSDF app
+           :return: response as a success,failure
     """
 
-    type = request_json["type"]
+    request_type = request_json["type"]
     request_info = request_json.get("requestInfo", {})
     addtnl_args = request_info.get("addtnlArgs", {})
-    if type == "NSI":
-        arg_val = addtnl_args.get("serviceProfileId", "")
-        return check_nxi_termination(request_json, osdf_config, addtnl_args, arg_val,
-                                     get_service_profiles, get_service_profile_id)
+    query_templates = osdf_config.core["nxi_termination"]["query_templates"]
 
-    else:
-        arg_val = addtnl_args.get("serviceInstanceId", "")
-        return check_nxi_termination(request_json, osdf_config, addtnl_args, arg_val, get_relationshiplist, get_nsi_id)
-
-
-def check_nxi_termination(request_json, osdf_config, addtnl_args, arg_val, get_response_object, get_response_id):
-    request_info = request_json.get("requestInfo", {})
+    inputs = {
+        "instance_id": request_json["NxIId"]
+    }
 
     try:
-        response_object = get_response_object(request_json, osdf_config)
-        if addtnl_args and arg_val and len(response_object) == 1:
-            response_id = get_response_id(response_object)
-            if arg_val == response_id:
-                reason = ''
-                return set_success_response(reason, request_info, terminate_response=True)
-
-            else:
-                reason = "{} is not available in AAI".format(arg_val)
-                return set_success_response(reason, request_info, terminate_response=False)
-
-        elif len(response_object) == 0:
-            reason = ''
-            return set_success_response(reason, request_info, terminate_response=True)
-
+        if request_type == "NSI":
+            query_type = "nsi"
+            if addtnl_args and "serviceProfileId" in addtnl_args:
+                inputs["profile_id"] = addtnl_args["serviceProfileId"]
+                query_type = "nsi_with_profile"
         else:
-            reason = "Associated to more than one"
-            return set_success_response(reason, request_info, terminate_response=False)
+            query_type = "nssi"
+            if addtnl_args and "serviceInstanceId" in addtnl_args:
+                inputs["nsi_id"] = addtnl_args["serviceInstanceId"]
+                query_type = "nssi_with_nsi"
 
+        debug_log.debug("query type: {}".format(query_type))
+
+        resource_count = get_resource_count(query_templates[query_type], inputs, osdf_config)
+        if query_type not in ["nsi", "nssi"]:
+            # if additional args is provided, it must have exactly one resource in its relationships
+            resource_count = resource_count - 1
+
+        return set_response("success", "", request_info, resource_count <= 0)
     except AAIException as e:
         reason = str(e)
-        return set_failure_response(reason, request_info)
+        return set_response("failure", reason, request_info)
 
     except Exception as e:
         reason = "{} Exception Occurred while processing".format(str(e))
-        return set_failure_response(reason, request_info)
+        return set_response("failure", reason, request_info)
 
 
-def get_service_profiles(request_json, osdf_config):
-    try:
-        json_response = get_aai_data(request_json, osdf_config)
-        service_profiles = json_response.get("service-profiles", {})
-        service_profile = service_profiles.get("service-profile", [])
-        return service_profile
-    except AAIException as e:
-        raise AAIException(e)
-
-
-def get_relationshiplist(request_json, osdf_config):
-    try:
-        json_response = get_aai_data(request_json, osdf_config)
-        rel_list = json_response.get("relationship-list", {})
-        relationship = rel_list.get("relationship", [])
-        return relationship
-    except AAIException as e:
-        raise AAIException(e)
-
-
-def get_service_profile_id(service_profile):
-    profile_obj = service_profile[0]
-    return profile_obj.get("profile-id", "")
-
-
-def get_nsi_id(relationship):
-    rel_obj = relationship[0]
-    rel_data = rel_obj.get("relationship-data", [])
-    for data in rel_data:
-        if data["relationship-key"] == "service-instance.service-instance-id":
-            return data["relationship-value"]
-
-
-def set_success_response(reason, request_info, terminate_response):
+def set_response(status, reason, request_info, terminate_response=None):
     res = dict()
-    res["requestStatus"] = "success"
+    res["requestStatus"] = status
     res["terminateResponse"] = terminate_response
     res["reason"] = reason
     return get_nxi_termination_response(request_info, res)
 
 
-def set_failure_response(reason, request_info,):
-    res = dict()
-    res["requestStatus"] = "failure"
-    res["reason"] = reason
-    return get_nxi_termination_failure_response(request_info, res)
+def get_resource_count(query_template, inputs, osdf_config):
+    query = Template(query_template).render(inputs)
+    dsl_response = execute_dsl_query(query, "count", osdf_config)
+    debug_log.debug("dsl_response {}".format(dsl_response))
+    # the dsl query with format "count" includes the original service-instance, hence reducing one from the result
+    return dsl_response["results"][0]["service-instance"] - 1

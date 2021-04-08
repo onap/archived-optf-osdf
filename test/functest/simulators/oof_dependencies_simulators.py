@@ -23,7 +23,7 @@ import glob
 import json
 import os
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 from osdf.utils.interfaces import json_from_file
 
@@ -117,6 +117,46 @@ def get_nbr_list(cell_id, ts):
     if not status:
         return jsonify(data)
     return jsonify(data), 503
+
+
+@app.route("/simulated/aai/v23/dsl", methods=["PUT"])
+def dsl_query():
+
+    nsi_query = {"dsl": "service-instance*('service-instance-id','9629e36c-a3d9-4aed-8368-f72b8be1cd34') > "
+                        "service-instance*('service-role','e2eserviceprofile-service')"}
+
+    nssi_query = {"dsl": "service-instance*('service-instance-id','9629e36c-a3d9-4aed-8368-f72b8be1cd34') > "
+                         "service-instance*('service-role','nsi')"}
+
+    nsi_with_sp_query = {"dsl": "service-instance*('service-instance-id','9629e36c-a3d9-4aed-8368-f72b8be1cd34') > "
+                                "service-instance*('service-role','e2eserviceprofile-service')("
+                                "'service-instance-id',"
+                                "'660ca85c-1a0f-4521-a559-65f23e794699660ca85c-1a0f-4521-a559-65f23e794699')"}
+
+    nssi_with_nsi_query = {"dsl": "service-instance*('service-instance-id','9629e36c-a3d9-4aed-8368-f72b8be1cd34') > "
+                                  "service-instance*('service-role','nsi')('service-instance-id',"
+                                  "'660ca85c-1a0f-4521-a559-65f23e794699')"}
+
+    queries = {
+        "nsi": nsi_query,
+        "nssi_query": nssi_query,
+        "nsi_with_sp": nsi_with_sp_query,
+        "nssi_with_nsi": nssi_with_nsi_query
+    }
+
+    count = {
+        "nsi": 1,
+        "nssi_query": 1,
+        "nsi_with_sp": 2,
+        "nssi_with_nsi": 2
+    }
+
+    request_body = request.get_json()
+    service_count = 0
+    for query_type, query in queries.items():
+        if request_body == query:
+            service_count = count[query_type]
+    return {'results': [{'service-instance': service_count}]}
 
 
 if __name__ == "__main__":

@@ -6,7 +6,6 @@ Resource          ./resources/common-keywords.robot
 Suite Teardown  Delete All Sessions
 
 *** Variables ***
-${osdf_host}    ${OSDF_HOSTNAME}:${OSDF_PORT}
 &{placement_auth} =    username=test   password=testpwd
 &{wrong_authorization} =    username=test   password=test
 &{pci_auth}=    username=pci_test   password=pci_testpwd
@@ -41,8 +40,3 @@ SendPCIOptimizationWithAuth
     ${response_json}    json.loads    ${resp.content}
     Should Be Equal As Integers    ${resp.status_code}    202
     Should Be Equal     accepted    ${response_json['requestStatus']}
-
-
-
-
-

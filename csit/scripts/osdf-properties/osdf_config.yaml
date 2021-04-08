@@ -41,12 +41,21 @@ aaf_user_roles:
 aaf_sms_url: http://aaf-sms.onap:10443
 aaf_sms_timeout: 30
 secret_domain: osdf
-aaf_ca_certs: ssl_certs/aaf_root_ca.cer
+aaf_ca_certs: /opt/aaf_root_ca.cer
 
 # config db api
 configDbUrl: http://127.0.0.1:5000/simulated/configdb
 configDbGetCellListUrl: 'getCellList'
 configDbGetNbrListUrl: 'getNbrList'
+
+#aai api
+aaiUrl: "http://127.0.0.1:5000"
+aaiGetLinksUrl: "/aai/v16/network/logical-links"
+aaiServiceInstanceUrl : "/aai/v20/nodes/service-instances/service-instance/"
+aaiGetControllersUrl: /aai/v19/external-system/esr-thirdparty-sdnc-list
+controllerQueryUrl: /aai/v19/query?format=resource
+aaiGetInterDomainLinksUrl: /aai/v19/network/logical-links?link-type=inter-domain&operational-status=up
+dslQueryPath: /simulated/aai/v23/dsl?format=
 
 #key
 appkey:

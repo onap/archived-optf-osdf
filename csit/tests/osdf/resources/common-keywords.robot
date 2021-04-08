@@ -6,6 +6,7 @@ Library       json
 Library       RequestsLibrary
 *** Variables ***
 &{headers}=      Content-Type=application/json  Accept=application/json
+${osdf_host}    ${OSDF_HOSTNAME}:${OSDF_PORT}
 *** Keywords ***
 Verify Docker RC Status
     [Documentation]  Method to verify whether docker instance is up and running

@@ -69,72 +69,73 @@ class TestRemoteOptProcessor(unittest.TestCase):
         exception_response_json1 = json_from_file(exception_response_file1)
 
         #nsi success scenario
-        self.patcher_req=patch('apps.nxi_termination.optimizers.remote_opt_processor.get_service_profiles',return_value=service_profile_json)
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count', return_value=1)
         self.Mock_req = self.patcher_req.start()
-        self.assertEquals(success_output_json, process_nxi_termination_opt(request_json,osdf_config))
+        self.assertEquals(success_output_json, process_nxi_termination_opt(request_json, osdf_config))
         self.patcher_req.stop()
 
         #nsi failure scenario
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_service_profiles', return_value=failure_service_profile_json)
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count', return_value=3)
         self.Mock_req = self.patcher_req.start()
         self.assertEquals(nxi_failure_output_json1, process_nxi_termination_opt(request_json, osdf_config))
         self.patcher_req.stop()
 
+        request_json["requestInfo"]["addtnlArgs"] = {}
+
         #nsi success scenario
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_service_profiles',
-                                 return_value=[])
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count',
+                                 return_value=0)
         self.Mock_req = self.patcher_req.start()
         self.assertEquals(success_output_json, process_nxi_termination_opt(request_json, osdf_config))
         self.patcher_req.stop()
 
         # nsi failure scenario
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_service_profiles',
-                                 return_value=failure_service_profile_json2)
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count',
+                                 return_value=1)
         self.Mock_req = self.patcher_req.start()
         self.assertEquals(nxi_failure_output_json2, process_nxi_termination_opt(request_json, osdf_config))
         self.patcher_req.stop()
         # #
         # nssi success scenario
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_relationshiplist', return_value=success_rel_json)
-        self.Mock_req = self.patcher_req.start()
-        self.assertEquals(success_output_json, process_nxi_termination_opt(nssi_request_json, osdf_config))
-        self.patcher_req.stop()
-
-        # nssi success scenario
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_relationshiplist',
-                                 return_value=[])
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count', return_value=1)
         self.Mock_req = self.patcher_req.start()
         self.assertEquals(success_output_json, process_nxi_termination_opt(nssi_request_json, osdf_config))
         self.patcher_req.stop()
 
         # nssi failure scenario
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_relationshiplist',
-                                 return_value=failure_rel_json)
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count',
+                                 return_value=2)
         self.Mock_req = self.patcher_req.start()
         self.assertEquals(nssi_failure_output_json, process_nxi_termination_opt(nssi_request_json, osdf_config))
         self.patcher_req.stop()
 
+        nssi_request_json["requestInfo"]["addtnlArgs"] = {}
+
+        # nssi success scenario
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count',
+                                 return_value=0)
+        self.Mock_req = self.patcher_req.start()
+        self.assertEquals(success_output_json, process_nxi_termination_opt(nssi_request_json, osdf_config))
+        self.patcher_req.stop()
+
         # nssi failure scenario
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_relationshiplist',
-                                 return_value=failure_rel_json2)
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count',
+                                 return_value=1)
         self.Mock_req = self.patcher_req.start()
         self.assertEquals(nxi_failure_output_json2, process_nxi_termination_opt(nssi_request_json, osdf_config))
         self.patcher_req.stop()
 
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_relationshiplist',
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count',
                                  side_effect=AAIException("Error response recieved from AAI for the request"))
-        self.Mock_req = self.patcher_req.start()
-        self.assertEquals(exception_response_json1, process_nxi_termination_opt(nssi_request_json, osdf_config))
-        self.patcher_req.stop()
-
-
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_relationshiplist',
-                                 side_effect=AAIException("Request exception was encountered"))
         self.Mock_req = self.patcher_req.start()
         self.assertEquals("failure", process_nxi_termination_opt(nssi_request_json, osdf_config).get('requestStatus'))
         self.patcher_req.stop()
 
-
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count',
+                                 side_effect=AAIException("Request exception was encountered"))
+        self.Mock_req = self.patcher_req.start()
+        self.assertEquals("failure", process_nxi_termination_opt(nssi_request_json, osdf_config).get('requestStatus'))
+        self.patcher_req.stop()
 
 
 if __name__ == "__main__":
