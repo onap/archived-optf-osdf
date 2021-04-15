@@ -106,7 +106,7 @@ class SliceSelectionOptimizer(Thread):
         recommendations = resp["plans"][0].get("recommendations")
         subnets = [subnet['domainType'] for subnet in self.request_json['subnetCapabilities']] \
             if self.request_json.get('subnetCapabilities') else []
-        return self.response_processor.process_response(recommendations, model_info, subnets)
+        return self.response_processor.process_response(recommendations, model_info, subnets, self.model_type)
 
     def get_request_parameters(self, requirements, model_info):
         camel_to_snake = self.slice_config['attribute_mapping']['camel_to_snake']

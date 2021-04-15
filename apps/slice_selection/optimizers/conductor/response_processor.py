@@ -28,23 +28,31 @@ class ResponseProcessor(object):
         self.request_info = request_info
         self.slice_config = slice_config
 
-    def process_response(self, recommendations, model_info, subnets):
+    def process_response(self, recommendations, model_info, subnets, model_type):
         """Process conductor response to form the response for the API request
 
             :param recommendations: recommendations from conductor
             :param model_info: model info from the request
             :param subnets: list of subnets
+            :param model_type: NSI or NSSI
             :return: response json as a dictionary
         """
         if not recommendations:
             return self.get_slice_selection_response([])
         model_name = model_info['name']
-        solutions = [self.get_solution_from_candidate(rec[model_name]['candidate'], model_info, subnets)
+        solutions = [self.get_solution_from_candidate(rec[model_name]['candidate'], model_info, subnets, model_type)
                      for rec in recommendations]
         return self.get_slice_selection_response(solutions)
 
-    def get_solution_from_candidate(self, candidate, model_info, subnets):
-        if candidate['inventory_type'] == 'nssi':
+    def get_solution_from_candidate(self, candidate, model_info, subnets, model_type):
+        if candidate['inventory_type'] == 'slice_profiles':
+            return {
+                'existingNSI': False,
+                'newNSISolution': {
+                    'sliceProfiles': self.get_slice_profiles_from_candidate(candidate, subnets)
+                }
+            }
+        elif model_type == 'NSSI':
             return {
                 'UUID': model_info['UUID'],
                 'invariantUUID': model_info['invariantUUID'],
@@ -52,7 +60,7 @@ class ResponseProcessor(object):
                 'NSSIId': candidate['instance_id']
             }
 
-        elif candidate['inventory_type'] == 'nsi':
+        elif model_type == 'NSI':
             return {
                 'existingNSI': True,
                 'sharedNSISolution': {
@@ -60,14 +68,6 @@ class ResponseProcessor(object):
                     'invariantUUID': model_info['invariantUUID'],
                     'NSIName': candidate['instance_name'],
                     'NSIId': candidate['instance_id']
-                }
-            }
-
-        elif candidate['inventory_type'] == 'slice_profiles':
-            return {
-                'existingNSI': False,
-                'newNSISolution': {
-                    'sliceProfiles': self.get_slice_profiles_from_candidate(candidate, subnets)
                 }
             }
 
