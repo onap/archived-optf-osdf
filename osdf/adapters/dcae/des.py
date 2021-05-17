@@ -17,7 +17,7 @@
 #
 
 import requests
-from requests.exceptions import HTTPError
+# from requests.exceptions import HTTPError
 
 from osdf.config.base import osdf_config
 from osdf.utils.interfaces import RestClient
@@ -46,5 +46,5 @@ def extract_data(service_id, request_data):
         return response_json.get("result")
     except requests.RequestException as e:
         raise DESException("Request exception was encountered {}".format(e))
-    except HTTPError as ex:
-        raise DESException("Response code other than 200. Response code: {}".format(ex.response.status_code))
+    # except HTTPError as ex:
+        # raise DESException("Response code other than 200. Response code: {}".format(ex.response.status_code))
