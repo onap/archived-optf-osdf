@@ -102,7 +102,7 @@ def get_aaf_permissions(uid, passwd):
 
 def remote_api(passwd, uid):
     headers = {"Accept": "application/Users+xml;q=1.0;charset=utf-8;version=2.0,text/xml;q=1.0;version=2.0",
-               "Accept": "application/Users+json;q=1.0;charset=utf-8;version=2.0,application/json;q=1.0;version=2.0,*/*;q=1.0"}
+               "ACCEPT": "application/Users+json;q=1.0;charset=utf-8;version=2.0,application/json;q=1.0;version=2.0,*/*;q=1.0"}
     url = AUTHZ_PERMS_USER.format(deploy_config['aaf_url'], uid)
     rc = RestClient(userid=uid, passwd=passwd, headers=headers, url=url, log_func=debug_log.debug,
                     req_id='aaf_user_id')
