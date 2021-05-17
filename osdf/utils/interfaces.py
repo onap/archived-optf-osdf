@@ -104,7 +104,7 @@ class RestClient(object):
 
         res_code = str(res.status_code)
         if not any(res_code.startswith(x) for x in map(str, ok_codes)):
-            raise res.raise_for_status()
+            raise BaseException(res.raise_for_status())
 
         if raw_response:
             return res
