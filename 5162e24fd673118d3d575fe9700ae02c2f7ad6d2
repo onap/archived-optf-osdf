@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5677946c_dbbe38d2",
+        "filename": "osdf/adapters/aaf/aaf_authentication.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-06-01T08:18:51Z",
+      "side": 1,
+      "message": "Remove this one and keep the other one. We want only json as the response, not xml",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 108
+      },
+      "revId": "5162e24fd673118d3d575fe9700ae02c2f7ad6d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa2530b_0a1ab143",
+        "filename": "osdf/adapters/dcae/des.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-06-01T08:18:51Z",
+      "side": 1,
+      "message": "Same here",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "5162e24fd673118d3d575fe9700ae02c2f7ad6d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853aa5b8_5fd5118d",
+        "filename": "osdf/adapters/dcae/des.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-06-01T08:18:51Z",
+      "side": 1,
+      "message": "Do not comment code segment. Instead delete it, if a piece of code is not needed.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 111
+      },
+      "revId": "5162e24fd673118d3d575fe9700ae02c2f7ad6d2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
