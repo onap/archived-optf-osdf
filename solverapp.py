@@ -16,7 +16,8 @@
 # -------------------------------------------------------------------------
 #
 
-from flask import request, g
+from flask import request
+from markupsafe import Markup
 
 from osdf.apps.baseapp import app, run_app
 from osdf.logging.osdf_logging import audit_log
@@ -50,7 +51,7 @@ def opt_model_create_rest_api():
 def opt_get_model_rest_api(model_id):
     """Retrieve model data
     """
-
+    model_id = Markup.escape(model_id)
     return retrieve_model_data(model_id)
 
 
