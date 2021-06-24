@@ -45,6 +45,7 @@ http://maven.apache.org/POM/4.0.0 ">
 		<osdf.build.timestamp>${maven.build.timestamp}</osdf.build.timestamp>
 		<osdf.project.version>${project.version}</osdf.project.version>
 		<osdf.docker.repository>nexus3.onap.org:10003</osdf.docker.repository>
+		<osdf.base.image>osdf-base</osdf.base.image>
 		<image.namespace>${osdf.docker.repository}/onap/optf-osdf</image.namespace>
 		<opteng.namespace>${osdf.docker.repository}/onap/optf-opteng</opteng.namespace>
 	</properties>
@@ -111,6 +112,26 @@ http://maven.apache.org/POM/4.0.0 ">
 					<verbose>true</verbose>
 					<apiVersion>1.23</apiVersion>
 					<images>
+						<image>
+							<name>${osdf.base.image}</name>
+							<alias>optf-base</alias>
+							<build>
+								<cleanup>true</cleanup>
+								<tags>
+									<tag>latest</tag>
+								</tags>
+
+								<dockerFile>${project.basedir}/docker/osdf-lib-base/Dockerfile</dockerFile>
+								<assembly>
+									<descriptor>${project.basedir}/docker/osdf-lib-base/assembly/osdf-lib-files.xml</descriptor>
+									<name>onap-osdf-tm</name>
+								</assembly>
+								<args>
+									<MVN_ARTIFACT_VERSION>${project.version}</MVN_ARTIFACT_VERSION>
+									<REPO>${project.repo}</REPO>
+								</args>
+							</build>
+						</image>
 						<image>
 							<name>${image.namespace}</name>
 							<alias>optf-osdf</alias>
