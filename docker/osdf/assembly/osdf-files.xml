@@ -46,14 +46,13 @@
 	<fileSets>
 		<fileSet>
 			<includes>
-				<include>${project.build.finalName}.zip</include>
-			</includes>
-			<directory>${project.build.directory}</directory>
-			<outputDirectory>/</outputDirectory>
-		</fileSet>
-		<fileSet>
-			<includes>
 				<include>apps/**</include>
+				<include>osdf/**</include>
+				<include>config/**</include>
+				<include>setup.py</include>
+				<include>osdfapp.py</include>
+				<include>requirements.txt</include>
+				<include>requirements-osdf.txt</include>
 			</includes>
 			<excludes>
                 <exclude>**/*.pyc</exclude>
