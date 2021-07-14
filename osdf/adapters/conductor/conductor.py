@@ -71,7 +71,7 @@ def request(req_info, demands, request_parameters, service_info, template_fields
             if resp["plans"][0].get("status") in ["error"]:
                 raise RequestException(response=raw_resp, request=raw_resp.request)
 
-            if resp["plans"][0].get("status") in ["done", "not found"]:
+            if resp["plans"][0].get("status") in ["done", "not found", "solved"]:
                 return resp
             new_url = resp['plans'][0]['links'][0][0]['href']  # TODO(krishna): check why a list of lists
 

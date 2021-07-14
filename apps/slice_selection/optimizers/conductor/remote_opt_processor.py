@@ -52,7 +52,8 @@ class SliceSelectionOptimizer(Thread):
 
         try:
             if self.model_type == 'NSSI' \
-                    and self.request_json['sliceProfile'].get('resourceSharingLevel', "") == 'not-shared':
+                    and self.request_json['sliceProfile'].get('resourceSharingLevel', "") \
+                    in ['not-shared', 'non-shared']:
                 final_response = self.response_processor.get_slice_selection_response([])
 
             else:
@@ -97,7 +98,7 @@ class SliceSelectionOptimizer(Thread):
         except RequestException as e:
             resp = e.response.json()
             error = resp['plans'][0]['message']
-            if "Unable to find any" in error:
+            if isinstance(error, list) and "Unable to find any" in error[0]:
                 return self.response_processor.get_slice_selection_response([])
             error_log.error('Error from conductor {}'.format(error))
             return self.response_processor.process_error_response(error)
