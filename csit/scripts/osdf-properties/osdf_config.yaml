@@ -43,10 +43,19 @@ aaf_sms_timeout: 30
 secret_domain: osdf
 aaf_ca_certs: /opt/aaf_root_ca.cer
 
+configClientType: configdb
+
 # config db api
 configDbUrl: http://127.0.0.1:5000/simulated/configdb
 configDbGetCellListUrl: 'getCellList'
 configDbGetNbrListUrl: 'getNbrList'
+
+# cps api
+cpsUrl: http://localhost:8080/execute
+cpsCellListUrl: 'e2e-cavsta-schemaset/get-cell-list'
+cpsNbrListUrl: 'e2e-cavsta-schemaset/get-nbr-list'
+cpsUsername: ''
+cpsPassword: ''
 
 #aai api
 aaiUrl: "http://127.0.0.1:5000"

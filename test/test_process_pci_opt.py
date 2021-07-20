@@ -31,7 +31,7 @@ class TestProcessPlacementOpt(unittest.TestCase):
 
     def setUp(self):
         mock_req_accept_message = Response("Accepted Request", content_type='application/json; charset=utf-8')
-        self.patcher_req = patch('apps.pci.optimizers.configdb.request',
+        self.patcher_req = patch('apps.pci.optimizers.config_request.request',
                                  return_value={"solutionInfo": {"placementInfo": "dummy"}})
         self.patcher_req_accept = patch('osdf.operation.responses.osdf_response_for_request_accept',
                                         return_value=mock_req_accept_message)

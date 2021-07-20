@@ -16,7 +16,7 @@
 # -------------------------------------------------------------------------
 #
 
-from apps.pci.optimizers.configdb import request
+from apps.pci.optimizers.config_request import request
 import osdf.config.loader as config_loader
 from osdf.utils.interfaces import json_from_file
 from osdf.utils.programming_utils import DotDict

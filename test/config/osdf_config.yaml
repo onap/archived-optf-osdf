@@ -64,6 +64,15 @@ aaf_ca_certs: ssl_certs/aaf_root_ca.cer
 pciHMSUsername: ""   # pcihandler username for call back.
 pciHMSPassword: ""   # pcihandler password for call back.
 
+configClientType: configdb
+
+# config db api
+configDbUrl: http://127.0.0.1:5000/simulated/configdb
+configDbUserName: osdf
+configDbPassword: passwd
+configDbGetCellListUrl: 'getCellList'
+configDbGetNbrListUrl: 'getNbrList'
+
 # Credentials for the OOF PCI Opt service
 osdfPCIOptUsername: PCI-OSDF-USER
 osdfPCIOptPassword: PCI-OSDF-PASSWD
