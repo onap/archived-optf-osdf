@@ -14,7 +14,7 @@
                   "latency": 10,
                   "reliability": 99.99,
                   "uEMobilityLevel": "stationary",
-                  "maxNumberOfUEs": 100
+                  "maxNumberofUEs": 100
                },
                {
                   "domainType": "CN",

@@ -18,7 +18,7 @@
 				"skip_post_instantiation_configuration": "true",
 				"controller_actor": "SO-REF-DATA",
 				"sNSSAI": "01-3226E7D1",
-				"plmnIdList": "39-00",
+				"pLMNIdList": "39-00",
 				"sST": "embb",
 				"uEMobilityLevel": "stationary",
 				"activityFactor": "0",
