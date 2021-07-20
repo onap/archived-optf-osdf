@@ -19,7 +19,7 @@
                   "candidate": {
                      "exp_data_rate": 0,
                      "conn_density": 0,
-                     "coverage_area_ta_list": "[{\"province\":\"??\",\"city\":\"???\",\"county\":\"???\",\"street\":\"?????\"}]",
+                     "coverage_area_ta_List": "[{\"province\":\"??\",\"city\":\"???\",\"county\":\"???\",\"street\":\"?????\"}]",
                      "activity_factor": 0,
                      "cs_availability": null,
                      "candidate_id": "1a636c4d-5e76-427e-bfd6-241a947224b0",

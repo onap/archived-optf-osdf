@@ -55,9 +55,9 @@
          "capabilityDetails":{
              "latency": "4",
              "reliability": "99.9",
-             "maxNumberOfUEs": "10",
+             "maxNumberofUEs": "10",
              "maxThroughput": "50",
-             "terminalDensity": "60"
+             "termDensity": "60"
          }
       },
       {
@@ -65,9 +65,9 @@
          "capabilityDetails":{
              "latency": "3",
              "reliability": "99.9",
-             "maxNumberOfUEs": "10",
+             "maxNumberofUEs": "10",
              "maxThroughput": "50",
-             "terminalDensity": "60"
+             "termDensity": "60"
          }
       },
       {
@@ -75,9 +75,9 @@
          "capabilityDetails":{
              "latency": "2",
              "reliability": "99.9",
-             "maxNumberOfUEs": "10",
+             "maxNumberofUEs": "10",
              "maxThroughput": "50",
-             "terminalDensity": "60"
+             "termDensity": "60"
          }
       }
    ]

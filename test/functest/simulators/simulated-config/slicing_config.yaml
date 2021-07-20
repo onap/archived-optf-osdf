@@ -16,13 +16,13 @@ attribute_mapping:
     latency: latency
     resourceSharingLevel: resource_sharing_level
     uEMobilityLevel: ue_mobility_level
-    maxNumberOfUEs: max_number_of_ues
+    maxNumberofUEs: max_number_of_ues
     dLThptPerUE: dl_thpt_per_ue
     uLThptPerUE: ul_thpt_per_ue
     sNSSAI: s_nssai
-    plmnIdList: plmn_id_list
+    pLMNIdList: plmn_id_list
     activityFactor: activity_factor
-    coverageAreaTAList: coverage_area_ta_list
+    coverageAreaTAList: coverage_area_ta_List
     availability: availability
     cSAvailabilityTarget: cs_availability_target
     reliability: reliability
@@ -31,11 +31,11 @@ attribute_mapping:
     expDataRateDL: exp_data_rate_dl
     uLThptPerSlice: ul_thpt_per_slice
     expDataRateUL: exp_data_rate_ul
-    MaxPktSize: max_pkt_size
+    maxPktSize: max_pkt_size
     msgSizeByte: msg_size_byte
-    maxNumberOfConns: max_number_of_conns
-    maxNumberOfPDUSessions: max_number_of_pdu_sessions
-    terminalDensity: terminal_density
+    maxNumberofConns: max_number_of_conns
+    maxNumberofPDUSessions: max_number_of_pdu_sessions
+    termDensity: terminal_density
     survivalTime: survival_time
     areaTrafficCapDL: area_traffic_cap_dl
     areaTrafficCapUL: area_traffic_cap_ul
@@ -47,6 +47,10 @@ attribute_mapping:
     sliceProfileId: slice_profile_id
     snssaiList: s_nssai_list
     domainType: domain_type
+    logicInterfaceId: logical_interface_id
+    ipAddress: ip_address
+    nextHopInfo: next_hop_info
+    perfReq: perf_req
 
   snake_to_camel:
     max_bandwidth: maxBandwidth
@@ -55,13 +59,13 @@ attribute_mapping:
     latency: latency
     resource_sharing_level: resourceSharingLevel
     ue_mobility_level: uEMobilityLevel
-    max_number_of_ues: maxNumberOfUEs
+    max_number_of_ues: maxNumberofUEs
     dl_thpt_per_ue: dLThptPerUE
     ul_thpt_per_ue: uLThptPerUE
     s_nssai: sNSSAI
-    plmn_id_list: plmnIdList
+    plmn_id_list: pLMNIdList
     activity_factor: activityFactor
-    coverage_area_ta_list: coverageAreaTAList
+    coverage_area_ta_List: coverageAreaTAList
     availability: availability
     cs_availability_target: cSAvailabilityTarget
     reliability: reliability
@@ -70,11 +74,11 @@ attribute_mapping:
     exp_data_rate_dl: expDataRateDL
     ul_thpt_per_slice: uLThptPerSlice
     exp_data_rate_ul: expDataRateUL
-    max_pkt_size: MaxPktSize
+    max_pkt_size: maxPktSize
     msg_size_byte: msgSizeByte
-    max_number_of_conns: maxNumberOfConns
-    max_number_of_pdu_sessions: maxNumberOfPDUSessions
-    terminal_density: terminalDensity
+    max_number_of_conns: maxNumberofConns
+    max_number_of_pdu_sessions: maxNumberofPDUSessions
+    terminal_density: termDensity
     survival_time: survivalTime
     area_traffic_cap_dl: areaTrafficCapDL
     area_traffic_cap_ul: areaTrafficCapUL
@@ -86,3 +90,7 @@ attribute_mapping:
     slice_profile_id: sliceProfileId
     s_nssai_list: snssaiList
     domain_type: domainType
+    logical_interface_id: logicInterfaceId
+    ip_address: ipAddress
+    next_hop_info: nextHopInfo
+    perf_req: perfReq
