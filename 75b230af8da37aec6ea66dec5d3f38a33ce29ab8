@@ -22,6 +22,30 @@
       "revId": "75b230af8da37aec6ea66dec5d3f38a33ce29ab8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ea0fb2_70ece3c1",
+        "filename": "test/apps/slice_selection/nssi_conductor_response.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 2671
+      },
+      "writtenOn": "2021-07-23T05:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab2209f7_76f36a5c",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "75b230af8da37aec6ea66dec5d3f38a33ce29ab8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
