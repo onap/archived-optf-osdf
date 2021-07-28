@@ -12,7 +12,7 @@
     "timeout": 600
   },
   "cellInfo": {
-    "networkId": "2000",
+    "networkId": "netw2000",
     "cellIdList": [
       "cell20"
     ]

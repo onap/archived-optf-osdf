@@ -16,54 +16,40 @@
 # -------------------------------------------------------------------------
 #
 
-from datetime import datetime as dt
-
-from osdf.logging.osdf_logging import debug_log
-from osdf.utils.interfaces import RestClient
+from apps.pci.optimizers.config.config_client import ConfigClient
 
 
 def request(req_object, osdf_config, flat_policies):
-    """
-    Process a configdb request from a Client (build Conductor API call, make the call, return result)
+    """Process a configdb request from a Client (build Conductor API call, make the call, return result)
+
     :param req_object: Request parameters from the client
     :param osdf_config: Configuration specific to OSDF application (core + deployment)
     :param flat_policies: policies related to PCI Opt (fetched based on request)
     :return: response from ConfigDB (accounting for redirects from Conductor service
     """
     cell_list_response = {}
-    config = osdf_config.deployment
-    local_config = osdf_config.core
-    uid, passwd = config['configDbUserName'], config['configDbPassword']
-    req_id = req_object['requestInfo']['requestId']
-    transaction_id = req_object['requestInfo']['transactionId']
-    headers = dict(transaction_id=transaction_id)
 
     network_id = req_object['cellInfo']['networkId']
 
     cell_list_response['network_id'] = network_id
 
-    ts = dt.strftime(dt.now(), '%Y-%m-%d %H:%M:%S%z')
+    config = osdf_config.deployment
 
-    rc = RestClient(userid=uid, passwd=passwd, method="GET", log_func=debug_log.debug, headers=headers)
+    config_client = ConfigClient.create(config['configClientType'])
 
-    cell_list_url = '{}/{}/{}/{}'.format(config['configDbUrl'], config['configDbGetCellListUrl'], network_id, ts)
-
-    cell_list_resp = rc.request(raw_response=True, url=cell_list_url)
-    cell_resp = cell_list_resp.json()
+    cell_resp = config_client.get_cell_list(network_id)
 
     cell_list = []
     count = 0
     for cell_id in cell_resp:
-        cell_info = {'cell_id': cell_id, 'id': count}
-        nbr_list_url = '{}/{}/{}/{}'.format(config['configDbUrl'], config['configDbGetNbrListUrl'], cell_id, ts)
-        nbr_list_raw = rc.request(url=nbr_list_url, raw_response=True)
-        cell_info['nbr_list'] = get_neighbor_list(nbr_list_raw.json())
+        cell_info = {
+            'cell_id': cell_id,
+            'id': count,
+            'nbr_list': config_client.get_nbr_list(network_id, cell_id)
+        }
         cell_list.append(cell_info)
         count += 1
 
     cell_list_response['cell_list'] = cell_list
+
     return cell_resp, cell_list_response
-
-
-def get_neighbor_list(nbr_list_response):
-    return nbr_list_response.get('nbrList', [])
