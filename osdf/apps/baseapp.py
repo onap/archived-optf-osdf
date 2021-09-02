@@ -32,7 +32,6 @@ from flask import g
 from flask import request
 from flask import Response
 from onaplogging.mdcContext import MDC
-import pydevd
 from requests import RequestException
 from schematics.exceptions import DataError
 
@@ -188,7 +187,7 @@ def get_options(argv):
 
     if opts.debughost:
         debug_log.debug('pydevd.settrace({}, port={})'.format(opts.debughost, opts.debugport))
-        pydevd.settrace(opts.debughost, port=opts.debugport)
+        # pydevd.settrace(opts.debughost, port=opts.debugport)
     return opts
 
 

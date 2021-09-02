@@ -4,3 +4,4 @@ pytest
 pytest-tap
 requests-mock
 pylint
+mock
