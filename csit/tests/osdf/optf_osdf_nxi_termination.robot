@@ -33,7 +33,7 @@ TerminationRequestGeneration
     Set Global Variable       ${nssi_termination_request}
     ${nsi_termination_request_args}=      copy.deepcopy  ${nsi_termination_request}
     ${request_info}=          Set Variable      ${nsi_termination_request_args["requestInfo"]}
-    ${addtnl_args}=           Create Dictionary  serviceProfileId=660ca85c-1a0f-4521-a559-65f23e794699
+    ${addtnl_args}=           Create Dictionary  serviceInstanceId=660ca85c-1a0f-4521-a559-65f23e794699
     Set To Dictionary         ${request_info}      addtnlArgs=${addtnl_args}
     Set To Dictionary         ${nsi_termination_request_args}      requestInfo=${request_info}
     Set Global Variable       ${nsi_termination_request_args}

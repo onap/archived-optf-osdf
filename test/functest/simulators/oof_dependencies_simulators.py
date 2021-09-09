@@ -118,36 +118,30 @@ def get_nbr_list(cell_id, ts):
         return jsonify(data)
     return jsonify(data), 503
 
+@app.route("/simulated/aai/v23/nodes/service-instances/service-instance/<service_id>", methods=["GET"])
+def get_aai_instances(service_id):
+    data, status = get_payload_for_simulated_component('aai', 'nsi_instance.json')
+    if not status:
+        return jsonify(data)
+    return jsonify(data), 503
 
 @app.route("/simulated/aai/v23/dsl", methods=["PUT"])
 def dsl_query():
 
-    nsi_query = {"dsl": "service-instance*('service-instance-id','9629e36c-a3d9-4aed-8368-f72b8be1cd34') > "
-                        "service-instance*('service-role','e2eserviceprofile-service')"}
-
-    nssi_query = {"dsl": "service-instance*('service-instance-id','9629e36c-a3d9-4aed-8368-f72b8be1cd34') > "
+    nssi_query = {"dsl": "service-instance*('service-instance-id','9629e36c-a3d9-4aed-8368-f72b8be1cd34')('workload-context', 'CN') > "
                          "service-instance*('service-role','nsi')"}
 
-    nsi_with_sp_query = {"dsl": "service-instance*('service-instance-id','9629e36c-a3d9-4aed-8368-f72b8be1cd34') > "
-                                "service-instance*('service-role','e2eserviceprofile-service')("
-                                "'service-instance-id',"
-                                "'660ca85c-1a0f-4521-a559-65f23e794699660ca85c-1a0f-4521-a559-65f23e794699')"}
-
-    nssi_with_nsi_query = {"dsl": "service-instance*('service-instance-id','9629e36c-a3d9-4aed-8368-f72b8be1cd34') > "
+    nssi_with_nsi_query = {"dsl": "service-instance*('service-instance-id','9629e36c-a3d9-4aed-8368-f72b8be1cd34')('workload-context', 'CN') > "
                                   "service-instance*('service-role','nsi')('service-instance-id',"
                                   "'660ca85c-1a0f-4521-a559-65f23e794699')"}
 
     queries = {
-        "nsi": nsi_query,
         "nssi_query": nssi_query,
-        "nsi_with_sp": nsi_with_sp_query,
         "nssi_with_nsi": nssi_with_nsi_query
     }
 
     count = {
-        "nsi": 1,
         "nssi_query": 1,
-        "nsi_with_sp": 2,
         "nssi_with_nsi": 2
     }
 
