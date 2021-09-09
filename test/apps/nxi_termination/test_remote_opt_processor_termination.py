@@ -69,13 +69,13 @@ class TestRemoteOptProcessor(unittest.TestCase):
         exception_response_json1 = json_from_file(exception_response_file1)
 
         #nsi success scenario
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count', return_value=1)
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_allotted_resources', return_value=success_rel_json)
         self.Mock_req = self.patcher_req.start()
         self.assertEquals(success_output_json, process_nxi_termination_opt(request_json, osdf_config))
         self.patcher_req.stop()
 
         #nsi failure scenario
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count', return_value=3)
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_allotted_resources', return_value=failure_rel_json)
         self.Mock_req = self.patcher_req.start()
         self.assertEquals(nxi_failure_output_json1, process_nxi_termination_opt(request_json, osdf_config))
         self.patcher_req.stop()
@@ -83,18 +83,12 @@ class TestRemoteOptProcessor(unittest.TestCase):
         request_json["requestInfo"]["addtnlArgs"] = {}
 
         #nsi success scenario
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count',
-                                 return_value=0)
+        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_allotted_resources',
+                                 return_value=[])
         self.Mock_req = self.patcher_req.start()
         self.assertEquals(success_output_json, process_nxi_termination_opt(request_json, osdf_config))
         self.patcher_req.stop()
 
-        # nsi failure scenario
-        self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count',
-                                 return_value=1)
-        self.Mock_req = self.patcher_req.start()
-        self.assertEquals(nxi_failure_output_json2, process_nxi_termination_opt(request_json, osdf_config))
-        self.patcher_req.stop()
         # #
         # nssi success scenario
         self.patcher_req = patch('apps.nxi_termination.optimizers.remote_opt_processor.get_resource_count', return_value=1)

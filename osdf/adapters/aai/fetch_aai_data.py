@@ -52,7 +52,9 @@ def get_aai_data(request_json, osdf_config):
     aai_req_url = aai_url + config["aaiServiceInstanceUrl"] + nxi_id + "?depth=2"
 
     try:
+        debug_log.debug("aai request: {}".format(aai_req_url))
         response = requests.get(aai_req_url, headers=AAI_HEADERS, auth=AUTH, verify=False)
+        debug_log.debug("aai response: {}".format(response.json()))
     except RequestException as e:
         raise AAIException("Request exception was encountered {}".format(e))
 
@@ -77,6 +79,7 @@ def execute_dsl_query(query, format, osdf_config):
     debug_log.debug("aai dsl request: {}".format(data))
     try:
         response = requests.put(dsl_url, data=data, headers=AAI_HEADERS, auth=AUTH, verify=False)
+        debug_log.debug("aai dsl response: {}".format(response))
     except RequestException as ex:
         raise AAIException("Request exception was encountered {}".format(ex))
 

@@ -1,27 +1,34 @@
 [
+    {
+        "related-to": "allotted-resource",
+        "relationship-label": "org.onap.relationships.inventory.Uses",
+        "related-link": "/aai/v23/business/customers/customer/5GCustomer/service-subscriptions/service-subscription/5G/service-instances/service-instance/d88b6ce6-19be-439d-8553-4f9d6cce0494/allotted-resources/allotted-resource/07138106-f535-413b-b002-40ba24f95937",
+        "relationship-data": [
             {
-                "related-to": "service-instance",
-                "relationship-label": "org.onap.relationships.inventory.ComposedOf",
-                "related-link": "/aai/v16/business/customers/customer/5GCustomer/service-subscriptions/service-subscription/5G/service-instances/service-instance/4115d3c8-dd59-45d6-b09d-e756dee9b518",
-                "relationship-data": [
-                    {
-                        "relationship-key": "customer.global-customer-id",
-                        "relationship-value": "5GCustomer"
-                    },
-                    {
-                        "relationship-key": "service-subscription.service-type",
-                        "relationship-value": "5G"
-                    },
-                    {
-                        "relationship-key": "service-instance.service-instance-id",
-                        "relationship-value": "4115d3c8-dd59-45d6-b09d-e756dee9b518"
-                    }
-                ],
-                "related-to-property": [
-                    {
-                        "property-key": "service-instance.service-instance-name",
-                        "property-value": "nsi_test_0211"
-                    }
-                ]
+                "relationship-key": "customer.global-customer-id",
+                "relationship-value": "5GCustomer"
+            },
+            {
+                "relationship-key": "service-subscription.service-type",
+                "relationship-value": "5G"
+            },
+            {
+                "relationship-key": "service-instance.service-instance-id",
+                "relationship-value": "cdad9f49-4201-4e3a-aac1-b0f27902c299"
+            },
+            {
+                "relationship-key": "allotted-resource.id",
+                "relationship-value": "07138106-f535-413b-b002-40ba24f95937"
+            }
+        ],
+        "related-to-property": [
+            {
+                "property-key": "allotted-resource.description"
+            },
+            {
+                "property-key": "allotted-resource.allotted-resource-name",
+                "property-value": "Allotted_coe"
             }
         ]
+    }
+]
