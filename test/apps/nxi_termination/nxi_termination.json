@@ -6,7 +6,7 @@
     "sourceId": "SO",
     "timeout": 5,
     "addtnlArgs": {
-      "serviceProfileId":"cdad9f49-4201-4e3a-aac1-b0f27902c299"
+      "serviceInstanceId":"cdad9f49-4201-4e3a-aac1-b0f27902c299"
     }
   },
   "type":"NSI",
