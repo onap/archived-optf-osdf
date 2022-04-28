@@ -162,4 +162,5 @@ nxi_termination:
             - "service-instance*('service-instance-id','{{instance_id}}')('workload-context', 'AN') > service-instance*('service-role','nsi')"
             - "service-instance*('service-instance-id','{{instance_id}}')('workload-context', 'AN-NF') > service-instance*('workload-context','AN')"
             - "service-instance*('service-instance-id','{{instance_id}}')('workload-context', 'TN-MH') > service-instance*('workload-context','AN')"
+            - "service-instance*('service-instance-id','{{instance_id}}')('workload-context', 'TN-FH') > service-instance*('workload-context','AN')"
             - "service-instance*('service-instance-id','{{instance_id}}')('workload-context', 'AN-NF') > service-instance*('workload-context','AN')"
