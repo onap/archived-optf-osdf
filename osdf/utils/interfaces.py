@@ -62,7 +62,7 @@ class RestClient(object):
         self.method = method
         self.url = url
         self.log_func = log_func
-        self.timeout = (30, 90) if timeout is None else timeout
+        self.timeout = (30, 120) if timeout is None else timeout
         self.req_id = req_id
         self.verify = verify
 
