@@ -29,7 +29,7 @@ http://maven.apache.org/POM/4.0.0 ">
 	<groupId>org.onap.optf.osdf</groupId>
 	<artifactId>optf-osdf</artifactId>
 	<name>optf-osdf</name>
-	<version>3.0.6-SNAPSHOT</version>
+	<version>3.0.7-SNAPSHOT</version>
 	<description>Optimization Service Design Framework</description>
 
 	<properties>
