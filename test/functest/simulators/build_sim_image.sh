@@ -31,6 +31,11 @@ SIMULATORS_DIR=$FUNC_TEST_DIR/simulators
 OSDF_DIR=$(dirname $TEST_DIR)
 DOCKER_DIR=$SIMULATORS_DIR/tmp_docker
 
+echo "Before Docker Build"
+cat $OSDF_DIR/requirements.txt
+echo $OSDF_DIR
+
+exit 0
 mkdir -p $DOCKER_DIR/sim/osdf/policy/response-payloads/pdp-has-vcpe-good
 
 cp $SIMULATORS_DIR/Dockerfile $DOCKER_DIR/.
@@ -47,7 +52,7 @@ cp -r $SIMULATORS_DIR/aai $DOCKER_DIR/sim
 cp $TEST_DIR/policy-local-files/*.json $DOCKER_DIR/sim/policy/response-payloads/pdp-has-vcpe-good
 cp $TEST_DIR/placement-tests/policy_response.json $DOCKER_DIR/sim/policy/response-payloads/
 cp $SIMULATORS_DIR/oof_dependencies_simulators.py $DOCKER_DIR/sim/oof_dependencies_simulators.py
-cp $OSDF_DIR/requirements.txt $DOCKER_DIR
+cp $OSDF_DIR/requirements-sim.txt $DOCKER_DIR/requirements.txt
 cp -r $SIMULATORS_DIR/start_sim.sh $DOCKER_DIR/
 
 cd $DOCKER_DIR
