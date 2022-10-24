@@ -2,7 +2,7 @@
 policyPlatformUrl: https://policy-xacml-pdp:6969/policy/pdpx/decision/v1 # Policy Dev platform URL
 
 # AAF Authentication config
-is_aaf_enabled: False
+is_aaf_enabled: True
 aaf_cache_expiry_mins: 5
 aaf_url: https://aaftest.simpledemo.onap.org:8095
 aaf_user_roles:

@@ -48,7 +48,7 @@ osdfPlacementUsername: "test"
 osdfPlacementPassword: "testpwd"
 
 # AAF Authentication config
-is_aaf_enabled: False
+is_aaf_enabled: True
 aaf_cache_expiry_hrs: 3
 aaf_url: https://aaftest.simpledemo.onap.org:8095
 aaf_user_roles:

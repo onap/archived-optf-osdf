@@ -209,8 +209,10 @@ def run_app():
     if ssl_opts:
         common_app_opts.update({'ssl_context': build_ssl_context()})
     opts = get_options(sys.argv)
-    # Load secrets from SMS
-    sms.load_secrets()
+    is_aaf_enabled = osdf_config.deployment.get('is_aaf_enabled', False)
+    if is_aaf_enabled:
+        # Load secrets from SMS
+        sms.load_secrets()
     if not opts.local and not opts.devtest:  # normal deployment
         app.run(port=internal_port, debug=False, **common_app_opts)
     else:
