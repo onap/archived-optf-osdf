@@ -31,6 +31,11 @@ SIMULATORS_DIR=$FUNC_TEST_DIR/simulators
 OSDF_DIR=$(dirname $TEST_DIR)
 DOCKER_DIR=$SIMULATORS_DIR/tmp_docker
 
+echo "Before Docker Build"
+cat $OSDF_DIR/requirements.txt
+echo $OSDF_DIR
+
+exit 0
 mkdir -p $DOCKER_DIR/sim/osdf/policy/response-payloads/pdp-has-vcpe-good
 
 cp $SIMULATORS_DIR/Dockerfile $DOCKER_DIR/.
