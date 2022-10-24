@@ -44,6 +44,11 @@ chmod +x ./build_sim_image.sh
 # run osdf_sim
 docker run -d --name osdf_sim -p "5000:5000"  osdf_sim:latest;
 
+#wait for docker setup a while
+sleep 2
+
+docker ps -a
+
 OSDF_SIM_IP=`${WORKSPACE}/scripts/get-instance-ip.sh osdf_sim`
 echo "OSDF_SIM_IP=${OSDF_SIM_IP}"
 
@@ -52,7 +57,3 @@ ${WORKSPACE}/scripts/wait_for_port.sh ${OSDF_SIM_IP} 5000
 
 # wait a while before continuing
 sleep 2
-
-echo "inspect docker things for tracing purpose"
-docker inspect osdf_sim
-
