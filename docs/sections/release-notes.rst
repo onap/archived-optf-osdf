@@ -646,12 +646,12 @@ The Dublin release for OOF delivered the following Epics.
 *Known Vulnerabilities in Used Modules*
 
 OPTFRA osdf code has been formally scanned during build time using NexusIQ and no Critical vulnerability was found.
-The OPTF open Critical security vulnerabilities and their risk assessment have been documented as part of the `project <https://wiki.onap.org/pages/viewpage.action?pageId=64005463>`_.
+The OPTF open Critical security vulnerabilities and their risk assessment have been documented as part of the `project <https://wiki.onap.org/pages/viewpage.action?pageId=64005463>`__.
 
 Quick Links:
-    - `OPTFRA project page <https://wiki.onap.org/display/DW/Optimization+Framework+Project>`_
-    - `Passing Badge information for OPTFRA <https://bestpractices.coreinfrastructure.org/en/projects/1720>`_
-    - `Project Vulnerability Review Table for OPTF <https://wiki.onap.org/pages/viewpage.action?pageId=64005463>`_
+    - `OPTFRA project page <https://wiki.onap.org/display/DW/Optimization+Framework+Project>`__
+    - `Passing Badge information for OPTFRA <https://bestpractices.coreinfrastructure.org/en/projects/1720>`__
+    - `Project Vulnerability Review Table for OPTF <https://wiki.onap.org/pages/viewpage.action?pageId=64005463>`__
 
 **Upgrade Notes**
 
@@ -739,7 +739,7 @@ The Casablanca release for OOF delivered the following Epics.
 **Security Notes**
 
 OPTFRA osdf code has been formally scanned during build time using NexusIQ and no Critical vulnerability was found.
-The OPTF open Critical security vulnerabilities and their risk assessment have been documented as part of the `project <https://wiki.onap.org/pages/viewpage.action?pageId=43385924>`_.
+The OPTF open Critical security vulnerabilities and their risk assessment have been documented as part of the `project <https://wiki.onap.org/pages/viewpage.action?pageId=43385924>`__.
 
 Quick Links:
     - `OPTFRA project page <https://wiki.onap.org/display/DW/Optimization+Framework+Project>`_
