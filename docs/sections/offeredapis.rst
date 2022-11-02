@@ -3,7 +3,7 @@
 .. _offeredapis:
 
 Offered APIs
-=============================================
+============
 
 This document describes the OSDF HAS (Homing and Allocation Service) API
 
@@ -17,15 +17,14 @@ paste into the swagger tool here: https://editor.swagger.io
 
    "OOF OSDF HAS API", ":download:`link <../api/swagger/oof-osdf-has-api.json>`"
    "OOF OPTENG API", ":download:`link <../api/swagger/oof-optf-opteng-api.json>`"
-
-OOF OSDF HAS API
-................
-
-`OSDF API <osdf-api.html>`_
-
-
-OOF OPTENG API
-..............
-
-`OPTENG API <opteng-api.html>`_
-
+ 
+.. OOF OSDF HAS API
+.. ................
+.. 
+.. `OSDF API <osdf-api.html>`_
+.. 
+.. 
+.. OOF OPTENG API
+.. ..............
+.. 
+.. `OPTENG API <opteng-api.html>`_
