@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ecbcfb2_80fd7a2a",
+        "filename": "docs/sections/offeredapis.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3091
+      },
+      "writtenOn": "2022-11-08T13:46:09Z",
+      "side": 1,
+      "message": "causes \"broken link\" error messages; not sure how to fix",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "f4bfac20ab2aaed86846da037db986d3d1dcb6f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
