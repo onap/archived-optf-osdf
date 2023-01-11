@@ -29,8 +29,10 @@ from flask import request, g
 
 from osdf.apps.baseapp import app, run_app
 from apps.nst.models.api.nstSelectionRequest import NSTSelectionAPI
+from apps.nsst.models.api.nsstSelectionRequest import NSSTSelectionAPI
 from apps.pci.models.api.pciOptimizationRequest import PCIOptimizationAPI
 from apps.nst.optimizers.nst_select_processor import NstSelection
+from apps.nsst.optimizers.nsst_select_processor import NsstSelection
 from apps.pci.optimizers.pci_opt_processor import process_pci_optimation
 from apps.placement.models.api.placementRequest import PlacementAPI
 from apps.placement.optimizers.conductor.remote_opt_processor import process_placement_opt
@@ -135,6 +137,19 @@ def do_nst_selection():
                       transaction_id=request_json['requestInfo']['transactionId'],
                       request_status="accepted", status_message="")
 
+
+@app.route("/api/oof/v1/selection/nsst", methods=["POST"])
+def do_nsst_selection():
+    request_json = request.get_json()
+    req_id = request_json['requestInfo']['requestId']
+    audit_log.info(MH.received_request(request.url, request.remote_addr, json.dumps(request_json)))
+    NSSTSelectionAPI(request_json).validate()
+    audit_log.info(MH.new_worker_thread(req_id, "[for NSST selection]"))
+    nsst_selection = NsstSelection(osdf_config, request_json)
+    nsst_selection.start()
+    return req_accept(request_id=req_id,
+                      transaction_id=request_json['requestInfo']['transactionId'],
+                      request_status="accepted", status_message="")
 
 @app.route("/api/oof/v1/pci", methods=["POST"])
 @app.route("/api/oof/pci/v1", methods=["POST"])
