@@ -1,0 +1,7 @@
+Code-Review+2: Thomas Kulik <thomas.kulik@telekom.de>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Submitted-by: Thomas Kulik <thomas.kulik@telekom.de>
+Submitted-at: Mon, 17 Jul 2023 10:21:55 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/optf/osdf/+/135301
+Project: optf/osdf
+Branch: refs/heads/master
