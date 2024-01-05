@@ -1,22 +1,36 @@
 {
-  "service": "distancePolicy",
-  "policyName": "OSDF_DUBLIN.Distance_vGMuxInfra",
-  "description": "Distance Policy for vGMuxInfra",
-  "templateVersion": "OpenSource.version.1",
-  "version": "test1",
-  "priority": "3",
-  "riskType": "test",
-  "riskLevel": "2",
-  "guard": "False",
-  "content": {
-    "distanceProperties": {
-      "locationInfo": "customer_loc",
-      "distance": { "value": "500", "operator": "<", "unit": "km" }
+  "OSDF_FRANKFURT.Distance_vGMuxInfra": {
+    "type": "onap.policies.optimization.resource.DistancePolicy",
+    "version": "1.0.0",
+    "type_version": "1.0.0",
+    "metadata": {
+      "policy-id": "OSDF_FRANKFURT.Distance_vGMuxInfra",
+      "policy-version": 1
     },
-    "identity": "distance-vGMuxInfra",
-    "resources": ["vGMuxInfra"],
-    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra"],
-    "policyType": "distance_to_location",
-    "applicableResources": "any"
+    "properties": {
+      "scope": [ 
+        "OSDF_FRANKFURT"
+      ],
+      "services": [
+        "vCPE"
+      ],
+      "resources": [
+        "vGMuxInfra"
+      ],
+      "geography": [
+        "US",
+        "INTERNATIONAL"
+      ],
+      "identity": "distance-vGMuxInfra",
+      "applicableResources": "any",
+      "distanceProperties": {
+        "locationInfo": "customer_loc",
+        "distance": {
+          "value": "500",
+          "operator": "<",
+          "unit": "km"
+        }
+      }
+    }
   }
 }

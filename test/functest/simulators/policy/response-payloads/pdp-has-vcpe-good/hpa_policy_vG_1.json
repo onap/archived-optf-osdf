@@ -1,18 +1,27 @@
 {
-    "service": "hpaPolicy",
-    "policyName": "OSDF_DUBLIN.hpa_policy_vG_1",
-    "description": "HPA policy for vG",
-    "templateVersion": "OpenSource.version.1",
-    "version": "test1",
-    "priority": "3",
-    "riskType": "test",
-    "riskLevel": "2",
-    "guard": "False",
-    "content": {
-      "resources": ["vG"],
+  "OSDF_FRANKFURT.hpa_policy_vG_1": {
+    "type": "onap.policies.optimization.resource.HpaPolicy",
+    "version": "1.0.0",
+    "type_version": "1.0.0",
+    "metadata": {
+      "policy-id": "OSDF_FRANKFURT.hpa_policy_vG_1",
+      "policy-version": 1
+    },
+    "properties": {
+      "scope": [
+        "OSDF_FRANKFURT" 
+      ],
+      "services": [
+        "vCPE"
+      ],
+      "resources": [
+        "vG"
+      ],
+      "geography": [
+        "US",
+        "INTERNATIONAL"
+      ],
       "identity": "hpa-vG",
-      "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vG"],
-      "policyType": "hpa",
       "flavorFeatures": [
         {
           "id": "vg_1",
@@ -28,8 +37,8 @@
               ]
             }
           ],
-          "flavorProperties":[
-            {
+          "flavorProperties": [
+           {  
               "hpa-feature" : "cpuTopology",
               "mandatory" : "True",
               "architecture": "generic",
@@ -43,33 +52,64 @@
                 {"hpa-attribute-key":"numCpuThreads", "hpa-attribute-value": "8", "operator":"<=", "unit": ""}
               ]
             },
-            {
-              "hpa-feature" : "basicCapabilities",
-              "mandatory" : "True",
+           {
+              "hpa-feature": "basicCapabilities",
+              "mandatory": true,
               "architecture": "generic",
               "directives": [],
               "hpa-feature-attributes": [
-                {"hpa-attribute-key": "numVirtualCpu", "hpa-attribute-value": "6", "operator": "=", "unit": ""},
-                {"hpa-attribute-key": "virtualMemSize", "hpa-attribute-value":"6", "operator": "=", "unit": "GB"}
+                {
+                  "hpa-attribute-key": "numVirtualCpu",
+                  "hpa-attribute-value": 6,
+                  "operator": [
+                    "="
+                  ],
+                  "unit": ""
+                },
+                {
+                  "hpa-attribute-key": "virtualMemSize",
+                  "hpa-attribute-value": 6,
+                  "operator": [
+                    "="
+                  ],
+                  "unit": ""
+                }
               ]
             },
             {
-              "hpa-feature" : "ovsDpdk",
-              "mandatory" : "False",
-              "score" : "3",
+              "hpa-feature": "ovsDpdk",
+              "mandatory": false,
+              "score": 3,
               "architecture": "generic",
               "directives": [],
               "hpa-feature-attributes": [
-                 {"hpa-attribute-key":"dataProcessingAccelerationLibrary", "hpa-attribute-value":"ovsDpdk_version", "operator": "=", "unit":""}
+                {
+                  "hpa-attribute-key": "dataProcessingAccelerationLibrary",
+                  "hpa-attribute-value": "ovsDpdk_version",
+                  "operator": [
+                    "="
+                  ],
+                  "unit": ""
+                }
               ]
             },
             {
-              "hpa-feature" : "cpuInstructionSetExtensions",
-              "mandatory" : "True",
+              "hpa-feature": "cpuInstructionSetExtensions",
+              "mandatory": true,
               "architecture": "INTEL-64",
               "directives": [],
               "hpa-feature-attributes": [
-                {"hpa-attribute-key":"instructionSetExtensions", "hpa-attribute-value":["<CPUINST>", "<CPUINST>"], "operator": "ALL", "unit":""}
+                {
+                  "hpa-attribute-key": "instructionSetExtensions",
+                  "hpa-attribute-value": [
+                    "<CPUINST>",
+                    "<CPUINST>"
+                  ],
+                  "operator": [
+                    "ALL"
+                  ],
+                  "unit": ""
+                }
               ]
             }
           ]
@@ -99,7 +139,7 @@
                 {"hpa-attribute-key":"logicalCpuPinningPolicy", "hpa-attribute-value": "<CPUPOLICY>","operator": "=", "unit":""}
               ]
             },
-            {
+ {
               "hpa-feature" : "basicCapabilities",
               "mandatory" : "True",
               "architecture": "generic",
@@ -132,7 +172,7 @@
                 {"hpa-attribute-key": "pciDeviceId", "hpa-attribute-value": "2", "operator": "=", "unit": ""}
               ]
             }
-          ]
+]
         },
         {
           "id": "vg_3",
@@ -162,7 +202,7 @@
                 {"hpa-attribute-key": "numaCpu-1", "hpa-attribute-value":"4", "operator": "=", "unit": ""},
                 {"hpa-attribute-key": "numaMem-1", "value": "4096", "operator": "=", "unit": "MB"}
               ]
-            },
+},
             {
               "hpa-feature" : "basicCapabilities",
               "mandatory" : "True",
@@ -187,4 +227,5 @@
         }
       ]
     }
+  }
 }

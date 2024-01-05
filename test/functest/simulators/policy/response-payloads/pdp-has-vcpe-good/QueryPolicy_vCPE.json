@@ -1,21 +1,38 @@
 {
-  "service": "queryPolicy",
-  "policyName": "OSDF_DUBLIN.QueryPolicy_vCPE",
-  "description": "Query policy for vCPE",
-  "templateVersion": "OpenSource.version.1",
-  "version": "test1",
-  "priority": "3",
-  "riskType": "test",
-  "riskLevel": "2",
-  "guard": "False",
-  "content": {
-    "queryProperties": [
-      {"attribute":"customerLatitude", "attribute_location": "customerLatitude"},
-      {"attribute":"customerLongitude", "attribute_location": "customerLongitude"}
-    ],
-    "policyScope": ["vCPE", "US", "INTERNATIONAL", "ip", "vGMuxInfra", "vG"],
-    "policyType": "request_param_query",
-    "serviceName": "vCPE",
-    "identity": "vCPE_Query_Policy"
+  "OSDF_FRANKFURT.queryPolicy_vCPE": {
+    "type": "onap.policies.optimization.service.QueryPolicy",
+    "version": "1.0.0",
+    "type_version": "1.0.0",
+    "metadata": {
+      "policy-id": "OSDF_FRANKFURT.queryPolicy_vCPE",
+      "policy-version": 1
+    },
+    "properties": {
+      "scope": [
+        "OSDF_FRANKFURT"
+      ],
+      "services": [
+        "vCPE"
+      ],
+      "resources": [
+        "vGMuxInfra",
+        "vG"
+      ],
+      "geography": [
+        "US",
+        "INTERNATIONAL"
+      ],
+      "identity": "vCPE_Query_Policy",
+      "queryProperties": [
+        {
+          "attribute": "customerLatitude",
+          "attribute_location": "customerLatitude"
+        },
+        {
+          "attribute": "customerLongitude",
+          "attribute_location": "customerLongitude"
+        }
+      ]
+    }
   }
 }
